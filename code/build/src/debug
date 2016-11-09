@@ -1,0 +1,15 @@
+In file included from /home/chris/lookup/prog/src/main.cpp:1:0:
+/home/chris/lookup/prog/src/btree.h: In member function ‘void BTree::delete4(const uint32&, const uint8&)’:
+/home/chris/lookup/prog/src/btree.h:215:33: error: ‘_level’ was not declared in this scope
+    if (utility::getBit(_prefix, _level)) {
+                                 ^
+/home/chris/lookup/prog/src/btree.h: In member function ‘uint32 BTree::search4(const uint32&)’:
+/home/chris/lookup/prog/src/btree.h:328:36: error: expected ‘)’ before ‘{’ token
+    if (utility::getBit(_ip, level) {
+                                    ^
+/home/chris/lookup/prog/src/btree.h:337:11: warning: suggest braces around empty body in an ‘if’ statement [-Wempty-body]
+    ++level;
+           ^
+make[2]: *** [src/CMakeFiles/main.dir/main.cpp.o] Error 1
+make[1]: *** [src/CMakeFiles/main.dir/all] Error 2
+make: *** [all] Error 2

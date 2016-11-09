@@ -1,0 +1,1 @@
+/usr/bin/c++    -W -Wall  -std=c++11 -O3    CMakeFiles/analyzer.dir/analyzer.cpp.o  -o analyzer  -L/home/chris/lookup/code/external/bgpdump -rdynamic -lbgpdump -Wl,-rpath,/home/chris/lookup/code/external/bgpdump 

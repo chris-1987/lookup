@@ -1,0 +1,2 @@
+/home/chris/lookup/code/build/src/CMakeFiles/analyzer.dir
+/home/chris/lookup/code/build/src/CMakeFiles/main.dir
