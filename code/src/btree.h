@@ -20,7 +20,11 @@
 /// binary node
 ///
 /// two pointers to children and one field for storing nexthop
+
+template<int W>
 struct BNode {
+
+	typedef typename choose_ip_type<W>::ip_type ip_type;
 
 	BNode* lchild; /// if bitcheck = 0
 
@@ -28,32 +32,40 @@ struct BNode {
 		
 	uint32 nexthop; /// next hop 
 
+	ip_type prefix; /// a dummy field, for building and updating fstree only
+
 	/// default ctor
-	BNode() : lchild(nullptr), rchild(nullptr), nexthop(0) {}
+	BNode() : lchild(nullptr), rchild(nullptr), nexthop(0), prefix(0) {}
 };
 
 /// binary tree, singleton
 ///
 /// build : create a btree, each node of which contains three fields (two pointers along with a data field).
 /// update: support two kinds of update, namely withdraw/insert a prefix and alter the nexthop information
+/// @param W 32 for IPV4 and 128 for IPV6
 
+template<int W>
 class BTree {
 private:
+	
+	typedef typename choose_ip_type<W>::ip_type ip_type;
 
-	static BTree* bt; 
+	typedef BNode<W> node_type;
 
-	BNode* root; /// ptr to root
+	static BTree<W>* bt; 
+
+	node_type* root; /// ptr to root
 
 	uint32 nodenum;
 
-	uint32 levelnodenum[32];
+	uint32 levelnodenum[W + 1]; // root node contains */0 and locates at level 0
 
 private:
 
 	/// default ctor
 	BTree() : root(nullptr), nodenum(0) {
 
-		for (int i = 0; i < 32; ++i) {
+		for (int i = 0; i < W + 1; ++i) {
 
 			levelnodenum[i] = {0};
 		}
@@ -77,8 +89,8 @@ public:
 	/// create an instance of BTree if not yet instantiated; otherwise, return the instance.
 	static BTree* getInstance();
 
-	/// build BTree for IPv4 BGP table
-	void build4(const std::string & _fn) {
+	/// build BTree for BGP table
+	void build(const std::string& _fn) {
 
 		// destroy the old tree if there exists
 		if (nullptr != root) {
@@ -87,14 +99,18 @@ public:
 		}
 
 		// create a new root node
-		root = new BNode();
+		root = new node_type();
+
+		++nodenum;
+
+		++levelnodenum[0]; // root node is at level 0
 		
 		// insert prefixes into btree one by one
 		std::ifstream fin(_fn, std::ios_base::binary);
 
 		std::string line; 
 
-		uint32 prefix;
+		ip_type prefix;
 					
 		uint8 length;
 
@@ -103,7 +119,7 @@ public:
 		while (getline(fin, line)) {	
 
 			// retrieve prefix and length
-			utility::retrieveInfo4(line, prefix, length);
+			utility::retrieveInfo(line, prefix, length);
 
 			nexthop = length; //! note that we represent the nexthop information by length (for test only)
 	
@@ -117,15 +133,15 @@ public:
 
 				//std::cerr << "2 line: " << line << " prefix: " << prefix << " length: " << (uint32)length << std::endl;
 
-				insert4(prefix, length, nexthop, root, 0);
+				ins(prefix, length, nexthop, root, 1); // insert nodes from level 1
 
 				//std::cin.get();
 			}
 		}	 
 
-		std::cerr << "created node num (not include root node): " << nodenum << std::endl;
+		std::cerr << "created node num: " << nodenum << std::endl;
 
-		for (int i = 0; i < 32; ++i) {
+		for (int i = 0; i < W + 1; ++i) {
 
 			std::cerr << "the " << i << "'s level--node num: " << levelnodenum[i] << std::endl;
 		}
@@ -142,7 +158,7 @@ public:
 			return;
 		}	
 
-		std::queue<BNode*> queue;
+		std::queue<node_type*> queue;
 
 		queue.push(root);
 
@@ -161,7 +177,7 @@ public:
 
 		nodenum = 0;
 
-		for (int i = 0; i < 32; ++i) {
+		for (int i = 0; i < W + 1; ++i) {
 
 			levelnodenum[i] = 0;
 		}
@@ -171,18 +187,17 @@ public:
 
 
 	/// insert a prefix
-	void insert4 (const uint32& _prefix, const uint8& _length, const uint32& _nexthop, BNode* _pnode, const int _level){
+	void ins (const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, node_type* _pnode, const int _level){
 	
-		BNode* node = nullptr;
+		node_type* node = nullptr;
 
 		// create lchild or rchild for _pnode with respect to whether bit = 0 or 1
-	//	std::cerr << "the " << _level << "'s bit is " << ((utility::getBit(_prefix, _level) == 0) ? 0 : 1) << " \n";
 
-		if (0 == utility::getBit(_prefix, _level)) {
+		if (0 == utility::getBit(_prefix, _level - 1)) { // _prefix[_level - 1] is used to branch
 
 			if (nullptr == _pnode->lchild) {
 
-				_pnode->lchild = new BNode();
+				_pnode->lchild = new node_type();
 
 				++nodenum;
 			
@@ -195,7 +210,7 @@ public:
 
 			if (nullptr == _pnode->rchild) {
 
-				_pnode->rchild = new BNode();
+				_pnode->rchild = new node_type();
 
 				++nodenum;
 
@@ -205,14 +220,14 @@ public:
 			node = _pnode->rchild;
 		}
 
-		// insert _prefix into _node if _level == _length - 1; otherwise, recursively call insert() with _level = _level + 1
-		if (_level == _length - 1) {
+		// insert _prefix into _node if _level == _length; otherwise, recursively call insert() with _level = _level + 1
+		if (_level == _length) {
 
 			node->nexthop = _nexthop;
 		}
 		else {
 
-			insert4(_prefix, _length, _nexthop, node, _level + 1);
+			ins(_prefix, _length, _nexthop, node, _level + 1);
 		}
 
 		return;
@@ -224,7 +239,7 @@ public:
 		
 		if (nullptr == root) return;
 		
-		std::queue<BNode*> queue;
+		std::queue<node_type*> queue;
 
 		queue.push(root);
 
@@ -244,7 +259,7 @@ public:
 
 
 	/// print a node
-	void printNode(BNode * _node) {
+	void printNode(node_type* _node) {
 
 		std::cerr << "lnode: " << _node->lchild << " rnode: " << _node->rchild << " nexthop: " << _node->nexthop << std::endl;
 
@@ -252,10 +267,10 @@ public:
 	}
 
 	/// search the LPM for the given IPv4 address
-	uint32 search4(const uint32& _ip) {
+	uint32 search(const ip_type& _ip) {
 
 		// root contains */0, which is a prefix matching any address
-		BNode* node = root;
+		node_type* node = root;
 
 		uint32 nexthop = 0; 
 
@@ -270,8 +285,10 @@ public:
 				nexthop = node->nexthop;
 			}
 		
+			++level;
+
 			// branch to left or right subtree according to bit value
-			if (utility::getBit(_ip, level)) {
+			if (utility::getBit(_ip, level - 1)) {
 
 				node = node->rchild;
 			}
@@ -279,8 +296,6 @@ public:
 
 				node = node->lchild;
 			}
-
-			++level;
 		}		
 
 		//std::cerr << "original ip: " << _ip << " nexthop of LPM: " << nexthop << std::endl;
@@ -293,22 +308,24 @@ public:
 	/// (1) a leaf node, then delete the node and recursively check if the parent node is required to be deleted; 
 	/// (2) a non-leaf node, then clear the nexthop field if not empty.
 	/// note that the prefix is assumed not to be */0
-	void delete4 (const uint32& _prefix, const uint8& _length){
+	void del (const ip_type& _prefix, const uint8& _length){
 	
 		//std::cerr << "prefix: " << _prefix << " length: " << (uint32)_length << std::endl;
 
-		std::stack<BNode*> stack;
+		std::stack<node_type*> stack;
 		
 		// root contains */0, which is a prefix matching any address
-		BNode* node = root;
+		node_type* node = root;
 
 		// search prefix in btree
 		int level = 0;
 
 		do {
-			stack.push(node); // push parent node
+			stack.push(node); // push current node
 
-			if (utility::getBit(_prefix, level)) {
+			++level;
+
+			if (utility::getBit(_prefix, level - 1)) {
 
 				node = node->rchild;
 			}
@@ -317,10 +334,10 @@ public:
 				node = node->lchild;
 			}
 
-		} while (node != nullptr && (++level) != _length);
+		} while (node != nullptr && level != _length);
 
 		//update 
-		if (nullptr == node || 0 == node->nexthop) { // not found, do nothing
+		if (nullptr == node || 0 == node->nexthop) { // not found or root node, do nothing
 
 			return;
 		}
@@ -334,7 +351,7 @@ public:
 
 				--nodenum;
 
-				--levelnodenum[level - 1];
+				--levelnodenum[level];
 
 				//update parent/ancestors
 
@@ -352,13 +369,15 @@ public:
 					}
 			
 					// parent node has become an empty leaf node (it is assumemd not to be root)
-					if ((stack.top()->nexthop == 0 && stack.top() != root) && (nullptr == stack.top()->lchild) && (nullptr == stack.top()->rchild)) {
+					if ((stack.top()->nexthop == 0 && stack.top() != root) && 
+						(nullptr == stack.top()->lchild) && 
+						(nullptr == stack.top()->rchild)) {
 					
 						delete stack.top();
 
 						--nodenum;
 
-						--levelnodenum[level - 1];
+						--levelnodenum[level];
 	
 						stack.pop();
 					}
@@ -380,9 +399,11 @@ public:
 };
 
 
-BTree* BTree::bt = nullptr;
+template<int W>
+BTree<W>* BTree<W>::bt = nullptr;
 
-BTree* BTree::getInstance() {
+template<int W>
+BTree<W>* BTree<W>::getInstance() {
 
 	if (nullptr == bt) {
 

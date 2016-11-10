@@ -30,8 +30,9 @@ void printMsg(const std::string& _msg, const int code = 0) {
 }
 
 
-/// convert a string (integer value) to an integer
-void strToUInt(const std::string& _str, const size_t& _beg, const size_t& _end,  uint32& _uint) {
+/// convert a string (integer value) to an unsigned integer for ipv6
+template<typename T>
+void strToUInt(const std::string& _str, const size_t& _beg, const size_t& _end, T& _uint) {
 
 	_uint = 0;
 
@@ -43,14 +44,25 @@ void strToUInt(const std::string& _str, const size_t& _beg, const size_t& _end, 
 	return;
 }
 
-/// get the bit-value of _uint[_pos]
+/// get the bit-value for ipv4 
 uint32 getBit(const uint32& _uint, const size_t& _pos) {
+		
+	static const uint32 odd = 1;
 
-	 return _uint & OFFSET[_pos]; //if !=0, then 1; otherwise 0.
+	return (_uint << _pos) & (odd << 31);
+} 
+
+/// get the bit-value for ipv6
+uint128 getBit(const uint128& _uint, const size_t& _pos) {
+	// not allowe to declare 128-bit unsigned integer constant, thus we must directly compute 
+
+	static const uint128 odd = 1;
+
+	return (_uint << _pos) & (odd << 127);
 } 
 
 /// retrieve IPv4 prefix, length and nexthop
-void retrieveInfo4(const std::string& _line, uint32& _prefix, uint8& _length) {
+void retrieveInfo(const std::string& _line, ipv4_type& _prefix, uint8& _length) {
 
 	// prefix, in xx.xx.xx.xx format
 	size_t pos1 = _line.find_first_of(" ");
@@ -63,7 +75,7 @@ void retrieveInfo4(const std::string& _line, uint32& _prefix, uint8& _length) {
 	std::string length = _line.substr(pos1 + 1, pos2 - pos1 - 1);
 
 	// convert prefix to _prefix by integrating the 4 seguments into a whole integer
-	uint32 sum;
+	ipv4_type sum1;
 	
 	size_t beg, end;
 
@@ -71,27 +83,39 @@ void retrieveInfo4(const std::string& _line, uint32& _prefix, uint8& _length) {
 
 	for (int i = 0; i < 4; ++i) {
 
-		if (0 == i) end = prefix.find_first_of(".", beg);
-		else if (3 == i) end = prefix.size();
-		else end = prefix.find_first_of(".", beg + 1);
+		if (0 == i) {
 
-		strToUInt(prefix, beg, end, sum);
+			end = prefix.find_first_of(".", beg);
+		}
+		else if (3 == i) {
+
+			end = prefix.size();
+		}
+		else {
+			
+			end = prefix.find_first_of(".", beg + 1);
+		}
+
+		strToUInt<ipv4_type>(prefix, beg, end, sum1);
 	
-		_prefix = (_prefix << 8) + sum;
+		_prefix = (_prefix << 8) + sum1;
 	
 		beg = end + 1;	
 	}
 
 	// convert length to _length
-	_length = 0, beg = 0, end = length.size();
+	beg = 0, end = length.size();
 
-	strToUInt(length, beg, end, sum);
+	strToUInt<uint8>(length, beg, end, _length);
 		
-	_length = sum;	
-
 	return;
 }
 
+/// retrieve IPv6 prefix, length and nexthop
+void retrieveInfo(const std::string& _line, ipv6_type& _prefix, uint8& _length) {
+
+	return;
+}
 
 
 NAMESPACE_UTILITY_END

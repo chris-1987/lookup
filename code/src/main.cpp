@@ -1,4 +1,5 @@
 #include "btree.h"
+#include "fstree.h"
 #include "scheduler.h"
 
 //#define TEST_SCHEDULER
@@ -34,13 +35,12 @@ int main(int argc, char** argv){
 
 	// build a tree
 	std::cerr << "Create btree.\n";
+
 	std::string bgptable(argv[1]);
 
-	BTree* bt = BTree::getInstance();
+	BTree<32>* bt = BTree<32>::getInstance();
 	
-	bt->build4(bgptable);
-
-//	bt->traverse();
+	bt->build(bgptable);
 
 	// search the tree
 	std::cerr << "Search btree.\n";
@@ -48,17 +48,16 @@ int main(int argc, char** argv){
 
 	std::string line; 
 
-	uint32 prefix;
+	ipv4_type prefix;
 
-	uint8 length;
-						
+	uint8 length;					
 
 	while (getline(fin, line)) {	
 
 		// retrieve prefix and length
-		utility::retrieveInfo4(line, prefix, length);
+		utility::retrieveInfo(line, prefix, length);
 
-		bt->search4(prefix);
+		bt->search(prefix);
 	}
 
 	// delete the tree	
@@ -70,9 +69,9 @@ int main(int argc, char** argv){
 
 	while (getline(fin2, line)) {
 
-		utility::retrieveInfo4(line, prefix, length);
+		utility::retrieveInfo(line, prefix, length);
 		
-		bt->delete4(prefix, length);
+		bt->del(prefix, length);
 
 	}
 	

@@ -78,7 +78,7 @@ template<int W, int K, int M>
 class FSTree{
 
 private:
-	typedef BNode<W> bnode_type;
+	typename BNode<W> bnode_type;
 
 	bnode_type* bt_root; // ptr to root node of auxiliary binary tree, this is used to 
 
@@ -123,7 +123,7 @@ public:
 		fst_root = new FNode<W>(static_cast<size_t>(expander[0].entrynum));
 
 		// traverse binary tree in bridth-first order to create the fixed-stride tree 
-		std::queue<bnode_type*> bt_queue;
+		std::queue<BNode*> bt_queue;
 
 
 		bt_queue.push(bt_root);
@@ -140,7 +140,7 @@ public:
 private:
 
 	/// compute stride for expansion level using dynamic programming technique
-	void computeStride(bnode_type* _btRoot) {
+	void computeStride(BNode * _btRoot) {
 
 		
 	}
