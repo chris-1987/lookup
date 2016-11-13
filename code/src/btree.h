@@ -17,6 +17,7 @@
 #include <deque>
 #include <stack>
 
+
 /// binary node
 ///
 /// two pointers to children and one field for storing nexthop
@@ -26,17 +27,16 @@ struct BNode {
 
 	typedef typename choose_ip_type<W>::ip_type ip_type;
 
-	BNode* lchild; /// if bitcheck = 0
+	BNode* lchild; // left child
 
-	BNode* rchild; /// if bitcheck = 1
+	BNode* rchild; // right child
 		
-	uint32 nexthop; /// next hop 
-
-	ip_type prefix; /// a dummy field, for building and updating fstree only
-
+	uint32 nexthop; // next hop
+	
 	/// default ctor
-	BNode() : lchild(nullptr), rchild(nullptr), nexthop(0), prefix(0) {}
+	BNode() : lchild(nullptr), rchild(nullptr), nexthop(0) {}
 };
+
 
 /// binary tree, singleton
 ///
@@ -67,7 +67,7 @@ private:
 
 		for (int i = 0; i < W + 1; ++i) {
 
-			levelnodenum[i] = {0};
+			levelnodenum[i] = 0;
 		}
 	}
 
@@ -125,13 +125,13 @@ public:
 	
 			if (0 == length) { // must be */0
 
-				//std::cerr << "1 line: " << line << " prefix: " << prefix << " length: " << (uint32)length << std::endl;
+			//	std::cerr << "1 line: " << line << " prefix: " << prefix << " length: " << (uint32)length << std::endl;
 
 				root->nexthop = nexthop; 
 			}
 			else { // insert the prefix and length
 
-				//std::cerr << "2 line: " << line << " prefix: " << prefix << " length: " << (uint32)length << std::endl;
+			//	std::cerr << "2 line: " << line << " prefix: " << prefix << " length: " << (uint32)length << std::endl;
 
 				ins(prefix, length, nexthop, root, 1); // insert nodes from level 1
 

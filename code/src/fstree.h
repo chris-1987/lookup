@@ -38,7 +38,7 @@ struct FNode{
 
 		void* child; // in the final fst-tree, child pointer and prefix share a common space
 
-		uint8 length; // prefix length
+		uint8 length; // length of original prefix
 
 		uint32 nexthop; // next hop information, typically a pointer to route information
 	};
@@ -60,6 +60,13 @@ struct FNode{
 			dataArr[i].nexthop = 0;
 		}	
 	}
+
+	~FNode () {
+
+		delete [] dataArr;
+
+		dataArr = nullptr;
+	}
 };
 
 
@@ -78,11 +85,12 @@ template<int W, int K, int M>
 class FSTree{
 
 private:
+
+	static FSTree<W, K, M> * fst;
+
+	typedef BTree<W> btree_type;
+
 	typedef BNode<W> bnode_type;
-
-	bnode_type* bt_root; // ptr to root node of auxiliary binary tree, this is used to 
-
-	void* fst_root; // ptr to root node of fixed-stride tree
 
 	struct Expansion{
 
@@ -92,10 +100,17 @@ private:
 
 		size_t entrynum; // number of entries per node in the expansion level
 	};
-	
-	std::vector<Expansion> expander;
 
-	std::map<int, int> levelmapper; // level in btree mapped to expansion level in fstree
+private:
+
+	void* fst_root;	
+
+	int mapper[K]; // map expansion level to levels
+
+	int entrynum[K]; // number of entries per node in expansion level
+
+	int imapper[W + 1]; // map level to expansion level
+
 
 private:
 
@@ -106,46 +121,160 @@ private:
 public:
 
 	/// ctor
-	FSTree() : bt_root(nullptr), fst_root(nullptr) {}
+	FSTree () : fst_root(nullptr) {}
 
 	/// produce a fixed-stride tree
-	void build4(const std::string & _fn) {
+	void build (const std::string& _fn) {
 
 		// build a binary tree 
-		BTree<W>* bt = BTree<W>::getInstance();
+		btree_type* bt = btree_type::getInstance();
 
-		bt_root = bt->build4(_fn);
+		bt->build(_fn);
 
 		// compute level stride using dynamic programming
-		computeStride(bt);
+		doPrefixExpansion(bt);
 
-		// create the root node
-		fst_root = new FNode<W>(static_cast<size_t>(expander[0].entrynum));
-
-		// traverse binary tree in bridth-first order to create the fixed-stride tree 
-		std::queue<bnode_type*> bt_queue;
-
-
-		bt_queue.push(bt_root);
-
-		while (!bt_queue.empty()) {
-
-			bt_queue.front();
-		}
+		// create the root node of which the stride is 2^mapper[0]
+		fst_root = new FNode<W>(static_cast<size_t>(mapper[0]));
+	
+		for (size_t i = 0; i < 	
+			
+		//fst_root = new FNodeW>(static_cast<size_t>(leveexpander[0].entrynum));		
 			
 	}
 
-	
+	static FSTree<W, K, M>* getInstance();
 
 private:
 
-	/// compute stride for expansion level using dynamic programming technique
-	void computeStride(bnode_type* _btRoot) {
+	/// perform prefix expansion according to node distribution in binary tree
+	void doPrefixExpansion(btree_type* _bt) {
 
-		
+		switch(M) {
+
+		case 1: 
+			doPrefixExpansionCPE(_bt); break; // compressed prefix expansion
+
+		case 2: 
+			doPrefixExpansionMM(_bt); break; // min-max
+
+		default:
+			doPrefixExpansionCPE(_bt); 
+		}
 	}
 
+	/// perform level expansion following compressed prefix expansion
+	void doPrefixExpansionCPE(btree_type* _bt) {
+
+		size_t tArr[W + 1][K]; // tArr[i][j] is the minimum memory requirement for expanding i + 1 levels to j + 1 levels 
+
+		size_t mArr[W + 1][K]; // mArr[i][j] = r, such that tArr[r][j - 1] + node(r) * 2^(i - r) is minimum for j <= r < i
+
+		//initialize tArr[][]
+		for (int i = 0; i < W + 1; ++i) {
+
+			for (int j = 0; j < K; ++j) {
+
+				tArr[i][j] = std::numeric_limits<size_t>::max();
+
+				mArr[i][j] = std::numeric_limits<size_t>::max();
+			}
+		}
+		
+		// tArr[i][0] = 2^i, expand all nodes in level [0, i] to expansion level 0, this level only contains one node
+		for (int i = 1; i < W + 1; ++i) {
+
+			tArr[i][0] = static_cast<size_t>(pow(2, i)) * 1; // one node only, 	
+
+			mArr[i][0] = W + 1; // previous expansion level includes no levels 
+		}
+		
+		// tArr[i][i] = tArr[i - 1][i - 1] + levelnodenum[i]. 
+		tArr[0][0] = _bt->getLevelNodeNum(0); // must be 0 
+		
+		mArr[0][0] = W + 1; // previous expansion level includes no levels
+
+		for (int i = 1; i < K; ++i) {
+
+			tArr[i][i] = tArr[i - 1][i - 1] + _bt->getLevelNodeNum(i);
+
+			mArr[i][i] = i - 1; // the highest level of the previous expansion level is i - 1
+		}
+	
+		// calculate the remaining subproblems by DP 	
+		for (int j = 1; j < K; ++j) {
+
+			for (int i = j + 1; i < W + 1; ++i) {
+				
+				for (int k = j - 1; k < i; ++k) {
+				
+					size_t tmp = tArr[k][j - 1] + (_bt->getLevelNodeNum(k + 1) * static_cast<size_t>(pow(2, i - k)));
+
+					if (tArr[i][j] > tmp) {
+
+						tArr[i][j] = tmp;
+				
+						mArr[i][j] = k;
+					}
+				}
+			}
+		}
+	
+		// find the optimal by scanning mArr, store the result in mapper
+		mapper[K - 1] = W;
+
+		for (int i = K - 2; i >= 0; --i) {
+
+			mapper[i] = mArr[mapper[i + 1]][i + 1];
+		}
+	
+		// generate the inverse mapper
+		for (int i = 0, j = 0; i < K; ++i) {
+
+			for (; j <= mapper[i]; ++j) {
+
+				imapper[j] = i;
+			}
+		}
+
+	
+		// output the optimal
+		std::cerr << "mapper: " << std::endl;
+
+		for (int i = 0; i < K; ++i) {
+
+			std::cerr << mapper[i] << " ";
+		}
+
+		std::cerr << "imapper: " << std::endl;
+
+		for (int i = 0; i < W + 1; ++i) {
+
+			std::cerr << imapper[i] << " ";
+		}
+		
+		std::cerr << "\nmax: " << tArr[W][K - 1] << std::endl;		
+	}
+
+
+	/// perform level expansion following Min-Max
+	void doPrefixExpansionMM(btree_type* _bt) {
+
+	}
 };
 
+template<int W, int K, int M>
+FSTree<W, K, M>* FSTree<W, K, M>::fst = nullptr;
+
+template<int W, int K, int M>
+FSTree<W, K, M>* FSTree<W, K, M>::getInstance() {
+
+	if (nullptr == fst) {
+
+		fst = new FSTree();
+	}
+
+	return fst;
+}
 
 #endif // _FST_H

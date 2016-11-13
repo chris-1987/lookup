@@ -3,7 +3,8 @@
 #include "scheduler.h"
 
 //#define TEST_SCHEDULER
-#define TEST_TREE
+//#define TEST_BTREE
+#define TEST_FSTREE
 
 int main(int argc, char** argv){
 
@@ -25,7 +26,7 @@ int main(int argc, char** argv){
 	
 #endif
 
-#ifdef TEST_TREE
+#ifdef TEST_BTREE
 
 	if (argc != 2) {
 
@@ -33,7 +34,7 @@ int main(int argc, char** argv){
 	}
 
 
-	// build a tree
+	// build a binary tree
 	std::cerr << "Create btree.\n";
 
 	std::string bgptable(argv[1]);
@@ -60,7 +61,7 @@ int main(int argc, char** argv){
 		bt->search(prefix);
 	}
 
-	// delete the tree	
+	// delete the binary tree	
 	std::cerr << "Delete btree.\n";
 
 	std::ifstream fin2(bgptable, std::ios_base::binary);
@@ -72,7 +73,6 @@ int main(int argc, char** argv){
 		utility::retrieveInfo(line, prefix, length);
 		
 		bt->del(prefix, length);
-
 	}
 	
 	// traverse after deletion
@@ -82,6 +82,25 @@ int main(int argc, char** argv){
 
 #endif
 
+#ifdef TEST_FSTREE
+
+	if (argc != 2) {
+
+		exit(0);
+	}
+
+
+	// build a fixed-stride tree
+	std::cerr << "Create fstree.\n";
+
+	std::string bgptable(argv[1]);
+
+	FSTree<32, 6, 1>* fst = FSTree<32, 6, 1>::getInstance();
+	
+	fst->build(bgptable);
+
+
+#endif
 	return 0;
 
 }
