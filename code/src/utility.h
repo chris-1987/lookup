@@ -5,7 +5,10 @@
 
 NAMESPACE_UTILITY_BEG
 
-/// print message
+/// \brief print message
+///
+/// \param _msg message to print
+/// \param code indicate warning level
 void printMsg(const std::string& _msg, const int code = 0) {
 
 #ifdef _PRINT_MSG_ENABLE
@@ -30,7 +33,12 @@ void printMsg(const std::string& _msg, const int code = 0) {
 }
 
 
-/// convert a string (integer value) to an unsigned integer for ipv6
+/// \brief convert a string (integer value) to an unsigned integer for ipv6
+///
+/// \param _str input string
+/// \param _beg start position
+/// \param _end end position
+/// \param _uint result stored in _uint
 template<typename T>
 void strToUInt(const std::string& _str, const size_t& _beg, const size_t& _end, T& _uint) {
 
@@ -44,7 +52,10 @@ void strToUInt(const std::string& _str, const size_t& _beg, const size_t& _end, 
 	return;
 }
 
-/// get the bit-value for ipv4 
+/// \brief get the bit-value for ipv4 
+///
+/// \param _uint ipv4 address
+/// \param _pos offset
 uint32 getBit(const uint32& _uint, const size_t& _pos) {
 		
 	static const uint32 odd = 1;
@@ -52,7 +63,10 @@ uint32 getBit(const uint32& _uint, const size_t& _pos) {
 	return (_uint << _pos) & (odd << 31);
 } 
 
-/// get the bit-value for ipv6
+/// \brief get the bit-value for ipv6
+/// 
+/// \param _uint ipv6 address
+/// \param _pos offset
 uint128 getBit(const uint128& _uint, const size_t& _pos) {
 	// not allowe to declare 128-bit unsigned integer constant, thus we must directly compute 
 
@@ -61,7 +75,30 @@ uint128 getBit(const uint128& _uint, const size_t& _pos) {
 	return (_uint << _pos) & (odd << 127);
 } 
 
-/// retrieve IPv4 prefix, length and nexthop
+
+/// get the value of bits for ipv4
+///
+/// \param _uint inpv4 address
+/// \param _stride number of bits to be retrieved
+/// \param _pos start position
+uint32 getBits(const uint32& _uint, const int _stride, const size_t& _pos) {
+
+	uint32 mask = 0;
+
+	for (int i = 0; i < _stride; ++i) {
+
+		mask = mask << 1 + 1;
+	}	
+	
+	return (_uint >> (31 - _pos)) & mask;
+}
+
+
+/// \brief retrieve IPv4 prefix, length and nexthop
+///
+/// \param _line input sttring line, containing prefix and length
+/// \param _prefix store the prefix retrieved from _line
+/// \param _length sotre the prefix length retrieved from _length
 void retrieveInfo(const std::string& _line, ipv4_type& _prefix, uint8& _length) {
 
 	// prefix, in xx.xx.xx.xx format
@@ -111,7 +148,10 @@ void retrieveInfo(const std::string& _line, ipv4_type& _prefix, uint8& _length) 
 	return;
 }
 
-/// retrieve IPv6 prefix, length and nexthop
+/// \brief retrieve IPv6 prefix, length and nexthop
+/// \param _line
+/// \param _prefix
+/// \param _length
 void retrieveInfo(const std::string& _line, ipv6_type& _prefix, uint8& _length) {
 
 	return;
