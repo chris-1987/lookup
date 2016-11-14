@@ -91,14 +91,20 @@ int main(int argc, char** argv){
 
 
 	// build a fixed-stride tree
-	std::cerr << "Create fstree.\n";
+	std::cerr << "------------Create fstree with CPE.\n";
 
 	std::string bgptable(argv[1]);
 
-	FSTree<32, 6, 1>* fst = FSTree<32, 6, 1>::getInstance();
+	FSTree<32, 6, 0>* fst_cpe = FSTree<32, 6, 0>::getInstance();
 	
-	fst->build(bgptable);
+	fst_cpe->build(bgptable);
 
+	
+	std::cerr << "------------Create fstree with MinMax.\n";
+
+	FSTree<32, 6, 1>* fst_mm = FSTree<32, 6, 1>::getInstance();
+
+	fst_mm->build(bgptable);
 
 #endif
 	return 0;

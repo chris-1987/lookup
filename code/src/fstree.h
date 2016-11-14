@@ -36,7 +36,7 @@ struct FNode{
 
 		ip_type prefix; ///< prefix in integer value
 
-		FNode* child; ///< pointer to the subtree
+		FNode<W>* child; ///< pointer to the subtree
 
 		uint8 length; ///< length of the prefix
 
@@ -89,10 +89,10 @@ struct FNode2{
 	struct Entry {
 
 		union{
-			FNode* child; ///< after leaf-pushing, child pointer and prefix share a common space
+			FNode2<W>* child; ///< after leaf-pushing, child pointer and prefix share a common space
 	
 			uint8 length; ///< length of original prefix
-		}
+		};
 
 		uint32 nexthop; ///< next hop information, typically a pointer to route information
 	};
@@ -100,7 +100,7 @@ struct FNode2{
 	Entry* entries; ///< _entrynum entries of data
 
 	/// ctor
-	FNode (const size_t _entrynum) {
+	FNode2 (const size_t _entrynum) {
 
 		entries = new Entry[_entrynum];
 
@@ -115,7 +115,7 @@ struct FNode2{
 	}
 
 	/// dtor
-	~FNode () {
+	~FNode2 () {
 
 		delete[] entries;
 
@@ -218,7 +218,7 @@ public:
 			}
 			else { // insert the prefix
 	
-				ins(prefix,length,nexthop, fst_root, 0);
+//				ins(prefix,length,nexthop, fst_root, 0);
 			}
 			
 		}
@@ -232,7 +232,7 @@ public:
 
 
 		// rebuild the fixed-stride tree by leaf-pushing
-		rebuild();
+//		rebuild();
 
 		return;
 	}
@@ -249,105 +249,123 @@ private:
 	/// \note CPE is used in default.
 	void doPrefixExpansion(btree_type* _bt) {
 
-		switch(M) {
+		size_t pArr[W + 1][K]; // record memory requirement over all pipe stages
 
-		case 1: 
-			doPrefixExpansionCPE(_bt); break; // CPE
+		size_t qArr[W + 1][K]; // record per-stage memory requirement
 
-		case 2: 
-			doPrefixExpansionMM(_bt); break; // MINMAX
+		size_t rArr[W + 1][K]; // record the level selected to be expanded in the previous iteration
 
-		default:
-			doPrefixExpansionCPE(_bt); // CPE by default
-		}
-	}
-
-
-	/// \brief perform level expansion according to CPE
-	///
-	/// CPE keeps the total memory footprint as small as possible.
-	/// The result is stored in mapper[], entrynum[] and imapper[].
-	void doPrefixExpansionCPE(btree_type* _bt) {
-
-		size_t tArr[W + 1][K]; // tArr[i][j] is the minimum memory requirement for expanding i + 1 levels to j + 1 levels 
-
-		size_t mArr[W + 1][K]; // mArr[i][j] = r, such that tArr[r][j - 1] + node(r) * 2^(i - r) is minimum for j <= r < i
-
-		//initialize tArr[][]
+		//initialize pArr, qArr and rArr
 		for (int i = 0; i < W + 1; ++i) {
 
 			for (int j = 0; j < K; ++j) {
 
-				tArr[i][j] = std::numeric_limits<size_t>::max();
+				pArr[i][j] = std::numeric_limits<size_t>::max();
 
-				mArr[i][j] = std::numeric_limits<size_t>::max();
+				qArr[i][j] = std::numeric_limits<size_t>::max();
+
+				rArr[i][j] = std::numeric_limits<size_t>::max();
 			}
 		}
 		
-		// tArr[i][0] = 2^i, expand all nodes in level [0, i] to expansion level 0, this level only contains one node
+		// pArr[i][0] = qArr[i][0] = 2^i, rArr[i][0] = W + 1. That is, use expansion level 0 to represent levels 0, 1, ..., i
 		for (int i = 1; i < W + 1; ++i) {
 
-			tArr[i][0] = static_cast<size_t>(pow(2, i)) * 1; // one node only, 	
+			pArr[i][0] = static_cast<size_t>(pow(2, i)); 	
+	
+			qArr[i][0] = pArr[i][0];
 
-			mArr[i][0] = W + 1; // previous expansion level includes no levels 
+			rArr[i][0] = W + 1; // no previous iteration 
 		}
 		
-		// tArr[i][i] = tArr[i - 1][i - 1] + levelnodenum[i]. 
-		tArr[0][0] = _bt->getLevelNodeNum(0); // must be 0 
+		// pArr[i][i] = pArr[i - 1][i - 1] + levelnodenum[i], qArr[i][i] = max{qArr[i - 1][i - 1], levelnodenum[i]}
+		pArr[0][0] = _bt->getLevelNodeNum(0);
 		
-		mArr[0][0] = W + 1; // previous expansion level includes no levels
+		qArr[0][0] = pArr[0][0];
+
+		rArr[0][0] = W + 1; // no previous iteration
 
 		for (int i = 1; i < K; ++i) {
 
-			tArr[i][i] = tArr[i - 1][i - 1] + _bt->getLevelNodeNum(i);
+			pArr[i][i] = pArr[i - 1][i - 1] + _bt->getLevelNodeNum(i);
 
-			mArr[i][i] = i - 1; // the highest level of the previous expansion level is i - 1
+			qArr[i][i] = std::max(qArr[i - 1][i - 1], static_cast<size_t>(_bt->getLevelNodeNum(i)));
+
+			rArr[i][i] = i - 1;
 		}
 	
-		// calculate the remaining subproblems by DP 	
+		// calculate the remaining subproblems by dynamic programming	
 		for (int j = 1; j < K; ++j) {
-
+	
 			for (int i = j + 1; i < W + 1; ++i) {
 				
 				for (int k = j - 1; k < i; ++k) {
-				
-					size_t tmp = tArr[k][j - 1] + (_bt->getLevelNodeNum(k + 1) * static_cast<size_t>(pow(2, i - k)));
+			
+					size_t tmp_p = pArr[k][j - 1] + (_bt->getLevelNodeNum(k + 1) * static_cast<size_t>(pow(2, i - k)));
+					
+					size_t tmp_q = std::max(qArr[k][j - 1], (_bt->getLevelNodeNum(k + 1) * static_cast<size_t>(pow(2, i - k))));
 
-					if (tArr[i][j] > tmp) {
+					if (0 == M) {
+						// for j > i and j - 1 <= k < i, we have the following two formulas:
+						// pArr[i][j] = min{pArr[k][j - 1] + 2^(i - k - 1) * levelnodenum[k + 1]}
+						// qArr[i][j] = max{pArr[k][j - 1], 2^(i - k - 1) * levelnodenum[k + 1]}
 
-						tArr[i][j] = tmp;
+						// if pArr[i][j] > tmp_p, then find a scheme that has smaller total memory requirement
+						if (pArr[i][j] > tmp_p) {
+	
+							pArr[i][j] = tmp_p;
+					
+							qArr[i][j] = tmp_q;
 				
-						mArr[i][j] = k;
+							rArr[i][j] = k;
+						}
+					}
+					else if (1 == M) {
+						// for j > i and j - 1 <= k < i, we have the following two formulas:
+						// qArr[i][j] = min{max{qArr[k][j - 1], 2^(i - k - 1) * levelnodenum[k + 1]}}
+						// pArr[i][j] = min{pArr[k][j - 1] + 2^(i - k - 1) * levelnodenum[k + 1]}
+	
+						// if qArr[i][j] > tmp_q, then find a scheme that has smaller per-stage memory requirement
+						// otherwise, if qArr[i][j] = tmp_q && pArr[i][j] > tmp_p, then find a scheme that has equal per-stage 
+						// requirement but smaller total memory requirement
+						if ((qArr[i][j] > tmp_q) || (qArr[i][j] == tmp_q && pArr[i][j] > tmp_p)) {
+	
+							pArr[i][j] = tmp_p;
+
+							qArr[i][j] = tmp_q;
+	
+							rArr[i][j] = k;
+						}
 					}
 				}
 			}
 		}
-	
-		// find the optimal by scanning mArr, store the result in mapper
+
+		// find the optimal scheme and store the result in mapper
 		mapper[K - 1] = W;
 
 		for (int i = K - 2; i >= 0; --i) {
 
-			mapper[i] = mArr[mapper[i + 1]][i + 1];
+			mapper[i] = rArr[mapper[i + 1]][i + 1];
 		}
 	
-		// compute entrynum per node in each level
-		entrynum[0] = static_cast<size_t>(pow(2, mapper[0]));
-
-		for (int i = 1; i < K; ++i) {
-		
-			entrynum[i] = static_cast<size_t>(pow(2, mapper[i] - mapper[i - 1]));
-		}
-
-		entrynum[K] = 0; // used as a boundary sentinel
-
 		// compute stride for each expansion level
 		stride[0] = mapper[0];
 
-		for (int i = 0; i < K; ++i) {
+		for (int i = 1; i < K; ++i) {
 
 			stride[i] = mapper[i] - mapper[i - 1]; 
 		}
+
+		// compute entrynum per node in each level
+		entrynum[0] = static_cast<size_t>(pow(2, stride[0]));
+
+		for (int i = 1; i < K; ++i) {
+
+			entrynum[i] = _bt->getLevelNodeNum(mapper[i - 1] + 1) * static_cast<size_t>(pow(2, stride[i]));
+		}
+
+		entrynum[K] = 0; // used as a boundary sentinel
 
 		// generate the inverse mapper
 		for (int i = 0, j = 0; i < K; ++i) {
@@ -369,18 +387,18 @@ private:
 			std::cerr << mapper[i] << " ";
 		}
 
-		std::cerr << "\nentrynum: ";
-
-		for (int i = 0; i < K; ++i) {
-
-			std::cerr << entrynum[i] << " ";
-		}
-
 		std::cerr << "\nstride: ";
 	
 		for (int i = 0; i < K; ++i) {
 
 			std::cerr << stride[i] << " ";
+		}
+
+		std::cerr << "\nentrynum: ";
+
+		for (int i = 0; i < K; ++i) {
+
+			std::cerr << entrynum[i] << " ";
 		}
 
 		std::cerr << "\nimapper: ";
@@ -390,7 +408,9 @@ private:
 			std::cerr << imapper[i] << " ";
 		}
 		
-		std::cerr << "\nmemory footprint in unit of created nodes: " << tArr[W][K - 1] << std::endl;		
+		std::cerr << "\ntotal memory footprint in unit of entries: " << pArr[W][K - 1] << std::endl;	
+		
+		std::cerr << "maximum per-stage memory requirement in unit of entries: " << qArr[W][K - 1] << std::endl; 
 		
 
 #endif
@@ -399,62 +419,51 @@ private:
 	}
 
 
-	/// \brief perform level expansion according to MinMax
-	///
-	/// MinMax minimize the maximum memory footprint for each stage while it keeps the total memory footprint as small as possible.
-	/// The result is stored in mapper[], entrynum[] and imapper[].
-	void doPrefixExpansionMM(btree_type* _bt) {
-
-	
-		return;	
-	}
-
-
 	/// \brief insert a prefix into the fixed-stride tree
 	///
 	/// Expand prefix into a set of fixed-length ones and insert them one by one into the fixed-stride tree.
 	/// A prefix may embrace another one in the same node, be careful.
 	/// \note This function is used only when building the fixed-stride tree while leaf-pushing is not done yet.
-	void ins (const ip_type & _prefix, const uint8 _length, const uint32& _nexthop, fnode_type* _node, const int _level) {
-
-		fnode_type* node = nullptr;
-			
-		if (_length < mapper[_level]) { // insert prefix into current node
-
-			node = _node;							
-
-			// expand prefix and insert the expanded ones into the node	
-			//size_t prefixSegment = utility::getBits(_prefix);
-
-			size_t entryBegOffset = prefixSegment << (mapper[_level] - _length);
-
-			size_t entryEndOffset = entryBegOffset + static_cast<int>(pow(2, mapper[_level] - length));
-
-			for (size_t i = entryBegOffset; i < entryEndOffset; ++i) {
-
-				if (node->entries[i].length < _length) {
-
-					node->entries[i].length = _length;
-	
-					node->entries[i].prefix = _prefix;
-
-					node->entries[i].nexthop = _nexthop;	
-				}
-			}
-		}	
-		else { // recursively insert prefix into a node in the next level
-
-			//size_t childOffset = utility::getBits(_prefix);
-			if (nullptr == _node->entries[childOffset]) {
-					
-				node = new fnode_type(entrynum[_level + 1]);					
-			}
-
-			ins (_prefix, _length, _nexthop, _node, _level + 1);
-		}
-	
-		return;	
-	}
+//	void ins (const ip_type & _prefix, const uint8 _length, const uint32& _nexthop, fnode_type* _node, const int _level) {
+//
+//		fnode_type* node = nullptr;
+//			
+//		if (_length < mapper[_level]) { // insert prefix into current node
+//
+//			node = _node;							
+//
+//			// expand prefix and insert the expanded ones into the node	
+//			//size_t prefixSegment = utility::getBits(_prefix);
+//
+//			size_t entryBegOffset = prefixSegment << (mapper[_level] - _length);
+//
+//			size_t entryEndOffset = entryBegOffset + static_cast<int>(pow(2, mapper[_level] - length));
+//
+//			for (size_t i = entryBegOffset; i < entryEndOffset; ++i) {
+//
+//				if (node->entries[i].length < _length) {
+//
+//					node->entries[i].length = _length;
+//	
+//					node->entries[i].prefix = _prefix;
+//
+//					node->entries[i].nexthop = _nexthop;	
+//				}
+//			}
+//		}	
+//		else { // recursively insert prefix into a node in the next level
+//
+//			//size_t childOffset = utility::getBits(_prefix);
+//			if (nullptr == _node->entries[childOffset]) {
+//					
+//				node = new fnode_type(entrynum[_level + 1]);					
+//			}
+//
+//			ins (_prefix, _length, _nexthop, _node, _level + 1);
+//		}
+//	
+//		return;	
+//	}
 
 	/// \brief delete a prefix from the fixed-stride tree
 	///
@@ -466,95 +475,95 @@ private:
 	/// \brief Rebuid a fixed-stride tree by using leaf-pushing to reduce memory requirement. 
 	///
 	/// After leaf pushing, each entry in a node contains either a pointer to its subtree or a prefix, along with a pointer to nexthop inforamtion.
-	void rebuild(){
-
-		if (nullptr == fst_root) {
-			
-			fst2_root = nullptr;
-
-			return;
-		}
-
-		// step 1: traverse nodes in the non-leaf-pushed fixed-stride tree, push prefixes in parent nodes into child nodes
-		std::queue<std::tuple<fnode_type*, int, fnode_type::entry*>> queue; // a tuple of 3 items <node_ptr, level, parent_entry_ptr>
-
-		queue.push(std::tuple<fst_root, 0, nullptr>);
-
-		while (!queue.empty()) {
-
-			auto front = queue.front();
-
-			// process current node
-			if (0 == front.second) { // root node
-
-				// do nothing
-			}
-			else {
-
-				for (size_t i = 0; i < entrynum[front.second]; ++i) {
-
-					if (front.first->entry[i].length < front.third->length) {
-
-						front.first->entry[i].prefix = front.third->prefix;
-
-						front.first->entry[i].nexthop = front.third->nexthop;
-
-						front.first->entry[i].length = front.third->length;
-					}
-				}	
-			}
-
-			// push child nodes 
-			for (size_t i = 0; i < entrynum[front.second + 1]; ++i) {
-
-				if (nullptr != front.first->entry[i].child) {
-
-					queue.push(std::tuple(front.first->entry[i].child, front.second + 1, &(front.first->entry[i]));
-				}
-			}
-
-			queue.pop();				
-		} 
-
-
-		std::queue2<std::tuple<fnode_type*, int, fnode2_type*> queue; 
-
-		// create a mirror node for the root node
-		fnode2_root = new FNode2(entrynum[0]);
-	
-		queue2.push(std::tuple<fst_root, 0, fst2_root>);
-
-		while (!queue.empty()) {
-
-			auto front = queue.front();
-
-			// update mirror nodes
-			for (size_t i = 0; i < entrynum[front.second]; ++i) {
-
-				if (nullptr != fnode_root->entries[i].child) { // has a child, update child
-		
-					fnode2_root->entries[i].child = fnode_root->entries[i].child;
-				} 
-				else { // has a child, update length
-	
-					fnode2_root->entries[i].length = fnode_root->entries[i].length;
-				}
-
-				fnode2_root->entries[i].nexthop = fnode_root->entries[i].nexthop; // update nexthop
-			}
-		
-			// create mirror nodes
-			for (size_t i = 0; i < entrynum[front.second]; ++i) {
-
-				if (nullptr != front.first->entries[i].child) {
-
-					FNode2* node2 = new FNode2(entrynum[front.second + 1]);
-		
-					queue2.push(std::tuple<front.first->entries[i].child, front.second, node2>);
-				}		
-			}
-		}		
-	}
+//	void rebuild(){
+//
+//		if (nullptr == fst_root) {
+//			
+//			fst2_root = nullptr;
+//
+//			return;
+//		}
+//
+//		// step 1: traverse nodes in the non-leaf-pushed fixed-stride tree, push prefixes in parent nodes into child nodes
+//		std::queue<std::tuple<fnode_type*, int, fnode_type::entry*>> queue; // a tuple of 3 items <node_ptr, level, parent_entry_ptr>
+//
+//		queue.push(std::tuple<fst_root, 0, nullptr>);
+//
+//		while (!queue.empty()) {
+//
+//			auto front = queue.front();
+//
+//			// process current node
+//			if (0 == front.second) { // root node
+//
+//				// do nothing
+//			}
+//			else {
+//
+//				for (size_t i = 0; i < entrynum[front.second]; ++i) {
+//
+//					if (front.first->entry[i].length < front.third->length) {
+//
+//						front.first->entry[i].prefix = front.third->prefix;
+//
+//						front.first->entry[i].nexthop = front.third->nexthop;
+//
+//						front.first->entry[i].length = front.third->length;
+//					}
+//				}	
+//			}
+//
+//			// push child nodes 
+//			for (size_t i = 0; i < entrynum[front.second + 1]; ++i) {
+//
+//				if (nullptr != front.first->entry[i].child) {
+//
+//					queue.push(std::tuple(front.first->entry[i].child, front.second + 1, &(front.first->entry[i]));
+//				}
+//			}
+//
+//			queue.pop();				
+//		} 
+//
+//
+//		std::queue2<std::tuple<fnode_type*, int, fnode2_type*> queue; 
+//
+//		// create a mirror node for the root node
+//		fnode2_root = new FNode2(entrynum[0]);
+//	
+//		queue2.push(std::tuple<fst_root, 0, fst2_root>);
+//
+//		while (!queue.empty()) {
+//
+//			auto front = queue.front();
+//
+//			// update mirror nodes
+//			for (size_t i = 0; i < entrynum[front.second]; ++i) {
+//
+//				if (nullptr != fnode_root->entries[i].child) { // has a child, update child
+//		
+//					fnode2_root->entries[i].child = fnode_root->entries[i].child;
+//				} 
+//				else { // has a child, update length
+//	
+//					fnode2_root->entries[i].length = fnode_root->entries[i].length;
+//				}
+//
+//				fnode2_root->entries[i].nexthop = fnode_root->entries[i].nexthop; // update nexthop
+//			}
+//		
+//			// create mirror nodes
+//			for (size_t i = 0; i < entrynum[front.second]; ++i) {
+//
+//				if (nullptr != front.first->entries[i].child) {
+//
+//					FNode2* node2 = new FNode2(entrynum[front.second + 1]);
+//		
+//					queue2.push(std::tuple<front.first->entries[i].child, front.second, node2>);
+//				}		
+//			}
+//		}		
+//	}
 
 	/// \brief destroy the fixed-stride tree (without leaf-pushing)
 	///
@@ -568,52 +577,55 @@ private:
 		}		
 
 		std::queue<std::pair<fnode_type*, int>> queue;	
-			
+
 		queue.push(std::pair<fst_root, 0>);
 
-		while (!queue.empty()) {
-			
-			for (size_t i = 0; i < entrynum[queue.front().first]; ++i) {
-			
-				if (nullptr != queue.front()->entry[i]) {
-
-					queue.push(std::pair<queue.front().first->entry[i], queue.front().second + 1>); 
-					delete queue.front();
-
-					queue.pop();
-				}
-			} 
-		}
-		
-		// destory the fixed-stride tree with the root node fst2_root (without leaf-pushing)
-		if (nullptr != fst2_root) {
-
-			return;
-		}	
-
-		std::queue<std::pair<fnode2_type*, int>> queue2;
-
-		queue2.push(std::pair<fst2_root, 0>);
-
-		while (!queue.empty()) {
-
-
-			for (size_t i = 0; i < entrynum[queue2.front().first]; ++i) {
-
-
-				if (nullptr != queue2.front()->entry[i]) {
-
-
-					queue2.push(std::pair<queue2.front().first->entry[i], queue2.front().second + 1>);
-
-					delete queue2.front();
-
-
-					queue2.pop();
-				}
-			}
-		}
-	}
+					
+//		queue.push(std::pair<fst_root, 0>);
+//
+//		while (!queue.empty()) {
+//			
+//			for (size_t i = 0; i < entrynum[queue.front().first]; ++i) {
+//			
+//				if (nullptr != queue.front()->entry[i]) {
+//
+//					queue.push(std::pair<queue.front().first->entry[i], queue.front().second + 1>); 
+//					delete queue.front();
+//
+//					queue.pop();
+//				}
+//			} 
+//		}
+//		
+//		// destory the fixed-stride tree with the root node fst2_root (without leaf-pushing)
+//		if (nullptr != fst2_root) {
+//
+//			return;
+//		}	
+//
+//		std::queue<std::pair<fnode2_type*, int>> queue2;
+//
+//		queue2.push(std::pair<fst2_root, 0>);
+//
+//		while (!queue.empty()) {
+//
+//
+//			for (size_t i = 0; i < entrynum[queue2.front().first]; ++i) {
+//
+//
+//				if (nullptr != queue2.front()->entry[i]) {
+//
+//
+//					queue2.push(std::pair<queue2.front().first->entry[i], queue2.front().second + 1>);
+//
+//					delete queue2.front();
+//
+//
+//					queue2.pop();
+//				}
+//			}
+//		}
+//	}
 
 	~FSTree() {
 
