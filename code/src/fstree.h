@@ -136,10 +136,10 @@ struct FNode2{
 /// To build a fixed-stride tree, we first create an auxiliary binary tree and then determine expansion levels by using CPE or MINMAX.
 /// we expand each prefix into a set of fixed-length ones and insert them into the fixed-stride tree one by one. 
 /// Afterward, we rebuild the fixed-stride tree by using the leaf-pushing technique for a smaller memory requirement. 
-/// \note Two strategies are used to perform prefix expansion. The first approach CPE, namely compressed prefix expansion aims at minimize the total memory footprint, while the second approach MINMAX aims at minimize the per-block memory footprint but tries to keep the total memory footprint as small as possible. Update in a fixe-stride tree is expensive due to the use of prefix expansion and leaf-pushing. This becomes even worse for the next generation IPv6 route lookup techniques. Therefore, we only investigate the performance of IP lookups for a fixed-stride tree and do not provide interfaces to insert/delete prefixes in fixed-stride tree after leaf-pushing.
+/// \note Three strategies are used to perform prefix expansion. The first approach CPE, namely compressed prefix expansion, aims at minimize the total memory footprint, while the second approach MINMAX aims at minimize the per-block memory footprint but tries to keep the total memory footprint as small as possible. Finally, the third approach demands all levels have a same stride. Update in a fixe-stride tree is expensive due to the use of prefix expansion and leaf-pushing. This becomes even worse for the next generation IPv6 route lookup techniques. Therefore, we only investigate the performance of IP lookups for a fixed-stride tree and do not provide interfaces to insert/delete prefixes in fixed-stride tree after leaf-pushing.
 /// \param W 32 or 128 for IPv4 or IPv6
 /// \param K number of expansion levels
-/// \param M 0 or 1 for CPE or MINMAX
+/// \param M 0 for CPE, 1 for MINMAX and 2 for different levels with a same stride
 template<int W, int K, int M>
 class FSTree{
 
@@ -296,11 +296,114 @@ private:
 
 	/// \brief generate prefix expansion scheme according to node distribution in binary tree
 	/// 
-	/// Two strategies with different objectives are available for prefix expansion. The template argument M is used to specify the strategy.
+	/// Three strategies with different objectives are available for prefix expansion. The template argument M is used to specify the strategy.
+	void doPrefixExpansion(btree_type* _bt) {
+
+		switch(M) {
+
+		case 0: 
+
+		case 1: 
+			doPrefixExpansionDP(_bt); break;
+
+		case 2:	
+			doPrefixExpansionEven(); break;		
+		}
+	}
+
+	void doPrefixExpansionEven() { 
+
+		// compute stride
+		for (int i = 0; i < K; ++i) {
+
+			mStride[i] = W / K;
+		}	
+
+		mStride[K - 1] += W % K;
+		
+		// compute mEndLevel
+		mEndLevel[K - 1] = W;
+
+		for (int i = K - 2; i >=0; --i) {
+
+			mEndLevel[i] = mEndLevel[i + 1] - mStride[i + 1];
+		}
+		
+		
+		// compute begin level for expansion level
+		mBegLevel[0] = 1;
+
+		for (int i = 1; i < K; ++i) {
+
+			mBegLevel[i] = mEndLevel[i - 1] + 1;
+		}
+
+		// compute entrynum/childnum per node in each level
+		for (int i = 0; i < K; ++i) {
+
+			mNodeEntryNum[i] = static_cast<size_t>(pow(2, mStride[i]));
+		}
+
+		mNodeEntryNum[K] = 0; // used as a boundary sentinel
+
+		// compute expansion level for corresponding level in binary tree
+		for (int i = 0, j = 0; i < K; ++i) {
+
+			for (; j <= mEndLevel[i]; ++j) {
+
+				mExpansionLevel[j] = i;
+			}
+		}
+
+
+#ifdef DEBUG_FST
+	
+		// output result
+		std::cerr << "begin level:\n";
+
+		for (int i = 0; i < K; ++i) {
+
+			std::cerr << mBegLevel[i] << " ";
+		}
+
+		std::cerr << "\nstride:\n";
+	
+		for (int i = 0; i < K; ++i) {
+
+			std::cerr << mStride[i] << " ";
+		}
+
+		std::cerr << "\nend level:\n";
+	
+		for (int i = 0; i < K; ++i) {
+
+			std::cerr << mEndLevel[i] << " ";
+		}
+
+		std::cerr << "\nentrynum:\n";
+
+		for (int i = 0; i < K; ++i) {
+
+			std::cerr << mNodeEntryNum[i] << " ";
+		}
+
+		std::cerr << "\nexpansion level:\n";
+
+		for (int i = 0; i < W + 1; ++i) {
+
+			std::cerr << mExpansionLevel[i] << " ";
+		}
+		
+		
+#endif
+
+		return;
+	}
+
 	/// CPE aims at minimize the total memory footprint in all the SRAM, while MinMax aims at minimize per-block memory footprint 
 	/// and tries to keep the total memory footprint as small as possible.
 	/// \note CPE is used in default.
-	void doPrefixExpansion(btree_type* _bt) {
+	void doPrefixExpansionDP(btree_type* _bt) {
 
 		size_t pArr[W + 1][K]; // record memory requirement over all pipe stages
 

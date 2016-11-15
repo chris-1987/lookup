@@ -115,6 +115,7 @@ int main(int argc, char** argv){
 		// retrieve prefix and length
 		utility::retrieveInfo(line, prefix, length);
 
+		fst_cpe->search(prefix);
 	//	std::cerr << "prefix: " << prefix << " " << " nexthop: " << fst_cpe->search(prefix) << std::endl;
 	}
 
@@ -134,7 +135,31 @@ int main(int argc, char** argv){
 		// retrieve prefix and length
 		utility::retrieveInfo(line, prefix, length);
 
+		fst_mm->search(prefix);
+
 	//	std::cerr << "prefix: " << prefix << " " << " nexthop: " << fst_mm->search(prefix) << std::endl;
+	}
+
+		
+	std::cerr << "------------Create fstree with Even.\n";
+
+	FSTree<32, 9, 2>* fst_even = FSTree<32, 9, 2>::getInstance();
+
+	fst_even->build(bgptable);
+
+	// search the fixed-stride tree
+	std::cerr << "Search fixed-stride tree.\n";
+
+	std::ifstream fin3(bgptable, std::ios_base::binary);
+
+	while(getline(fin3, line)) {
+
+		// retrieve prefix and length
+		utility::retrieveInfo(line, prefix, length);
+
+		fst_even->search(prefix);
+
+//		std::cerr << "prefix: " << prefix << " " << " nexthop: " << fst_mm->search(prefix) << std::endl;
 	}
 	
 #endif
