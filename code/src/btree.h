@@ -193,7 +193,7 @@ public:
 
 		// create lchild or rchild for _pnode with respect to whether bit = 0 or 1
 
-		if (0 == utility::getBit(_prefix, _level - 1)) { // _prefix[_level - 1] is used to branch
+		if (0 == utility::getBitValue(_prefix, _level - 1)) { // _prefix[_level - 1] is used to branch
 
 			if (nullptr == _pnode->lchild) {
 
@@ -288,7 +288,7 @@ public:
 			++level;
 
 			// branch to left or right subtree according to bit value
-			if (utility::getBit(_ip, level - 1)) {
+			if (utility::getBitValue(_ip, level - 1)) {
 
 				node = node->rchild;
 			}
@@ -325,7 +325,7 @@ public:
 
 			++level;
 
-			if (utility::getBit(_prefix, level - 1)) {
+			if (utility::getBitValue(_prefix, level - 1)) {
 
 				node = node->rchild;
 			}
@@ -359,7 +359,7 @@ public:
 	
 					--level;
 
-					if (utility::getBit(_prefix, level)) {
+					if (utility::getBitValue(_prefix, level)) {
 	
 						stack.top()->rchild = nullptr;
 					}

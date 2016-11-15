@@ -56,7 +56,7 @@ void strToUInt(const std::string& _str, const size_t& _beg, const size_t& _end, 
 ///
 /// \param _uint ipv4 address
 /// \param _pos offset
-uint32 getBit(const uint32& _uint, const size_t& _pos) {
+uint32 getBitValue(const uint32& _uint, const size_t& _pos) {
 		
 	static const uint32 odd = 1;
 
@@ -67,7 +67,7 @@ uint32 getBit(const uint32& _uint, const size_t& _pos) {
 /// 
 /// \param _uint ipv6 address
 /// \param _pos offset
-uint128 getBit(const uint128& _uint, const size_t& _pos) {
+uint128 getBitValue(const uint128& _uint, const size_t& _pos) {
 	// not allowe to declare 128-bit unsigned integer constant, thus we must directly compute 
 
 	static const uint128 odd = 1;
@@ -81,16 +81,16 @@ uint128 getBit(const uint128& _uint, const size_t& _pos) {
 /// \param _uint inpv4 address
 /// \param _stride number of bits to be retrieved
 /// \param _pos start position
-uint32 getBits(const uint32& _uint, const int _stride, const size_t& _pos) {
+uint32 getBitsValue(const uint32& _uint, const uint32 _begBit, const uint32 _endBit) {
 
 	uint32 mask = 0;
 
-	for (int i = 0; i < _stride; ++i) {
+	for (uint32 i = _begBit; i <= _endBit; ++i) {
 
-		mask = mask << 1 + 1;
-	}	
-	
-	return (_uint >> (31 - _pos)) & mask;
+		mask = (mask << 1) + 1;
+	}
+
+	return (_uint >> (31 - _endBit)) & mask;
 }
 
 

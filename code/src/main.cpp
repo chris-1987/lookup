@@ -95,17 +95,48 @@ int main(int argc, char** argv){
 
 	std::string bgptable(argv[1]);
 
-	FSTree<32, 6, 0>* fst_cpe = FSTree<32, 6, 0>::getInstance();
+	FSTree<32, 8, 0>* fst_cpe = FSTree<32, 8, 0>::getInstance();
 	
 	fst_cpe->build(bgptable);
-
 	
+	// search the fixed-stride tree
+	std::cerr << "Search fixed-stride tree.\n";
+
+	std::ifstream fin(bgptable, std::ios_base::binary);
+
+	std::string line; 
+
+	ipv4_type prefix;
+
+	uint8 length;					
+
+	while (getline(fin, line)) {	
+
+		// retrieve prefix and length
+		utility::retrieveInfo(line, prefix, length);
+
+	//	std::cerr << "prefix: " << prefix << " " << " nexthop: " << fst_cpe->search(prefix) << std::endl;
+	}
+
 	std::cerr << "------------Create fstree with MinMax.\n";
 
-	FSTree<32, 6, 1>* fst_mm = FSTree<32, 6, 1>::getInstance();
+	FSTree<32, 8, 1>* fst_mm = FSTree<32, 8, 1>::getInstance();
 
 	fst_mm->build(bgptable);
 
+	// search the fixed-stride tree
+	std::cerr << "Search fixed-stride tree.\n";
+
+	std::ifstream fin2(bgptable, std::ios_base::binary);
+
+	while(getline(fin2, line)) {
+
+		// retrieve prefix and length
+		utility::retrieveInfo(line, prefix, length);
+
+	//	std::cerr << "prefix: " << prefix << " " << " nexthop: " << fst_mm->search(prefix) << std::endl;
+	}
+	
 #endif
 	return 0;
 
