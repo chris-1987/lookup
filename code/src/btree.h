@@ -4,10 +4,12 @@
 ////////////////////////////////////////////////////////////
 /// Copyright (c) 2016, Sun Yat-sen University,
 /// All rights reserved
-/// @file btree.h
-/// @brief definition of binary (one-bit) tree
-/// build, insert and delete prefixes in a binary tree
+/// \file btree.h
+/// \brief definition of binary (one-bit) tree
+/// Build, insert and delete prefixes in a binary tree.
+/// An implementation of the algorithm presented by Donald Knuth.
 /// @author Yi Wu
+/// \date 2016.11
 ///////////////////////////////////////////////////////////
 
 #include "common.h"
@@ -27,21 +29,22 @@ struct BNode {
 
 	typedef typename choose_ip_type<W>::ip_type ip_type;
 
-	BNode* lchild; // left child
+	BNode* lchild; ///< left child
 
-	BNode* rchild; // right child
+	BNode* rchild; ///< right child
 		
-	uint32 nexthop; // next hop
+	uint32 nexthop; ///< next hop
 	
-	/// default ctor
+	/// \brief ctor
 	BNode() : lchild(nullptr), rchild(nullptr), nexthop(0) {}
 };
 
 
-/// binary tree, singleton
+/// \brief Build and update binary tree.
 ///
-/// build : create a btree, each node of which contains three fields (two pointers along with a data field).
-/// update: support two kinds of update, namely withdraw/insert a prefix and alter the nexthop information
+/// All the prefixes of length $k$ are located in the $k$-th level of the binary tree. 
+/// A search start from the root node and branch to the higher levels by checking bits 
+/// in the given IP address. 
 /// @param W 32 for IPV4 and 128 for IPV6
 
 template<int W>
@@ -54,15 +57,15 @@ private:
 
 	static BTree<W>* bt; 
 
-	node_type* root; /// ptr to root
+	node_type* root; ///< ptr to root
 
-	uint32 nodenum;
+	uint32 nodenum; ///< node num
 
-	uint32 levelnodenum[W + 1]; // root node contains */0 and locates at level 0
+	uint32 levelnodenum[W + 1]; ///< root node contains */0 and locates at level 0
 
 private:
 
-	/// default ctor
+	/// \brief default ctor
 	BTree() : root(nullptr), nodenum(0) {
 
 		for (int i = 0; i < W + 1; ++i) {
@@ -71,11 +74,13 @@ private:
 		}
 	}
 
+	/// \brief disble copy-ctor
 	BTree(const BTree& _bt) = delete;
 
+	/// \brief disable assignment op
 	BTree& operator= (const BTree&) = delete;
 
-	/// destroyer
+	/// \brief dtor
 	~BTree() {
 
 		if (nullptr != root) {
@@ -86,10 +91,10 @@ private:
 
 public: 
 
-	/// create an instance of BTree if not yet instantiated; otherwise, return the instance.
+	/// \brief create an instance of BTree if not yet instantiated; otherwise, return the instance.
 	static BTree* getInstance();
 
-	/// build BTree for BGP table
+	/// \brief build BTree for BGP table
 	void build(const std::string& _fn) {
 
 		// destroy the old tree if there exists
@@ -150,7 +155,7 @@ public:
 	}
 	
 
-	/// destroy btree to free memory (bridth-first order)
+	/// \brief destroy btree to free memory (bridth-first order)
 	void destroy() {
 			
 		if (nullptr == root) {
@@ -186,7 +191,7 @@ public:
 	}
 
 
-	/// insert a prefix
+	/// \brief insert a prefix
 	void ins (const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, node_type* _pnode, const int _level){
 	
 		node_type* node = nullptr;
@@ -234,7 +239,7 @@ public:
 	}
 
 
-	// traverse bt in bridth-first order
+	/// \brief traverse bt in bridth-first order
 	void traverse() {
 		
 		if (nullptr == root) return;
@@ -258,7 +263,7 @@ public:
 	}
 
 
-	/// print a node
+	/// \brief print a node
 	void printNode(node_type* _node) {
 
 		std::cerr << "lnode: " << _node->lchild << " rnode: " << _node->rchild << " nexthop: " << _node->nexthop << std::endl;
@@ -266,7 +271,7 @@ public:
 		return;
 	}
 
-	/// search the LPM for the given IPv4 address
+	/// \breif search the LPM for the given IP address
 	uint32 search(const ip_type& _ip) {
 
 		// root contains */0, which is a prefix matching any address
@@ -303,11 +308,12 @@ public:
 		return nexthop;
 	}
 
-	/// delete a prefix from btree. The idea is to first find the location of the prefix node in btree (if any) and then conduct the delete operation
-	/// according to two cases: 
+	/// \brief delete a prefix.
+	///
+	/// The idea is to first find the location of the prefix node in btree (if any) and then conduct the delete operation according to two cases: 
 	/// (1) a leaf node, then delete the node and recursively check if the parent node is required to be deleted; 
 	/// (2) a non-leaf node, then clear the nexthop field if not empty.
-	/// note that the prefix is assumed not to be */0
+	/// \note The prefix is assumed not to be */0
 	void del (const ip_type& _prefix, const uint8& _length){
 	
 		//std::cerr << "prefix: " << _prefix << " length: " << (uint32)_length << std::endl;
@@ -392,6 +398,7 @@ public:
 		return;	
 	}
 
+	/// \brief get number of nodes in a level
 	uint32 getLevelNodeNum(const int _level) const {
 
 		return levelnodenum[_level];
