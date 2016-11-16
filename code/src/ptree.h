@@ -1,16 +1,19 @@
 #ifndef _PT_H
-#ifndef _PT_H
 #define _PT_H
 
-//////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 /// Copyright (c) 2016, Sun Yat-sen University
 /// All rights reserved
 /// \file ptree.h
 /// \brief definition of prefix tree
+///
 /// Build, insert and delete prefixes in a prefix tree
 /// An implementation of the algorithm designed by Michael Berger.
-/// @author Yi Wu
+/// Please refer to "IP lookup with low memory requirement and fast update" for more details.
+///
+/// \author Yi Wu
 /// \date 2016.11
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "common.h"
 #include "utility.h"
@@ -32,7 +35,7 @@ struct PNode{
 
 	ip_type prefix; ///< prefix
 
-	uint8 length; ///< prefix length
+	uint8 length; ///< length of prefix
 
 	uint32 nexthop; ///< next hop	
 
@@ -54,9 +57,9 @@ private:
 
 	node_type* root; ///< ptr to root
 
-	uint32 mNodeNum; ///< node num
+	uint32 mNodeNum; ///< number of nodes in total
 
-	uint32 mLevelNodeNum[W + 1]; ///< node num in levels
+	uint32 mLevelNodeNum[W + 1]; ///< number of nodes in each level
 
 private:
 
@@ -174,29 +177,43 @@ public:
 	}
 
 	/// \brief insert a prefix
-	void ins (const ip_type & _prefix, const uint8& _length, const uint32& _nexthop, node_type&* _node, const int _level) {
+	void ins(const ip_type & _prefix, const uint8& _length, const uint32& _nexthop, node_type&* _node, const int _level) {
 
 		if (nullptr == _node) {
 
-			_node = new node_type(_prefix, _length, _nexthop);
+			_node = new node_type();
+
+			_node->prefix = _prefix;
+
+			_node->length = _length;
+		
+			_node->nexthop = _nexthop;
 			
-			if (nullptr == root) {
+			if (nullptr == root) { // update root node pointer
 
 				root = _node;
 			}
 
 			return;
 		}	
+		else if (_length == _level) { // a prefix of length $k$ can be inserted into the first $k + 1$ levels (start numbering from 0)
 
-		if (_length == _level) {
-
+			// substitute prefix, say A, in current node with the one to be inserted.
 			uint32 prefix = _node->prefix;
 
 			uint8 length = _node->length;
 
 			uint32 nexthop = _node->nexthop;
 
-			if (utility::getBit(prefix, _level)) {
+			_node->prefix = _prefix;
+
+			_node->length = _length;
+
+			_node->nexthop = _nexthop;
+
+			// prefix A  must has be longer than _level, recursively insert prefix A into the higher level
+			// branch according to the next bit in prefix
+			if (utility::getBitValue(prefix, _level)) { 
 
 				insert(prefix, length, nexthop, _node->rchild);
 			}
@@ -205,9 +222,9 @@ public:
 				insert(prefix, length, nexthop, _node->lchild);
 			}
 		}	
-		else {
+		else { // recursively insert _prefix into higher levels
 
-			if (utility::getBit(_prefix, _level)) {
+			if (utility::getBitValue(_prefix, _level)) {
 
 				insert(prefix, length, nexthop, _node->rchild);
 			}
@@ -216,38 +233,79 @@ public:
 				insert(prefix, length, nexthop, _node->lchild);
 			}
 		}
+
 		return;
 	}
 
 	/// \brief delete a prefix
-	void del(const ip_type& _prefix, const uint8& _length, node_type * _node, int _level) {
+	void del(const ip_type& _prefix, const uint8& _length, node_type&* _node, int _level) {
 
-		if (_prefix == _node->prefix && _length == _node->length) {
+		if (_prefix == _node->prefix && _length == _node->length) { // both value and length are equal, delete it
 
-			node_type* leafNode = findLeafNode(_node);
-
-			if (nullptr == leafNode) {
+			if (nullptr == _node->lchild && nullptr == _node->rchild) { // current is a leaf node, delete it directly
 
 				delete _node;
+
+				_node = nullptr; // reset parent's child pointer
 
 				return;
 			}	
-			else {
+			else { 
+			
+				node_type* pnode = _node; // parent node of leaf node
 
-				leafNode->rchild = _node->rchild;
+				node_type* cnode = nullptr; // child node 
 
-				leafNode->lchild = _node->lchild;
+				bool isLeftBranch = true; // true if branch to left
 
-				delete _node;
+				cnode = (nullptr != _node->lchild) ? (_node->lchild) : (_node->rchild);
+			
+				while (nullptr != cnode->lchild || nullptr != cnode->rchild) {
 
-				_node = leafNode;
+					if (nullptr != cnode->lchild) {
+
+						pnode = cnode;
+
+						cnode = cnode->lchild;
+
+						isLeftBranch = true;
+					}
+					else {
+
+						pnode = cnode;
+
+						cnode = cnode->rchild;
+
+						isLeftBranch = false;
+					}
+				}	
+				
+				// replace content of _node by that of those in cnode
+				_node->preifx = cnode->prefix;
+
+				_node->length = cnode->length;
+
+				_node->nexthop = cnode->nexthop;
+
+				// reset child poointer of pnode
+				if (isLeftBranch) {
+
+					pnode->lchild = nullptr;
+				}
+				else {
+
+					pnode->rchild = nullptr;
+				}
+				
+				// delete cnode
+				delete cnode;
 
 				return;
 			}
 		}
-		else {
+		else { // attempt to find the prefix in higher levels
 
-			if (utility::getBit(_prefix, _level)) {
+			if (utility::getBitValue(_prefix, _level)) {
 
 				del(_prefix, _length, _node->rchild, _level + 1);
 			} 
@@ -258,6 +316,52 @@ public:
 		}
 				
 	}
+
+
+	/// \brief search the LPM for the given IP address
+	uint32 search(const ip_type& _ip) {
+		
+		uint32 nexthop = 0; 
+
+		if (nullptr == root) {
+
+			// do nothing	
+		}
+		else {
+			int level = 0;
+
+			node_type* node = root;
+
+			int bestLength = 0;
+			
+			while (nullptr != node) {
+
+				if (utility::getBitsValue(_ip, 0, node->length - 1) == utility::getBitsValue(node->prefix, 0, node->length - 1)) { // match
+
+					if (bestLength < node->length) { // if length > current best match
+
+						bestLength = node->length;
+
+						nexthop = node->nexthop;
+					}
+				}
+
+				if (utility::getBitValue(_ip, level)) { // branch to next level
+
+					node = node->rchild;
+				}
+				else {
+
+					node = node->lchild;
+				}	
+			
+				++level;
+			}
+		}	
+	
+		return nexthop;		
+	}
+
 
 	/// \brief traverse the prefix tree
 	void traverse() {
@@ -282,50 +386,6 @@ public:
 		return;
 	}
 
-
-	/// \brief search the LPM for the given IP address
-	uint32 search(const ip_type& _ip) {
-		
-		uint32 nexthop = 0; 
-
-		if (nullptr == root) {
-
-			// do nothing	
-		}
-		else {
-			int level = 0;
-
-			node_type* node = root;
-
-			int bestLength;
-			
-			while (nullptr != node) {
-
-				if (utility::getBitsValue(_ip, 0, node->length) == utility::getBitsValue(node->prefix, 0, node->length)) {
-
-					if (bestLength < node->length) {
-
-						bestLength = node->length;
-
-						nexthop = node->nexthop;
-					}
-				}
-
-				if (utility::getBitValue(_ip, _level)) {
-
-					node = node->rchild;
-				}
-				else {
-
-					node = node->lchild;
-				}	
-			}
-		}	
-	
-		return nexthop;		
-	}
-
-
 	/// \brief print a node
 	void printNode(node_type* _node) {
 
@@ -333,7 +393,6 @@ public:
 
 		return;	
 	}
-
 };
 
 
