@@ -169,7 +169,7 @@ int main(int argc, char** argv){
 
 #ifdef TEST_PTREE
 
-	if (argc != 2) {
+	if (argc != 3) {
 
 		exit(0);
 	}
@@ -184,16 +184,33 @@ int main(int argc, char** argv){
 	
 	pt->build(bgptable);
 
-	// search the tree
-	std::cerr << "Search ptree.\n";
-
-	std::ifstream fin(bgptable, std::ios_base::binary);
-
+	// delete the prefix tree	
 	std::string line; 
 
 	ipv4_type prefix;
 
 	uint8 length;					
+
+	std::cerr << "Delete ptree.\n";
+
+	std::string deltable(argv[2]);
+
+	std::ifstream fin2(deltable, std::ios_base::binary);
+
+	while (getline(fin2, line)) {
+
+		utility::retrieveInfo(line, prefix, length);
+	
+		pt->del(prefix, length, pt->getRoot(), 0);
+	}
+
+	// traverse after deletion
+	pt->traverse();
+
+	// search the tree
+	std::cerr << "Search ptree.\n";
+
+	std::ifstream fin(bgptable, std::ios_base::binary);
 
 	while (getline(fin, line)) {	
 
@@ -208,20 +225,8 @@ int main(int argc, char** argv){
 	}
 
 
-	// delete the prefix tree	
-	std::cerr << "Delete ptree.\n";
 
-	std::ifstream fin2(bgptable, std::ios_base::binary);
 
-	while (getline(fin2, line)) {
-
-		utility::retrieveInfo(line, prefix, length);
-	
-		pt->del(prefix, length, pt->getRoot(), 0);
-	}
-
-	// traverse after deletion
-	pt->traverse();
 
 #endif
 
