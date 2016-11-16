@@ -1,10 +1,12 @@
 #include "btree.h"
 #include "fstree.h"
+#include "ptree.h"
 #include "scheduler.h"
 
 //#define TEST_SCHEDULER
 //#define TEST_BTREE
-#define TEST_FSTREE
+//#define TEST_FSTREE
+#define TEST_PTREE
 
 int main(int argc, char** argv){
 
@@ -163,6 +165,66 @@ int main(int argc, char** argv){
 	}
 	
 #endif
+
+
+#ifdef TEST_PTREE
+
+	if (argc != 2) {
+
+		exit(0);
+	}
+
+
+	// build a binary tree
+	std::cerr << "Create ptree.\n";
+
+	std::string bgptable(argv[1]);
+
+	PTree<32>* pt = PTree<32>::getInstance();
+	
+	pt->build(bgptable);
+
+	// search the tree
+	std::cerr << "Search ptree.\n";
+
+	std::ifstream fin(bgptable, std::ios_base::binary);
+
+	std::string line; 
+
+	ipv4_type prefix;
+
+	uint8 length;					
+
+	while (getline(fin, line)) {	
+
+		// retrieve prefix and length
+		utility::retrieveInfo(line, prefix, length);
+
+		pt->search(prefix);
+
+	//	std::cerr << "prefix: " << prefix << " length:" << (uint32)length << " nexthop: " << std::endl;
+	//	std::cerr <<  pt->search(prefix) << std::endl;
+
+	}
+
+
+	// delete the prefix tree	
+	std::cerr << "Delete ptree.\n";
+
+	std::ifstream fin2(bgptable, std::ios_base::binary);
+
+	while (getline(fin2, line)) {
+
+		utility::retrieveInfo(line, prefix, length);
+	
+		pt->del(prefix, length, pt->getRoot(), 0);
+	}
+
+	// traverse after deletion
+	pt->traverse();
+
+#endif
+
 	return 0;
 
 }

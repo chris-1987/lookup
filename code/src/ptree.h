@@ -24,7 +24,7 @@
 ///
 /// Each node in the tree contains two pointers, a prefix field and a nexthop field. 
 /// A node at level-$k$ can store a prefix of a length no less than $k$.
-template<typename W>
+template<int W>
 struct PNode{
 
 	typedef typename choose_ip_type<W>::ip_type ip_type;
@@ -45,7 +45,7 @@ struct PNode{
 };
 
 /// \brief 
-template<typename W>
+template<int W>
 class PTree{
 private:
 
@@ -135,8 +135,10 @@ public:
 
 			std::cerr << "the " << i << "'s level--node num: " << mLevelNodeNum[i] << std::endl;
 		}
-
 	
+		//
+		//traverse();
+
 		return;
 	}
 
@@ -177,11 +179,15 @@ public:
 	}
 
 	/// \brief insert a prefix
-	void ins(const ip_type & _prefix, const uint8& _length, const uint32& _nexthop, node_type&* _node, const int _level) {
+	void ins(const ip_type & _prefix, const uint8& _length, const uint32& _nexthop, node_type*& _node, const int _level) {
 
-		if (nullptr == _node) {
+		if (nullptr == _node) { // create a new node and insert the prefix into the node
 
 			_node = new node_type();
+
+			mNodeNum++;
+
+			mLevelNodeNum[_level]++;
 
 			_node->prefix = _prefix;
 
@@ -189,48 +195,48 @@ public:
 		
 			_node->nexthop = _nexthop;
 			
-			if (nullptr == root) { // update root node pointer
-
-				root = _node;
-			}
-
 			return;
 		}	
-		else if (_length == _level) { // a prefix of length $k$ can be inserted into the first $k + 1$ levels (start numbering from 0)
+		else {
+			
+			if (_length == _level) { // _prefix must be inserted into current node
+				
+				if (_node->length > _level) { //otherwise, node
+					// check if the prefix in current node, say A, is equal to the one to be inserted, say B.
+					// If yes substitute A with the one to be inserted; otherwise, A = B
+					uint32 prefix = _node->prefix;
+		
+					uint8 length = _node->length;
+		
+					uint32 nexthop = _node->nexthop;
+		
+					_node->prefix = _prefix;
+	
+					_node->length = _length;
+		
+					_node->nexthop = _nexthop;
+	
+					// A must has be longer than _level, recursively insert A into a higher level
+					if (0 == utility::getBitValue(prefix, _level)) { // branch to right subtrie 
+		
+						ins(prefix, length, nexthop, _node->lchild, _level + 1);
+					}
+					else {
+		
+						ins(prefix, length, nexthop, _node->rchild, _level + 1);
+					}
+				}
+			}	
+			else { // recursively insert _prefix into higher levels
+	
+				if (0 == utility::getBitValue(_prefix, _level)) { // branch to right subtrie
+	
+					ins(_prefix, _length, _nexthop, _node->lchild, _level + 1);
+				}
+				else {
 
-			// substitute prefix, say A, in current node with the one to be inserted.
-			uint32 prefix = _node->prefix;
-
-			uint8 length = _node->length;
-
-			uint32 nexthop = _node->nexthop;
-
-			_node->prefix = _prefix;
-
-			_node->length = _length;
-
-			_node->nexthop = _nexthop;
-
-			// prefix A  must has be longer than _level, recursively insert prefix A into the higher level
-			// branch according to the next bit in prefix
-			if (utility::getBitValue(prefix, _level)) { 
-
-				insert(prefix, length, nexthop, _node->rchild);
-			}
-			else {
-
-				insert(prefix, length, nexthop, _node->lchild);
-			}
-		}	
-		else { // recursively insert _prefix into higher levels
-
-			if (utility::getBitValue(_prefix, _level)) {
-
-				insert(prefix, length, nexthop, _node->rchild);
-			}
-			else {
-
-				insert(prefix, length, nexthop, _node->lchild);
+					ins(_prefix, _length, _nexthop, _node->rchild, _level + 1);
+				}
 			}
 		}
 
@@ -238,19 +244,21 @@ public:
 	}
 
 	/// \brief delete a prefix
-	void del(const ip_type& _prefix, const uint8& _length, node_type&* _node, int _level) {
+	void del(const ip_type& _prefix, const uint8& _length, node_type*& _node, int _level) {
 
-		if (_prefix == _node->prefix && _length == _node->length) { // both value and length are equal, delete it
+		if (nullptr == _node) return; // find nothing
 
-			if (nullptr == _node->lchild && nullptr == _node->rchild) { // current is a leaf node, delete it directly
-
+		if (_prefix == _node->prefix && _length == _node->length) { // prefix is found
+			
+			if (nullptr == _node->lchild && nullptr == _node->rchild) { // a leaf node, delete it directly
+				
 				delete _node;
 
 				_node = nullptr; // reset parent's child pointer
 
 				return;
 			}	
-			else { 
+			else { // not a leaf node, substitute the content of current node with the leaf node
 			
 				node_type* pnode = _node; // parent node of leaf node
 
@@ -258,8 +266,21 @@ public:
 
 				bool isLeftBranch = true; // true if branch to left
 
-				cnode = (nullptr != _node->lchild) ? (_node->lchild) : (_node->rchild);
-			
+				// at least has a child
+				if (nullptr != pnode->lchild) {
+
+					cnode = pnode->lchild;
+
+					isLeftBranch = true;
+				}
+				else {
+
+					cnode = pnode->rchild;
+
+					isLeftBranch = false;
+				}
+				
+				// find leaf descendant
 				while (nullptr != cnode->lchild || nullptr != cnode->rchild) {
 
 					if (nullptr != cnode->lchild) {
@@ -279,15 +300,16 @@ public:
 						isLeftBranch = false;
 					}
 				}	
-				
+					
+	
 				// replace content of _node by that of those in cnode
-				_node->preifx = cnode->prefix;
+				_node->prefix = cnode->prefix;
 
 				_node->length = cnode->length;
 
 				_node->nexthop = cnode->nexthop;
 
-				// reset child poointer of pnode
+				// reset child pointer of pnode
 				if (isLeftBranch) {
 
 					pnode->lchild = nullptr;
@@ -296,7 +318,7 @@ public:
 
 					pnode->rchild = nullptr;
 				}
-				
+
 				// delete cnode
 				delete cnode;
 
@@ -305,13 +327,13 @@ public:
 		}
 		else { // attempt to find the prefix in higher levels
 
-			if (utility::getBitValue(_prefix, _level)) {
+			if (0 == utility::getBitValue(_prefix, _level)) {
 
-				del(_prefix, _length, _node->rchild, _level + 1);
+				del(_prefix, _length, _node->lchild, _level + 1);
 			} 
 			else {
 
-				del(_prefix, _length, _node->lchild, _level + 1);
+				del(_prefix, _length, _node->rchild, _level + 1);
 			}
 		}
 				
@@ -346,13 +368,13 @@ public:
 					}
 				}
 
-				if (utility::getBitValue(_ip, level)) { // branch to next level
+				if (0 == utility::getBitValue(_ip, level)) { // branch to next level
 
-					node = node->rchild;
+					node = node->lchild;
 				}
 				else {
 
-					node = node->lchild;
+					node = node->rchild;
 				}	
 			
 				++level;
@@ -366,22 +388,42 @@ public:
 	/// \brief traverse the prefix tree
 	void traverse() {
 
-		if (nullptr == root) return;
+		uint32 nodeNum = 0;
+
+		if (nullptr == root) {
+
+			std::cerr << "node num: " << nodeNum << std::endl;
+
+			return;
+		}
 
 		std::queue<node_type*> queue;
 
 		queue.push(root);
 
+		nodeNum++;
+
 		while(!queue.empty()) {
 
-			if (nullptr != queue.front()->lchild) queue.push(queue.front()->lchild);
+			if (nullptr != queue.front()->lchild) {
 
-			if (nullptr != queue.front()->rchild) queue.push(queue.front()->rchild);
+				queue.push(queue.front()->lchild);
 
-			printNode(queue.front());
+				nodeNum++;
+			}
+		
+			if (nullptr != queue.front()->rchild) {
+			
+				queue.push(queue.front()->rchild);
+
+				nodeNum++;
+			}
+//			printNode(queue.front());
 
 			queue.pop();
 		}
+
+		std::cerr << "Scanned node num: " << nodeNum << std::endl;
 
 		return;
 	}
@@ -389,13 +431,34 @@ public:
 	/// \brief print a node
 	void printNode(node_type* _node) {
 
-		std::cerr << "lnode: " << _node->lchild << "rnode: " << _node->rchild << " nexthop: " << _node->nexthop << std::endl;
+		std::cerr << "lnode: " << _node->lchild << " rnode: " << _node->rchild;
+
+		std::cerr << " prefix: " << _node->prefix << " length: " << (uint32)_node->length << " nexthop: " << _node->nexthop << std::endl;
 
 		return;	
+	}
+
+
+	node_type*& getRoot(){
+
+		return root;
 	}
 };
 
 
+template<int W>
+PTree<W>* PTree<W>::pt = nullptr;
+
+template<int W>
+PTree<W>* PTree<W>::getInstance() {
+
+	if (nullptr == pt) {
+
+		pt = new PTree();
+	}
+
+	return pt;
+}
 
 #endif // _PT_H
 

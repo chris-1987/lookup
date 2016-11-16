@@ -60,7 +60,7 @@ uint32 getBitValue(const uint32& _uint, const size_t& _pos) {
 		
 	static const uint32 odd = 1;
 
-	return (_uint << _pos) & (odd << 31);
+	return (((_uint << _pos) & (odd << 31)) == 0) ? 0 : 1;
 } 
 
 /// \brief get the bit-value for ipv6
@@ -72,7 +72,7 @@ uint128 getBitValue(const uint128& _uint, const size_t& _pos) {
 
 	static const uint128 odd = 1;
 
-	return (_uint << _pos) & (odd << 127);
+	return (((_uint << _pos) & (odd << 127)) == 0) ? 0: 1;
 } 
 
 
