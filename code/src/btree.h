@@ -45,8 +45,7 @@ struct BNode {
 /// All the prefixes of length $k$ are located in the $k$-th level of the binary tree. 
 /// A search start from the root node and branch to the higher levels by checking bits 
 /// in the given IP address. 
-/// @param W 32 for IPV4 and 128 for IPV6
-
+/// \param W 32 for IPV4 and 128 for IPV6
 template<int W>
 class BTree {
 private:

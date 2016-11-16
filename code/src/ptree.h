@@ -44,7 +44,11 @@ struct PNode{
 
 };
 
-/// \brief 
+/// \brief prefix tree, singleton class
+/// 
+/// The length of each prefix inserted into level $k$ is no less than $k$.
+/// 
+/// \param W 32 and 128 for IPv4 and IPv6, respectively.
 template<int W>
 class PTree{
 private:
