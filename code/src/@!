@@ -184,9 +184,16 @@ public:
 			}
 			else {
 
+#ifdef DEBUG_MPT
+				std::cerr << "prefix: " << prefix << " length: " << (uint32)length << std::endl;
+#endif
 				ins(prefix, length, nexthop, pRoot, 0);
 			}
-		}		
+		}
+		
+		std::cerr << "created pnode num: " << mPNodeNum << std::endl;
+
+		std::cerr << "craeted snode num: " << mSNodeNum << std::endl;
 
 		return;
 	}
@@ -270,8 +277,12 @@ public:
 			if (_pnode->t < MP) { // _pnode is not full, insert _prefix into _pnode
 	
 				insertPrefixInPNode(_pnode, _prefix, _length, _nexthop);
-	
-//				printPNode(_pnode);
+
+				std::cerr << "t: " << (uint32) _pnode->t << std::endl;
+
+				std::cerr << "_prefix:" << _prefix << " _length: " << (uint32)_length << std::endl;
+				
+				printPNode(_pnode);
 			}
 			else { // _pnode is full
 	
@@ -287,15 +298,18 @@ public:
 					// delete shortest prefix (located at MP - 1) from current pnode
 					deletePrefixInPNode(_pnode, MP - 1);	
 				 
+				std::cerr<< "here1\n";	printPNode(_pnode);
+
 					// insert _prefix into current pnode
 					insertPrefixInPNode(_pnode, _prefix, _length, _nexthop);
 
+				std::cerr<<"here2\n";	printPNode(_pnode);
 					// recursively insert the deleted shorted prefix into a higher level	
-					ins(prefix, length, nexthop, _pnode->childEntries[utility::getBitsValue(prefix, _level * K, (_level + 1) * K - 1)], _level + 1);	
+					ins(prefix, length, nexthop, _pnode->childEntries[utility::getBitsValue(prefix, _level * K, _level * (K + 1) - 1)], _level + 1);	
 				}
 				else { // insert _prefix into a higher level
 
-					ins(_prefix, _length, _nexthop, _pnode->childEntries[utility::getBitsValue(_prefix, _level * K, (_level + 1) * K - 1)], _level + 1);
+					ins(_prefix, _length, _nexthop, _pnode->childEntries[utility::getBitsValue(_prefix, _level * K, _level * (K + 1) - 1)], _level + 1);
 				}
 			}
 		}
@@ -440,7 +454,7 @@ public:
 
 		int pLevel = 0;
 
-		int sBestLength = 0; // record length of LPM
+		int sBestLength = 0;
 
 		int nexthop = 0;
 
@@ -455,7 +469,7 @@ public:
 				}
 			}
 
-			// search in snode, if find a match, record it in (bestLength, nexthop)
+			// search in snode
 			if (nullptr != pnode->sRoot) {
 
 				int sLevel = 0;
@@ -469,9 +483,9 @@ public:
 						if (sBestLength < snode->length) {
 
 							sBestLength = snode->length;
-
 							nexthop = snode->nexthop;
-						}					
+						}
+					
 					}
 
 					if (0 == utility::getBitValue(_ip, K * pLevel + sLevel)) {
@@ -486,9 +500,6 @@ public:
 					++sLevel;
 				}
 			}
-
-			// search in higher level
-			pnode = pnode->childEntries[utility::getBitsValue(_ip, pLevel * K, (pLevel + 1) * K - 1)];
 
 			++pLevel;
 		}
@@ -510,20 +521,32 @@ public:
 
 		if (nullptr == _pnode) return;
 
-		if (_length < (_level + 1) * K) { // if _prefix exists in the multi-prefix tree, then it must be in the auxiliary prefix tree
+		if (_length < _level * (K + 1)) { // if exists, the prefix is in the auxiliary prefix tree
 
-			// delete _prefix in the auxiliary prefix tree
+			// delete prefix in the auxiliary prefix tree
 			del(_prefix, _length, _pnode->sRoot, 0, _level);
 
-			// delete operation is finshed
-			// if _pnode is an external node and there remains no prefixes in _pnode and the subtrie rooted at sRoot, then remove the pnode. 
-			if (nullptr == _pnode->sRoot && 0 == _pnode->t) { // if 0 == _pnode->t, then _pnode must be an external node
+			// after delete operation, if no prefix in pnode or the subtrie rooted at sRoot and no children, then delete the node
+			if (nullptr == _pnode->sRoot && 0 == _pnode->t) {
 
-				delete _pnode;
+				bool hasChild = false;
+	
+				for (size_t i = 0; i < MC; ++i) {
 
-				_pnode = nullptr;
+					if (nullptr != _pnode->childEntries[i]) {
+	
+						hasChild = true;
+	
+						break;
+					}
+				}
+				
+				if (false == hasChild) {
 
-				--mPNodeNum;
+					delete _pnode;
+
+					_pnode = nullptr;
+				}
 			}
 		}
 		else { // search in pnode and higher levels
@@ -531,12 +554,12 @@ public:
 			// try to find the prefix in pnode
 			int _pos = findPrefixInPNode(_pnode, _prefix, _length);
 
-			if (_pos != _pnode->t + 1) { // prefix is found in the primary node
+			if (_pos < _pnode->t) { // find the prefix in the primary node
 	
-				// delete prefix from _pnode
+				// delete prefix in current node
 				deletePrefixInPNode(_pnode, _pos);
 
-				// check whether or not _pnode is an external node
+				// check if current pnode whether or not current pnode is an external node
 				bool hasChild = false;
 
 				for (size_t i = 0; i < MC; ++i) {
@@ -549,42 +572,35 @@ public:
 					}
 				}
 			
-				if (true == hasChild) { // an internal node
+				if (true == hasChild) { // an internal node, find the longest prefix in its children and insert it into current pnode
 
-					ip_type long_prefix = 0;
+					ip_type long_prefix;
 
-					uint8 long_length = 0;
+					uint8 long_length;
 		
-					uint32 long_nexthop = 0;
+					uint32 long_nexthop;
 
-					size_t childIdx = 0;
+					size_t childIdx;
 		
-					// find longest prefix in child nodes
 					findLongestPrefixInChild(_pnode, childIdx, long_prefix, long_length, long_nexthop);	
 
-					// insert the longest prefix in _pnode
 					insertPrefixInPNode(_pnode, long_prefix, long_length, long_nexthop);
 
-					// delete the longest prefix in child node
-					del(long_prefix, long_length, _pnode->childEntries[childIdx], _level + 1);
+					del(long_prefix, long_length, _pnode->child[childIdx], _level + 1);
 				}
-				else { // an external node
-					
-					//delete operation is finished
-					// if there remains no prefixes in _pnode and the subtrie rooted at sRoot, then remove _pnode 
+				else { // if no prefixes in pnode and the subtrie rooted at sRoot, then delete the node
+
 					if (0 == _pnode->t && nullptr == _pnode->sRoot) {
 
 						delete _pnode;
-
+						
 						_pnode = nullptr;
-
-						--mPNodeNum;						
 					}
 				}
 			}
 			else {	// search in higher levels
 		
-				del(_prefix, _length, _pnode->childEntries[utility::getBitsValue(_prefix, _level * K , (_level + 1) * K - 1)], _level + 1);
+				del(_prefix, _length, _pnode->child[utility::getBitsValue(_prefix, _level * K , _level * (K + 1) - 1)], _level + 1);	
 			}	
 		}
 
@@ -595,7 +611,7 @@ public:
 	/// \brief try to find a prefix in the primary node
 	///
 	/// \return position of prefix in the node if any; otherwise, t.
-	int findPrefixInPNode(pnode_type* _pnode, const ip_type& _prefix, const uint8& _length){
+	int findPrefixInPNode(PNode<W, K>* _pnode, const ip_type& _prefix, const uint8& _length){
 
 		for (int i = 0; i < _pnode->t; ++i) {
 
@@ -605,11 +621,11 @@ public:
 			}
 		}
 		
-		return _pnode->t + 1;
+		return _pnode->t;
 	}
 
 	/// \brief delete a prefix in the auxiliary prefix tree
-	void del(const ip_type& _prefix, const uint8& _length, snode_type*& _snode, const int _sLevel, const int _pLevel){
+	void del(const ip_type & _prefix, const uint8& _length, const uint32& _nexthop, SNode<W>*& _snode, const int _sLevel, const int _pLevel){
 
 		if (nullptr == _snode) return;
 
@@ -620,8 +636,6 @@ public:
 				delete _snode;
 
 				_snode = nullptr;
-
-				--mSNodeNum;
 
 				return;
 			}
@@ -689,20 +703,18 @@ public:
 
 				child_node = nullptr;
 
-				--mSNodeNum;
-
 				return;
 			}	
 		}
 		else { // try to find in a higher level
 
-			if (0 == utility::getBitValue(_prefix, _pLevel * K + _sLevel)) {
+			if (0 == utility::getBitValue(_prefix, _sLevel, _pLevel)) {
 
-				del(_prefix, _length, _snode->lchild, _sLevel + 1, _pLevel);
+				del(_prefix, _length, _nexthop, _snode->lchild, _sLevel + 1, _pLevel);
 			}
 			else {
 
-				del(_prefix, _length, _snode->rchild, _sLevel + 1, _pLevel);
+				del(_prefix, _length, _nexthop, _snode->rchild, _sLevel + 1, _pLevel);
 			}
 		}
 	}
@@ -711,7 +723,7 @@ public:
 	///
 	/// If all the child nodes have no prefixes, then they are external nodes and the longest prefix is in one of the auxiliary prefix tree
 	/// If at least one child node is an internal node, then the longest prefix can be found in one of the child node.
-	void findLongestPrefixInChild(PNode<W, K>* _pnode, size_t& _childIdx, ip_type& _longPrefix, uint8& _longLength, uint32& _longNexthop){
+	void findLongestPrefixInChild(PNode<W, K>* _pnode, size_t& _childIdx, ip_type& _longPrefix, uint8& _longLength, uint32 _longNexthop){
 
 		_longLength = 0;
 
@@ -724,13 +736,13 @@ public:
 
 				if (0 != cnode->t) {
 
-					if (cnode->prefixEntries[0].length > _longLength) {
+					if (cnode->length[0] > _longLength) {
 
-						_longLength = cnode->prefixEntries[0].length;
+						_longLength = cnode->length[0];
 			
-						_longPrefix = cnode->prefixEntries[0].prefix;
+						_longPrefix = cnode->prefix[0];
 
-						_longNexthop = cnode->prefixEntries[0].nexthop;
+						_longNexthop = cnode->nexthop[0];
 
 						_childIdx = i;
 					}
@@ -738,15 +750,17 @@ public:
 			}
 		}
 
-		// All primary nodes have no prefixes, indicating that they are all external nodes. 
-		// Find the longest prefix in the auxiliary prefix trees
+		// All the prefixes have no prefixes, indicating that they are all external nodes. Find the longest prefix
+		// in the auxiliary prefix trees
 		if (0 == _longLength) { 
 
 			for (size_t i = 0; i < MC; ++i) {
 
 				pnode_type* cnode = _pnode->childEntries[i];
 
-				if (nullptr != cnode && nullptr != cnode->sRoot) {
+				if (nullptr != cnode->sRoot) {
+
+					snode_type* snode = cnode->sRoot;
 
 					std::queue<snode_type*> queue;
 			
@@ -789,18 +803,6 @@ public:
 
 		std::cerr << std::endl;
 	}	
-
-	pnode_type*& getRoot() {
-
-		return pRoot;
-	}
-
-	void report(){
-
-		std::cerr << "mSNodeNum: " << mSNodeNum << std::endl;
-
-		std::cerr << "mPNodeNum: " << mPNodeNum << std::endl;
-	}
 };
 
 template<int W, int K, size_t MP, size_t MC>
