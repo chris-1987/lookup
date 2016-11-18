@@ -10,8 +10,8 @@
 /// @author Yi Wu
 ///////////////////////////////////////////////////////////
 
-#include "common.h"
-#include "utility.h"
+#include "../common.h"
+#include "../utility.h"
 #include "btree.h"
 #include <queue>
 #include <deque>

@@ -15,8 +15,8 @@
 /// \date 2016.11
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "common.h"
-#include "utility.h"
+#include "../common.h"
+#include "../utility.h"
 #include <queue>
 
 

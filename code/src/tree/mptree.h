@@ -16,8 +16,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-#include "common.h"
-#include "utility.h"
+#include "../common.h"
+#include "../utility.h"
 #include <queue>
 #include <cmath>
 
