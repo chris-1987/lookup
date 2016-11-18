@@ -40,9 +40,11 @@ struct BNode {
 	BNode* rchild; ///< pointer to right child
 		
 	uint32 nexthop; ///< next hop information
+
+	int stageidx; ///< stage index, indicate the pipestage in which the node is located
 	
 	/// \brief ctor
-	BNode() : lchild(nullptr), rchild(nullptr), nexthop(0) {}
+	BNode() : lchild(nullptr), rchild(nullptr), nexthop(0), stageidx(0) {}
 };
 
 
@@ -479,6 +481,21 @@ public:
 		}
 		
 		return;
+	}
+
+	/// \brief Number nodes in binary trees according to the type of pipeline
+	///
+	/// Three types of pipelines are considered
+	void number(int _pipestyle){
+
+	 	switch(_pipestyle) {
+
+		case 0:
+
+		case 1:
+
+		case 2:
+		}	
 	}
 };
 
