@@ -1,17 +1,9 @@
 INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}")
 
-# find libbgpdump
-LINK_DIRECTORIES("${PROJECT_SOURCE_DIR}/external/bgpdump")
+
+#analyzer
+ADD_EXECUTABLE(test_rbt test_rbt.cpp)
 
 
-
-# test btree
-
-# test fstree
-
-# test ptree
-
-# test mptree 
-ADD_EXECUTABLE(test_mptree test_mptree.cpp)
 
 

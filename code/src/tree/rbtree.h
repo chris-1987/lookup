@@ -24,6 +24,10 @@
 #include <deque>
 #include <stack>
 #include <cmath>
+#include <random>
+#include <algorithm>
+#include <numeric>
+#include <limits>
 
 /// \brief Nodes in a binary tree.
 /// 
@@ -182,7 +186,7 @@ public:
 			}
 		}
 
-		//report();
+		report();
 
 		//traverse();
 
@@ -228,12 +232,14 @@ public:
 
 		for (int i = 0; i < V; ++i) {
 
-			std::cerr << "\n------node num in the " << i << "'s tree: " << mNodeNum[i] << std::endl;
+			//std::cerr << "\n------node num in the " << i << "'s tree: " << mNodeNum[i] << std::endl;
 
-//			for (int j = 0; j < W - U + 1; ++j) {
+		//	for (int j = 0; j < W - U + 1; ++j) {
 
-//				std::cerr << "level " << j << ": " << mLevelNodeNum[i][j]<< "\t";
-//			}
+		//		std::cerr << "level " << j << ": " << mLevelNodeNum[i][j]<< "\t";
+		//	}
+			
+		//	std::cin.get();
 
 			mTotalNodeNum += mNodeNum[i];	
 		}
@@ -269,7 +275,7 @@ public:
 
 			++mNodeNum[_treeIdx];
 
-			++mLevelNodeNum[_treeIdx][_level];
+			++mLevelNodeNum[_treeIdx][_level - U];
 		}
 
 		if (_length == _level) { // insert into current node
@@ -435,7 +441,7 @@ public:
 
 				--mNodeNum[_treeIdx];
 
-				--mLevelNodeNum[_treeIdx][level];
+				--mLevelNodeNum[_treeIdx][level - U];
 					
 				// modify parent
 				while (!stack.empty()) {
@@ -463,7 +469,7 @@ public:
 
 						--mNodeNum[_treeIdx];
 	
-						--mLevelNodeNum[_treeIdx][level - 1];
+						--mLevelNodeNum[_treeIdx][level - U - 1];
 					}
 					else {
 
@@ -483,19 +489,285 @@ public:
 		return;
 	}
 
-	/// \brief Number nodes in binary trees according to the type of pipeline
+	/// \brief Scatter nodes in binary trees according to a pipeline
 	///
-	/// Three types of pipelines are considered
-	void number(int _pipestyle){
+	/// Three types of pipelines are considered: linear, cirular and random
+	/// 
+	void scatterToPipeline(int _pipestyle, int _stagenum = W - U + 1){
 
 	 	switch(_pipestyle) {
 
-		case 0:
+		case 0: lin(); break;
 
-		case 1:
+		case 1: ran(_stagenum); break;
 
-		case 2:
+		case 2: cir(_stagenum); break;
+
 		}	
+
+		return;
+	}
+
+	/// \brief Scatter nodes in a linear pipeline.
+	///
+	/// Map nodes into a linear pipe line in a manner of one level per stage.
+	///
+	/// \note the number of stages is W - U + 1 for a linear pipe line.
+	void lin() {
+		
+		size_t* nodeNumInStage = new size_t[W - U + 1];
+
+		for (int i = 0; i < W - U + 1; ++i) {
+
+			nodeNumInStage[i] = 0;
+		}
+
+		// start numbering from 0 to _stagenum - 1, nodes in a same level are located in the same level
+		for (size_t i = 0; i < V; ++i) {
+
+			if (nullptr != mRootTable[i]) {
+
+				std::queue<node_type*> queue;
+
+				mRootTable[i]->stageidx = 0;
+
+				nodeNumInStage[0]++;
+
+				queue.push(mRootTable[i]);
+
+				while (!queue.empty()) {
+					
+					auto front = queue.front(); 
+
+					if (nullptr != front->lchild) {
+
+						front->lchild->stageidx = front->stageidx + 1;
+
+						nodeNumInStage[front->lchild->stageidx]++;
+						
+						queue.push(front->lchild);
+					}								
+
+					if (nullptr != front->rchild) {
+
+						front->rchild->stageidx = front->stageidx + 1;
+
+						nodeNumInStage[front->rchild->stageidx]++;
+
+						queue.push(front->rchild);
+					}
+
+					queue.pop();
+				}
+			}
+		}
+
+		size_t nodeNumInAllStages = 0;
+
+		for (size_t i = 0; i < W - U + 1; ++i) {
+
+			nodeNumInAllStages += nodeNumInStage[i];
+
+			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << std::endl;
+		}
+
+		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
+
+		delete[] nodeNumInStage;
+	}
+
+
+	/// \brief Scatter in a random pipeline.
+	///
+	/// Map nodes into a random pipeline. A random generator is applied to determine the pipe stage to where a node is allocated.
+	///
+	void ran(int _stagenum) {
+
+		size_t* nodeNumInStage = new size_t[W - U + 1];
+
+		for (int i = 0; i < W - U + 1; ++i) {
+
+			nodeNumInStage[i] = 0;
+		}
+
+		std::default_random_engine generator;
+
+		std::uniform_int_distribution<int> distribution(0, _stagenum - 1);
+
+		auto roll = std::bind(distribution, generator);
+
+		for (size_t i = 0; i < V; ++i) {
+
+			if (nullptr != mRootTable[i]) {
+
+				std::queue<node_type*> queue;
+
+				mRootTable[i]->stageidx = roll();
+
+				nodeNumInStage[mRootTable[i]->stageidx]++;
+
+				queue.push(mRootTable[i]);
+
+				while (!queue.empty()) {
+					
+					auto front = queue.front(); 
+
+					if (nullptr != front->lchild) {
+
+						front->lchild->stageidx = roll();
+
+						nodeNumInStage[front->lchild->stageidx]++;
+
+						queue.push(front->lchild);
+					}								
+
+					if (nullptr != front->rchild) {
+
+						front->rchild->stageidx = roll();
+
+						nodeNumInStage[front->rchild->stageidx]++;
+
+						queue.push(front->rchild);
+					}
+
+					queue.pop();
+				}
+			}
+		}
+			
+		size_t nodeNumInAllStages = 0;
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+
+			nodeNumInAllStages += nodeNumInStage[i];
+
+			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << std::endl;
+		}
+
+		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
+
+		delete[] nodeNumInStage;
+
+		return;				
+	}
+
+
+
+	/// \brief element to be sorted
+	struct SortElem{
+
+		size_t nodeNum; ///< number of nodes in the tree
+
+		size_t treeIdx; ///< index of tree
+
+		SortElem(const size_t _nodeNum, const size_t _treeIdx) : nodeNum(_nodeNum), treeIdx(_treeIdx) {}
+
+		bool operator< (const SortElem& _a) const {
+
+			if (nodeNum == _a.nodeNum) {
+
+				return (treeIdx < _a.treeIdx);
+			}
+			else {
+
+				return (nodeNum < _a.nodeNum);
+			}
+		}		
+	};
+
+	/// \brief Scatter in a circular pipe line.
+	///
+	/// Scatter nodes into a circular pipe line according to method proposed by Sailesh Karmar et al.
+	/// we use variance to make heuristic.
+	void cir(int _stagenum) {
+
+		// step 1: sort binary tries by their size in non-decreasing order
+		std::vector<SortElem> vec;
+
+		for (size_t i = 0; i < V; ++i) {
+
+			if (nullptr != mRootTable[i]) {
+
+				vec.push_back(SortElem(mNodeNum[i], i));
+			}		
+		}
+
+		std::sort(std::begin(vec), std::end(vec));		
+
+		// step 2: scatter nodes
+		size_t* colored = new size_t[_stagenum];
+
+		for (int i = 0; i < _stagenum; ++i) colored[i]= 0;
+
+		size_t* trycolor = new size_t[_stagenum];
+
+		for (int i = 0; i < _stagenum; ++i) trycolor[i] = 0;
+
+		int bestStartIdx = 0;
+
+		for (int i = vec.size() - 1; i >= 0; --i) { // larger-size tree first
+		
+			size_t treeIdx = vec[i].treeIdx;
+
+			double bestVar = std::numeric_limits<double>::max();
+
+			for (size_t j = 0; j < _stagenum; ++j) { // try to put the root node at j-th pipe stage
+
+				for (size_t k = 0; k < _stagenum; ++k) { // reset 
+
+					trycolor[k] = colored[k];
+				}
+	
+				for (size_t k = 0; k < W - U + 1; ++k) { // put nodes one level per stage
+
+					trycolor[(j + k) % _stagenum] += mLevelNodeNum[treeIdx][k];		
+				}
+
+				// compute variance
+				double sum = std::accumulate(trycolor, trycolor + _stagenum, 0.0);
+
+				double mean = sum / _stagenum;
+
+				double accum = 0.0;
+
+				for (int k = 0; k < _stagenum; ++k) {
+
+					accum += (trycolor[k] - mean) * (trycolor[k] - mean);
+				}
+				
+				double var = accum / _stagenum;
+
+//				std::cerr << "var: " << var << " bestVar: " << bestVar << std::endl;
+//				std::cin.get();
+
+				if (var < bestVar) {
+					
+					bestVar = var;
+
+					bestStartIdx = j;
+				}
+			}	
+
+			for (int j = 0; j < W - U + 1; ++j) {
+		
+				colored[(bestStartIdx + j) % _stagenum] += mLevelNodeNum[treeIdx][j];	
+			}
+		} 
+
+		size_t nodeNumInAllStages = 0;
+
+		for (int i = 0; i < _stagenum; ++i) {
+			
+			nodeNumInAllStages += colored[i];
+
+			std::cerr << "nodes in stage " << i << ": " << colored[i] << std::endl;
+		}
+
+		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
+
+		delete[] colored;
+
+		delete[] trycolor;
 	}
 };
 
