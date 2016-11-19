@@ -1,19 +1,19 @@
-#ifndef _RBTREE_H
-#define _RBTREE_H
+#ifndef _RPTREE_H
+#define _RPTREE_H
 
-////////////////////////////////////////////////////////////
-/// Copyright (c) 2016, Sun Yat-sen University,
+///////////////////////////////////////////////////////////////////////////////////////////////
+/// Copyright (c) 2016, Sun Yat-sen University
 /// All rights reserved
-/// \file rbtree.h
-/// \brief Definition of an IP lookup index based on binary tree.
+/// \file rptree.h
+/// \brief Definition of an IP lookup index based on prefix tree.
 ///
-/// The lookup index consists of three parts: a fast lookup table that contains route information for prefixes shorter than U bits,
-/// a table that consists of 2^U entries and each entry stores a pointer to the root of a binary tree, 
-/// and a set of binary tree.
+/// This index consits of three parts: a fast lookup table that contains route information
+/// for prefixes shorter than U bits, a table that consists of 2^U entries and each entry 
+/// stores a pointer to the root of a binary tree, and a set of binary tree.
+///
 /// \author Yi Wu
 /// \date 2016.11
-///////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../common/common.h"
 #include "../common/utility.h"
@@ -21,69 +21,66 @@
 #include "fasttable.h"
 
 #include <queue>
-#include <deque>
-#include <stack>
-#include <cmath>
-#include <random>
 #include <algorithm>
-#include <numeric>
-#include <limits>
 
-/// \brief Nodes in a binary tree.
-/// 
-/// Two pointers that indicate the child nodes and a nexthop information field.
+
+/// \brief Nodes in a prefix tree.
 ///
-/// \param W 32 or 128 for IPv4 or IPv6 address, respectively.
+/// Each node in the tree contains two pointers, a prefix field and a nexthop field. 
+/// A node at level-$k$ can store a prefix of a length no less than $k$.
 template<int W>
-struct BNode {
+struct PNode{
 
 	typedef typename choose_ip_type<W>::ip_type ip_type;
 
-	BNode* lchild; ///< pointer to left child
+	PNode* lchild; ///< left child
 
-	BNode* rchild; ///< pointer to right child
-		
-	uint32 nexthop; ///< next hop information
+	PNode* rchild; ///< right child
 
-	int stageidx; ///< stage index, indicate the pipestage in which the node is located
-	
+	ip_type prefix; ///< prefix
+
+	uint8 length; ///< length of prefix
+
+	uint32 nexthop; ///< next hop	
+
+	int stageidx; ///< location in pipe stage
+
 	/// \brief ctor
-	BNode() : lchild(nullptr), rchild(nullptr), nexthop(0), stageidx(0) {}
+	PNode() : lchild(nullptr), rchild(nullptr), prefix(0), length(0), nexthop(0) {}
+
 };
 
-
 /// \brief Build and update the index.
-///
+/// 
 /// Prefixes shorter than U bits are stored in a fast lookup table.
 /// Prefixes not shorter than U bits are stored in the set of binary trees.
-///
-/// \param W 32 for IPV4 and 128 for IPV6.
-/// \param U A threshold for classifying shorter and longer prefixes ( < U and >=U).
-/// \param V Number of binary trees at large.
+/// 
+/// \param W 32 or 128 for IPv4 or IPv6, respectively.
+/// \param U A threshold for classifying shorter and longer prefixes
+/// \param V Number of prefix trees at large.
 template<int W, int U, size_t V = static_cast<size_t>(pow(2, U))>
-class RBTree {
+class RPTree{
 private:
-	
+
 	typedef typename choose_ip_type<W>::ip_type ip_type;
 
-	typedef BNode<W> node_type;
+	typedef PNode<W> node_type;
 
-	node_type* mRootTable[V]; ///< each entry points to a binary tree
+	node_type* mRootTable[V]; ///< pointers to a forest of prefix tree
 
-	uint32 mNodeNum[V]; ///< number of nodes in each binary tree
+	uint32 mNodeNum[V]; ///< number of nodes in each prefix tree
 
-	uint32 mLevelNodeNum[V][W - U + 1]; ///< number of nodes in each level of a binary tree
+	uint32 mLevelNodeNum[V][W - U + 1]; ///< number of nodes in each level of a prefix tree
 
-	uint32 mTotalNodeNum; ///< number of nodes in total
+	uint32 mTotalNodeNum; ///< number of nodes in total 
 
-	FastTable<W, U - 1> *ft; ///< pointer to fast table, a fast table is used to store shorter prefixes and provide search, insert and delete interfaces
+	FastTable<W, U - 1> *ft;
 
 public:
-
 	/// \brief default ctor
-	RBTree() : mTotalNodeNum(0), ft(nullptr) {
-	
-		for (int i = 0; i < V; ++i) {
+	RPTree() : mTotalNodeNum(0) {
+
+		for (size_t i = 0; i < V; ++i) {
 
 			mRootTable[i] = nullptr;
 		}
@@ -92,7 +89,7 @@ public:
 
 			mNodeNum[i] = 0;
 		}
-	
+
 		for (int i = 0; i < V; ++i) {
 
 			for (int j = 0; j < W - U + 1; ++j) {
@@ -104,17 +101,14 @@ public:
 		ft = new FastTable<W, U - 1>();
 	}
 
-	/// \brief disable copy-ctor
-	RBTree(const RBTree& _rbt) = delete;
+	/// \brief copy ctor, disabled
+	RPTree(const RPTree& _pt) = delete;
 
-	/// \brief disable assignment op
-	RBTree& operator= (const RBTree&) = delete;
+	/// \brief assignment op, disabled
+	RPTree& operator= (const RPTree&) = delete;
 
 	/// \brief dtor
-	///
-	/// destory all binary trees
-	///
-	~RBTree() {
+	~RPTree() {
 
 		for (int i = 0; i < V; ++i) {
 
@@ -127,14 +121,14 @@ public:
 		}
 
 		delete ft;
-	
+
 		ft = nullptr;
 	}
 
 	/// \brief Build the index.
-	void build(const std::string & _fn) {
+	void build(const std::string& _fn) {
 
-		// clear old index if there exists any
+		// clear old index if exists any
 		for (int i = 0; i < V; ++i) {
 
 			if (nullptr != mRootTable[i]) {
@@ -146,7 +140,7 @@ public:
 		}
 
 		for (int i = 0; i < V; ++i) {
-
+			
 			mNodeNum[i] = 0;
 		}
 
@@ -157,11 +151,11 @@ public:
 				mLevelNodeNum[i][j] = 0;
 			}
 		}
-	
-		// insert prefixes one by one into index
+
+		// insert prefixes into ptree one by one
 		std::ifstream fin(_fn, std::ios_base::binary);
 
-		std::string line; 
+		std::string line;
 
 		ip_type prefix;
 
@@ -176,145 +170,172 @@ public:
 
 			nexthop = length;
 
-			if (0 == length) { // insert */0
-		
+			if (0 == length) { // */0
+
 				// do nothing
 			}
-			else { // insert into index
-			
+			else {
+
 				ins(prefix, length, nexthop);
 			}
 		}
 
 		report();
 
-		//traverse();
+		traverse();	
 
 		return;
 	}
-	
-	/// \brief destroy a binary tree
+
+
 	void destroy(size_t _idx) {
 
 		if (nullptr == mRootTable[_idx]) {
-		
+
 			return;
 		}
 
 		node_type* node = mRootTable[_idx];
 
 		std::queue<node_type*> queue;
-		
+
 		queue.push(node);
 
-		while(!queue.empty()) {
-
+		while (!queue.empty()) {
+		
 			auto front = queue.front();
 
-			if (nullptr != front->lchild) queue.push(front->lchild);
+			if (nullptr != queue.front()->lchild) queue.push(queue.front()->lchild);
 
-			if (nullptr != front->rchild) queue.push(front->rchild);
+			if (nullptr != queue.front()->rchild) queue.push(queue.front()->rchild);
 
 			delete front;
 
-			front = nullptr;	
+			front = nullptr;
 
 			queue.pop();
 		}
 
 		return;
-	}			
-	
-	/// \brief Report statistical inforamtion collected at the time point.
+	}
+
+	/// \brief Report the collected information.
 	void report() {
 
 		mTotalNodeNum = 0;
 
 		for (int i = 0; i < V; ++i) {
 
-			//std::cerr << "\n------node num in the " << i << "'s tree: " << mNodeNum[i] << std::endl;
-
-		//	for (int j = 0; j < W - U + 1; ++j) {
-
-		//		std::cerr << "level " << j << ": " << mLevelNodeNum[i][j]<< "\t";
-		//	}
-			
-		//	std::cin.get();
-
-			mTotalNodeNum += mNodeNum[i];	
+			mTotalNodeNum += mNodeNum[i];
 		}
 
 		std::cerr << "node num in total: " << mTotalNodeNum << std::endl;
 	}
 
 
-
-	/// \brief insert into index	
+	/// \brief Insert a prefix.
 	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop) {
 
-		if (_length < U){ // insert into a fast lookup table (use prefix + length as index entry) 
-	
-			ft->ins(_prefix, _length, _nexthop);	
-					
-		}
-		else { // insert into a binary tree
+		if (_length < U) {
 
-			ins(_prefix, _length, _nexthop, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], U, utility::getBitsValue(_prefix, 0, U - 1)); 
-		}
-
-		return;
-	}	
-		
-
-	/// \brief insert into a binary tree
-	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, node_type*& _node, const int _level, const size_t _treeIdx) {
-
-		if (nullptr == _node) {
-
-			_node = new node_type();
-
-			++mNodeNum[_treeIdx];
-
-			++mLevelNodeNum[_treeIdx][_level - U];
-		}
-
-		if (_length == _level) { // insert into current node
-			
-			_node->nexthop = _nexthop;
+			ft->ins(_prefix, _length, _nexthop);
 		}
 		else {
 
-			if (0 == utility::getBitValue(_prefix, _level)) {
-				
-				ins(_prefix, _length, _nexthop, _node->lchild, _level + 1, _treeIdx);
-			}
-			else {
-
-				ins(_prefix, _length, _nexthop, _node->rchild, _level + 1, _treeIdx);
-			}
+			ins(_prefix, _length, _nexthop, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], U, utility::getBitsValue(_prefix, 0, U - 1));
 		}
 
 		return;
 	}
 
 
-	/// \brief traverse all binary trees in bridth-first order
+	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, node_type*& _node, const int _level, const size_t _treeIdx) {
+
+		if (nullptr == _node) {
+
+			// create a node
+			_node = new node_type();
+
+			mNodeNum[_treeIdx]++;
+
+			mLevelNodeNum[_treeIdx][_level - U]++;
+
+			// insert the prefix
+			_node->prefix = _prefix;
+
+			_node->length = _length;
+		
+			_node->nexthop = _nexthop;
+			
+			return;
+		}	
+		else {
+			
+			if (_length == _level) { // _prefix must be inserted into current node
+				
+				if (_node->length > _level) { // the prefix in current node is different from the one to be inserted 
+	
+					// cache the prefix in _node 
+					uint32 prefix = _node->prefix;
+		
+					uint8 length = _node->length;
+		
+					uint32 nexthop = _node->nexthop;
+		
+					// insert _prefix into _node
+					_node->prefix = _prefix;
+	
+					_node->length = _length;
+		
+					_node->nexthop = _nexthop;
+	
+					// recursively insert the cached prefix into higher levels
+					if (0 == utility::getBitValue(prefix, _level)) { 
+		
+						ins(prefix, length, nexthop, _node->lchild, _level + 1, _treeIdx);
+					}
+					else {
+		
+						ins(prefix, length, nexthop, _node->rchild, _level + 1, _treeIdx);
+					}
+				}
+				else { // the prefix in current node must be the same as the one to be inserted
+
+					// do nothing
+				}
+			}	
+			else { // recursively insert _prefix into higher levels
+	
+				if (0 == utility::getBitValue(_prefix, _level)) {
+	
+					ins(_prefix, _length, _nexthop, _node->lchild, _level + 1, _treeIdx);
+				}
+				else {
+
+					ins(_prefix, _length, _nexthop, _node->rchild, _level + 1, _treeIdx);
+				}
+			}
+		}
+
+		return;
+	}
+
 	void traverse() {
 
-		uint32 nodeNum = 0;
+		uint32 nodeNum = 0; // for test
 
 		for (int i = 0; i < V; ++i) {
 
 			if (nullptr == mRootTable[i]) {
-				
+
 				// do nothing
 			}
 			else {
-		
+
 				std::queue<node_type*> queue;
 
 				queue.push(mRootTable[i]);
-			
+
 				while(!queue.empty()) {
 
 					nodeNum++;
@@ -322,25 +343,31 @@ public:
 					if (nullptr != queue.front()->lchild) queue.push(queue.front()->lchild);
 
 					if (nullptr != queue.front()->rchild) queue.push(queue.front()->rchild);
-					
-					printNode(queue.front());
+
+				//	printNode(queue.front());
 
 					queue.pop();
 				}
 			}
 		}
 
+		std::cerr << "traversed node num: " << nodeNum << std::endl;
+
 		return;
 	}
 
+	/// \brief print node information
 	void printNode(node_type* _node) {
 
-		std::cerr << "nexthop: " << _node->nexthop << std::endl;
+		std::cerr << "prefix: " << _node->prefix << " length: " << _node->length << "nexthop: " << _node->nexthop << std::endl;
 
 		return;
 	}
-	
-	/// \brief search for _ip
+
+
+	/// \brief search in the index
+	///
+	/// A match in the forest of prefix trees has a higher priority than the one in the fast lookup table.
 	uint32 search(const ip_type& _ip) {
 
 		// try to find a match in the fast lookup table
@@ -348,146 +375,170 @@ public:
 
 		nexthop1 = ft->search(_ip);
 
-		// try to find a match in the binary trees
+		// try to find a match in the forest of prefix trees
 		uint32 nexthop2 = 0;
 
-		node_type* node = mRootTable[utility::getBitsValue(_ip, 0, U - 1)]; 
+		node_type* node = mRootTable[utility::getBitsValue(_ip, 0, U - 1)];
 
 		int level = U;
 
+		int bestLength = 0;
+
 		while (nullptr != node) {
 
-			if (node->nexthop != 0) { // contains a valid prefix
+			if (utility::getBitsValue(_ip, 0, node->length - 1) == utility::getBitsValue(node->prefix, 0, node->length - 1)) {
 
-				nexthop2 = node->nexthop;
+				if (bestLength < node->length) {
+
+					bestLength = node->length;
+
+					nexthop2 = node->nexthop;
+				}
 			}
-		
-			// branch 
+
 			if (0 == utility::getBitValue(_ip, level)) {
 
 				node = node->lchild;
-			}		
+			}
 			else {
 
 				node = node->rchild;
 			}
-
+			
 			++level;
-		}				
+		}
 
-		if (0 != nexthop2) return nexthop2; // prefixes found in binary trees must be longer than those found in the fast table
+		// return a match in the forest of prefix trees if any
+		if (0 != nexthop2) return nexthop2;
 
+		// return a match in the fast lookup table if any
 		if (0 != nexthop1) return nexthop1;
 
 		return 0;
 	}
 
-
 	/// \brief delete a prefix in the index
 	void del(const ip_type& _prefix, const uint8& _length) {
 
-		if (_length < U) { // process in an alternatively way
-
-			// delete from the fast lookup table
+		if (_length < U) {
+		
 			ft->del(_prefix, _length);
 		}
-		else { // delete from a binary tree
+		else {
 
-			del(_prefix, _length, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], utility::getBitsValue(_prefix, 0, U - 1));
+			del(_prefix, _length, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], U, utility::getBitsValue(_prefix, 0, U - 1));
 		}
+	}
 
-		return;	
-	}	
+	/// \brief delete a prefix
+	void del(const ip_type& _prefix, const uint8& _length, node_type*& _node, const int _level, const size_t _treeIdx) {
 
-	/// \brief delete a prefix in a binary tree
-	///
-	/// If _prefix is located in a leaf node, then directly delete the node; otherwise,
-	/// clear the nexthop field.
-	/// \note After delete a leaf node, its parent may become a leaf node as well. 
-	/// If the parent has no prefix, we must recursively delete the parent node as well. 
-	void del(const ip_type& _prefix, const uint8& _length, node_type*& _root, const size_t _treeIdx){
-	
-		std::stack<node_type*> stack;
+		if (nullptr == _node) return; // find nothing	
 
-		node_type* node = _root;
-
-		int level = U; // start from level U
-
-		while (level < _length && nullptr != node) {
-	
-			stack.push(node);
+		if (_prefix == _node->prefix && _length == _node->length) { // prefix is found
 			
-			if (0 == utility::getBitValue(_prefix, level)) {
+			if (nullptr == _node->lchild && nullptr == _node->rchild) { // a leaf node, delete it directly
+				
+				delete _node;
 
-				node = node->lchild;
-			}			
-			else {
-	
-				node = node->rchild;
-			}
-
-			++level;
-		}
-
-		if (level == _length && nullptr != node) { // find the node
-
-			node->nexthop = 0;
-
-			if (nullptr == node->lchild && nullptr == node->rchild) { // if leaf node, then delete the node
-
-				delete node;
-
-				node = nullptr;
+				_node = nullptr; // reset parent's child pointer
 
 				--mNodeNum[_treeIdx];
 
-				--mLevelNodeNum[_treeIdx][level - U];
-					
-				// modify parent
-				while (!stack.empty()) {
+				--mLevelNodeNum[_treeIdx][_level - U];
 
-					// modify pointer
-					auto top = stack.top();
-
-					if (0 == utility::getBitValue(_prefix, level - 1)) {
-
-						top->lchild = nullptr;
-					}			
-					else {
-						
-						top->rchild = nullptr;
-					}
-
-					// parent becomes a leaf node, delete it
-					if (nullptr == top->lchild && nullptr == top->rchild && top->nexthop == 0) {
+				return;
+			}	
+			else { // not a leaf node, substitute the content of current node with the leaf node
 			
-						delete top;
+				node_type* pnode = _node; // parent node of leaf node
 
-						top = nullptr;
+				node_type* cnode = nullptr; // child node 
 
-						stack.pop();
+				bool isLeftBranch = true; // true if branch to left
 
-						--mNodeNum[_treeIdx];
-	
-						--mLevelNodeNum[_treeIdx][level - U - 1];
+				// at least has a child
+				if (nullptr != pnode->lchild) {
+
+					cnode = pnode->lchild;
+
+					isLeftBranch = true;
+				}
+				else {
+
+					cnode = pnode->rchild;
+
+					isLeftBranch = false;
+				}
+				
+				int child_level = _level + 1;
+
+				// find leaf descendant
+				while (nullptr != cnode->lchild || nullptr != cnode->rchild) {
+
+					if (nullptr != cnode->lchild) {
+
+						pnode = cnode;
+
+						cnode = cnode->lchild;
+
+						isLeftBranch = true;
 					}
 					else {
 
-						break;
+						pnode = cnode;
+
+						cnode = cnode->rchild;
+
+						isLeftBranch = false;
 					}
 
-					--level;
+					child_level++;
+				}	
+					
+	
+				// replace content of _node by that of those in cnode
+				_node->prefix = cnode->prefix;
+
+				_node->length = cnode->length;
+
+				_node->nexthop = cnode->nexthop;
+
+				// reset child pointer of pnode
+				if (isLeftBranch) {
+
+					pnode->lchild = nullptr;
+				}
+				else {
+
+					pnode->rchild = nullptr;
 				}
 
-				if (stack.empty()) { // stack is empty, then the root is also deleted
+				// delete cnode
+				delete cnode;
 
-					_root = nullptr;
-				}
+				cnode = nullptr;
+
+				--mNodeNum[_treeIdx];
+
+				--mLevelNodeNum[_treeIdx][child_level];
+
+				return;
 			}
 		}
-		
-		return;
+		else { // attempt to find the prefix in higher levels
+
+			if (0 == utility::getBitValue(_prefix, _level)) {
+
+				del(_prefix, _length, _node->lchild, _level + 1, _treeIdx);
+			} 
+			else {
+
+				del(_prefix, _length, _node->rchild, _level + 1, _treeIdx);
+			}
+		}	
 	}
+	
 
 	/// \brief Scatter nodes in binary trees according to a pipeline
 	///
@@ -795,6 +846,8 @@ public:
 
 		delete[] trycolor;
 	}
+
 };
 
-#endif // _BTree_H
+#endif // _PT_H
+

@@ -1,5 +1,5 @@
-#ifndef _PT_H
-#define _PT_H
+#ifndef _PTREE_H
+#define _PTREE_H
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /// Copyright (c) 2016, Sun Yat-sen University
@@ -15,8 +15,8 @@
 /// \date 2016.11
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../common.h"
-#include "../utility.h"
+#include "../common/common.h"
+#include "../common/utility.h"
 #include <queue>
 
 
@@ -248,7 +248,7 @@ public:
 	}
 
 	/// \brief delete a prefix
-	void del(const ip_type& _prefix, const uint8& _length, node_type*& _node, int _level) {
+	void del(const ip_type& _prefix, const uint8& _length, node_type*& _node, const int _level) {
 
 		if (nullptr == _node) return; // find nothing
 

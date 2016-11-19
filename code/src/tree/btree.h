@@ -12,9 +12,8 @@
 /// \date 2016.11
 ///////////////////////////////////////////////////////////
 
-#include "../common.h"
-#include "../utility.h"
-#include "btree.h"
+#include "../common/common.h"
+#include "../common/utility.h"
 #include <queue>
 #include <deque>
 #include <stack>
