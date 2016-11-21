@@ -10,8 +10,8 @@
 /// @author Yi Wu
 ///////////////////////////////////////////////////////////
 
-#include "../common.h"
-#include "../utility.h"
+#include "../common/common.h"
+#include "../common/utility.h"
 #include "btree.h"
 #include <queue>
 #include <deque>
@@ -860,7 +860,7 @@ public:
 		{
 
 			// destroy the fixed-stride tree starting with the root node fst_root (without leaf-pushing)
-			if (nullptr != fst_root) {
+			if (nullptr == fst_root) {
 	
 				return;
 			}		
@@ -889,7 +889,7 @@ public:
 
 		{
 			// destroy the fixed-stride tree starting with the root node fst2_root (with leaf-pushing) 
-			if (nullptr != fst2_root) {
+			if (nullptr == fst2_root) {
 
 				return;
 			}

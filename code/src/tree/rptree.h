@@ -592,16 +592,16 @@ public:
 
 					if (nullptr != front->lchild) {
 
-						front->lchild->stageidx = front->stageidx + 1;
+						front->lchild->stageidx = front->stageidx + 1; // increment 1
 
-						nodeNumInStage[front->lchild->stageidx]++;
+						nodeNumInStage[front->lchild->stageidx]++; 
 						
 						queue.push(front->lchild);
 					}								
 
 					if (nullptr != front->rchild) {
 
-						front->rchild->stageidx = front->stageidx + 1;
+						front->rchild->stageidx = front->stageidx + 1; // increment 1
 
 						nodeNumInStage[front->rchild->stageidx]++;
 
@@ -665,7 +665,7 @@ public:
 
 					if (nullptr != front->lchild) {
 
-						front->lchild->stageidx = roll();
+						front->lchild->stageidx = roll(); // roll
 
 						nodeNumInStage[front->lchild->stageidx]++;
 
@@ -674,7 +674,7 @@ public:
 
 					if (nullptr != front->rchild) {
 
-						front->rchild->stageidx = roll();
+						front->rchild->stageidx = roll(); // roll
 
 						nodeNumInStage[front->rchild->stageidx]++;
 
@@ -771,7 +771,7 @@ public:
 	
 				for (size_t k = 0; k < W - U + 1; ++k) { // put nodes one level per stage
 
-					trycolor[(j + k) % _stagenum] += mLevelNodeNum[treeIdx][k];		
+					trycolor[(j + k) % _stagenum] += mLevelNodeNum[treeIdx][k]; // wrap around
 				}
 
 				// compute variance
@@ -801,7 +801,7 @@ public:
 
 			for (int j = 0; j < W - U + 1; ++j) {
 		
-				colored[(bestStartIdx + j) % _stagenum] += mLevelNodeNum[treeIdx][j];	
+				colored[(bestStartIdx + j) % _stagenum] += mLevelNodeNum[treeIdx][j]; // wrap around	
 			}
 
 			// color nodes in current binary tree
@@ -819,12 +819,16 @@ public:
 
 				if (nullptr != front->lchild) {
 
-					front->lchild->stageidx = front->stageidx + 1;
+					front->lchild->stageidx = (front->stageidx + 1) % _stagenum; // wrap around
+
+					queue.push(front->lchild);
 				}
 
 				if (nullptr != front->rchild) {
 
-					front->rchild->stageidx = front->stageidx + 1;
+					front->rchild->stageidx = (front->stageidx + 1) % _stagenum; // wrap around
+
+					queue.push(front->rchild);
 				}
 
 				queue.pop();

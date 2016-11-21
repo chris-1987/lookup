@@ -10,6 +10,7 @@
 /// The lookup index consists of three parts: a fast lookup table that contains route information for prefixes shorter than U bits,
 /// a table that consists of 2^U entries and each entry stores a pointer to the root of a binary tree, 
 /// and a set of binary tree.
+
 /// \author Yi Wu
 /// \date 2016.11
 ///////////////////////////////////////////////////////////
@@ -81,7 +82,17 @@ private:
 public:
 
 	/// \brief default ctor
-	RBTree() : mTotalNodeNum(0), ft(nullptr) {
+	RBTree() {
+
+		initializeParameters();
+	}
+
+	/// \brief initialize parameters
+	void initializeParameters() {
+
+		mTotalNodeNum = 0;
+
+		ft = nullptr;
 	
 		for (int i = 0; i < V; ++i) {
 
@@ -131,32 +142,26 @@ public:
 		ft = nullptr;
 	}
 
-	/// \brief Build the index.
-	void build(const std::string & _fn) {
+	/// \brief clear
+	void clear() {
 
-		// clear old index if there exists any
 		for (int i = 0; i < V; ++i) {
 
 			if (nullptr != mRootTable[i]) {
 
 				destroy(i);
 
-				mRootTable[i] = nullptr;
 			}
 		}
+	}
+	/// \brief Build the index.
+	void build(const std::string & _fn) {
 
-		for (int i = 0; i < V; ++i) {
+		// clear old index if there exists any
+		clear();
 
-			mNodeNum[i] = 0;
-		}
-
-		for (int i = 0; i < V; ++i) {
-
-			for (int j = 0; j < W - U + 1; ++j) {
-
-				mLevelNodeNum[i][j] = 0;
-			}
-		}
+		// 
+		initializeParameters();
 	
 		// insert prefixes one by one into index
 		std::ifstream fin(_fn, std::ios_base::binary);
@@ -232,7 +237,7 @@ public:
 
 		for (int i = 0; i < V; ++i) {
 
-			//std::cerr << "\n------node num in the " << i << "'s tree: " << mNodeNum[i] << std::endl;
+		//	std::cerr << "\n------node num in the " << i << "'s tree: " << mNodeNum[i] << std::endl;
 
 		//	for (int j = 0; j < W - U + 1; ++j) {
 
@@ -541,7 +546,7 @@ public:
 
 					if (nullptr != front->lchild) {
 
-						front->lchild->stageidx = front->stageidx + 1;
+						front->lchild->stageidx = front->stageidx + 1; // plus 1
 
 						nodeNumInStage[front->lchild->stageidx]++;
 						
@@ -550,7 +555,7 @@ public:
 
 					if (nullptr != front->rchild) {
 
-						front->rchild->stageidx = front->stageidx + 1;
+						front->rchild->stageidx = front->stageidx + 1; // plus 1
 
 						nodeNumInStage[front->rchild->stageidx]++;
 
@@ -614,7 +619,7 @@ public:
 
 					if (nullptr != front->lchild) {
 
-						front->lchild->stageidx = roll();
+						front->lchild->stageidx = roll(); // roll
 
 						nodeNumInStage[front->lchild->stageidx]++;
 
@@ -623,7 +628,7 @@ public:
 
 					if (nullptr != front->rchild) {
 
-						front->rchild->stageidx = roll();
+						front->rchild->stageidx = roll(); // roll
 
 						nodeNumInStage[front->rchild->stageidx]++;
 
@@ -720,7 +725,7 @@ public:
 	
 				for (size_t k = 0; k < W - U + 1; ++k) { // put nodes one level per stage
 
-					trycolor[(j + k) % _stagenum] += mLevelNodeNum[treeIdx][k];		
+					trycolor[(j + k) % _stagenum] += mLevelNodeNum[treeIdx][k]; // wrap around	
 				}
 
 				// compute variance
@@ -750,7 +755,7 @@ public:
 
 			for (int j = 0; j < W - U + 1; ++j) {
 		
-				colored[(bestStartIdx + j) % _stagenum] += mLevelNodeNum[treeIdx][j];	
+				colored[(bestStartIdx + j) % _stagenum] += mLevelNodeNum[treeIdx][j]; // wrap around	
 			}
 
 			// color nodes in current binary tree
@@ -768,12 +773,16 @@ public:
 
 				if (nullptr != front->lchild) {
 
-					front->lchild->stageidx = front->stageidx + 1;
+					front->lchild->stageidx = (front->stageidx + 1) % _stagenum; // wrap around
+
+					queue.push(front->lchild);
 				}
 
 				if (nullptr != front->rchild) {
 
-					front->rchild->stageidx = front->stageidx + 1;
+					front->rchild->stageidx = (front->stageidx + 1) % _stagenum; // wrap around
+
+					queue.push(front->rchild);
 				}
 
 				queue.pop();
@@ -794,6 +803,20 @@ public:
 		delete[] colored;
 
 		delete[] trycolor;
+	}
+
+
+	/// \brief Compute and return number of nodes at a specific level in all the binary trees.
+	size_t getLevelNodeNum(const int _level) {
+
+		size_t sum = 0;
+
+		for (size_t i = 0; i < V; ++i) {
+		
+			sum += mLevelNodeNum[i][_level];
+		}
+		
+		return sum;
 	}
 };
 
