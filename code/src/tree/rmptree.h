@@ -17,10 +17,14 @@
 
 
 #include "../common/common.h"
-#include "../utility/utility.h"
+#include "../common/utility.h"
+#include "fasttable.h"
+
 #include <queue>
 #include <cmath>
 #include <chrono>
+#include <random>
+#include <algorithm>
 
 #define DEBUG_RMPT
 
@@ -48,13 +52,14 @@ struct SNode{
 
 	SNode* rchild; ///< ptr to right child
 
-	int stageidx; ///< pipe stage number
+	int stageidx; ///< pipe stage number, not required, only for test
 
 	SNode() : prefix(0), length(0), nexthop(0), lchild(nullptr), rchild(nullptr), stageidx(0) {}
 };
 
 template<int W>
 const size_t SNode<W>::size = sizeof(ip_type) + sizeof(uint8) + sizeof(uint32) + sizeof(SNode*) + sizeof(SNode*); // stageidx is excluded
+
 
 
 /// \brief Primary node in a multi-prefix tree.
@@ -85,7 +90,6 @@ struct PNode{
 	///
 	/// A primary node consists of multiple prefix esntries, each entry records a prefix, the length of the prefix and its nexthop.
 	/// A primary node also contains multiple child pointers.
-	///
 	struct PrefixEntry{
 		
 		ip_type prefix;
@@ -103,7 +107,7 @@ struct PNode{
 
 	snode_type* sRoot; ///< pointer to the root of auxiliary prefix tree.
 
-	PNode() : t(0), sRoot(nullptr), stageidx(0) {
+	PNode() : t(0), stageidx(0), sRoot(nullptr) {
 
 		for (size_t i = 0; i < MC; ++i) {
 
@@ -112,14 +116,12 @@ struct PNode{
 	}
 
 	~PNode() {
-
+		
 	}
 };
 
-const size_t PNode<W, K>::size = sizeof(uint8) + sizeof(PrefixEntry) * MP + sizeof(pnode_type*) * MC + sizeof(snode_type*); // t, prefixes, childs, sRoot
-
-
-
+template<int W, int K, size_t MP, size_t MC>
+const size_t PNode<W, K, MP, MC>::size = sizeof(uint8) + sizeof(PrefixEntry) * MP + sizeof(pnode_type*) * MC + sizeof(snode_type*);
 
 
 /// \brief Build the index (fast table + forest of multi-prefix trees).
@@ -133,7 +135,9 @@ const size_t PNode<W, K>::size = sizeof(uint8) + sizeof(PrefixEntry) * MP + size
 /// \param U A threshold for classifying shorter and longer prefixes. Specifically, the length of a shorter prefix is smaller than U,
 /// while the length of a longer prefix is no less than U.
 /// \param V Number of prefix trees at large.
-template<int W, int K, size_t MP = 2 * K + 1, size_t MC = static_cast<size_t>(pow(2, K)), int U, size_t V = static_cast<size_t>(pow(2, U))>
+/// \param H1 maximum height of a primary node.
+/// \param H2 maximum height of a secondary node.
+template<int W, int K, int U, size_t MP = 2 * K + 1, size_t MC = static_cast<size_t>(pow(2, K)), size_t V = static_cast<size_t>(pow(2, U)), int H1 = (W - U + 1) / K + (((W - U + 1) % K != 0) ? 1 : 0), int H2 = H1 + K>
 class RMPTree {
 private:
 
@@ -145,13 +149,21 @@ private:
 
 	pnode_type* mRootTable[V]; ///< pointers to a forest of multi-prefix tree
 
-	uint32 mPNodeNum[V]; ///< number of pnodes in each multi-prefix tree
+	uint32 mLocalLevelPNodeNum[V][H1]; ///< number of primary ndoes at each level in all trees
 
-	uint32 mSNodeNum[V]; ///< number of snodes in each multi-prefix tree
+	uint32 mLocalLevelSNodeNum[V][H2]; ///< number of seconary nodes at each level in all trees
+
+	uint32 mLocalPNodeNum[V]; ///< number of primary nodes in each tree
+
+	uint32 mLocalSNodeNum[V]; ///< number of seceondary nodes in each tree
+	
+	uint32 mGlobalLevelPNodeNum[H1]; ///< number of primary nodes at each level
+	
+	uint32 mGlobalLevelSNodeNum[H2]; ///< number of secondary nodes at each level
 
 	FastTable<W, U - 1> *ft; ///< pointer to the fast lookup table
 
-private:
+public:
 	
 	/// \brief default ctor
 	RMPTree() {
@@ -169,28 +181,54 @@ private:
 
 		for (size_t i = 0; i < V; ++i) {
 
-			mPNodeNum[i] = 0;
+			for (size_t j = 0; j < H1; ++j) {
+
+				mLocalLevelPNodeNum[i][j] = 0;
+			}
 		}
 
 		for (size_t i = 0; i < V; ++i) {
 
-			mSNodeNum[i] = 0;
+			for (size_t j = 0; j < H2; ++j) {
+
+				mLocalLevelSNodeNum[i][j] = 0;
+			}
 		}
 
+		for (size_t i = 0; i < V; ++i) {
+
+			mLocalPNodeNum[i] = 0;
+		}
+
+		for (size_t i = 0; i < V; ++i) {
+
+			mLocalSNodeNum[i] = 0;
+		}
+
+		for (size_t i = 0; i < H1; ++i) {
+
+			mGlobalLevelPNodeNum[i] = 0;
+		}	
+
+		for (size_t i = 0; i < H2; ++i) {
+
+			mGlobalLevelSNodeNum[i] = 0;
+		}
+	
 		ft = new FastTable<W, U - 1>();
 	}
 
 	/// \brief disable copy-ctor
-	RMPTree(const MPTree& _mpt) = delete;
+	RMPTree(const RMPTree& _mpt) = delete;
 
 	/// \brief disable assignment op
-	RMPTree& operator= (const MPTree&) = delete;
+	RMPTree& operator= (const RMPTree&) = delete;
 
 
 	/// \brief dtor
 	///
 	/// destroy index
-	~MPTree() {
+	~RMPTree() {
 
 		clear();
 	}
@@ -228,7 +266,7 @@ public:
 		// insert prefixes one by one into index
 		std::ifstream fin(_fn, std::ios_base::binary);
 
-		std::string line
+		std::string line;
 
 		ip_type prefix;
 
@@ -251,8 +289,6 @@ public:
 				ins(prefix, length, nexthop);
 			}
 		}		
-
-		report();
 
 		// traverse();
 
@@ -330,7 +366,7 @@ public:
 		}
 		else { // no fewer than U bits, insert into the forest of the multi-prefix trees
 
-			// the starting level is 0 (not U bits)
+			// the starting level is 0 (not U), use the first U bits to branch.
 			ins(_prefix, _length, _nexthop, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], 0, utility::getBitsValue(_prefix, 0, U - 1));
 		}
 		
@@ -351,19 +387,21 @@ public:
 
 			_pnode = new pnode_type();
 	
-			++mPNodeNum[_treeIdx];
+			++mLocalPNodeNum[_treeIdx]; // primary nodes in current MPT
+
+			++mLocalLevelPNodeNum[_treeIdx][_level]; // primary nodes at current level of current MPT
 		}
 
-		if (_length < U + (_level + 1) * K) { // _level starts from 0, required to plus U
+		if (_length < U + (_level + 1) * K) { // [U, U + (_level + 1) * K - 1], in this level
 
 			// current prefix must be inserted into the auxiliary prefix tree
-			ins(_prefix, _length, _nexthop, _pnode->sRoot, 0, _level, _treeIdx); // sLevel = 0, pLevel = _level	
+			ins(_prefix, _length, _nexthop, _pnode->sRoot, 0, _level, _treeIdx); // sLevel in current auxiliary tree starts from 0
 		}
 		else { // insert the prefix into current primary node or a node in a higher level
 
 			if (_pnode->t < MP) { // current primary node is not full, insert prefix into current primary node
 
-				insertPrefixInPNode(_pnode, _prefix,_length, _nexthop, _treeIdx);
+				insertPrefixInPNode(_pnode, _prefix,_length, _nexthop);
 			}
 			else {
 					
@@ -371,7 +409,7 @@ public:
 				if (_pnode->prefixEntries[MP - 1].length < _length) { 
 
 					// cache the shortest prefix in current primary node
-					uint32 prefix = _pnode->prefixEntries[MP - 1].prefix;
+					ip_type prefix = _pnode->prefixEntries[MP - 1].prefix;
 
 					uint8 length = _pnode->prefixEntries[MP - 1].length;
 
@@ -468,7 +506,9 @@ public:
 			// create a new secondary node
 			_snode = new snode_type();
 
-			mSNodeNum[_treeIdx]++;	
+			mLocalSNodeNum[_treeIdx]++;	
+
+			mLocalLevelSNodeNum[_treeIdx][_pLevel + 1 + _sLevel]++; // be careful, required to plus 1 
 
 			// insert the prefix
 			_snode->prefix = _prefix;
@@ -486,7 +526,7 @@ public:
 				if (_snode->length > U + _pLevel * K + _sLevel) { // prefix in curretn node is longer than the one to be inserted
 
 					// copy prefix in current secondary node
-					uint32 prefix = _snode->prefix;
+					ip_type prefix = _snode->prefix;
 
 					uint8 length = _snode->length;
 
@@ -551,7 +591,7 @@ public:
 
 		int pLevel = 0;
 
-		int sBestlength; // record best match in auxiliary prefix trees	
+		int sBestLength; // record best match in auxiliary prefix trees	
 
 		while (nullptr != pnode) {
 
@@ -620,11 +660,11 @@ public:
 	/// A long prefix (>=U bits) is deleted from the forest of multi-prefix tree.
 	void del(const ip_type& _prefix, const uint8& _length) {
 
-		if (_length < U) {
+		if (_length < U) { // delete a short prefix in the fast lookup table
 
 			ft->del(_prefix, _length);	
 		}
-		else {
+		else { // delete a long prefix in the MPT forest
 
 			del(_prefix, _length, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], 0, utility::getBitsValue(_prefix, 0, U - 1));
 		}
@@ -644,17 +684,21 @@ public:
 
 		if (nullptr == _pnode) return;
 
-		if (_length < U + (_level + 1) * K) { // if exists, must be in the auxiliary prefix tree
+		if (_length < U + (_level + 1) * K) { // in the auxiliary PT
 
 			// delete
-			del(_prefix, _length, _pnode->sRoot, 0, _level);				
+			del(_prefix, _length, _pnode->sRoot, 0, _level, _treeIdx);				
 
 			// adjust the prefix tree, if necessary
-			if (nullptr == _pnode->sRoot && 0 == _pnode->t) {
+			if (nullptr == _pnode->sRoot && 0 == _pnode->t) { // empty external primary node
 		
-			_pnode = nullptr;
+				delete _pnode;
 
-				--mPNodeNum[_treeIdx];
+				_pnode = nullptr;
+
+				--mLocalPNodeNum[_treeIdx];
+
+				--mLocalLevelPNodeNum[_treeIdx][_level];
 			}
 		}
 		else {
@@ -668,6 +712,8 @@ public:
 				deletePrefixInPNode(_pnode, _pos);
 
 				// if current primary node is an internal node, then find the longest prefix in them and insert it into current primary node
+				bool hasChild = false;
+
 				for (size_t i = 0; i < MC; ++i) {
 
 					if (nullptr != _pnode->childEntries[i]) {
@@ -695,7 +741,7 @@ public:
 					insertPrefixInPNode(_pnode, long_prefix, long_length, long_nexthop);
 
 					// delete the longest prefix in the child node
-					del(long_prefix, long_length, _pnode->childEntries[childIdx], _level + 1);
+					del(long_prefix, long_length, _pnode->childEntries[childIdx], _level + 1, _treeIdx);
 				}
 				else { // external node
 
@@ -706,7 +752,9 @@ public:
 			
 						_pnode = nullptr;
 
-						--mPNodeNum[_treeIdx];
+						--mLocalPNodeNum[_treeIdx];
+
+						--mLocalLevelPNodeNum[_treeIdx][_level];
 					}
 				}
 			}	
@@ -737,6 +785,7 @@ public:
 		return _pnode->t + 1;
 	}
 
+
 	/// \brief delete a prefix in an auxiliary prefix tree
 	void del(const ip_type& _prefix, const uint8& _length, snode_type*& _snode, const int _sLevel, const int _pLevel, const uint32 _treeIdx){
 
@@ -744,13 +793,15 @@ public:
 
 		if (_length == _snode->length && _prefix == _snode->prefix) { // find the prefix
 
-			if (nullptr == _snode->lchild && nullptr == _snode->rchild) { // external node, delete it
+			if (nullptr == _snode->lchild && nullptr == _snode->rchild) { // external node, directly delete it
 
 				delete _snode;
 
 				_snode = nullptr;
 
-				--mSNodeNum[_sLevel + K * _pLevel];
+				--mLocalSNodeNum[_treeIdx];
+
+				--mLocalLevelSNodeNum[_treeIdx][_pLevel + 1 + _sLevel]; // plus 1 is required
 
 				return;
 			}
@@ -775,6 +826,8 @@ public:
 					child_node = parent_node->rchild;
 				}
 
+				int child_sLevel = _sLevel + 1; // level of child node
+
 				// find leaf descendant
 				while (nullptr != child_node->lchild || nullptr != child_node->rchild) {
 
@@ -794,6 +847,8 @@ public:
 
 						isLeftBranch = false;
 					}
+
+					++child_sLevel;
 				}
 
 
@@ -818,7 +873,9 @@ public:
 
 				child_node = nullptr;
 
-				--mSNodeNum[_sLevel + K * _pLevel];
+				--mLocalSNodeNum[_treeIdx];
+
+				--mLocalLevelSNodeNum[_treeIdx][_pLevel + 1 + child_sLevel];
 
 				return;
 			}	
@@ -909,7 +966,7 @@ public:
 		return;
 	}
 
-	/// \brief print a primary node and 	
+	/// \brief print a primary node 	
 	void printPNode(const pnode_type* _pnode) const {
 
 		for (size_t i = 0; i < MP; ++i) {
@@ -923,34 +980,204 @@ public:
 
 	/// \brief Report collected information.
 	///
+	/// Consider three types of pipe lines: linear, circular and random.
 	void report(){
+
+		std::cerr << "---statistics for pnode/snode in each MPT\n";
 
 		for (size_t i = 0; i < V; ++i) {
 
-			std::cerr << "tree " << i << ": \n"'
-		
-			std::cerr << "primary node num: " << mPNodeNum[i] << std::endl;
-
-			std::cerr << "secondary node num: " << mSNodeNum[i] << std::endl;
+			std::cerr << "tree " << i << ": " << "primary node num: " << mLocalPNodeNum[i] << " secondary node num: " << mLocalSNodeNum[i] << std::endl;
 		}
+
+//		std::cerr << "---statistics for node/snode at each level in each MPT\n";
+//		for (size_t i = 0; i < V; ++i) {
+
+//			std::cerr << "tree " << i << ":\n";
+
+//			std::cerr << "pnode: \n";
+
+//			for (size_t j = 0; j < H1; ++j) {
+
+//				std::cerr << "level " << j << ": " << mLocalLevelPNodeNum[i][j] << "\t";
+//			} 
+
+//			std::cerr << "\nsnode: \n";
+//
+//			for (size_t j = 0; j< H2; ++j) {
+//
+//				std::cerr << "level " << j << ": " << mLocalLevelSNodeNum[i][j] << "\t";
+//			}
+	
+//			std::cerr << std::endl;
+//		}
 	}
 
-	
-	/// \brief Scatter in a random pipeline.
+
+	/// \brief Scatter 
+	void scatterToPipeline(int _pipestyle, int _stagenum = H2) { // H2 > H1
+
+		switch(_pipestyle) {
+
+		case 0: lin(_stagenum); break;
+
+		case 1: ran(_stagenum); break;
+
+		case 2: cir(_stagenum); break;
+		}
+
+		return;
+	}
+
+	/// \brief Scatter nodes in a linear pipe line.
 	///
-	/// Use two different random seed to generate random number for primary
-	/// and secondary nodes, respectively.
+	/// Map nodes into a linear pipe line in a manner of one level per stage.
+	/// 	
+	/// \note The number of stages is H2 for a linear pipe line.
+	void lin(int _stagenum) {
+
+		size_t* memUseInStage = new size_t[_stagenum];
+
+		size_t* testGlobalPNodeNum = new size_t[_stagenum];
+
+		size_t* testGlobalSNodeNum = new size_t[_stagenum];
+
+		for (int i = 0; i < _stagenum; ++i) {
+
+			memUseInStage[i] = 0;
+
+			testGlobalPNodeNum[i] = 0;
+
+			testGlobalSNodeNum[i] = 0;
+		}
+		
+		// start numbering
+		for (size_t i = 0; i < V; ++i) {
+
+			if (nullptr != mRootTable[i]) {
+
+				mRootTable[i]->stageidx = 0;
+
+				memUseInStage[0] += PNode<W, K>::size;
+		
+				testGlobalPNodeNum[0]++;	
+
+				std::queue<pnode_type*> pqueue;
+
+				pqueue.push(mRootTable[i]);
+
+				while (!pqueue.empty()) {
+
+					auto pfront = pqueue.front();
+
+					if (nullptr != pfront->sRoot) {
+
+						pfront->sRoot->stageidx = (pfront->stageidx + 1) % _stagenum;
+
+						memUseInStage[pfront->sRoot->stageidx] += SNode<W>::size;
+
+						testGlobalSNodeNum[pfront->sRoot->stageidx]++;
+
+						std::queue<snode_type*> squeue;
+
+						squeue.push(pfront->sRoot);
+
+						while (!squeue.empty()) {
+
+							auto sfront = squeue.front();
+
+							if (nullptr != sfront->lchild) {
+
+								sfront->lchild->stageidx = (sfront->stageidx + 1) % _stagenum;
+
+								memUseInStage[sfront->lchild->stageidx] += SNode<W>::size;
+
+								testGlobalSNodeNum[pfront->lchild->stageidx]++;
+
+								squeue.push(sfront->lchild);
+							}
+
+							if (nullptr != sfront->rchild) {
+
+								sfront->rchild->stageidx = (sfront->stageidx + 1) % _stagenum;
+
+								memUseInStage[sfront->rchild->stageidx] += SNode<W>::size;
+
+								testGlobalSNodeNum[pfront->rchild->stageidx]++;
+
+								squeue.push(sfront->rchild);
+							}
+
+							squeue.pop();
+						}
+					}
+
+					// 
+					for (size_t j = 0; j < MC; ++j) {
+
+						if (nullptr != pfront->childEntries[j]) {
+
+							pfront->childEntries[j]->stageidx = (pfront->stageidx + 1) % _stagenum;
+
+							memUseInStage[pfront->childEntries[j]->stageidx] += PNode<W, K>::size;
+
+							testGlobalPNodeNum[pfront->childEntries[j]->stageidx]++;
+
+							pqueue.push(pfront->childEntries[j]);
+						}
+					}
+
+					pqueue.pop();
+				}
+			}
+		}
+
+		// output information
+		std::cerr << "\nmem use in stage: \n";
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+
+			std::cerr << "stage " << i << ": " << memUseInStage[i] << "\t";
+		}
+
+		std::cerr << "\nGlobal pnode num in each stage: \n";
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+
+			std::cerr << "stage " << i << ": " << testGlobalPNodeNum[i] << std::endl;
+		}
+	
+		std::cerr << "\nGlobal snode num in each stage: \n";
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+
+			std::cerr << "stage " << i << ": " << testGlobalSNodeNum[i] << std::endl;
+		}
+
+		delete[] memUseInStage;
+
+		delete[] testGlobalPNodeNum;
+
+		delete[] testGlobalSNodeNum;
+	}
+
+
+	/// \brief Scatter nodes in a random pipe line.
+	///
+	/// Use different generator to produce random number for distributing primary nodes and 
+	/// secondary nodes.
 	void ran(int _stagenum) {
 
 		size_t* pnodeNumInStage = new size_t[_stagenum];
 
 		size_t* snodeNumInStage = new size_t[_stagenum];
 
-		for (int i = 0; i < _stagenum; ++i) {
 
+		for (int i = 0; i < _stagenum; ++i) {
+	
 			pnodeNumInStage[i] = 0;
 
-			snodeNumInstage[i] = 0;
+			snodeNumInStage[i] = 0;
 		}
 
 		// random generator for pnode
@@ -963,7 +1190,7 @@ public:
 		auto roll_pnode = std::bind(distribution_pnode, generator_pnode);
 
 		// random generator for snode
-		unsigned seed_snode = std::system_clock::now().time_since_epoch().count() + 1000000;
+		unsigned seed_snode = std::chrono::system_clock::now().time_since_epoch().count() + 1000000;
 
 		std::default_random_engine generator_snode(seed_snode);
 
@@ -976,11 +1203,11 @@ public:
 
 			if (nullptr != mRootTable[i]) {
 
+				mRootTable[i]->stageidx = roll_pnode(); // roll
+
+				pnodeNumInStage[mRootTable[i]->stageidx]++;
+
 				std::queue<pnode_type*> pqueue;
-
-				mRootTable[i]->stageidx = 0;
-
-				pnodeNumInStage[0]++;
 
 				pqueue.push(mRootTable[i]);
 			
@@ -991,9 +1218,9 @@ public:
 					// auxiliary tree
 					if (nullptr != pfront->sRoot) {
 
-						std::queue,snode_type*> squeue;
+						std::queue<snode_type*> squeue;
 
-						pfront->sRoot->stageidx = pfront->stageidx; // root of auxiliary tree and the primary node at same level
+						pfront->sRoot->stageidx = roll_snode(); // roll  
 				
 						squeue.push(pfront->sRoot);
 
@@ -1003,14 +1230,14 @@ public:
 							
 							if (nullptr != sfront->lchild) {
 
-								sfront->lchild->stageidx = sfront->stageidx + 1;
+								sfront->lchild->stageidx = roll_snode(); // roll
 
-								squueue.push(sfront->lchild);
+								squeue.push(sfront->lchild);
 							}
 
 							if (nullptr != sfront->rchild) {
 
-								sfront->rchild->stageidx = sfront->stageidx + 1;
+								sfront->rchild->stageidx = roll_snode(); // roll
 
 								squeue.push(sfront->rchild);
 							}
@@ -1024,7 +1251,7 @@ public:
 
 						if(nullptr != pfront->childEntries[j]) {
 
-							pfront->childEntries[j]->stageidx = pfront->stageidx + K;
+							pfront->childEntries[j]->stageidx = roll_pnode(); // roll
 
 							pqueue.push(pfront->childEntries[j]);
 						}
@@ -1042,13 +1269,13 @@ public:
 
 		for (size_t i = 0; i < _stagenum; ++i) {
 
-			pnodeNumInAllStages[i] += pnodeNumInStages[i];
+			pnodeNumInAllStages += pnodeNumInStage[i];
 
-			snodeNumInAllStages[i] += snodeNumInStages[i];
+			snodeNumInAllStages += snodeNumInStage[i];
 
-			std::cerr << "pnodenum in stages " << i << ": " << pnodenumInStages[i] << std::endl;
+			std::cerr << "pnodenum in stages " << i << ": " << pnodeNumInStage[i] << std::endl;
 
-			std::cerr << "snodenum in stages " << i << ": " << snodenumInStages[i] << std::endl;
+			std::cerr << "snodenum in stages " << i << ": " << snodeNumInStage[i] << std::endl;
 		}
 
 		std::cerr << "pnode num in all stages: " << pnodeNumInAllStages << std::endl;
@@ -1056,9 +1283,9 @@ public:
 		std::cerr << "snode num in all stages: " << snodeNumInAllStages << std::endl;
 
 
-		delete pnodeNumInStages[i];
+		delete[] pnodeNumInStage;
 
-		delete snodeNumInStages[i];
+		delete[] snodeNumInStage;
 
 		return;
 	}
@@ -1085,6 +1312,165 @@ public:
 			}
 		}		
 	};
+
+	/// \brief Scatter in a circular pipeline
+	void cir(int _stagenum) {
+
+		// step 1: sort binary tries by their size in no-decreasing order
+		std::vector<SortElem> vec;
+
+		for (size_t i = 0; i < V; ++i) {
+
+			if (nullptr != mRootTable[i]) {
+
+				size_t treeSize = mLocalPNodeNum[i] * PNode<W, K>::size + mLocalSNodeNum[i] * SNode<W>::size;
+
+				vec.push_back(SortElem(treeSize, i));
+			}
+		}
+
+		std::sort(std::begin(vec), std::end(vec));
+
+		// step 2: scatter nodes 
+		size_t* colored = new size_t[_stagenum];
+
+		for (int i = 0; i < _stagenum; ++i) colored[i] = 0;
+
+		size_t* trycolor = new size_t[_stagenum];
+
+		for (int i = 0; i < _stagenum; ++i)  trycolor[i] = 0;
+
+		int bestStartIdx = 0;
+
+		for (int i = vec.size() - 1; i >= 0; --i) {
+
+			size_t treeIdx = vec[i].treeIdx;
+
+			double bestVar = std::numeric_limits<double>::max();
+
+			for (size_t j = 0; j < _stagenum; ++j) {
+
+				for (size_t k = 0; k < _stagenum; ++k) {
+
+					trycolor[k] = colored[k];
+				}
+
+				// add primary nodes
+				for (size_t k = 0; k < H1; ++k) {
+
+					trycolor[(j + k) % _stagenum] += mLocalLevelPNodeNum[treeIdx][k] * PNode<W, K>::size;
+				}
+
+				// add auxiliary nodes
+				for (size_t k = 0; k < H2; ++k) {
+
+					trycolor[(j + k) % _stagenum] += mLocalLevelSNodeNum[treeIdx][k] * SNode<W>::size;
+				}
+
+				// compute variance
+				double sum = std::accumulate(trycolor, trycolor + _stagenum, 0.0);
+
+				double mean = sum / _stagenum;
+
+				double accum = 0.0;
+
+				for (int k = 0; k < _stagenum; ++k) {
+
+					accum += (trycolor[k] - mean) * (trycolor[k] - mean);
+				}
+				
+				double var = accum / _stagenum;
+
+				if (var < bestVar) {
+					
+					bestVar = var;
+
+					bestStartIdx = j;
+				}
+			}	
+
+			for (int j = 0; j < W - U + 1; ++j) {
+		
+				colored[(bestStartIdx + j) % _stagenum] += mLocalLevelPNodeNum[treeIdx][j] * PNode<W, K>::size + mLocalLevelSNodeNum[treeIdx][j] * SNode<W>::size; // wrap around	
+			}
+
+			// color nodes in current tree
+			pnode_type* pRoot = mRootTable[treeIdx];
+
+			std::queue<pnode_type*> pqueue;
+
+			pRoot->stageidx = bestStartIdx;
+
+			pqueue.push(pRoot);
+
+			while (!pqueue.empty()) {
+
+				auto pfront = pqueue.front();
+			
+				if (nullptr != pfront->sRoot) {
+
+					pfront->sRoot->stageidx = pfront->stageidx + 1;
+	
+					std::queue<snode_type*> squeue;
+
+					squeue.push(pfront->sRoot);
+
+					while (!squeue.empty()) {
+
+						auto sfront = squeue.front();
+
+						if (nullptr != sfront->lchild) {
+
+							sfront->lchild->stageidx = sfront->stageidx + 1;
+
+							squeue.push(sfront->lchild);
+						}
+
+						if (nullptr != sfront->rchild) {
+
+							sfront->rchild->stageidx = sfront->stageidx + 1;
+
+							squeue.push(sfront->rchild);
+						}
+
+						squeue.pop();
+					}
+				}	
+
+				// color childs
+				for (size_t j = 0; j < MC; ++j) {
+
+					if (nullptr != pfront->childEntries[j]) {
+
+						pfront->childEntries[j]->stageidx = pfront->stageidx + 1;
+
+						pqueue.push(pfront->childEntries[j]);
+					}
+				}	
+
+				pqueue.pop();
+			}
+		}
+
+		// compute mem use in all stsages
+		size_t memUseInAllStages = 0;
+
+		for (int i = 0; i < _stagenum; ++i) {
+		
+			std::cerr << "mem use in stage " << i << ": " << colored[i] << std::endl;
+
+			memUseInAllStages += colored[i];
+		}
+
+		std::cerr << "mem use in all stages: " << memUseInAllStages << std::endl;
+
+		delete[] colored;
+
+		delete[] trycolor;
+	}
+
+
+
 };
 
 
