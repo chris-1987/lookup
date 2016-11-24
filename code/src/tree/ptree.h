@@ -3,7 +3,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /// Copyright (c) 2016, Sun Yat-sen University
-/// All rights reserved
+/// All rights reserved.
 /// \file ptree.h
 /// \brief definition of prefix tree
 ///

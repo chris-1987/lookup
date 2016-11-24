@@ -7,9 +7,9 @@
 /// \file rptree.h
 /// \brief Definition of an IP lookup index based on prefix tree.
 ///
-/// This index consits of three parts: a fast lookup table that contains route information
+/// This index consists of three parts: a fast lookup table that contains route information
 /// for prefixes shorter than U bits, a table that consists of 2^U entries and each entry 
-/// stores a pointer to the root of a binary tree, and a set of binary tree.
+/// stores a pointer to the root of a binary tree.
 ///
 /// \author Yi Wu
 /// \date 2016.11

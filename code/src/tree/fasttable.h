@@ -5,7 +5,7 @@
 ////////////////////////////////////////////////////////////
 /// Copyright (c) 2016, Sun Yat-sen University,
 /// All rights reserved
-/// \file btree.h
+/// \file fasttable.h
 /// \brief definition of a fast table for searching short prefixes
 /// 
 /// Build a fast table for prefixes not longer than U bits.
@@ -13,6 +13,7 @@
 /// All the prefixes with a same expanded form are gathered together in the table. 
 /// To insert/delete a prefix into/from the table, we expand the prefix to U bits by padding 0 and use <expandedPrefix> as an index to find the set of 
 /// prefixes that have a same expanded form and use its length to check whether or not it exists.
+///
 /// \author Yi Wu
 /// \date 2016.11
 ///////////////////////////////////////////////////////////

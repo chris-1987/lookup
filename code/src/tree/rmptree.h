@@ -1,37 +1,42 @@
-#ifndef _MPT_H
-#define _MPT_H
+#ifndef _RMPT_H
+#define _RMPT_H
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /// Copyright (c) 2016, Sun Yat-sen University
-/// All rights reserved
-/// \file ptree.h
-/// \brief definition of multi-prefix tree
+/// All rights reserved.
+/// \file rmptree.h
+/// \brief Definition of an IP lookup index based on multi-prefix tree.
 ///
-/// Build, insert and delete prefixes in a multi-bit tree
-/// An implementation of the algorithm designed by Sun-Yuan Hsieh.
-/// Please refer to "A novel dynamic router-tables design for IP lookup and update" for more details.
+/// This index consists of three parts: a fast lookup table containing route information
+/// of short prefixes (shorter than U bits), a root table pointing to a forest of multi-prefix
+/// trees, and a forest of multi-prefix trees.
 ///
 /// \author Yi Wu
 /// \date 2016.11
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-#include "../common.h"
-#include "../utility.h"
+#include "../common/common.h"
+#include "../utility/utility.h"
 #include <queue>
 #include <cmath>
+#include <chrono>
 
-#define DEBUG_MPT
+#define DEBUG_RMPT
+
 
 /// \brief Secondary node in a multi-prefix tree.
 /// 
-/// Each secondary node is a 5-tuple consisting of <prefix, length of prefix, nexthop, ptr to left child, ptr to right child>.
+/// Nodes in a multi-prefix tree are divided into two categories: primary node and secondary node. A secondary node is
+/// a 5-tuple consisting of <prefix, length of prefix, nexthop, pointer to left child, pointer to right child>.
 ///
-/// \param W length of IP address, 32 or 128 for IPv4 or IPv6, respectively
+/// \param W length of IP address, 32 or 128 for IPv4 or IPv6, respectively.
 template<int W>
 struct SNode{
 
 	typedef typename choose_ip_type<W>::ip_type ip_type;
+
+	static const size_t size; /// size of a secondary node
 
 	ip_type prefix; ///< prefix
 	
@@ -43,18 +48,24 @@ struct SNode{
 
 	SNode* rchild; ///< ptr to right child
 
-	SNode() : prefix(0), length(0), nexthop(0), lchild(nullptr), rchild(nullptr) {}
+	int stageidx; ///< pipe stage number
+
+	SNode() : prefix(0), length(0), nexthop(0), lchild(nullptr), rchild(nullptr), stageidx(0) {}
 };
+
+template<int W>
+const size_t SNode<W>::size = sizeof(ip_type) + sizeof(uint8) + sizeof(uint32) + sizeof(SNode*) + sizeof(SNode*); // stageidx is excluded
 
 
 /// \brief Primary node in a multi-prefix tree.
 ///  
-/// Each node can store at most MP prefixes and MC child pointers 
+/// Nodes in a multi-prefix tree are divided into two categories: primary node and secondary node. A secondary node is
+/// a tuple that sotres MP prefixes and MC child pointers (MP = 2 * K + 1, MC = pow(2, K).
 ///
-/// \param W length of IP address, 32 or 128 for IPv4 or IPv6, respectively
-/// \param K stride
-/// \param MP number of prefixes in a primary node, 2 * K + 1 in default
-/// \param MC number of child pointers in a primary node, pow(2, K) in default
+/// \param W Length of IP address, 32 or 128 for IPv4 or IPv6, respectively.
+/// \param K Stride of the tree. This argument determines MC and MP.
+/// \param MP number of prefixes in a primary node, which is equal to  2 * K + 1. Please do not change it.
+/// \param MC number of child pointers in a primary node, which is equal to pow(2, K). Please do not change it.
 template<int W, int K, size_t MP = 2 * K + 1, size_t MC = static_cast<size_t>(pow(2, K))>
 struct PNode{
 
@@ -64,11 +75,16 @@ struct PNode{
 
 	typedef SNode<W> snode_type; 
 
+	static const size_t size; ///< size of a primary node
+
 	uint8 t; ///< number of prefixes currently stored in the primary node, at most 2K + 1
+
+	int stageidx; ///< pipe stage number
 
 	/// \brief Prefix entry.
 	///
-	/// Each entry consists of three items, which are prefix, length of prefix and nexthop.
+	/// A primary node consists of multiple prefix esntries, each entry records a prefix, the length of the prefix and its nexthop.
+	/// A primary node also contains multiple child pointers.
 	///
 	struct PrefixEntry{
 		
@@ -85,9 +101,9 @@ struct PNode{
 
 	pnode_type* childEntries[MC]; ///< store at most MC childs
 
-	snode_type* sRoot; ///< pointer to the root of auxiliary prefix tree	
+	snode_type* sRoot; ///< pointer to the root of auxiliary prefix tree.
 
-	PNode() : t(0), sRoot(nullptr) {
+	PNode() : t(0), sRoot(nullptr), stageidx(0) {
 
 		for (size_t i = 0; i < MC; ++i) {
 
@@ -100,18 +116,25 @@ struct PNode{
 	}
 };
 
+const size_t PNode<W, K>::size = sizeof(uint8) + sizeof(PrefixEntry) * MP + sizeof(pnode_type*) * MC + sizeof(snode_type*); // t, prefixes, childs, sRoot
 
 
-/// \brief Build and update a multi-prefix tree.
+
+
+
+/// \brief Build the index (fast table + forest of multi-prefix trees).
 ///
-/// Two kinds of nodes appear in a multi-prefix tree, namely primary node and secondary node.
+/// Shorter prefixes are stored in the fast table while longer prefixes are stroed in the forest of multi-prefix trees.
 /// 
 /// \param W 32 and 128 for IPv4 and IPv6, respectively
-/// \param K stride
+/// \param K Stride of each multi-prefix tree.
 /// \param MP at most MP prefixes can be stored in a primary node, MP = 2 * K + 1
 /// \param MC at most MC child pointers can be stored in a primary node, MC = pow(2, K)
-template<int W, int K, size_t MP = 2 * K + 1, size_t MC = static_cast<size_t>(pow(2, K))>
-class MPTree {
+/// \param U A threshold for classifying shorter and longer prefixes. Specifically, the length of a shorter prefix is smaller than U,
+/// while the length of a longer prefix is no less than U.
+/// \param V Number of prefix trees at large.
+template<int W, int K, size_t MP = 2 * K + 1, size_t MC = static_cast<size_t>(pow(2, K)), int U, size_t V = static_cast<size_t>(pow(2, U))>
+class RMPTree {
 private:
 
 	typedef typename choose_ip_type<W>::ip_type ip_type;
@@ -120,58 +143,99 @@ private:
 
 	typedef SNode<W> snode_type; ///< secondary node type
 
-	static MPTree* mpt; ///< pointer to mpt
+	pnode_type* mRootTable[V]; ///< pointers to a forest of multi-prefix tree
 
-	pnode_type* pRoot; ///< root node of the multi-prefix tree, a primary node
+	uint32 mPNodeNum[V]; ///< number of pnodes in each multi-prefix tree
 
-	uint32 mPNodeNum; ///< number of primary nodes in total
+	uint32 mSNodeNum[V]; ///< number of snodes in each multi-prefix tree
 
-	uint32 mSNodeNum; ///< number of secondary nodes in total
+	FastTable<W, U - 1> *ft; ///< pointer to the fast lookup table
 
 private:
 	
 	/// \brief default ctor
-	MPTree() : pRoot(nullptr), mPNodeNum(0), mSNodeNum(0) {}
+	RMPTree() {
 
-	MPTree(const MPTree& _mpt) = delete;
+		initializeParameters();
+	}
+	
+	/// \brief initialize parameters
+	void initializeParameters() {
 
-	MPTree& operator= (const MPTree&) = delete;
+		for (size_t i = 0; i < V; ++i) {
 
+			mRootTable[i] = 0;
+		}
+
+		for (size_t i = 0; i < V; ++i) {
+
+			mPNodeNum[i] = 0;
+		}
+
+		for (size_t i = 0; i < V; ++i) {
+
+			mSNodeNum[i] = 0;
+		}
+
+		ft = new FastTable<W, U - 1>();
+	}
+
+	/// \brief disable copy-ctor
+	RMPTree(const MPTree& _mpt) = delete;
+
+	/// \brief disable assignment op
+	RMPTree& operator= (const MPTree&) = delete;
+
+
+	/// \brief dtor
+	///
+	/// destroy index
 	~MPTree() {
 
-		if (nullptr != pRoot) {
+		clear();
+	}
 
-			destroy();
+
+	/// \brief clear
+	void clear() {
+
+		for (size_t i = 0; i < V; ++i) {
+
+			if (nullptr != mRootTable[i]) {
+
+				destroy(i); // destory the multi-prefix tree along with the auxiliary prefix trees
+
+				mRootTable[i] = nullptr;
+			}
 		}
+		
+		delete ft;
+
+		ft = nullptr;
 	}
 
 public:
 
-	/// \brief create an instance of MPTree if not yet instantiated
-	static MPTree* getInstance();
-
-	/// \brief build BTree for BGP table
+	/// \brief Build the index.
 	void build(const std::string & _fn) {
 
-		// destroy the existing MPTree (if any)		
-		if (nullptr != pRoot) {
+		// clear old index if there exists any
+		clear();
 
-			destroy();
+		// initialize
+		initializeParameters();
 
-			pRoot = nullptr;
-		}
-
-		// read prefixes from BGPtable and insert them one by one into MPTree
+		// insert prefixes one by one into index
 		std::ifstream fin(_fn, std::ios_base::binary);
 
-		std::string line;
+		std::string line
 
 		ip_type prefix;
 
 		uint8 length;
 
 		uint32 nexthop;
-
+		
 		while (getline(fin, line)) {
 
 			utility::retrieveInfo(line, prefix, length);
@@ -184,32 +248,37 @@ public:
 			}
 			else {
 
-				ins(prefix, length, nexthop, pRoot, 0);
+				ins(prefix, length, nexthop);
 			}
 		}		
+
+		report();
+
+		// traverse();
 
 		return;
 	}
 
 	/// \brief destroy a multi-prefix tree
-	void destroy() {
+	void destroy(size_t _idx) {
 
-		if (nullptr == pRoot) {
+		if (nullptr == mRootTable[_idx]) {
 
 			return;
 		}
 
-		std::queue<pnode_type*> pqueue;
+		pnode_type* pnode = mRootTable[_idx];
 
+		std::queue<pnode_type*> pqueue;
+			
 		std::queue<snode_type*> squeue;
 
-		pqueue.push(pRoot);
-
-		while(!pqueue.empty()) {
+		pqueue.push(pnode);
+		
+		while (!pqueue.empty()) {
 
 			auto pfront = pqueue.front();
-	
-			// first destroy the auxiliary prefix tree if there exists any
+
 			if (nullptr != pfront->sRoot) {
 
 				squeue.push(pfront->sRoot);
@@ -223,6 +292,8 @@ public:
 					if (nullptr != sfront->rchild) squeue.push(sfront->rchild);
 
 					delete sfront;
+
+					sfront = nullptr;
 
 					squeue.pop();
 				}
@@ -239,72 +310,102 @@ public:
 
 			delete pfront;
 
+			pfront = nullptr;
+
 			pqueue.pop();
 		}
-		
+			
 		return;
 	}
 
-	/// \brief Insert a prefix into multi-prefix tree.
+	/// \brief Insert a prefix into the index. 
 	///
-	/// If len(_prefix) < K * (_level + 1), then insert _prefix into the auxiliary prefix tree rooted at _node->sRoot. Otherwise:
-	/// (1) If _node.t != MP, then _node is not full, insert _prefix into current node.
-	/// (2) If _node.t == MP && len(_node.prefix[MP - 1]) < len(_prefix), then replace _node.prefix[MP - 1] with
-	///     _prefix, reorde prefixes in _node and recursively insert the replaced prefix into a higher level.
-	/// (3) If _node.t == MP && len(_node.prefix[MP - 1]) >= len(_prefix), then continue to insert _prefix into a higher level.
-	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, pnode_type*& _pnode, const int _level) {
+	/// If the prefix is shorter than U bits, then insert it into the fast lookup table,
+	/// otherwise, insert it into the the forest of multi-prefix trees.
+	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop) {
 
-		if (nullptr == _pnode) { // create a new node
+		if (_length < U) { // smaler than U bits, insert into the fast lookup table
+
+			ft->ins(_prefix, _length, _nexthop);
+		}
+		else { // no fewer than U bits, insert into the forest of the multi-prefix trees
+
+			// the starting level is 0 (not U bits)
+			ins(_prefix, _length, _nexthop, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], 0, utility::getBitsValue(_prefix, 0, U - 1));
+		}
+		
+		return;
+	} 
+
+
+	/// \brief Insert a prefix into the forest of multi-prefix trees.
+	/// 
+	/// The forest consists of 2^U multi-prefix trees. Determine into which a prefix is inserted by checking the first U bits of the prefix.
+	/// When attempting to insert a prefix P into a node N at level L in a multi-prefix tree:
+	/// (1) if len(P) < U + K * (_level + 1), then insert it into the auxiliary prefix tree;
+	/// (2) if N is not full, then insert it into current node;
+	/// (3) if N is full, then recursively insert it into a higher level.
+	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, pnode_type*& _pnode, const int _level, const uint32 _treeIdx) {
+
+		if (nullptr == _pnode) { // node is empty, create the node
 
 			_pnode = new pnode_type();
-
-			mPNodeNum++;
+	
+			++mPNodeNum[_treeIdx];
 		}
 
-		if (_length < (_level + 1) * K) { // insert _prefix into auxiliary prefix tree rooted at sRoot
-	
-			ins(_prefix, _length, _nexthop, _pnode->sRoot, 0, _level); 
+		if (_length < U + (_level + 1) * K) { // _level starts from 0, required to plus U
+
+			// current prefix must be inserted into the auxiliary prefix tree
+			ins(_prefix, _length, _nexthop, _pnode->sRoot, 0, _level, _treeIdx); // sLevel = 0, pLevel = _level	
 		}
-		else {
-		
-			if (_pnode->t < MP) { // _pnode is not full, insert _prefix into _pnode
-	
-				insertPrefixInPNode(_pnode, _prefix, _length, _nexthop);
-	
-//				printPNode(_pnode);
+		else { // insert the prefix into current primary node or a node in a higher level
+
+			if (_pnode->t < MP) { // current primary node is not full, insert prefix into current primary node
+
+				insertPrefixInPNode(_pnode, _prefix,_length, _nexthop, _treeIdx);
 			}
-			else { // _pnode is full
-	
-				if (_pnode->prefixEntries[MP - 1].length < _length) { // shortest prefix in _pnode is shorter than _length, replace
-				
-					// copy shortest prefix in _pnode
-					uint32 prefix = _pnode->prefixEntries[MP - 1].prefix;
+			else {
 					
+				// if the shortest prefix in current primary node is also shorter than the prefix to be inserted
+				if (_pnode->prefixEntries[MP - 1].length < _length) { 
+
+					// cache the shortest prefix in current primary node
+					uint32 prefix = _pnode->prefixEntries[MP - 1].prefix;
+
 					uint8 length = _pnode->prefixEntries[MP - 1].length;
 
 					uint32 nexthop = _pnode->prefixEntries[MP - 1].nexthop;
 
-					// delete shortest prefix (located at MP - 1) from current pnode
-					deletePrefixInPNode(_pnode, MP - 1);	
-				 
-					// insert _prefix into current pnode
+					// delete shortest prefix in current primary node
+					deletePrefixInPNode(_pnode, MP - 1);
+					
+					// insert new comer
 					insertPrefixInPNode(_pnode, _prefix, _length, _nexthop);
 
-					// recursively insert the deleted shorted prefix into a higher level	
-					ins(prefix, length, nexthop, _pnode->childEntries[utility::getBitsValue(prefix, _level * K, (_level + 1) * K - 1)], _level + 1);	
+					// recursively insert the prefix deleted from the primary node into a higher level
+					ins(prefix, length, nexthop, _pnode->childEntries[utility::getBitsValue(prefix, U + _level * K, U + (_level + 1) * K - 1)], _level + 1, _treeIdx);
+						
 				}
-				else { // insert _prefix into a higher level
+				else {
+				
+					// insert prefix into a node in a higher level
 
-					ins(_prefix, _length, _nexthop, _pnode->childEntries[utility::getBitsValue(_prefix, _level * K, (_level + 1) * K - 1)], _level + 1);
+					ins(_prefix, _length, _nexthop, _pnode->childEntries[utility::getBitsValue(_prefix, U + _level * K, U + (_level + 1) * K - 1)], _level + 1, _treeIdx);	
 				}
 			}
 		}
 
 		return;
-	}
+	}	
 
 
-	/// \brief insert prefix into a non-full pnode
+
+	/// \brief Insert prefix into a non-full pnode
+	///
+	/// Prefixes in the node are sorted in non-decreasing order by their lengths. 
+	/// This variant is maintained during the insertion.
+	/// \note It is assumed that the primary node is not full yet.
 	void insertPrefixInPNode(pnode_type* _pnode, const ip_type& _prefix, const uint8& _length, const uint32& _nexthop) {
 
 		int i = 0;
@@ -318,7 +419,7 @@ public:
 			}
 		}	
 
-		// move elements one slot leftward
+		// move elements one slot rightward
 		for (int j = _pnode->t - 1; j >= i ; --j) {
 
 			_pnode->prefixEntries[j + 1].prefix = _pnode->prefixEntries[j].prefix;
@@ -360,14 +461,16 @@ public:
 	
 
 	/// \brief Insert a prefix into the auxiliary tree.
-	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, snode_type*& _snode, const int _sLevel, const int _pLevel) {
+	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, snode_type*& _snode, const int _sLevel, const int _pLevel, const uint32 _treeIdx) {
 
-		if (nullptr == _snode) { // create a new snode and insert the prefix
+		if (nullptr == _snode) { // empty
 
+			// create a new secondary node
 			_snode = new snode_type();
 
-			mSNodeNum++;
+			mSNodeNum[_treeIdx]++;	
 
+			// insert the prefix
 			_snode->prefix = _prefix;
 
 			_snode->length = _length;
@@ -378,32 +481,32 @@ public:
 		}
 		else {
 
-			if (_length == _pLevel * K + _sLevel) { // must be inserted into current level
+			if (_length == U + _pLevel * K + _sLevel) { // must be inserted into current level
 
-				if (_snode->length > _pLevel * K + _sLevel) { // replace
+				if (_snode->length > U + _pLevel * K + _sLevel) { // prefix in curretn node is longer than the one to be inserted
 
-					// copy prefix in current snode
+					// copy prefix in current secondary node
 					uint32 prefix = _snode->prefix;
 
 					uint8 length = _snode->length;
 
 					uint32 nexthop = _snode->nexthop;
 
-					// replace 
+					// replaced by _prefix
 					_snode->prefix = _prefix;
 
 					_snode->length = _length;
 
 					_snode->nexthop = _nexthop;
 
-					// recursively insert replaced prefix
-					if (0 == utility::getBitValue(prefix, _pLevel * K + _sLevel)) {
+					// recursively insert the replaced prefix
+					if (0 == utility::getBitValue(prefix, U + _pLevel * K + _sLevel)) {
 
-						ins(prefix, length, nexthop, _snode->lchild, _sLevel + 1, _pLevel);
+						ins(prefix, length, nexthop, _snode->lchild, _sLevel + 1, _pLevel, _treeIdx);
 					}
 					else {
 
-						ins(prefix, length, nexthop, _snode->rchild, _sLevel + 1, _pLevel);
+						ins(prefix, length, nexthop, _snode->rchild, _sLevel + 1, _pLevel, _treeIdx);
 					}	
 				}
 				else { // prefix in current node must be equal to the one to be inserted
@@ -411,15 +514,15 @@ public:
 					// do nothing
 				}
 			}
-			else { // insert into a higher level
+			else { // insert into a node in a higher level
 
-				if (0 == utility::getBitValue(_prefix, _pLevel * K + _sLevel)) {
+				if (0 == utility::getBitValue(_prefix, U + _pLevel * K + _sLevel)) {
 
-					ins(_prefix, _length, _nexthop, _snode->lchild, _sLevel + 1, _pLevel); 
+					ins(_prefix, _length, _nexthop, _snode->lchild, _sLevel + 1, _pLevel, _treeIdx); 
 				}
 				else {
 
-					ins(_prefix, _length, _nexthop, _snode->rchild, _sLevel + 1, _pLevel);
+					ins(_prefix, _length, _nexthop, _snode->rchild, _sLevel + 1, _pLevel, _treeIdx);
 				}
 			}
 		}
@@ -428,25 +531,31 @@ public:
 	}
 
 
-	/// \brief search LPM for the given IP address
+	/// \brief Search LPM for the input IP address.
+	/// 
+	/// Check both the fast lookup table and the forest of the multi-prefix trees. A match in the latter has a higher priority than the one in the former.
+	///
 	uint32 search(const ip_type& _ip) {
 
-		if (nullptr == pRoot) {
+		// try to find a match in the fast lookup table
+		uint32 nexthop1 = 0;
 
-			return 0;
-		}
+		nexthop1 = ft->search(_ip);
 
-		pnode_type* pnode = pRoot;
+		// try to find a match in the forest of the multi-prefix trees
+		uint32 nexthop2 = 0;
+
+		nexthop2 = 0;
+
+		pnode_type* pnode = mRootTable[utility::getBitsValue(_ip, 0, U - 1)];	
 
 		int pLevel = 0;
 
-		int sBestLength = 0; // record length of LPM
-
-		int nexthop = 0;
+		int sBestlength; // record best match in auxiliary prefix trees	
 
 		while (nullptr != pnode) {
 
-			// search in pnode, if there exist a match, then it must be LPM
+			// if there exists a match in the primary node, then it must be the LPM
 			for (size_t i = 0; i < pnode->t; ++i) {
 
 				if (utility::getBitsValue(_ip, 0, pnode->prefixEntries[i].length - 1) == utility::getBitsValue(pnode->prefixEntries[i].prefix, 0, pnode->prefixEntries[i].length - 1)) {
@@ -454,8 +563,8 @@ public:
 					return pnode->prefixEntries[i].nexthop;
 				}
 			}
-
-			// search in snode, if find a match, record it in (bestLength, nexthop)
+				
+			// if there exists a match in the auxiliary tree, then records it.
 			if (nullptr != pnode->sRoot) {
 
 				int sLevel = 0;
@@ -470,11 +579,11 @@ public:
 
 							sBestLength = snode->length;
 
-							nexthop = snode->nexthop;
+							nexthop2 = snode->nexthop;
 						}					
 					}
 
-					if (0 == utility::getBitValue(_ip, K * pLevel + sLevel)) {
+					if (0 == utility::getBitValue(_ip, U + K * pLevel + sLevel)) {
 
 						snode = snode->lchild;
 					}
@@ -484,61 +593,81 @@ public:
 					}
 
 					++sLevel;
-				}
+				}				
 			}
 
-			// search in higher level
-			pnode = pnode->childEntries[utility::getBitsValue(_ip, pLevel * K, (pLevel + 1) * K - 1)];
+			// search in higher levels
+			pnode = pnode->childEntries[utility::getBitsValue(_ip, U + pLevel * K, U + (pLevel + 1) * K - 1)];
 
 			++pLevel;
 		}
 
-		return nexthop;
+
+		// find a match in an auxiliary tree
+		if (0 != nexthop2) return nexthop2;
+
+		// find a match in the fast lookup table
+		if (0 != nexthop1) return nexthop1;
+
+		// return default route (0)
+		return 0;
 	}
 
 
-
-	/// \brief delete a prefix in a multi-prefix tree
+	/// \brief Delete a prefix from the index.
 	///
-	/// If len(_prefix) < K * (_level + 1), then attempt to delete the prefix in the auxiliary prefix tree of current node. Otherwise:
-	/// (1) If _prefix is in current node, there are two subcases:
-	/// (1-1) if current node is an external node, then directly remove the prefix in the node
-	/// (1-2) if current node is an internal node, then remove the prefix in the node, insert the longest prefix y in the child nodes to current node, 
-	/// 	and recursively delete y in the child node.
-	/// (2) If _prefix in not in current node, we branch to one of the child node to continue the delete operation.
-	void del(const ip_type& _prefix, const uint8& _length, PNode<W, K>*& _pnode, const int _level){
+	/// A short prefix (< U bits) is deleted from the fast lookup table if exists.
+	/// A long prefix (>=U bits) is deleted from the forest of multi-prefix tree.
+	void del(const ip_type& _prefix, const uint8& _length) {
+
+		if (_length < U) {
+
+			ft->del(_prefix, _length);	
+		}
+		else {
+
+			del(_prefix, _length, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], 0, utility::getBitsValue(_prefix, 0, U - 1));
+		}
+
+	}
+
+	/// \brief Delete a prefix in the index.
+	///
+	/// Given a prefix P to be deleted from the index and a primary node P at level L:
+	/// (1) if len(P) < U + K * (L + 1), then try to find the prefix in the auxiliary tree. Delete it if exists.
+	/// (2) otherwise, try to find the prefix in the current primary node. If current node contains prefix, then remove the prefix following one 
+	/// of two cases:
+	/// (2-1): if current node is an external node, then directly remove the prefix in the node.
+	/// (2-2): if currentnode is an internal node, then remove the prefix in the node and fetch the longest prefix in the child nodes to fill up 
+	/// current node again. Then recursively delete the prefix fetched from the child node. 
+	void del(const ip_type& _prefix, const uint8& _length, PNode<W, K>*& _pnode, const int _level, uint32 _treeIdx) {
 
 		if (nullptr == _pnode) return;
 
-		if (_length < (_level + 1) * K) { // if _prefix exists in the multi-prefix tree, then it must be in the auxiliary prefix tree
+		if (_length < U + (_level + 1) * K) { // if exists, must be in the auxiliary prefix tree
 
-			// delete _prefix in the auxiliary prefix tree
-			del(_prefix, _length, _pnode->sRoot, 0, _level);
+			// delete
+			del(_prefix, _length, _pnode->sRoot, 0, _level);				
 
-			// delete operation is finshed
-			// if _pnode is an external node and there remains no prefixes in _pnode and the subtrie rooted at sRoot, then remove the pnode. 
-			if (nullptr == _pnode->sRoot && 0 == _pnode->t) { // if 0 == _pnode->t, then _pnode must be an external node
+			// adjust the prefix tree, if necessary
+			if (nullptr == _pnode->sRoot && 0 == _pnode->t) {
+		
+			_pnode = nullptr;
 
-				delete _pnode;
-
-				_pnode = nullptr;
-
-				--mPNodeNum;
+				--mPNodeNum[_treeIdx];
 			}
 		}
-		else { // search in pnode and higher levels
+		else {
 
-			// try to find the prefix in pnode
+			// try to find the prefix in current primary node
 			int _pos = findPrefixInPNode(_pnode, _prefix, _length);
 
-			if (_pos != _pnode->t + 1) { // prefix is found in the primary node
-	
-				// delete prefix from _pnode
+			if (_pos != _pnode->t + 1) { // found
+
+				// delete
 				deletePrefixInPNode(_pnode, _pos);
 
-				// check whether or not _pnode is an external node
-				bool hasChild = false;
-
+				// if current primary node is an internal node, then find the longest prefix in them and insert it into current primary node
 				for (size_t i = 0; i < MC; ++i) {
 
 					if (nullptr != _pnode->childEntries[i]) {
@@ -548,53 +677,53 @@ public:
 						break;
 					}
 				}
-			
-				if (true == hasChild) { // an internal node
+	
+				if (true == hasChild) { // internal node
 
 					ip_type long_prefix = 0;
 
 					uint8 long_length = 0;
-		
+
 					uint32 long_nexthop = 0;
 
 					size_t childIdx = 0;
-		
-					// find longest prefix in child nodes
-					findLongestPrefixInChild(_pnode, childIdx, long_prefix, long_length, long_nexthop);	
 
-					// insert the longest prefix in _pnode
+					// find longest prefix in child nodes
+					findLongestPrefixInChild(_pnode, childIdx, long_prefix, long_length, long_nexthop);
+
+					// insert the longest prefix into current primary node
 					insertPrefixInPNode(_pnode, long_prefix, long_length, long_nexthop);
 
-					// delete the longest prefix in child node
+					// delete the longest prefix in the child node
 					del(long_prefix, long_length, _pnode->childEntries[childIdx], _level + 1);
 				}
-				else { // an external node
-					
-					//delete operation is finished
-					// if there remains no prefixes in _pnode and the subtrie rooted at sRoot, then remove _pnode 
+				else { // external node
+
+					// after delete, we must check if current pnode is empty (no prefix in the primary node and auxiliary tree)
 					if (0 == _pnode->t && nullptr == _pnode->sRoot) {
 
 						delete _pnode;
-
+			
 						_pnode = nullptr;
 
-						--mPNodeNum;						
+						--mPNodeNum[_treeIdx];
 					}
 				}
-			}
-			else {	// search in higher levels
-		
-				del(_prefix, _length, _pnode->childEntries[utility::getBitsValue(_prefix, _level * K , (_level + 1) * K - 1)], _level + 1);
 			}	
-		}
+			else { // not found in current primary node
+
+				del(_prefix, _length, _pnode->childEntries[utility::getBitsValue(_prefix, U + _level * K, U + (_level + 1) * K - 1)], _level + 1, _treeIdx);
+			}
+		}				
 
 		return;
 	}
 
 
-	/// \brief try to find a prefix in the primary node
+
+	/// \brief Try to find a prefix in a primary node.
 	///
-	/// \return position of prefix in the node if any; otherwise, t.
+	/// \return position of prefix in the node if any; otherwise, t + 1.
 	int findPrefixInPNode(pnode_type* _pnode, const ip_type& _prefix, const uint8& _length){
 
 		for (int i = 0; i < _pnode->t; ++i) {
@@ -608,8 +737,8 @@ public:
 		return _pnode->t + 1;
 	}
 
-	/// \brief delete a prefix in the auxiliary prefix tree
-	void del(const ip_type& _prefix, const uint8& _length, snode_type*& _snode, const int _sLevel, const int _pLevel){
+	/// \brief delete a prefix in an auxiliary prefix tree
+	void del(const ip_type& _prefix, const uint8& _length, snode_type*& _snode, const int _sLevel, const int _pLevel, const uint32 _treeIdx){
 
 		if (nullptr == _snode) return;
 
@@ -621,7 +750,7 @@ public:
 
 				_snode = nullptr;
 
-				--mSNodeNum;
+				--mSNodeNum[_sLevel + K * _pLevel];
 
 				return;
 			}
@@ -689,20 +818,20 @@ public:
 
 				child_node = nullptr;
 
-				--mSNodeNum;
+				--mSNodeNum[_sLevel + K * _pLevel];
 
 				return;
 			}	
 		}
 		else { // try to find in a higher level
 
-			if (0 == utility::getBitValue(_prefix, _pLevel * K + _sLevel)) {
+			if (0 == utility::getBitValue(_prefix, U + _pLevel * K + _sLevel)) {
 
-				del(_prefix, _length, _snode->lchild, _sLevel + 1, _pLevel);
+				del(_prefix, _length, _snode->lchild, _sLevel + 1, _pLevel, _treeIdx);
 			}
 			else {
 
-				del(_prefix, _length, _snode->rchild, _sLevel + 1, _pLevel);
+				del(_prefix, _length, _snode->rchild, _sLevel + 1, _pLevel, _treeIdx);
 			}
 		}
 	}
@@ -779,7 +908,8 @@ public:
 
 		return;
 	}
-	
+
+	/// \brief print a primary node and 	
 	void printPNode(const pnode_type* _pnode) const {
 
 		for (size_t i = 0; i < MP; ++i) {
@@ -790,33 +920,172 @@ public:
 		std::cerr << std::endl;
 	}	
 
-	pnode_type*& getRoot() {
 
-		return pRoot;
-	}
-
+	/// \brief Report collected information.
+	///
 	void report(){
 
-		std::cerr << "mSNodeNum: " << mSNodeNum << std::endl;
+		for (size_t i = 0; i < V; ++i) {
 
-		std::cerr << "mPNodeNum: " << mPNodeNum << std::endl;
+			std::cerr << "tree " << i << ": \n"'
+		
+			std::cerr << "primary node num: " << mPNodeNum[i] << std::endl;
+
+			std::cerr << "secondary node num: " << mSNodeNum[i] << std::endl;
+		}
 	}
+
+	
+	/// \brief Scatter in a random pipeline.
+	///
+	/// Use two different random seed to generate random number for primary
+	/// and secondary nodes, respectively.
+	void ran(int _stagenum) {
+
+		size_t* pnodeNumInStage = new size_t[_stagenum];
+
+		size_t* snodeNumInStage = new size_t[_stagenum];
+
+		for (int i = 0; i < _stagenum; ++i) {
+
+			pnodeNumInStage[i] = 0;
+
+			snodeNumInstage[i] = 0;
+		}
+
+		// random generator for pnode
+		unsigned seed_pnode = std::chrono::system_clock::now().time_since_epoch().count();
+
+		std::default_random_engine generator_pnode(seed_pnode);
+
+		std::uniform_int_distribution<int> distribution_pnode(0, _stagenum - 1);
+
+		auto roll_pnode = std::bind(distribution_pnode, generator_pnode);
+
+		// random generator for snode
+		unsigned seed_snode = std::system_clock::now().time_since_epoch().count() + 1000000;
+
+		std::default_random_engine generator_snode(seed_snode);
+
+		std::uniform_int_distribution<int> distribution_snode(0, _stagenum - 1);
+
+		auto roll_snode = std::bind(distribution_snode, generator_snode);
+
+		// start numbering nodes
+		for (size_t i = 0; i < V; ++i) {
+
+			if (nullptr != mRootTable[i]) {
+
+				std::queue<pnode_type*> pqueue;
+
+				mRootTable[i]->stageidx = 0;
+
+				pnodeNumInStage[0]++;
+
+				pqueue.push(mRootTable[i]);
+			
+				while (!pqueue.empty()) {
+
+					auto pfront = pqueue.front();
+
+					// auxiliary tree
+					if (nullptr != pfront->sRoot) {
+
+						std::queue,snode_type*> squeue;
+
+						pfront->sRoot->stageidx = pfront->stageidx; // root of auxiliary tree and the primary node at same level
+				
+						squeue.push(pfront->sRoot);
+
+						while (!squeue.empty()) {
+
+							auto sfront = squeue.top();
+							
+							if (nullptr != sfront->lchild) {
+
+								sfront->lchild->stageidx = sfront->stageidx + 1;
+
+								squueue.push(sfront->lchild);
+							}
+
+							if (nullptr != sfront->rchild) {
+
+								sfront->rchild->stageidx = sfront->stageidx + 1;
+
+								squeue.push(sfront->rchild);
+							}
+
+							squeue.pop();
+						}
+					}
+					
+					// child nodes
+					for (size_t j = 0; j < MC; ++j) {
+
+						if(nullptr != pfront->childEntries[j]) {
+
+							pfront->childEntries[j]->stageidx = pfront->stageidx + K;
+
+							pqueue.push(pfront->childEntries[j]);
+						}
+					}
+
+					pqueue.pop();
+				}	
+			}
+		}	
+
+		// report
+		size_t pnodeNumInAllStages = 0;
+
+		size_t snodeNumInAllStages = 0;
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+
+			pnodeNumInAllStages[i] += pnodeNumInStages[i];
+
+			snodeNumInAllStages[i] += snodeNumInStages[i];
+
+			std::cerr << "pnodenum in stages " << i << ": " << pnodenumInStages[i] << std::endl;
+
+			std::cerr << "snodenum in stages " << i << ": " << snodenumInStages[i] << std::endl;
+		}
+
+		std::cerr << "pnode num in all stages: " << pnodeNumInAllStages << std::endl;
+
+		std::cerr << "snode num in all stages: " << snodeNumInAllStages << std::endl;
+
+
+		delete pnodeNumInStages[i];
+
+		delete snodeNumInStages[i];
+
+		return;
+	}
+
+	
+	/// \brief element to be sorted
+	struct SortElem{
+
+		size_t nodeNum; ///< number of nodes in the tree
+
+		size_t treeIdx; ///< index of tree
+
+		SortElem(const size_t _nodeNum, const size_t _treeIdx) : nodeNum(_nodeNum), treeIdx(_treeIdx) {}
+
+		bool operator< (const SortElem& _a) const {
+
+			if (nodeNum == _a.nodeNum) {
+
+				return (treeIdx < _a.treeIdx);
+			}
+			else {
+
+				return (nodeNum < _a.nodeNum);
+			}
+		}		
+	};
 };
 
-template<int W, int K, size_t MP, size_t MC>
-MPTree<W, K, MP, MC>* MPTree<W, K, MP, MC>::mpt = nullptr;
 
-template<int W, int K, size_t MP, size_t MC>
-MPTree<W, K, MP, MC>* MPTree<W, K, MP, MC>::getInstance() {
-
-	if (nullptr == mpt) {
-
-		mpt = new MPTree();
-	}
-
-	return mpt;
-}
-
-
-
-#endif
+#endif // RMPT_H

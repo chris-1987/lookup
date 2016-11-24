@@ -6,9 +6,11 @@
 /// All rights reserved
 /// \file btree.h
 /// \brief definition of binary (one-bit) tree
+///
 /// Build, insert and delete prefixes in a binary tree.
 /// An implementation of the algorithm presented by Donald Knuth.
-/// @author Yi Wu
+///
+/// \author Yi Wu
 /// \date 2016.11
 ///////////////////////////////////////////////////////////
 

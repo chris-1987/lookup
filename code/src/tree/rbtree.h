@@ -123,11 +123,11 @@ public:
 
 	/// \brief dtor
 	///
-	/// destory all binary trees
+	/// destory index
 	///
 	~RBTree() {
 
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 			if (nullptr != mRootTable[i]) {
 
@@ -145,7 +145,7 @@ public:
 	/// \brief clear
 	void clear() {
 
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 			if (nullptr != mRootTable[i]) {
 
@@ -193,7 +193,7 @@ public:
 
 		report();
 
-		//traverse();
+		// traverse();
 
 		return;
 	}

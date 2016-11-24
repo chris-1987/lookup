@@ -1,15 +1,15 @@
-#ifndef _MPT_H
-#define _MPT_H
+#ifndef _RMPT_H
+#define _RMPT_H
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /// Copyright (c) 2016, Sun Yat-sen University
 /// All rights reserved
-/// \file mptree.h
-/// \brief definition of multi-prefix tree
+/// \file rmptree.h
+/// \brief Definition of an IP lookup index based on multi-prefix tree.
 ///
-/// Build, insert and delete prefixes in a multi-bit tree
-/// An implementation of the algorithm designed by Sun-Yuan Hsieh.
-/// Please refer to "A novel dynamic router-tables design for IP lookup and update" for more details.
+/// This index consists of three parts: a fast lookup table that contains route information
+/// for prefixes shorter than U bits, a table that consists of 2^U entries and each entry 
+/// stores a pointer to the root of a binary tree.
 ///
 /// \author Yi Wu
 /// \date 2016.11
@@ -17,11 +17,11 @@
 
 
 #include "../common/common.h"
-#include "../common/utility.h"
+#include "../utility/utility.h"
 #include <queue>
 #include <cmath>
 
-#define DEBUG_MPT
+#define DEBUG_RMPT
 
 /// \brief Secondary node in a multi-prefix tree.
 /// 
@@ -43,7 +43,9 @@ struct SNode{
 
 	SNode* rchild; ///< ptr to right child
 
-	SNode() : prefix(0), length(0), nexthop(0), lchild(nullptr), rchild(nullptr) {}
+	int stageidx; ///< pipe stage number
+
+	SNode() : prefix(0), length(0), nexthop(0), lchild(nullptr), rchild(nullptr), stageidx(0) {}
 };
 
 
@@ -66,6 +68,8 @@ struct PNode{
 
 	uint8 t; ///< number of prefixes currently stored in the primary node, at most 2K + 1
 
+	int stageidx; ///< pipe stage number
+
 	/// \brief Prefix entry.
 	///
 	/// Each entry consists of three items, which are prefix, length of prefix and nexthop.
@@ -87,7 +91,7 @@ struct PNode{
 
 	snode_type* sRoot; ///< pointer to the root of auxiliary prefix tree	
 
-	PNode() : t(0), sRoot(nullptr) {
+	PNode() : t(0), sRoot(nullptr), stageidx(0) {
 
 		for (size_t i = 0; i < MC; ++i) {
 
@@ -110,7 +114,9 @@ struct PNode{
 /// \param K stride
 /// \param MP at most MP prefixes can be stored in a primary node, MP = 2 * K + 1
 /// \param MC at most MC child pointers can be stored in a primary node, MC = pow(2, K)
-template<int W, int K, size_t MP = 2 * K + 1, size_t MC = static_cast<size_t>(pow(2, K))>
+/// \param U A threshold for classifying shorter and longer prefixes
+/// \param V Number of prefix trees at large.
+template<int W, int K, size_t MP = 2 * K + 1, size_t MC = static_cast<size_t>(pow(2, K)), int U, size_t V = static_cast<size_t>(pow(2, U))>
 class MPTree {
 private:
 
@@ -120,9 +126,8 @@ private:
 
 	typedef SNode<W> snode_type; ///< secondary node type
 
-	static MPTree* mpt; ///< pointer to mpt
 
-	pnode_type* pRoot; ///< root node of the multi-prefix tree, a primary node
+	pnode_type* pRoot; ///< root node, a primary node
 
 	uint32 mPNodeNum; ///< number of primary nodes in total
 
@@ -803,20 +808,5 @@ public:
 	}
 };
 
-template<int W, int K, size_t MP, size_t MC>
-MPTree<W, K, MP, MC>* MPTree<W, K, MP, MC>::mpt = nullptr;
 
-template<int W, int K, size_t MP, size_t MC>
-MPTree<W, K, MP, MC>* MPTree<W, K, MP, MC>::getInstance() {
-
-	if (nullptr == mpt) {
-
-		mpt = new MPTree();
-	}
-
-	return mpt;
-}
-
-
-
-#endif
+#endif // RMPT_H

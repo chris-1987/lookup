@@ -4,10 +4,13 @@
 ////////////////////////////////////////////////////////////
 /// Copyright (c) 2016, Sun Yat-sen University,
 /// All rights reserved
-/// @file fstree.h
-/// @brief definition of fixed-stride trees
+/// \file fstree.h
+/// \brief definition of fixed-stride trees
+///
 /// build, insert and delete prefixes in a fixed-stride tree
-/// @author Yi Wu
+///
+/// \author Yi Wu
+/// \date 2016.11
 ///////////////////////////////////////////////////////////
 
 #include "../common/common.h"
