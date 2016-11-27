@@ -984,11 +984,21 @@ public:
 	void report(){
 
 		std::cerr << "---statistics for pnode/snode in each MPT\n";
+		
+		uint32 totalPNodeNum = 0;
+
+		uint32 totalSNodeNum = 0;
 
 		for (size_t i = 0; i < V; ++i) {
 
 			std::cerr << "tree " << i << ": " << "primary node num: " << mLocalPNodeNum[i] << " secondary node num: " << mLocalSNodeNum[i] << std::endl;
+
+			totalPNodeNum += mLocalPNodeNum[i];
+
+			totalSNodeNum += mLocalSNodeNum[i];
 		}
+
+		std::cerr << "total pnode num: " << totalPNodeNum << " total snode num: " << totalSNodeNum << std::endl;
 
 //		std::cerr << "---statistics for node/snode at each level in each MPT\n";
 //		for (size_t i = 0; i < V; ++i) {
@@ -1015,6 +1025,8 @@ public:
 
 
 	/// \brief Scatter 
+	///
+	/// Consider three pipelines: linear, random and pipeline
 	void scatterToPipeline(int _pipestyle, int _stagenum = H2) { // H2 > H1
 
 		switch(_pipestyle) {
@@ -1054,9 +1066,9 @@ public:
 		// start numbering
 		for (size_t i = 0; i < V; ++i) {
 
-			if (nullptr != mRootTable[i]) {
+			if (nullptr != mRootTable[i]) { // current MPT is not empty
 
-				mRootTable[i]->stageidx = 0;
+				mRootTable[i]->stageidx = 0; // put pRoot in the initial stage
 
 				memUseInStage[0] += PNode<W, K>::size;
 		
@@ -1070,9 +1082,9 @@ public:
 
 					auto pfront = pqueue.front();
 
-					if (nullptr != pfront->sRoot) {
+					if (nullptr != pfront->sRoot) { // auxiliary PT of current primary node is not empty
 
-						pfront->sRoot->stageidx = (pfront->stageidx + 1) % _stagenum;
+						pfront->sRoot->stageidx = (pfront->stageidx + 1) % _stagenum; // put sRoot into the next stage of pRoot
 
 						memUseInStage[pfront->sRoot->stageidx] += SNode<W>::size;
 
@@ -1088,11 +1100,11 @@ public:
 
 							if (nullptr != sfront->lchild) {
 
-								sfront->lchild->stageidx = (sfront->stageidx + 1) % _stagenum;
+								sfront->lchild->stageidx = (sfront->stageidx + 1) % _stagenum; // sequentially put nodes
 
 								memUseInStage[sfront->lchild->stageidx] += SNode<W>::size;
 
-								testGlobalSNodeNum[pfront->lchild->stageidx]++;
+								testGlobalSNodeNum[sfront->lchild->stageidx]++;
 
 								squeue.push(sfront->lchild);
 							}
@@ -1103,7 +1115,7 @@ public:
 
 								memUseInStage[sfront->rchild->stageidx] += SNode<W>::size;
 
-								testGlobalSNodeNum[pfront->rchild->stageidx]++;
+								testGlobalSNodeNum[sfront->rchild->stageidx]++;
 
 								squeue.push(sfront->rchild);
 							}
@@ -1112,12 +1124,12 @@ public:
 						}
 					}
 
-					// 
+					// put child nodes of current primary node
 					for (size_t j = 0; j < MC; ++j) {
 
 						if (nullptr != pfront->childEntries[j]) {
 
-							pfront->childEntries[j]->stageidx = (pfront->stageidx + 1) % _stagenum;
+							pfront->childEntries[j]->stageidx = (pfront->stageidx + 1) % _stagenum; // sequentially put nodes
 
 							memUseInStage[pfront->childEntries[j]->stageidx] += PNode<W, K>::size;
 
@@ -1133,16 +1145,22 @@ public:
 		}
 
 		// output information
-		std::cerr << "\nmem use in stage: \n";
+		size_t pnodeNumInAllStages = 0;
+
+		size_t snodeNumInAllStages = 0;
+
+		std::cerr << "mem use in each stage: \n";
 
 		for (size_t i = 0; i < _stagenum; ++i) {
 
-			std::cerr << "stage " << i << ": " << memUseInStage[i] << "\t";
+			std::cerr << "stage " << i << ": " << memUseInStage[i] << std::endl;;
 		}
 
 		std::cerr << "\nGlobal pnode num in each stage: \n";
 
 		for (size_t i = 0; i < _stagenum; ++i) {
+
+			pnodeNumInAllStages += testGlobalPNodeNum[i];
 
 			std::cerr << "stage " << i << ": " << testGlobalPNodeNum[i] << std::endl;
 		}
@@ -1151,8 +1169,13 @@ public:
 
 		for (size_t i = 0; i < _stagenum; ++i) {
 
+			snodeNumInAllStages += testGlobalSNodeNum[i];
+
 			std::cerr << "stage " << i << ": " << testGlobalSNodeNum[i] << std::endl;
 		}
+
+		std::cerr << "pnode number in all stages: " << pnodeNumInAllStages << std::endl;
+		std::cerr << "snode number in all stages: " << snodeNumInAllStages << std::endl;
 
 		delete[] memUseInStage;
 
@@ -1168,16 +1191,19 @@ public:
 	/// secondary nodes.
 	void ran(int _stagenum) {
 
-		size_t* pnodeNumInStage = new size_t[_stagenum];
+		size_t* memUseInStage = new size_t[_stagenum];
 
-		size_t* snodeNumInStage = new size_t[_stagenum];
+		size_t* testGlobalPNodeNum = new size_t[_stagenum];
 
+		size_t* testGlobalSNodeNum = new size_t[_stagenum];
 
 		for (int i = 0; i < _stagenum; ++i) {
-	
-			pnodeNumInStage[i] = 0;
 
-			snodeNumInStage[i] = 0;
+			memUseInStage[i] = 0;
+
+			testGlobalPNodeNum[i] = 0;	
+
+			testGlobalSNodeNum[i] = 0;
 		}
 
 		// random generator for pnode
@@ -1201,11 +1227,13 @@ public:
 		// start numbering nodes
 		for (size_t i = 0; i < V; ++i) {
 
-			if (nullptr != mRootTable[i]) {
+			if (nullptr != mRootTable[i]) { // pRoot is not null
 
 				mRootTable[i]->stageidx = roll_pnode(); // roll
 
-				pnodeNumInStage[mRootTable[i]->stageidx]++;
+				memUseInStage[mRootTable[i]->stageidx] += PNode<W, K>::size;
+				
+				testGlobalPNodeNum[mRootTable[i]->stageidx]++;	
 
 				std::queue<pnode_type*> pqueue;
 
@@ -1218,19 +1246,27 @@ public:
 					// auxiliary tree
 					if (nullptr != pfront->sRoot) {
 
-						std::queue<snode_type*> squeue;
-
 						pfront->sRoot->stageidx = roll_snode(); // roll  
-				
+
+						memUseInStage[pfront->sRoot->stageidx] += SNode<W>::size;
+
+						testGlobalSNodeNum[pfront->sRoot->stageidx]++;
+
+						std::queue<snode_type*> squeue;
+	
 						squeue.push(pfront->sRoot);
 
 						while (!squeue.empty()) {
 
-							auto sfront = squeue.top();
+							auto sfront = squeue.front();
 							
 							if (nullptr != sfront->lchild) {
 
 								sfront->lchild->stageidx = roll_snode(); // roll
+
+								memUseInStage[sfront->lchild->stageidx] += SNode<W>::size;
+
+								testGlobalSNodeNum[sfront->lchild->stageidx]++;
 
 								squeue.push(sfront->lchild);
 							}
@@ -1238,6 +1274,10 @@ public:
 							if (nullptr != sfront->rchild) {
 
 								sfront->rchild->stageidx = roll_snode(); // roll
+
+								memUseInStage[sfront->rchild->stageidx] += SNode<W>::size;
+
+								testGlobalSNodeNum[sfront->rchild->stageidx]++;
 
 								squeue.push(sfront->rchild);
 							}
@@ -1253,6 +1293,10 @@ public:
 
 							pfront->childEntries[j]->stageidx = roll_pnode(); // roll
 
+							memUseInStage[pfront->childEntries[j]->stageidx] += PNode<W, K>::size;
+
+							testGlobalPNodeNum[pfront->childEntries[j]->stageidx]++;
+
 							pqueue.push(pfront->childEntries[j]);
 						}
 					}
@@ -1262,30 +1306,44 @@ public:
 			}
 		}	
 
-		// report
+		// output information
 		size_t pnodeNumInAllStages = 0;
 
 		size_t snodeNumInAllStages = 0;
 
+		std::cerr << "mem use in each stage: \n";
+
 		for (size_t i = 0; i < _stagenum; ++i) {
 
-			pnodeNumInAllStages += pnodeNumInStage[i];
-
-			snodeNumInAllStages += snodeNumInStage[i];
-
-			std::cerr << "pnodenum in stages " << i << ": " << pnodeNumInStage[i] << std::endl;
-
-			std::cerr << "snodenum in stages " << i << ": " << snodeNumInStage[i] << std::endl;
+			std::cerr << "stage " << i << ": " << memUseInStage[i] << std::endl;;
 		}
 
-		std::cerr << "pnode num in all stages: " << pnodeNumInAllStages << std::endl;
+		std::cerr << "\nGlobal pnode num in each stage: \n";
 
-		std::cerr << "snode num in all stages: " << snodeNumInAllStages << std::endl;
+		for (size_t i = 0; i < _stagenum; ++i) {
 
+			pnodeNumInAllStages += testGlobalPNodeNum[i];
 
-		delete[] pnodeNumInStage;
+			std::cerr << "stage " << i << ": " << testGlobalPNodeNum[i] << std::endl;
+		}
+	
+		std::cerr << "\nGlobal snode num in each stage: \n";
 
-		delete[] snodeNumInStage;
+		for (size_t i = 0; i < _stagenum; ++i) {
+
+			snodeNumInAllStages += testGlobalSNodeNum[i];
+
+			std::cerr << "stage " << i << ": " << testGlobalSNodeNum[i] << std::endl;
+		}
+
+		std::cerr << "pnode number in all stages: " << pnodeNumInAllStages << std::endl;
+		std::cerr << "snode number in all stages: " << snodeNumInAllStages << std::endl;
+
+		delete[] memUseInStage;
+
+		delete[] testGlobalPNodeNum;
+
+		delete[] testGlobalSNodeNum;
 
 		return;
 	}
@@ -1313,10 +1371,29 @@ public:
 		}		
 	};
 
+
 	/// \brief Scatter in a circular pipeline
+	///
+	/// \note The root node of an auxiliary PT is located at the stage next to that of the corresponding primary node. 
 	void cir(int _stagenum) {
 
+		size_t* memUseInStage = new size_t[_stagenum];
+
+		size_t* testGlobalPNodeNum = new size_t[_stagenum];
+
+		size_t* testGlobalSNodeNum = new size_t[_stagenum];
+
+		for (int i = 0; i < _stagenum; ++i) {
+
+			memUseInStage[i] = 0;
+
+			testGlobalPNodeNum[i] = 0;	
+
+			testGlobalSNodeNum[i] = 0;
+		}
+
 		// step 1: sort binary tries by their size in no-decreasing order
+		// size of an MPT is calculated by accumulating the memory comsumption for storing all primary & secondary nodes
 		std::vector<SortElem> vec;
 
 		for (size_t i = 0; i < V; ++i) {
@@ -1340,7 +1417,7 @@ public:
 
 		for (int i = 0; i < _stagenum; ++i)  trycolor[i] = 0;
 
-		int bestStartIdx = 0;
+		int bestStartIdx = 0; // the most proper stage that accommodate the root node
 
 		for (int i = vec.size() - 1; i >= 0; --i) {
 
@@ -1350,6 +1427,7 @@ public:
 
 			for (size_t j = 0; j < _stagenum; ++j) {
 
+				// reset
 				for (size_t k = 0; k < _stagenum; ++k) {
 
 					trycolor[k] = colored[k];
@@ -1389,19 +1467,28 @@ public:
 				}
 			}	
 
-			for (int j = 0; j < W - U + 1; ++j) {
-		
-				colored[(bestStartIdx + j) % _stagenum] += mLocalLevelPNodeNum[treeIdx][j] * PNode<W, K>::size + mLocalLevelSNodeNum[treeIdx][j] * SNode<W>::size; // wrap around	
+			// add primary nodes
+			for (int j = 0; j < H1; ++j) {
+
+				trycolor[(bestStartIdx + j) % _stagenum] += mLocalLevelPNodeNum[treeIdx][j] * PNode<W, K>::size;
+			}
+
+			// add secondary nodes
+			for (int j = 0; j < H2; ++j) {
+
+				trycolor[(bestStartIdx + j) % _stagenum] += mLocalLevelSNodeNum[treeIdx][j] * SNode<W>::size;
 			}
 
 			// color nodes in current tree
-			pnode_type* pRoot = mRootTable[treeIdx];
+			mRootTable[treeIdx]->stageidx = bestStartIdx;
+
+			memUseInStage[mRootTable[treeIdx]->stageidx] += PNode<W, K>::size;
+
+			testGlobalPNodeNum[mRootTable[treeIdx]->stageidx]++;
 
 			std::queue<pnode_type*> pqueue;
 
-			pRoot->stageidx = bestStartIdx;
-
-			pqueue.push(pRoot);
+			pqueue.push(mRootTable[treeIdx]);
 
 			while (!pqueue.empty()) {
 
@@ -1409,7 +1496,11 @@ public:
 			
 				if (nullptr != pfront->sRoot) {
 
-					pfront->sRoot->stageidx = pfront->stageidx + 1;
+					pfront->sRoot->stageidx = (pfront->stageidx + 1) % _stagenum; // stage of sRoot is next to that of pRoot
+
+					memUseInStage[pfront->sRoot->stageidx] += SNode<W>::size;
+
+					testGlobalSNodeNum[pfront->sRoot->stageidx]++;
 	
 					std::queue<snode_type*> squeue;
 
@@ -1421,14 +1512,22 @@ public:
 
 						if (nullptr != sfront->lchild) {
 
-							sfront->lchild->stageidx = sfront->stageidx + 1;
+							sfront->lchild->stageidx = (sfront->stageidx + 1) % _stagenum; // in sequence
+
+							memUseInStage[sfront->lchild->stageidx] += SNode<W>::size;
+
+							testGlobalSNodeNum[sfront->lchild->stageidx]++;
 
 							squeue.push(sfront->lchild);
 						}
 
 						if (nullptr != sfront->rchild) {
 
-							sfront->rchild->stageidx = sfront->stageidx + 1;
+							sfront->rchild->stageidx = (sfront->stageidx + 1) % _stagenum; // in sequence
+
+							memUseInStage[sfront->rchild->stageidx] += SNode<W>::size;
+
+							testGlobalSNodeNum[sfront->rchild->stageidx]++;
 
 							squeue.push(sfront->rchild);
 						}
@@ -1442,7 +1541,11 @@ public:
 
 					if (nullptr != pfront->childEntries[j]) {
 
-						pfront->childEntries[j]->stageidx = pfront->stageidx + 1;
+						pfront->childEntries[j]->stageidx = (pfront->stageidx + 1) % _stagenum;
+
+						memUseInStage[pfront->childEntries[j]->stageidx] += PNode<W, K>::size;
+
+						testGlobalPNodeNum[pfront->childEntries[j]->stageidx]++;
 
 						pqueue.push(pfront->childEntries[j]);
 					}
@@ -1452,25 +1555,53 @@ public:
 			}
 		}
 
-		// compute mem use in all stsages
-		size_t memUseInAllStages = 0;
+		// output information
+		size_t pnodeNumInAllStages = 0;
 
-		for (int i = 0; i < _stagenum; ++i) {
-		
-			std::cerr << "mem use in stage " << i << ": " << colored[i] << std::endl;
+		size_t snodeNumInAllStages = 0;
 
-			memUseInAllStages += colored[i];
+
+		std::cerr << "mem use in each stage: \n";
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+
+			std::cerr << "stage " << i << ": " << memUseInStage[i] << std::endl;;
 		}
 
-		std::cerr << "mem use in all stages: " << memUseInAllStages << std::endl;
+		std::cerr << "\nGlobal pnode num in each stage: \n";
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+
+			pnodeNumInAllStages += testGlobalPNodeNum[i];
+
+			std::cerr << "stage " << i << ": " << testGlobalPNodeNum[i] << std::endl;
+		}
+	
+		std::cerr << "\nGlobal snode num in each stage: \n";
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+
+			snodeNumInAllStages += testGlobalSNodeNum[i];
+
+			std::cerr << "stage " << i << ": " << testGlobalSNodeNum[i] << std::endl;
+		}
+
+		std::cerr << "pnode number in all stages: " << pnodeNumInAllStages << std::endl;
+
+		std::cerr << "snode number in all stages: " << snodeNumInAllStages << std::endl;
+
+		delete[] memUseInStage;
+
+		delete[] testGlobalPNodeNum;
+
+		delete[] testGlobalSNodeNum;
 
 		delete[] colored;
 
 		delete[] trycolor;
+
+		return;
 	}
-
-
-
 };
 
 
