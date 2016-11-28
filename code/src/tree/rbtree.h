@@ -29,6 +29,8 @@
 #include <algorithm>
 #include <numeric>
 #include <limits>
+#include <sstream>
+
 
 /// \brief Nodes in a binary tree.
 /// 
@@ -346,7 +348,7 @@ public:
 	}
 	
 	/// \brief search for _ip
-	uint32 search(const ip_type& _ip) {
+	uint32 search(const ip_type& _ip, std::vector<int>& _trace) {
 
 		// try to find a match in the fast lookup table
 		uint32 nexthop1 = 0;
@@ -361,6 +363,8 @@ public:
 		int level = U;
 
 		while (nullptr != node) {
+
+			_trace.push_back(node->stageidx); // stageidx
 
 			if (node->nexthop != 0) { // contains a valid prefix
 
@@ -380,12 +384,56 @@ public:
 			++level;
 		}				
 
-		if (0 != nexthop2) return nexthop2; // prefixes found in binary trees must be longer than those found in the fast table
+		
+		if (0 != nexthop2) return nexthop2; 
 
 		if (0 != nexthop1) return nexthop1;
 
 		return 0;
 	}
+
+	/// \brief generate lookup trace for simulation
+	void generateTrace (const std::string& _reqFile, const std::string& _traceFile){
+
+		std::ifstream reqFin(_reqFile, std::ios_base::binary);
+
+		std::string line;
+
+		ip_type prefix;
+
+		std::ofstream traFin(_traceFile, std::ios_base::binary);	
+
+		while (getline(reqFin, line)) {
+
+			std::vector<int> trace;
+
+			std::stringstream ss(line);
+
+			ss >> prefix;
+			
+			// generate trace while performing the lookup request
+			search(prefix, trace);
+
+			// output trace to file	
+			traFin << static_cast<size_t>(trace.size());
+
+			traFin << " ";
+	
+			// record stage list
+			for (int i = 0; i < trace.size(); ++i) {
+			
+				traFin << static_cast<size_t>(trace[i]);		
+
+				traFin << " ";
+			}
+	
+			//
+			traFin << "\n";
+		}
+	
+		return;	
+	}
+
 
 
 	/// \brief delete a prefix in the index
@@ -595,7 +643,9 @@ public:
 			nodeNumInStage[i] = 0;
 		}
 
-		std::default_random_engine generator;
+		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+		std::default_random_engine generator(seed);
 
 		std::uniform_int_distribution<int> distribution(0, _stagenum - 1);
 

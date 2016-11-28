@@ -2,8 +2,21 @@
 #define _UTILITY_H
 
 #include "common.h"
+#include <random>
+#include <chrono>
+#include <algorithm>
 
 NAMESPACE_UTILITY_BEG
+
+template<typename T>
+struct PairLessCmp1st{
+
+	bool operator()(const T& _a, const T& _b) const {
+
+		return _a.first < _b.first;
+	}
+};
+
 
 /// \brief print message
 ///
@@ -153,6 +166,94 @@ void retrieveInfo(const std::string& _line, ipv4_type& _prefix, uint8& _length) 
 /// \param _prefix
 /// \param _length
 void retrieveInfo(const std::string& _line, ipv6_type& _prefix, uint8& _length) {
+
+	return;
+}
+
+
+
+/// \brief generate search requests
+///
+/// Generate search requests in a random way. 
+template<int W>
+void generateSearchRequest(const std::string& _bgptable, const size_t _searchnum, const std::string& _reqFile) {
+
+	// step 1: count lines in bgp table
+	std::ifstream fin(_bgptable, std::ios_base::binary);
+
+	std::string line;
+
+	int linenum = 0;
+
+	while(getline(fin, line)) ++linenum;
+
+	fin.close();
+
+	// step 2: generate random number 
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+	std::default_random_engine generator(seed);
+
+	std::uniform_int_distribution<int> distribution(0, linenum - 1);
+
+	auto roll = std::bind(distribution, generator);
+
+	std::vector<std::pair<int, size_t> > randlist; // <rand, idx>	
+
+	for (size_t i = 0; i < _searchnum; ++i) {
+
+		randlist.push_back(std::pair<int, size_t>(roll(), i));
+	}
+
+	// step 3: sort pairs in randlist by the first component in ascending order
+	std::sort(randlist.begin(), randlist.end(), PairLessCmp1st<std::pair<int, size_t> >());
+	
+	// step 4: fetch ip information
+	std::vector<std::pair<size_t, typename choose_ip_type<W>::ip_type> > res; // <idx, ip>
+
+	std::ifstream fin2(_bgptable, std::ios_base::binary);
+
+	std::string line2;
+
+	typename choose_ip_type<W>::ip_type prefix;
+
+	uint8 length;
+
+	int lineidx = 0;
+
+	getline(fin2, line2); // get first line, lineidx = 0
+
+	for (auto it = randlist.begin(); it != randlist.end(); ++it) {
+
+		while ((*it).first > lineidx) {
+
+			getline(fin2, line2);
+
+			++lineidx;
+		}		
+
+		utility::retrieveInfo(line2, prefix, length);
+
+		res.push_back(std::pair<size_t, typename choose_ip_type<W>::ip_type>((*it).second, prefix));	
+	}
+
+	fin2.close();
+
+
+	// step 5: sort pairs in res by the first component in ascending order
+	std::sort(res.begin(), res.end(), PairLessCmp1st<std::pair<size_t, typename choose_ip_type<W>::ip_type> >());	
+
+	// step 6: output result to the file
+	std::ofstream fout(_reqFile, std::ios_base::binary);
+
+	for (auto it = res.begin(); it != res.end(); ++it) {
+
+		fout << (*it).second;
+
+		fout << "\n";
+	}
+
+	fout.close();
 
 	return;
 }

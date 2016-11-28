@@ -13,5 +13,5 @@ ADD_EXECUTABLE(test_rfst test_rfst.cpp)
 # test rfst
 ADD_EXECUTABLE(test_fst test_fst.cpp)
 
-
-
+# test rmpt
+ADD_EXECUTABLE(test_rmpt test_rmpt.cpp)
