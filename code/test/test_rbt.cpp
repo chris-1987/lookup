@@ -1,11 +1,12 @@
 #include "../src/tree/rbtree.h"
 #include "../src/scheduler/linsched.h"
 #include "../src/common/utility.h"
+#include "../src/scheduler/ransched.h"
 
-static const int SN = 5; // number of pipe stages
+static const int SN = 12; // number of pipe stages
 static const size_t RN = 1024 * 1024 * 1; // number of lookups
 static const int PL = 32; // prefix length, 32 or 128
-static const int PT = 4; // threshold for short & long prefixes
+static const int PT = 8; // threshold for short & long prefixes
 
 int main(int argc, char** argv){
 
@@ -69,12 +70,31 @@ int main(int argc, char** argv){
 
 	// linear pipeline, number of stages is PL - PT + 1
 	// a new arrival comes at the beginning of each time slot
+	std::cerr << "schedule in a linear pipeline\n";
+
 	LinSched<PL - PT + 1>* linsched = new LinSched<PL - PT + 1>();
 	
 	linsched->searchRun(linTraceFile);
 	
 	delete linsched;
 
+	// random pipeline
+	// new arrivals comes at the beginning of each time slot
+	// submitting to the Bernoulli distribution (benign or burst)
+	std::cerr << "schedule in a random pipeline\n";
+
+	RanSched<PL - PT + 1, SN>* ransched = new RanSched<PL - PT + 1, SN>();
+
+	ransched->searchRun(ranTraceFile);
+
+	// circular pipeline
+	// new arrivals comes at the beginning of each time slot
+	// comply with the Bernoulli distribution (benign or burst)
+//	std::cerr << "schedule in a circular pipeline\n";
+
+//	CirSched<PL - PT + 1>* cirsched = new CirSched<PL - PT + 1>();
+
+//	cirsched->searchRun(cirTraceFile);
 
 
 	// step 5: Delete prefixes.
