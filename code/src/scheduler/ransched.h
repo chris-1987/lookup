@@ -15,26 +15,18 @@
 
 #include <string>
 #include <sstream>
-
+#include <queue>
 
 /// \brief Schedule lookup requests in a random pipeline
 ///
 /// In a random pipeline, a search request jump over all the pipestages to perform the IP lookup task.
 ///
+/// \param W at most W search steps for a request
 /// \param K number of pipe stages
-template<int K>
+/// \param S size of request queue 
+template<int W, int K, int S = QUEUESIZE>
 class RanSched{
 
-private:
-
-
-};
-
-
-#ifdef DEBUG_RANSCHED
-
-template<int K>
-class LinSched{
 private:
 
 	size_t mSlotNum;  // number of time slots in total
@@ -45,86 +37,134 @@ private:
 	
 	size_t mBusySlotNumAvg; // average number of busy time slots over all pipe stages
 
+	bool mIsUsed[K]; ///< a pipe stage is occupied during the time slot
+
+	int mMaxQueueLength; ///< maximum length of the request queue
+
+	int mAvgQueueLength; ///< average length of the request queue
+
 public:
 
-	/// \brief structure of a task
+	/// \brief structure of a requeset
 	struct Request{
 
-		int stagelist[K]; ///< list of stages to be visited
-	
-		int stepnum; ///< number of steps in the task
+		int stagelist[W]; ///< list of stages
 
-		int curstep; ///< index of step in execution 
+		int stepnum; ///< number of steps
 
-		Request() : curstep(0) {}
-	};
+		int curstep; ///< current step (start numbering from 0)
 
-	/// \brief structure of a scheduler
-	///
-	/// Each pipe stage has a scheduler. During each time slot, a scheduler receives at most one task from the upstream pipe stage
-	/// and delivers the task to the downstream pipe stage for a further processing (if necessary).
-	struct Stage{
-			
-		Request* req;
+		Request() : curstep (0) {}
 
-		Stage() : req(nullptr){}
+		int getTargetStage() {
 
-		// performs a lookup
-		void execute() {
-
-			if (req != nullptr) {
-
-				req->curstep++;
-			}
-
-			return;
+			return stagelist[curstep];
 		}
 
-		// has a request
-		bool exist() {
-
-			return req != nullptr;
-		}
-
-		// check if current request is finished
 		bool isFinished() {
-			
-			return req->curstep == req->stepnum;
+
+			return stepnum == curstep;
+		}
+
+		void toNext() {
+
+			curstep++;
 		}
 
 	};
 
-	Stage stages[K]; ///< one scheduler per stage
+	/// \brief request queue
+	struct ReqQue {
+
+		std::vector<Request*> mData; ///< payload
+		
+		/// \brief check if queue is empty
+		bool isEmpty() {
+
+			return 0 == mData.size();
+		}
+
+		/// \brief check if queue is overflow
+		bool isOverflow() {
+
+			return S < mData.size();
+		}
+
+		/// \brief append a request to the end of the queue
+		void append(Request* _req) {
+
+			mData.push_back(_req);
+
+			return;			
+		}
+	};
+
+	ReqQue mReqQue; ///< queue of requests
 
 	/// \brief default ctor
-	LinSched () : mSlotNum(0), mRequestNum(0), mBusySlotNumAvg(0){
+	RanSched() : mSlotNum(0), mRequestNum(0), mBusySlotNumAvg(0), mMaxQueueLength(0), mAvgQueueLength(0) {
 
 		for (int i = 0; i < K; ++i) {
 
 			mBusySlotNumStage[i] = 0;
 		}
-	}	
-
-	/// \brief current pipeline is empty
-	bool isEmpty() {
 
 		for (int i = 0; i < K; ++i) {
 
-			if (stages[i].exist()) {
+			mIsUsed[i] = false;
+		}
+	}		
+	
+	/// \brief execute a search request on each pipe stage
+	void execute() {
+	
+		// reset status of each pipe stage to unused	
+		for (int i = 0; i < K; ++i) {
 
-				return false;	
+			mIsUsed[i] = false;
+		}
+
+		for (int i = 0; i < mReqQue.mData.size(); ++i) {
+
+			int targetStage = mReqQue.mData[i]->getTargetStage();
+
+			if (false == mIsUsed[targetStage]) {
+		
+				// used 	
+				mIsUsed[targetStage] = true;
+		
+				mBusySlotNumStage[targetStage]++; 		
+
+				// point to next target stage
+				mReqQue.mData[i]->toNext();
+			}
+		} 
+	}
+
+	/// \brief dispatch requests from the queue after finishing the search task
+	void dispatch() {
+	
+		int initialSize = mReqQue.mData.size();
+	
+		for (int i = initialSize - 1; i >= 0; --i) {
+
+			if (mReqQue.mData[i]->isFinished()) {
+
+				delete mReqQue.mData[i];
+
+				mReqQue.mData[i] = nullptr;
+
+				mReqQue.mData.erase(mReqQue.mData.begin() + i);
 			}
 		}
 
-		return true;
+		return;
 	}
 
-	/// \brief perform lookup 
-	///
-	/// A new arrival comes at the beginning of each time slot.
+	/// \brief a run of executing search requests
 	void searchRun(const std::string& _traceFile) {
 
-		// step 1: count number of traces 
+		// step 1: count number of traces
 		std::ifstream fin(_traceFile, std::ios_base::binary);
 
 		std::string line;
@@ -133,85 +173,98 @@ public:
 
 		while (getline(fin, line)) linenum++;
 
-		fin.close();
-		
+		fin.close();	
+
 		mRequestNum = linenum;
 
+		
 		// step 2: scheduling
+		// packet arrivals submit to bernoulli distribution
+		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+		std::default_random_engine generator(seed);
+	
+		std::bernoulli_distribution distribution(LAMBDA); // LAMBDA is a consexpr
+
+		auto genreq = std::bind(distribution, generator);
+	
+		// start simulation
 		std::ifstream fin2(_traceFile, std::ios_base::binary);
 
 		std::string line2;
 
-		mSlotNum = 0;
+		mSlotNum = 0; 
 
-		while (linenum > 0 || !isEmpty()) {
+		while (linenum > 0 || !mReqQue.isEmpty()) {
 
 			mSlotNum++;
+		
+			// generate requests
+			if (genreq()) { 
+
+				for (int i = 0; i < BURSTSIZE; ++i) {
+
+					if (linenum > 0) {
+
+						// generate a request and insert into the queue
+						getline(fin2, line2);
+
+						std::stringstream ss(line2);
+
+						Request* newReq = new Request();
+
+						ss >> newReq->stepnum;
+
+						for (int j = 0; j < newReq->stepnum; ++j) {
+
+							ss >> newReq->stagelist[j];
+						}						
+
+//						std::cerr << "queue size: " << mReqQue.mData.size() << std::endl;
+
+						if (0 == newReq->stepnum) {
+							
+							delete newReq;
+						}
+						else {
+					
+							mReqQue.append(newReq);
+
+							// collect max length of the queue
+							if (mReqQue.mData.size() > mMaxQueueLength) {
 	
-			// step 1: here comes a new arrival
-			if (linenum > 0) {
+								mMaxQueueLength = mReqQue.mData.size();
+							}
+						}
 
-				getline(fin2, line2);
-
-				std::stringstream ss(line2);
-		
-				Request* newReq = new Request();
-
-				ss >> newReq->stepnum;
-		
-				for (int i = 0; i < newReq->stepnum; ++i) {
-
-					ss >> newReq->stagelist[i];		
-				}				
-
-				--linenum;
-				
-				// deliver it to the initial stage
-				stages[0].req = newReq; 
-			}	
-
-			// step 2: performs one lookup step
-			for (int i = 0; i < K; ++i) {
-
-				Stage& curstage = stages[i];
-
-				if (curstage.exist()) { // exists a request 
-
-					curstage.execute();
-		
-					mBusySlotNumStage[i]++;
-
-					if (curstage.isFinished()) {
-
-						delete curstage.req;
-
-						curstage.req = nullptr;
+	
+						--linenum;
 					}
-				}
+				}	
 			}
+
+			// collect avg length of the requets queue
+			mAvgQueueLength += mReqQue.mData.size();
+
+			// scheduling and executes a search step
+			execute();
 			
-			// step 3: transfer
-			for (int i = K - 1; i >= 1; --i) {
+			// dispatch requests that are finished
+			dispatch();
+		}
 
-				if (nullptr != stages[i - 1].req) {
-
-					stages[i].req = stages[i - 1].req;
-				}
-				else {
-
-					stages[i].req = nullptr;
-				}
-			} 
-
-			stages[0].req = nullptr;
-		}		
-		
 		searchReport();
-
-		return;
 	}
 
+	
+	/// \breif print search report
 	void searchReport() {
+
+		std::cerr << "lamda: " << LAMBDA << std::endl;
+
+		std::cerr << "burst size: " << BURSTSIZE << std::endl;
+
+		std::cerr << "queue size: " << QUEUESIZE << std::endl; 
 
 		std::cerr << "request num: " << mRequestNum << std::endl;
 
@@ -231,17 +284,12 @@ public:
 		std::cerr << "busy slot num in average (per stage): " << mBusySlotNumAvg << std::endl;
 
 		std::cerr << "usage ratio: (busy slot/ total slot): " << static_cast<double>(mBusySlotNumAvg) / mSlotNum << std::endl;
+
+		std::cerr << "max queue length: " << mMaxQueueLength << std::endl;
+
+		std::cerr << "avg queue length (per slot): " << mAvgQueueLength / mSlotNum << std::endl;
 	}
-
-
-	void updateRun(const std::string& _taskFile) {
-
-		return;
-	}
-
 };
-
-#endif
 
 
 #endif

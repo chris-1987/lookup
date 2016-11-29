@@ -16,6 +16,12 @@
 #include <string>
 #include <sstream>
 
+static const double LAMBDA = 0.7; // packet arriving probability
+
+static const int BURSTSIZE = 1; // number of packets arriving at the same time
+
+static const int QUEUESIZE = 128; // size of queue
+
 /// \brief schedule lookup tasks in a linear pipeline
 ///
 /// In a linear pipeline, each lookup task starts at the initial pipe stage and steps through the remaining pipe stages from left to right.
@@ -156,7 +162,14 @@ public:
 				--linenum;
 				
 				// deliver it to the initial stage
-				stages[0].req = newReq; 
+				if (0 == newReq->stepnum) {
+
+					delete newReq;
+				}
+				else {
+
+					stages[0].req = newReq; 
+				}
 			}	
 
 			// step 2: performs one lookup step
