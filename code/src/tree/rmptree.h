@@ -7,9 +7,9 @@
 /// \file rmptree.h
 /// \brief Definition of an IP lookup index based on multi-prefix tree.
 ///
-/// This index consists of three parts: a fast lookup table containing route information
-/// of short prefixes (shorter than U bits), a root table pointing to a forest of multi-prefix
-/// trees, and a forest of multi-prefix trees.
+/// The lookup index consists of three parts: a fast lookup table that contains route information for prefixes shorter than U bits,
+/// a table that consists of 2^U entries and each entry stores a pointer to the root node of a multi-prefix tree, 
+/// and a set of multi-prefix trees.
 ///
 /// \author Yi Wu
 /// \date 2016.11
@@ -18,6 +18,7 @@
 
 #include "../common/common.h"
 #include "../common/utility.h"
+
 #include "fasttable.h"
 
 #include <queue>
@@ -31,16 +32,16 @@
 
 /// \brief Secondary node in a multi-prefix tree.
 /// 
-/// Nodes in a multi-prefix tree are divided into two categories: primary node and secondary node. A secondary node is
-/// a 5-tuple consisting of <prefix, length of prefix, nexthop, pointer to left child, pointer to right child>.
+/// Nodes in a multi-prefix tree are divided into two categories: primary node and secondary node.
+/// A secondary node is a 5-tuple consisting of <prefix, length of prefix, nexthop, pointer to left child, pointer to right child>
 ///
-/// \param W length of IP address, 32 or 128 for IPv4 or IPv6, respectively.
+/// \param W 32, or 128 for IPv4 or IPv6, respectively. 
 template<int W>
 struct SNode{
 
 	typedef typename choose_ip_type<W>::ip_type ip_type;
 
-	static const size_t size; /// size of a secondary node
+	static const size_t size; ///< size of a secondary node
 
 	ip_type prefix; ///< prefix
 	
@@ -48,9 +49,9 @@ struct SNode{
 
 	uint32 nexthop; ///< corresponding nexthop
 
-	SNode* lchild; ///< ptr to left child
+	SNode* lchild; ///< pointer to left child
 
-	SNode* rchild; ///< ptr to right child
+	SNode* rchild; ///< pointer to right child
 
 	int stageidx; ///< pipe stage number, not required, only for test
 
@@ -69,20 +70,20 @@ const size_t SNode<W>::size = sizeof(ip_type) + sizeof(uint8) + sizeof(uint32) +
 ///
 /// \param W Length of IP address, 32 or 128 for IPv4 or IPv6, respectively.
 /// \param K Stride of the tree. This argument determines MC and MP.
-/// \param MP number of prefixes in a primary node, which is equal to  2 * K + 1. Please do not change it.
-/// \param MC number of child pointers in a primary node, which is equal to pow(2, K). Please do not change it.
+/// \param MP number of prefixes in a primary node, which is equal to  2 * K + 1. Do not change it.
+/// \param MC number of child pointers in a primary node, which is equal to pow(2, K). Do not change it.
 template<int W, int K, size_t MP = 2 * K + 1, size_t MC = static_cast<size_t>(pow(2, K))>
 struct PNode{
 
 	typedef typename choose_ip_type<W>::ip_type ip_type;	
 	
-	typedef PNode<W,K> pnode_type;
+	typedef PNode<W, K> pnode_type;
 
 	typedef SNode<W> snode_type; 
 
 	static const size_t size; ///< size of a primary node
 
-	uint8 t; ///< number of prefixes currently stored in the primary node, at most 2K + 1
+	uint8 t; ///< number of prefixes currently stored in the primary node, at most 2 * K + 1
 
 	int stageidx; ///< pipe stage number
 
@@ -121,22 +122,22 @@ struct PNode{
 };
 
 template<int W, int K, size_t MP, size_t MC>
-const size_t PNode<W, K, MP, MC>::size = sizeof(uint8) + sizeof(PrefixEntry) * MP + sizeof(pnode_type*) * MC + sizeof(snode_type*);
+const size_t PNode<W, K, MP, MC>::size = sizeof(uint8) + sizeof(PrefixEntry) * MP + sizeof(pnode_type*) * MC + sizeof(snode_type*); // exclude stageidx
 
 
-/// \brief Build the index (fast table + forest of multi-prefix trees).
+/// \brief Build and update the index.
 ///
-/// Shorter prefixes are stored in the fast table while longer prefixes are stroed in the forest of multi-prefix trees.
-/// 
-/// \param W 32 and 128 for IPv4 and IPv6, respectively
-/// \param K Stride of each multi-prefix tree.
-/// \param MP at most MP prefixes can be stored in a primary node, MP = 2 * K + 1
-/// \param MC at most MC child pointers can be stored in a primary node, MC = pow(2, K)
-/// \param U A threshold for classifying shorter and longer prefixes. Specifically, the length of a shorter prefix is smaller than U,
-/// while the length of a longer prefix is no less than U.
+/// Prefixes shorter than U bits are stored in a fast lookup table.
+/// Prefixes not shorter than U bits are stored in the PT forest.
+/// \param W 32 or 128 for IPv4 or IPv6, respectively. 
+/// \param K Stride of MPT.
+/// \param MP Max number of prefixes tored in a primary node (2 * K + 1).
+/// \param MC Max number of child pointers stored in a primary node (pow(2, K).
+/// \param U Threshold for classifying shorter and longer prefixes.
 /// \param V Number of prefix trees at large.
-/// \param H1 maximum height of a primary node.
-/// \param H2 maximum height of a secondary node.
+/// \param H1 Max level of a primary node.
+/// \param H2 Max level of a secondary node.
+/// \note The maximum height of MPT is H1 = (W - U + 1) / K. The maximum height of PT is H2 = H1 + K, where the root node of PT is pointed to by a primary node located at the highest level of MPT.
 template<int W, int K, int U, size_t MP = 2 * K + 1, size_t MC = static_cast<size_t>(pow(2, K)), size_t V = static_cast<size_t>(pow(2, U)), int H1 = (W - U + 1) / K + (((W - U + 1) % K != 0) ? 1 : 0), int H2 = H1 + K>
 class RMPTree {
 private:
@@ -149,17 +150,21 @@ private:
 
 	pnode_type* mRootTable[V]; ///< pointers to a forest of multi-prefix tree
 
-	uint32 mLocalLevelPNodeNum[V][H1]; ///< number of primary ndoes at each level in all trees
+	uint32 mLocalLevelPNodeNum[V][H1]; ///< number of pnodes at each level in all MPT
 
-	uint32 mLocalLevelSNodeNum[V][H2]; ///< number of seconary nodes at each level in all trees
+	uint32 mLocalLevelSNodeNum[V][H2]; ///< number of snodes at each level in all MPT
 
-	uint32 mLocalPNodeNum[V]; ///< number of primary nodes in each tree
+	uint32 mLocalPNodeNum[V]; ///< number of pnodes in each MPT
 
-	uint32 mLocalSNodeNum[V]; ///< number of seceondary nodes in each tree
+	uint32 mLocalSNodeNum[V]; ///< number of snodes in each MPT
 	
-	uint32 mGlobalLevelPNodeNum[H1]; ///< number of primary nodes at each level
+	uint32 mGlobalLevelPNodeNum[H1]; ///< number of pnodes at each level
 	
-	uint32 mGlobalLevelSNodeNum[H2]; ///< number of secondary nodes at each level
+	uint32 mGlobalLevelSNodeNum[H2]; ///< number of snodes at each level
+
+	uint32 mTotalPNodeNum; ///< number of pnodes
+
+	uint32 mTotalSNodeNum; ///< number of snodes 
 
 	FastTable<W, U - 1> *ft; ///< pointer to the fast lookup table
 
@@ -176,7 +181,7 @@ public:
 
 		for (size_t i = 0; i < V; ++i) {
 
-			mRootTable[i] = 0;
+			mRootTable[i] = nullptr;
 		}
 
 		for (size_t i = 0; i < V; ++i) {
@@ -215,7 +220,13 @@ public:
 			mGlobalLevelSNodeNum[i] = 0;
 		}
 	
+		mTotalPNodeNum = 0;
+
+		mTotalSNodeNum = 0;
+
 		ft = new FastTable<W, U - 1>();
+
+		return;
 	}
 
 	/// \brief disable copy-ctor
@@ -226,8 +237,6 @@ public:
 
 
 	/// \brief dtor
-	///
-	/// destroy index
 	~RMPTree() {
 
 		clear();
@@ -289,6 +298,8 @@ public:
 				ins(prefix, length, nexthop);
 			}
 		}		
+
+		report();
 
 		// traverse();
 
@@ -353,20 +364,37 @@ public:
 			
 		return;
 	}
+		
+	/// \brief Report the collected information
+	void report() {
+
+		mTotalPNodeNum = 0;
+
+		mTotalSNodeNum = 0;
+	
+		for (size_t i = 0; i < V; ++i) {
+
+			mTotalPNodeNum += mLocalPNodeNum[i];
+
+			mTotalSNodeNum += mLocalSNodeNum[i]; 
+		}
+
+		std::cerr << "pnode num in total: " << mTotalPNodeNum << std::endl;
+
+		std::cerr << "snode num in total: " << mTotalSNodeNum << std::endl;
+
+		return;
+	}
 
 	/// \brief Insert a prefix into the index. 
-	///
-	/// If the prefix is shorter than U bits, then insert it into the fast lookup table,
-	/// otherwise, insert it into the the forest of multi-prefix trees.
 	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop) {
 
-		if (_length < U) { // smaler than U bits, insert into the fast lookup table
+		if (_length < U) { // insert into the fast table
 
 			ft->ins(_prefix, _length, _nexthop);
 		}
-		else { // no fewer than U bits, insert into the forest of the multi-prefix trees
+		else { // insert into the MPT forest
 
-			// the starting level is 0 (not U), use the first U bits to branch.
 			ins(_prefix, _length, _nexthop, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], 0, utility::getBitsValue(_prefix, 0, U - 1));
 		}
 		
@@ -374,13 +402,7 @@ public:
 	} 
 
 
-	/// \brief Insert a prefix into the forest of multi-prefix trees.
-	/// 
-	/// The forest consists of 2^U multi-prefix trees. Determine into which a prefix is inserted by checking the first U bits of the prefix.
-	/// When attempting to insert a prefix P into a node N at level L in a multi-prefix tree:
-	/// (1) if len(P) < U + K * (_level + 1), then insert it into the auxiliary prefix tree;
-	/// (2) if N is not full, then insert it into current node;
-	/// (3) if N is full, then recursively insert it into a higher level.
+	/// \brief Insert a prefix into the MPT forest.
 	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, pnode_type*& _pnode, const int _level, const uint32 _treeIdx) {
 
 		if (nullptr == _pnode) { // node is empty, create the node
@@ -572,10 +594,7 @@ public:
 
 
 	/// \brief Search LPM for the input IP address.
-	/// 
-	/// Check both the fast lookup table and the forest of the multi-prefix trees. A match in the latter has a higher priority than the one in the former.
-	///
-	uint32 search(const ip_type& _ip) {
+	uint32 search(const ip_type& _ip, std::vector<int>& _trace) {
 
 		// try to find a match in the fast lookup table
 		uint32 nexthop1 = 0;
@@ -595,6 +614,8 @@ public:
 
 		while (nullptr != pnode) {
 
+			_trace.push_back(pnode->stageidx);
+
 			// if there exists a match in the primary node, then it must be the LPM
 			for (size_t i = 0; i < pnode->t; ++i) {
 
@@ -613,7 +634,10 @@ public:
 
 				while (nullptr != snode) {
 
-					if (utility::getBitsValue(_ip, 0, snode->length - 1) == utility::getBitsValue(snode->prefix, 0, snode->length - 1)) {
+					_trace.push_back(snode->stageidx);
+
+					if (utility::getBitsValue(_ip, 0, snode->length - 1) == 
+						utility::getBitsValue(snode->prefix, 0, snode->length - 1)) {
 
 						if (sBestLength < snode->length) {
 
@@ -653,6 +677,61 @@ public:
 		return 0;
 	}
 
+
+	/// \brief generate lookup trace for simulation
+	void generateTrace (const std::string& _reqFile, const std::string& _traceFile){
+
+		std::ifstream reqFin(_reqFile, std::ios_base::binary);
+
+		std::string line;
+
+		ip_type prefix;
+
+		std::ofstream traFin(_traceFile, std::ios_base::binary);	
+		
+		size_t searchNum = 0;
+
+		double avgSearchDepth = 0;
+
+		while (getline(reqFin, line)) {
+
+			std::vector<int> trace;
+
+			std::stringstream ss(line);
+
+			ss >> prefix;
+			
+			// generate trace while performing the lookup request
+			search(prefix, trace);
+
+			// collect search depth
+			++searchNum;
+
+			avgSearchDepth += trace.size();
+		 
+			// output trace to file	
+			traFin << static_cast<size_t>(trace.size());
+
+			traFin << " ";
+	
+			// record stage list
+			for (int i = 0; i < trace.size(); ++i) {
+			
+				traFin << static_cast<size_t>(trace[i]);		
+
+				traFin << " ";
+			}
+	
+			//
+			traFin << "\n";
+		}
+	
+		avgSearchDepth /= searchNum; 
+
+		std::cerr << "average search depth: " << avgSearchDepth << std::endl;		
+
+		return;	
+	}
 
 	/// \brief Delete a prefix from the index.
 	///
@@ -978,74 +1057,28 @@ public:
 	}	
 
 
-	/// \brief Report collected information.
-	///
-	/// Consider three types of pipe lines: linear, circular and random.
-	void report(){
-
-		std::cerr << "---statistics for pnode/snode in each MPT\n";
-		
-		uint32 totalPNodeNum = 0;
-
-		uint32 totalSNodeNum = 0;
-
-		for (size_t i = 0; i < V; ++i) {
-
-			std::cerr << "tree " << i << ": " << "primary node num: " << mLocalPNodeNum[i] << " secondary node num: " << mLocalSNodeNum[i] << std::endl;
-
-			totalPNodeNum += mLocalPNodeNum[i];
-
-			totalSNodeNum += mLocalSNodeNum[i];
-		}
-
-		std::cerr << "total pnode num: " << totalPNodeNum << " total snode num: " << totalSNodeNum << std::endl;
-
-//		std::cerr << "---statistics for node/snode at each level in each MPT\n";
-//		for (size_t i = 0; i < V; ++i) {
-
-//			std::cerr << "tree " << i << ":\n";
-
-//			std::cerr << "pnode: \n";
-
-//			for (size_t j = 0; j < H1; ++j) {
-
-//				std::cerr << "level " << j << ": " << mLocalLevelPNodeNum[i][j] << "\t";
-//			} 
-
-//			std::cerr << "\nsnode: \n";
-//
-//			for (size_t j = 0; j< H2; ++j) {
-//
-//				std::cerr << "level " << j << ": " << mLocalLevelSNodeNum[i][j] << "\t";
-//			}
-	
-//			std::cerr << std::endl;
-//		}
-	}
-
-
 	/// \brief Scatter 
 	///
-	/// Consider three pipelines: linear, random and pipeline
+	/// The structure of an MPT is different from other prefix trees.
+	/// There's no efficient mapping method to distribute nodes in a MPT
+	/// into a linear/cirular pipeline without no-ops
+	/// Here, we only consider random pipeline.
 	void scatterToPipeline(int _pipestyle, int _stagenum = H2) { // H2 > H1
 
 		switch(_pipestyle) {
 
-		case 0: lin(_stagenum); break;
+	//	case 0: lin(_stagenum); break;
 
 		case 1: ran(_stagenum); break;
 
-		case 2: cir(_stagenum); break;
+	//	case 2: cir(_stagenum); break;
 		}
 
 		return;
 	}
 
 	/// \brief Scatter nodes in a linear pipe line.
-	///
-	/// Map nodes into a linear pipe line in a manner of one level per stage.
-	/// 	
-	/// \note The number of stages is H2 for a linear pipe line.
+	/// \note abandon
 	void lin(int _stagenum) {
 
 		size_t* memUseInStage = new size_t[_stagenum];
@@ -1350,6 +1383,9 @@ public:
 
 	
 	/// \brief element to be sorted
+	/// 
+	/// This strucutre is used along with cir() function to map nodes of 
+	// an MPT into a circular pipeline.
 	struct SortElem{
 
 		size_t nodeNum; ///< number of nodes in the tree
@@ -1373,8 +1409,7 @@ public:
 
 
 	/// \brief Scatter in a circular pipeline
-	///
-	/// \note The root node of an auxiliary PT is located at the stage next to that of the corresponding primary node. 
+	/// \note abandon
 	void cir(int _stagenum) {
 
 		size_t* memUseInStage = new size_t[_stagenum];

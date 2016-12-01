@@ -15,16 +15,11 @@
 /// \date 2016.11
 ///////////////////////////////////////////////////////////
 
+#include "../common/common.h"
+
 #include <string>
 #include <sstream>
 #include <queue>
-
-static const double LAMBDA = 0.7; // packet arriving probability
-
-static const int BURSTSIZE = 1; // number of packets arriving at the same time
-
-static const int QUEUESIZE = 128; // size of queue
-
 
 /// \brief Schedule lookup requests in a circular pipeline
 ///
@@ -35,7 +30,7 @@ static const int QUEUESIZE = 128; // size of queue
 /// \param K number of pipe stages
 /// \param S size of request queue per stage
 ///
-/// \note K >= W
+/// \note K >= W. That is, the number of pipe stages is no fewer than the height of the tree (the number of search steps)
 template<int W, int K, int S = QUEUESIZE>
 class CirSched{
 
@@ -49,37 +44,25 @@ private:
 
 	size_t mBusySlotNumAvg; ///< average number of busy time slots over all pipe stages
 
-	bool mIsUsed[K]; ///< a pipe stage is occupied during the time slot
+	int mMaxQueueLength[K]; ///< maximum lengths of the request queues
 
-	int mMaxQueueLength; ///< maximum length of the request queue
-
-	int mAvgQueueLength; ///< average length of the request queue
+	double mAvgQueueLength[K]; ///< average lengths of the request queues
 
 public:
 
 	/// \brief structure of request
 	struct Request{
 
-		int stagelist[K];
+		int stagelist[W];
 
 		int stepnum;
 
 		int curstep;
 
 		Request() : curstep(0) {}
-
-		bool isFinished() {
-
-			return stepnum == curstep;
-		}
-
-		void toNext() {
-
-			curstep++;
-		}
 	};
 
-	/// \brief structure of pip
+	/// \brief structure of request queue 
 	struct ReqQue{
 
 		std::vector<Request*> mData; ///< payload
@@ -103,11 +86,81 @@ public:
 
 			return;
 		}
+
+		/// \brief remove the head of request (which is assigned to the corresponding pipe stage)
+		void removeHead() {
+
+			mData.erase(mData.begin());
+
+			return;
+		}
+
+		Request* getHead() {
+
+			return mData[0];
+		}
 	};
 
-	ReqQue mReqQues[K]; ///< queues of requests, one queue per stage
+	ReqQue mReqQue[K]; ///< queues of requests, one queue per stage
 
-	CirSched() : mSlotNum(0), mRequestNum(0), mBusySlotNumAvg(0), mMaxQueueLength(0), mAvgQueueLength(0) {
+	/// \brief structure of stage
+	struct Stage{
+
+		Request* mReq;
+
+		Stage() {
+
+			mReq = nullptr;
+		}
+
+		/// \brief check if no request occupies the stage
+		bool isEmpty() {
+
+			return mReq == nullptr;
+		}
+
+		/// \brief check if request is finished
+		bool isFinished() {
+
+			return mReq->stepnum == mReq->curstep;
+		}
+
+		/// \brief one step further
+		void toNext() {
+
+			mReq->curstep++;
+
+			return;
+		}
+
+		/// \brief dispatch the completed request
+		void dispatch() {
+
+			delete mReq;
+
+			mReq = nullptr;
+
+			return;
+		}
+
+		/// \brief get request handler
+		Request* getReq() {
+
+			return mReq;
+		}
+
+		/// \brief set request
+		void setReq(Request* _req) {
+
+			mReq = _req;
+
+			return;
+		}
+	};
+
+	Stage mStage[K];
+
+	CirSched() : mSlotNum(0), mRequestNum(0), mBusySlotNumAvg(0) {
 
 		for (int i = 0; i < K; ++i) {
 
@@ -116,57 +169,53 @@ public:
 
 		for (int i = 0; i < K; ++i) {
 
-			mIsUsed[i] = false;
+			mMaxQueueLength[i] = 0;
 		}
+
+		for (int i = 0; i < K; ++i) {
+
+			mAvgQueueLength[i] = 0;
+		}
+	}
+
+
+	bool isAllQueueEmpty() {
+
+		for (int i = 0; i < K; ++i) {
+
+			if (!mReqQue[i].isEmpty()) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/// \brief execute 
 	void execute() {
-
+	
+		// execute a search step
 		for (int i = 0; i < K; ++i) {
 
-			mIsUsed[i] = false;
-		}
+			if (mStage[i].isEmpty()) { // current stage has no request in execution
 
-		//
-		
-for (int i = 0; i < K; ++i) {
+				if (!mReqQue[i].isEmpty()) { // try to forward the head request in the corresponding queue to the stage
 
-			if (mStages[i].isEmpty() && !mReqQue[i].isEmpty()) {
-
-				mStages[i].req = mReqQue.mData[0];
+					mStage[i].setReq(mReqQue[i].getHead());
+	
+					mReqQue[i].removeHead(); // remove the request from the queue
+				}
 			}
 
-			if (!mStages[i].isEmpty()) {
+			if (!mStage[i].isEmpty()) { // current stage has a request in execution
 
-				mStages[i].req->toNext();
+				mBusySlotNumStage[i]++;
+	
+				// after performing a search step, go to next
+				mStage[i].toNext();
 			}
-		}
-
-		/// wrap around
-		Request *preReq, *curReq;
-
-		preReq = mStages[K - 1].req;
-
-		for (int i = 0; i < K; ++i) {
-			
-			curReq = mStages[i].req;
-
-			mStages[i].req = preReq;
-
-			preReq = curReq;	
-		}
-
-		// dispatch completed requests
-		for (int i = 0; i < K; ++i) {
-
-			if (nullptr != mStages[i].req && mStages[i].req->isFinished()) {
-
-				delete mStages[i].req;
-			
-				mStages[i].req = nullptr;
-			}
-		}
+		}		
 
 		return;
 	}
@@ -187,6 +236,8 @@ for (int i = 0; i < K; ++i) {
 
 		mRequestNum = linenum;
 
+		std::cerr << "linenum: " << linenum << std::endl;
+
 		// step 2: scheduling
 		// packet arrivals submit to bernoulli distribution
 		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -198,13 +249,13 @@ for (int i = 0; i < K; ++i) {
 		auto genreq = std::bind(distribution, generator);
 
 		// start simulation
-		std::ifstream fin2(_traceFile, std::ios_base:;binary);
+		std::ifstream fin2(_traceFile, std::ios_base::binary);
 
 		std::string line2;
 
 		mSlotNum = 0;
-
-		while (linenum > 0 || !mReqQue.isEmpty()) {
+		
+		while (linenum > 0 || !isAllQueueEmpty()) {
 
 			mSlotNum++;
 
@@ -220,24 +271,32 @@ for (int i = 0; i < K; ++i) {
 
 						Request* newReq = new Request();
 
-						ss >> newReq->stenum;
+						ss >> newReq->stepnum;
 
 						for (int j = 0; j < newReq->stepnum; ++j) {
 
 							ss >> newReq->stagelist[j];
 						}
 
+			//			std::cerr << "\nnewReq: " << newReq->stepnum << " ";
+			//			for (int j = 0; j < newReq->stepnum; ++j) {
+			//				std::cerr << newReq->stagelist[j]<< " ";
+			//			}
+			//			std::cerr << std::endl;
 
-						if (0 == newReq->stepnum) {
+						if (0 == newReq->stepnum) { // no need to be further processed
 
 							delete newReq;
+
+							newReq = nullptr;
 						}
-						else {
+						else { // queue the request in the stage at which the target root node is located
 
 							int startStage = newReq->stagelist[0];
 
 							mReqQue[startStage].append(newReq);
 
+							// collect max queue length
 							if (mReqQue[startStage].mData.size() > mMaxQueueLength[startStage]) {
 
 								mMaxQueueLength[startStage] = mReqQue[startStage].mData.size();
@@ -249,15 +308,42 @@ for (int i = 0; i < K; ++i) {
 				}
 			}
 
+			// collect average queue length	
 			for (int i = 0; i < K; ++i) {
 
 				mAvgQueueLength[i] += mReqQue[i].mData.size();
 			}
 
-			dispatch();
-		}
+			// execute a search request
+			execute();
 
+			// dispatch completed requests
+			for (int i = 0; i < K; ++i) {
+
+				if (!mStage[i].isEmpty() && mStage[i].isFinished()) {
+	
+					mStage[i].dispatch();
+				}
+			}
+	
+			// forward the request in each stage to the downstream stage
+			Request* preReq = mStage[K - 1].getReq();
+	
+			Request* curReq;
+	
+			for (int i = 0; i < K; ++i) {
+	
+				curReq = mStage[i].getReq();
+	
+				mStage[i].setReq(preReq);
+	
+				preReq = curReq;			
+			}		
+		}
+	
 		searchReport();
+
+		return;
 	}
 
 	/// \breif print search report
@@ -292,7 +378,7 @@ for (int i = 0; i < K; ++i) {
 
 		for (int i = 0; i < K; ++i) {
 
-			std::cerr << i << "'s queue\tavg (per slot): " << mAvgQueueLength[i] << " max: " << mMaxQueueLength[i] << std::endl;
+			std::cerr << i << "'s queue--avg (per slot): " << mAvgQueueLength[i] / mSlotNum << " max: " << mMaxQueueLength[i] << std::endl;
 		}
 
 		return;

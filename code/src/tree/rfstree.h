@@ -7,9 +7,9 @@
 /// \file rfstree.h
 /// \brief Definition of a lookup index based on fixed-stride tree
 /// 
-/// The index consists of three parts: a fast lookup table for searching short
-/// prefixes, a root table along with a forest of fixed-stride trees for 
-/// searching long prefixes.
+/// The lookup index consists of three parts: a fast lookup table that contains route information for prefixes shorter than U bits,
+/// a table that consists of 2^U entries and each entry stores a pointer to the root of a fixed-stride tree,
+/// and a set of fixed-stride trees.
 ///
 /// \author Yi Wu
 /// \date 2016.11
@@ -27,7 +27,7 @@
 
 #define DEBUG_RFST
 
-/// \brief A node in a non-leaf-pushed fixed-stride tree
+/// \brief Node in a non-leaf-pushed fixed-stride tree
 ///
 /// Each node contains a set of entries and each entry records a prefix,
 /// its child pointer, the length of prefix and the nexthop information.
@@ -266,6 +266,14 @@ public:
 		ft = new FastTable<W, U - 1>();
 	}
 
+	/// \brief dtor
+	///
+	/// destroy index
+	~RFSTree() {
+
+		clear();
+	}
+
 	/// \brief clear the index
 	void clear() {
 
@@ -273,7 +281,7 @@ public:
 
 			if (nullptr != mRootTable[i]) {
 
-				destroy(i); // destroy non-leaf-pushed and leaf-pushed
+				destroy(i); // both non-leaf-pushed and leaf-pushed are destroyed
 			}
 		}
 
@@ -282,6 +290,69 @@ public:
 		ft = nullptr;
 	}
 
+
+	/// \brief destroy a tree in the forest
+	void destroy(const size_t _idx) {
+
+		{
+			if (nullptr != mRootTable[_idx]) {
+
+				std::queue<std::pair<fnode_type*, int> > queue;
+
+				queue.push(std::pair<fnode_type*, int>(mRootTable[_idx], 0));
+
+				while (!queue.empty()) {
+
+					auto front = queue.front();
+
+					for (size_t i = 0; i < mNodeEntryNum[front.second]; ++i) {
+
+						if (nullptr != front.first->entries[i].child) {
+
+							queue.push(std::pair<fnode_type*, int>(front.first->entries[i].child, front.second + 1));
+						}
+					}
+
+					delete front.first;
+
+					queue.pop();
+				}
+
+				mRootTable[_idx] = nullptr;
+			}
+		}
+
+		{
+
+			if (nullptr != mRootTable2[_idx]) {
+
+				std::queue<std::pair<fnode2_type*, int> > queue2;
+
+				queue2.push(std::pair<fnode2_type*, int>(mRootTable2[_idx], 0));
+
+				while (!queue2.empty()) {
+
+					auto front = queue2.front();
+
+					for (size_t i = 0; i < mNodeEntryNum[front.second]; ++i) {
+
+						if (false == front.first->entries[i].isLeaf) {
+
+							queue2.push(std::pair<fnode2_type*, int>(front.first->entries[i].child, front.second + 1));
+						}
+					}
+
+					delete front.first;
+
+					queue2.pop();
+				}
+
+				mRootTable2[_idx] = nullptr;
+			}
+		}
+
+		return;
+	}
 
 	/// \brief produce a non-leaf-pushed fixed-stride tree	
 	void build(const std::string& _fn) {
@@ -631,65 +702,6 @@ public:
 
 	}
 
-	/// \brief destroy a tree in the forest
-	void destroy(const size_t _idx) {
-
-		{
-			if (nullptr != mRootTable[_idx]) {
-
-				std::queue<std::pair<fnode_type*, int> > queue;
-
-				queue.push(std::pair<fnode_type*, int>(mRootTable[_idx], 0));
-
-				while (!queue.empty()) {
-
-					auto front = queue.front();
-
-					for (size_t i = 0; i < mNodeEntryNum[front.second]; ++i) {
-
-						if (nullptr != front.first->entries[i].child) {
-
-							queue.push(std::pair<fnode_type*, int>(front.first->entries[i].child, front.second + 1));
-
-							delete front.first;
-						}
-					}
-
-					queue.pop();
-				}
-			}
-		}
-
-
-		{
-
-			if (nullptr != mRootTable2[_idx]) {
-
-				std::queue<std::pair<fnode2_type*, int> > queue2;
-
-				queue2.push(std::pair<fnode2_type*, int>(mRootTable2[_idx], 0));
-
-				while (!queue2.empty()) {
-
-					auto front = queue2.front();
-
-					for (size_t i = 0; i < mNodeEntryNum[front.second]; ++i) {
-
-						if (nullptr != front.first->entries[i].child) {
-
-							queue2.push(std::pair<fnode2_type*, int>(front.first->entries[i].child, front.second + 1));
-
-							delete front.first;
-						}
-					}
-
-					queue2.pop();
-				}
-			}
-		}
-
-		return;
-	}
 		
 
 	/// \brief report collected information
@@ -993,8 +1005,8 @@ public:
 		return;
 	}
 
-	/// \brief search
-	uint32 search(const ip_type& _ip) {
+	/// \brief search LPM for target IP address
+	uint32 search(const ip_type& _ip, std::vector<int>& _trace) {
 
 		// try to find a match in the fast lookup table
 		uint32 nexthop1 = 0;
@@ -1017,6 +1029,8 @@ public:
 	 		fnode2_type* node = mRootTable2[entryIndex];
 			
 			while(true) {
+
+				_trace.push_back(node->stageidx); // stageidx
 			
 				begBit = mBegLevel[expansionLevel] + U - 1;
 
@@ -1050,19 +1064,59 @@ public:
 		return 0;
 	}
 
-	~RFSTree() {
+	/// \brief generate lookup trace for simulation
+	void generateTrace (const std::string& _reqFile, const std::string& _traceFile){
 
-		for (size_t i = 0; i < V; ++i) {
+		std::ifstream reqFin(_reqFile, std::ios_base::binary);
 
-			if (nullptr != mRootTable[i]) {
+		std::string line;
 
-				destroy(i); // destroy non-leaf-pushed and leaf-pushed
+		ip_type prefix;
+
+		std::ofstream traFin(_traceFile, std::ios_base::binary);	
+		
+		size_t searchNum = 0;
+
+		double avgSearchDepth = 0;
+
+		while (getline(reqFin, line)) {
+
+			std::vector<int> trace;
+
+			std::stringstream ss(line);
+
+			ss >> prefix;
+			
+			// generate trace while performing the lookup request
+			search(prefix, trace);
+
+			// collect search depth
+			++searchNum;
+
+			avgSearchDepth += trace.size();
+		 
+			// output trace to file	
+			traFin << static_cast<size_t>(trace.size());
+
+			traFin << " ";
+	
+			// record stage list
+			for (int i = 0; i < trace.size(); ++i) {
+			
+				traFin << static_cast<size_t>(trace[i]);		
+
+				traFin << " ";
 			}
+	
+			//
+			traFin << "\n";
 		}
+	
+		avgSearchDepth /= searchNum; 
 
-		delete ft;
+		std::cerr << "average search depth: " << avgSearchDepth << std::endl;		
 
-		ft = nullptr;
+		return;	
 	}
 
 	/// \brief traverse non-leaf-pushed fixed-stride tree
@@ -1101,7 +1155,7 @@ public:
 			}
 		}
 
-		std::cerr << "Traverse before leaf-pushing:\n";
+		std::cerr << "Traverse after leaf-pushing:\n";
 
 		std::cerr << "Traversed node num: " << testTotalNodeNum << std::endl;
 
@@ -1125,9 +1179,9 @@ public:
 
 			if (nullptr != mRootTable2[i]) {
 
-				std::queue<std::pair<fnode_type*, int> > queue;
+				std::queue<std::pair<fnode2_type*, int> > queue;
 
-				queue.push(std::pair<fnode_type*, int>(mRootTable[i], 0));
+				queue.push(std::pair<fnode2_type*, int>(mRootTable2[i], 0));
 	
 				while(!queue.empty()) {
 			
@@ -1139,9 +1193,9 @@ public:
 					
 					for (size_t j = 0; j < mNodeEntryNum[front.second]; ++j) {
 				
-						if (nullptr != front.first->entries[j].child){
+						if (false == front.first->entries[j].isLeaf){
 
-							queue.push(std::pair<fnode_type*, int>(front.first->entries[j].child, front.second + 1));
+							queue.push(std::pair<fnode2_type*, int>(front.first->entries[j].child, front.second + 1));
 						}
 					}
 
@@ -1150,7 +1204,7 @@ public:
 			}
 		}
 
-		std::cerr << "Traverse after leaf-pushing:\n";
+		std::cerr << "Traverse after rebuilding the tree\n";
 
 		std::cerr << "Traversed node num: " << testTotalNodeNum << std::endl;
 

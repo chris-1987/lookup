@@ -13,14 +13,11 @@
 /// \date 2016.11
 ///////////////////////////////////////////////////////////
 
+#include "../common/common.h"
+
 #include <string>
 #include <sstream>
 
-static const double LAMBDA = 0.7; // packet arriving probability
-
-static const int BURSTSIZE = 1; // number of packets arriving at the same time
-
-static const int QUEUESIZE = 128; // size of queue
 
 /// \brief schedule lookup tasks in a linear pipeline
 ///

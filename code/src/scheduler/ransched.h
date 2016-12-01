@@ -13,6 +13,9 @@
 /// \date 2016.11
 ///////////////////////////////////////////////////////////
 
+
+#include "../common/common.h"
+
 #include <string>
 #include <sstream>
 #include <queue>
@@ -41,7 +44,7 @@ private:
 
 	int mMaxQueueLength; ///< maximum length of the request queue
 
-	int mAvgQueueLength; ///< average length of the request queue
+	double mAvgQueueLength; ///< average length of the request queue
 
 public:
 

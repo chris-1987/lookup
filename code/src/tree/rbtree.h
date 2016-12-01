@@ -9,7 +9,7 @@
 ///
 /// The lookup index consists of three parts: a fast lookup table that contains route information for prefixes shorter than U bits,
 /// a table that consists of 2^U entries and each entry stores a pointer to the root of a binary tree, 
-/// and a set of binary tree.
+/// and a set of binary trees.
 
 /// \author Yi Wu
 /// \date 2016.11
@@ -58,9 +58,9 @@ struct BNode {
 /// \brief Build and update the index.
 ///
 /// Prefixes shorter than U bits are stored in a fast lookup table.
-/// Prefixes not shorter than U bits are stored in the set of binary trees.
+/// Prefixes not shorter than U bits are stored in the BT forest.
 ///
-/// \param W 32 for IPV4 and 128 for IPV6.
+/// \param W 32 for IPV4 and 128 for IPV6, respectively.
 /// \param U A threshold for classifying shorter and longer prefixes ( < U and >=U).
 /// \param V Number of binary trees at large.
 template<int W, int U, size_t V = static_cast<size_t>(pow(2, U))>
@@ -96,17 +96,17 @@ public:
 
 		ft = nullptr;
 	
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 			mRootTable[i] = nullptr;
 		}
 
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 			mNodeNum[i] = 0;
 		}
 	
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 			for (int j = 0; j < W - U + 1; ++j) {
 
@@ -114,7 +114,7 @@ public:
 			}
 		}
 
-		ft = new FastTable<W, U - 1>();
+		ft = new FastTable<W, U - 1>();	
 	}
 
 	/// \brief disable copy-ctor
@@ -129,19 +129,7 @@ public:
 	///
 	~RBTree() {
 
-		for (size_t i = 0; i < V; ++i) {
-
-			if (nullptr != mRootTable[i]) {
-
-				destroy(i);
-
-				mRootTable[i] = nullptr;
-			}
-		}
-
-		delete ft;
-	
-		ft = nullptr;
+		clear();
 	}
 
 	/// \brief clear
@@ -153,9 +141,16 @@ public:
 
 				destroy(i);
 
+				mRootTable[i] = nullptr;
 			}
 		}
+
+		delete ft;
+
+		ft = nullptr;
 	}
+
+
 	/// \brief Build the index.
 	void build(const std::string & _fn) {
 
@@ -237,7 +232,7 @@ public:
 
 		mTotalNodeNum = 0;
 
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 		//	std::cerr << "\n------node num in the " << i << "'s tree: " << mNodeNum[i] << std::endl;
 
@@ -264,7 +259,7 @@ public:
 			ft->ins(_prefix, _length, _nexthop);	
 					
 		}
-		else { // insert into a binary tree
+		else { // insert into the BT forest
 
 			ins(_prefix, _length, _nexthop, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], U, utility::getBitsValue(_prefix, 0, U - 1)); 
 		}
@@ -310,7 +305,7 @@ public:
 
 		uint32 nodeNum = 0;
 
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 			if (nullptr == mRootTable[i]) {
 				
@@ -337,6 +332,8 @@ public:
 			}
 		}
 
+		std::cerr << "traversed node num: " << nodeNum << std::endl;
+
 		return;
 	}
 
@@ -347,7 +344,7 @@ public:
 		return;
 	}
 	
-	/// \brief search for _ip
+	/// \brief search LPM for target IP address
 	uint32 search(const ip_type& _ip, std::vector<int>& _trace) {
 
 		// try to find a match in the fast lookup table
@@ -402,6 +399,10 @@ public:
 		ip_type prefix;
 
 		std::ofstream traFin(_traceFile, std::ios_base::binary);	
+		
+		size_t searchNum = 0;
+
+		double avgSearchDepth = 0;
 
 		while (getline(reqFin, line)) {
 
@@ -414,6 +415,11 @@ public:
 			// generate trace while performing the lookup request
 			search(prefix, trace);
 
+			// collect search depth
+			++searchNum;
+
+			avgSearchDepth += trace.size();
+		 
 			// output trace to file	
 			traFin << static_cast<size_t>(trace.size());
 
@@ -431,6 +437,10 @@ public:
 			traFin << "\n";
 		}
 	
+		avgSearchDepth /= searchNum; 
+
+		std::cerr << "average search depth: " << avgSearchDepth << std::endl;		
+
 		return;	
 	}
 
@@ -452,7 +462,7 @@ public:
 		return;	
 	}	
 
-	/// \brief delete a prefix in a binary tree
+	/// \brief delete a prefix in the BT forest
 	///
 	/// If _prefix is located in a leaf node, then directly delete the node; otherwise,
 	/// clear the nexthop field.

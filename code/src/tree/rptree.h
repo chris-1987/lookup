@@ -7,9 +7,9 @@
 /// \file rptree.h
 /// \brief Definition of an IP lookup index based on prefix tree.
 ///
-/// This index consists of three parts: a fast lookup table that contains route information
-/// for prefixes shorter than U bits, a table that consists of 2^U entries and each entry 
-/// stores a pointer to the root of a binary tree.
+/// The lookup index consists of three parts: a fast lookup table that contains route information for prefixes shorter than U bits,
+/// a table that consists of 2^U entries and each entry stores a pointer to the root of a prefix tree,
+/// and a set of binary trees.
 ///
 /// \author Yi Wu
 /// \date 2016.11
@@ -21,13 +21,14 @@
 #include "fasttable.h"
 
 #include <queue>
+#include <cmath>
+#include <random>
 #include <algorithm>
-
 
 /// \brief Nodes in a prefix tree.
 ///
 /// Each node in the tree contains two pointers, a prefix field and a nexthop field. 
-/// A node at level-$k$ can store a prefix of a length no less than $k$.
+/// Prefies stored in level-$k$ is no shorter than $k$.
 template<int W>
 struct PNode{
 
@@ -53,10 +54,10 @@ struct PNode{
 /// \brief Build and update the index.
 /// 
 /// Prefixes shorter than U bits are stored in a fast lookup table.
-/// Prefixes not shorter than U bits are stored in the set of binary trees.
+/// Prefixes not shorter than U bits are stored in the PT forest.
 /// 
 /// \param W 32 or 128 for IPv4 or IPv6, respectively.
-/// \param U A threshold for classifying shorter and longer prefixes
+/// \param U A threshold for classifying shorter and longer prefixes (< U and >= U)
 /// \param V Number of prefix trees at large.
 template<int W, int U, size_t V = static_cast<size_t>(pow(2, U))>
 class RPTree{
@@ -77,20 +78,29 @@ private:
 	FastTable<W, U - 1> *ft;
 
 public:
+
 	/// \brief default ctor
-	RPTree() : mTotalNodeNum(0) {
+	RPTree() {
+
+		initializeParameters();
+	}
+
+	/// \brief initialize parameters
+	void initializeParameters() {
+
+		mTotalNodeNum = 0;
 
 		for (size_t i = 0; i < V; ++i) {
 
 			mRootTable[i] = nullptr;
 		}
 
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 			mNodeNum[i] = 0;
 		}
 
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 			for (int j = 0; j < W - U + 1; ++j) {
 
@@ -98,9 +108,9 @@ public:
 			}
 		}
 
-		ft = new FastTable<W, U - 1>();
+		ft = new FastTable<W, U - 1>();	
 	}
-
+	
 	/// \brief copy ctor, disabled
 	RPTree(const RPTree& _pt) = delete;
 
@@ -110,7 +120,13 @@ public:
 	/// \brief dtor
 	~RPTree() {
 
-		for (int i = 0; i < V; ++i) {
+		clear();
+	}
+
+	/// \brief clear the index
+	void clear() {
+
+		for(size_t i = 0; i < V; ++i) {
 
 			if (nullptr != mRootTable[i]) {
 
@@ -125,32 +141,15 @@ public:
 		ft = nullptr;
 	}
 
+
 	/// \brief Build the index.
 	void build(const std::string& _fn) {
 
-		// clear old index if exists any
-		for (int i = 0; i < V; ++i) {
+		// clear old index if there exists any
+		clear();
 
-			if (nullptr != mRootTable[i]) {
-
-				destroy(i);
-
-				mRootTable[i] = nullptr;
-			}
-		}
-
-		for (int i = 0; i < V; ++i) {
-			
-			mNodeNum[i] = 0;
-		}
-
-		for (int i = 0; i < V; ++i) {
-
-			for (int j = 0; j < W - U + 1; ++j) {
-
-				mLevelNodeNum[i][j] = 0;
-			}
-		}
+		// initialize 
+		initializeParameters();
 
 		// insert prefixes into ptree one by one
 		std::ifstream fin(_fn, std::ios_base::binary);
@@ -182,7 +181,7 @@ public:
 
 		report();
 
-		traverse();	
+		//traverse();	
 
 		return;
 	}
@@ -224,7 +223,7 @@ public:
 
 		mTotalNodeNum = 0;
 
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 			mTotalNodeNum += mNodeNum[i];
 		}
@@ -233,14 +232,14 @@ public:
 	}
 
 
-	/// \brief Insert a prefix.
+	/// \brief Insert a prefix into the index.
 	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop) {
 
-		if (_length < U) {
+		if (_length < U) { // insert into the fast table
 
 			ft->ins(_prefix, _length, _nexthop);
 		}
-		else {
+		else { // insert into the PT forest
 
 			ins(_prefix, _length, _nexthop, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], U, utility::getBitsValue(_prefix, 0, U - 1));
 		}
@@ -248,17 +247,17 @@ public:
 		return;
 	}
 
-
+	/// \brief Insert a prefix into the PT forest.
 	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, node_type*& _node, const int _level, const size_t _treeIdx) {
 
-		if (nullptr == _node) {
+		if (nullptr == _node) { // create a new node and insert the prefix into the node
 
 			// create a node
 			_node = new node_type();
 
-			mNodeNum[_treeIdx]++;
+			++mNodeNum[_treeIdx];
 
-			mLevelNodeNum[_treeIdx][_level - U]++;
+			++mLevelNodeNum[_treeIdx][_level - U];
 
 			// insert the prefix
 			_node->prefix = _prefix;
@@ -269,11 +268,11 @@ public:
 			
 			return;
 		}	
-		else {
+		else { // current node is not null, insert prefix into current node if required, otherwise, insert the prefix into a higher level
 			
 			if (_length == _level) { // _prefix must be inserted into current node
 				
-				if (_node->length > _level) { // the prefix in current node is different from the one to be inserted 
+				if (_node->length > _level) { // check if the prefix is inserted repeatedly
 	
 					// cache the prefix in _node 
 					uint32 prefix = _node->prefix;
@@ -324,7 +323,7 @@ public:
 
 		uint32 nodeNum = 0; // for test
 
-		for (int i = 0; i < V; ++i) {
+		for (size_t i = 0; i < V; ++i) {
 
 			if (nullptr == mRootTable[i]) {
 
@@ -365,10 +364,11 @@ public:
 	}
 
 
-	/// \brief search in the index
+	/// \brief Search LPM for target IP address.
 	///
-	/// A match in the forest of prefix trees has a higher priority than the one in the fast lookup table.
-	uint32 search(const ip_type& _ip) {
+	/// Record trace in the vector.
+	///
+	uint32 search(const ip_type& _ip, std::vector<int>& _trace) {
 
 		// try to find a match in the fast lookup table
 		uint32 nexthop1 = 0;
@@ -386,6 +386,8 @@ public:
 
 		while (nullptr != node) {
 
+			_trace.push_back(node->stageidx);
+
 			if (utility::getBitsValue(_ip, 0, node->length - 1) == utility::getBitsValue(node->prefix, 0, node->length - 1)) {
 
 				if (bestLength < node->length) {
@@ -396,6 +398,7 @@ public:
 				}
 			}
 
+			// branch
 			if (0 == utility::getBitValue(_ip, level)) {
 
 				node = node->lchild;
@@ -417,7 +420,62 @@ public:
 		return 0;
 	}
 
-	/// \brief delete a prefix in the index
+	/// \brief generate lookup trace for simulation
+	void generateTrace (const std::string& _reqFile, const std::string& _traceFile){
+
+		std::ifstream reqFin(_reqFile, std::ios_base::binary);
+
+		std::string line;
+
+		ip_type prefix;
+
+		std::ofstream traFin(_traceFile, std::ios_base::binary);	
+		
+		size_t searchNum = 0;
+
+		double avgSearchDepth = 0;
+
+		while (getline(reqFin, line)) {
+
+			std::vector<int> trace;
+
+			std::stringstream ss(line);
+
+			ss >> prefix;
+			
+			// generate trace while performing the lookup request
+			search(prefix, trace);
+
+			// collect search depth
+			++searchNum;
+
+			avgSearchDepth += trace.size();
+		 
+			// output trace to file	
+			traFin << static_cast<size_t>(trace.size());
+
+			traFin << " ";
+	
+			// record stage list
+			for (int i = 0; i < trace.size(); ++i) {
+			
+				traFin << static_cast<size_t>(trace[i]);		
+
+				traFin << " ";
+			}
+	
+			//
+			traFin << "\n";
+		}
+	
+		avgSearchDepth /= searchNum; 
+
+		std::cerr << "average search depth: " << avgSearchDepth << std::endl;		
+
+		return;	
+	}
+
+	/// \brief Delete a prefix in the index.
 	void del(const ip_type& _prefix, const uint8& _length) {
 
 		if (_length < U) {
@@ -428,9 +486,11 @@ public:
 
 			del(_prefix, _length, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], U, utility::getBitsValue(_prefix, 0, U - 1));
 		}
+
+		return;
 	}
 
-	/// \brief delete a prefix
+	/// \brief Delete a prefix in the PT forest.
 	void del(const ip_type& _prefix, const uint8& _length, node_type*& _node, const int _level, const size_t _treeIdx) {
 
 		if (nullptr == _node) return; // find nothing	
@@ -537,6 +597,8 @@ public:
 				del(_prefix, _length, _node->rchild, _level + 1, _treeIdx);
 			}
 		}	
+
+		return;
 	}
 	
 
@@ -641,7 +703,9 @@ public:
 			nodeNumInStage[i] = 0;
 		}
 
-		std::default_random_engine generator;
+		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+		std::default_random_engine generator(seed);
 
 		std::uniform_int_distribution<int> distribution(0, _stagenum - 1);
 
