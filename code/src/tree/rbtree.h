@@ -878,6 +878,63 @@ public:
 		
 		return sum;
 	}
+
+
+	/// \brief update 
+	///
+	/// update the index
+	void update(std::string _fn) {
+
+		std::ifstream fin(_fn, std::ios_base::binary);
+		
+		std::string line;
+
+		ip_type prefix;
+
+		uint8 length;
+
+		bool isAnnounce;
+
+		while(getline(fin, line)) {
+
+			// retrieve prefix and length
+			utility::retrieveInfo(line, prefix, length, isAnnounce);
+
+			std::cerr << "line: " << line << std::endl;
+
+			std::cerr << "prefix: " << prefix << " length: " << (uint32)length << " isAnnounce: " << isAnnounce << std::endl;
+
+			std::cin.get();
+
+			if (false == isAnnounce) { // withdraw
+
+				if (0 == length) { // delete from fast table
+
+					
+				}
+				else { // delete from forest
+
+
+				}
+			}
+			else { // announce
+
+				if (0 == length) { // insert into fast table
+
+
+				}
+				else { // insert into forest
+
+
+				}
+			}	
+		}
+
+		report();
+
+		return;
+		
+	}
 };
 
 #endif // _BTree_H

@@ -5,6 +5,8 @@
 #include <random>
 #include <chrono>
 #include <algorithm>
+#include <sstream>
+
 
 NAMESPACE_UTILITY_BEG
 
@@ -80,16 +82,14 @@ uint32 getBitValue(const uint32& _uint, const size_t& _pos) {
 /// 
 /// \param _uint ipv6 address
 /// \param _pos offset
-uint128 getBitValue(const uint128& _uint, const size_t& _pos) {
+uint32 getBitValue(const MyUint128& _uint, const size_t& _pos) {
 	// not allowe to declare 128-bit unsigned integer constant, thus we must directly compute 
 
-	static const uint128 odd = 1;
-
-	return (((_uint << _pos) & (odd << 127)) == 0) ? 0: 1;
+	return _uint.getBitValue(_pos); 
 } 
 
 
-/// get the value of bits for ipv4
+/// \brief get the value of bits for ipv4
 ///
 /// \param _uint inpv4 address
 /// \param _stride number of bits to be retrieved
@@ -106,8 +106,16 @@ uint32 getBitsValue(const uint32& _uint, const uint32 _begBit, const uint32 _end
 	return (_uint >> (31 - _endBit)) & mask;
 }
 
+/// \brief get the value of bits for ipv6
+///
+/// \note we assume that _endBit - BegBit + 1 < 32, thus the result is less than std::numeric_limits<uint32>::max()
+uint32 getBitsValue(const MyUint128& _uint, const uint32 _begBit, const uint32 _endBit) {
 
-/// \brief retrieve IPv4 prefix, length and nexthop
+	return _uint.getBitsValue(_begBit, _endBit);
+}
+
+
+/// \brief for search, retrieve IPv4 prefix and length
 ///
 /// \param _line input sttring line, containing prefix and length
 /// \param _prefix store the prefix retrieved from _line
@@ -161,16 +169,381 @@ void retrieveInfo(const std::string& _line, ipv4_type& _prefix, uint8& _length) 
 	return;
 }
 
-/// \brief retrieve IPv6 prefix, length and nexthop
-/// \param _line
-/// \param _prefix
-/// \param _length
+/// \brief for update, retrieve IPv4 prefix, length and withdraw/announce. 
+///
+/// \param _line input sttring line, containing prefix and length
+/// \param _prefix store the prefix retrieved from _line
+/// \param _length sotre the prefix length retrieved from _length
+void retrieveInfo(const std::string& _line, ipv4_type& _prefix, uint8& _length, bool& _isAnnounce) {
+
+	// prefix, in xx.xx.xx.xx format
+	size_t pos1 = _line.find_first_of(" ");
+
+	std::string prefix = _line.substr(0, pos1);
+
+	// length
+	size_t pos2 = _line.find_first_of(" ", pos1 + 1);
+
+	std::string length = _line.substr(pos1 + 1, pos2 - pos1 - 1);
+
+	// isAnnounce
+	size_t pos3 = _line.find_first_of("\n", pos2 + 1);
+
+	std::string isAnnounce = _line.substr(pos2 + 1, pos3 - pos2 - 1);
+
+	// convert prefix to _prefix by integrating the 4 seguments into a whole integer
+	ipv4_type sum1;
+	
+	size_t beg, end;
+
+	_prefix = 0, beg = 0;
+
+	for (int i = 0; i < 4; ++i) {
+
+		if (0 == i) {
+
+			end = prefix.find_first_of(".", beg);
+		}
+		else if (3 == i) {
+
+			end = prefix.size();
+		}
+		else {
+			
+			end = prefix.find_first_of(".", beg + 1);
+		}
+
+		strToUInt<ipv4_type>(prefix, beg, end, sum1);
+	
+		_prefix = (_prefix << 8) + sum1;
+	
+		beg = end + 1;	
+	}
+
+	// convert length to _length
+	beg = 0, end = length.size();
+
+	strToUInt<uint8>(length, beg, end, _length);
+
+	// conver isAnnounce to _isAnnounce
+	if (isAnnounce == "0") {
+
+		_isAnnounce = false;
+	}
+	else if (isAnnounce == "1") {
+
+		_isAnnounce = true;
+	}
+	else {
+
+		std::cerr << "_isAnnounce is wrong.\n";
+
+		std::cin.get();
+	}
+	
+	return;
+}
+
+
+/// \brief for search, retrieve IPv6 prefix and length
+///
+/// \param _line input string line, containing prefix and length
+/// \param _prefix store the prefix retrieved from _line
+/// \param _length sotre the prefix length retrieved from _length
 void retrieveInfo(const std::string& _line, ipv6_type& _prefix, uint8& _length) {
+
+	_prefix = 0;
+
+	_length = 0;
+
+	// prefix
+	size_t pos1 = _line.find_first_of(" ");
+
+	std::string prefix = _line.substr(0, pos1);
+
+	// length
+	size_t pos2 = _line.find_first_of(" ", pos1 + 1);
+
+	std::string length = _line.substr(pos1 + 1, pos2 - pos1 - 1);
+
+	//std::cerr << "ipv6 prefix: " << prefix << " length: " << length << std::endl;
+	
+	// convert prefix (string) to _prefix (MyUint128)
+	std::stringstream ss(prefix);
+
+	std::vector<uint64> segarr; // store segements, at most 8 segments
+
+	uint64 seg = 0; // record current segment
+	
+	uint32 segnum = 0; // number of segments
+
+	uint32 frontsegnum = 0; // number of segments ahead of ::
+
+	uint32 backsegnum = 0; // number of segments behind ::
+
+	char preCh, curCh;
+
+	// prefix has at least two characters (::)
+	// process first character
+	ss >> curCh; 
+
+	if (':' != curCh) {
+
+		if (isdigit(curCh)) { // [0, 9]
+
+			seg = seg * 16 + (curCh - '0');
+		}
+		else if (islower(curCh)) { // [a, f]
+
+			seg = seg * 16 + (10 + curCh - 'a');
+		}
+		else { // [A, F]
+
+			seg = seg * 16 + (10 + curCh - 'A');
+		}
+	}
+
+	preCh = curCh;
+
+	// process the remaining characters
+	while (ss >> curCh) {
+
+		if (':' != curCh) { // current is a valid character
+
+			if (isdigit(curCh)) { // [0, 9]
+
+				seg = seg * 16 + (curCh - '0');
+			}
+			else if (islower(curCh)) { // [a, f]
+	
+				seg = seg * 16 + (10 + curCh - 'a');
+			}
+			else { // [A, F]
+	
+				seg = seg * 16 + (10 + curCh - 'A');
+			}
+		}
+		else { // current is :
+
+			if (':' != preCh) { // previous is a valid character, then find a segment
+
+				segarr.push_back(seg);
+
+				seg = 0;
+
+				segnum++;
+			}
+			else { // curCh == preCh == ':', find ::, then frontsegnum is determined
+				
+				frontsegnum = segnum;
+			}
+		}
+
+		preCh = curCh;
+	}
+
+	if (':' != preCh) { // if the last character is a valid character, then there remains a segment to be processed
+
+		segarr.push_back(seg);
+
+		seg = 0;
+
+		segnum++;
+	}
+	
+	backsegnum = segnum - frontsegnum; // compute number of segments behind ::
+
+	// put segments ahead of :: into _prefix
+	size_t i = 0;
+
+	for (; i < frontsegnum; ++i) {
+
+		_prefix.setSegment(segarr[i], i);
+
+		//std::cerr << "seg: " << segarr[i] << " i: " << i << std::endl;	
+	}
+
+	// put segments behind :: into _prefix
+	for (size_t j = 0; i < segnum; ++i, ++j) {
+
+		_prefix.setSegment(segarr[i], 8 - backsegnum + j); // at most 8 segments
+
+		//std::cerr << "seg: " << segarr[i] << " j: " << j << std::endl;
+	}
+
+
+	// convert length to _length
+	size_t beg = 0, end = length.size();
+
+	strToUInt<uint8>(length, beg, end, _length);
+
+	//std::cerr << "_prefix: " << _prefix << std::endl;
+
+	//std::cin.get();
 
 	return;
 }
 
 
+/// \brief for update, retrieve IPv6 prefix, length and announce/withdraw
+///
+/// \param _line input string line, containing prefix and length
+/// \param _prefix store the prefix retrieved from _line
+/// \param _length sotre the prefix length retrieved from _length
+void retrieveInfo(const std::string& _line, ipv6_type& _prefix, uint8& _length, bool& _isAnnounce) {
+
+	_prefix = 0;
+
+	_length = 0;
+
+	// prefix
+	size_t pos1 = _line.find_first_of(" ");
+
+	std::string prefix = _line.substr(0, pos1);
+
+	// length
+	size_t pos2 = _line.find_first_of(" ", pos1 + 1);
+
+	std::string length = _line.substr(pos1 + 1, pos2 - pos1 - 1);
+
+	// isAnnounce
+	size_t pos3 = _line.find_first_of("\n", pos2 + 1);
+
+	std::string isAnnounce = _line.substr(pos2 + 1, pos3 - pos2 - 1);
+
+	//std::cerr << "ipv6 prefix: " << prefix << " length: " << length << std::endl;
+	
+	// convert prefix (string) to _prefix (MyUint128)
+	std::stringstream ss(prefix);
+
+	std::vector<uint64> segarr; // store segements, at most 8 segments
+
+	uint64 seg = 0; // record current segment
+	
+	uint32 segnum = 0; // number of segments
+
+	uint32 frontsegnum = 0; // number of segments ahead of ::
+
+	uint32 backsegnum = 0; // number of segments behind ::
+
+	char preCh, curCh;
+
+	// prefix has at least two characters (::)
+	// process first character
+	ss >> curCh; 
+
+	if (':' != curCh) {
+
+		if (isdigit(curCh)) { // [0, 9]
+
+			seg = seg * 16 + (curCh - '0');
+		}
+		else if (islower(curCh)) { // [a, f]
+
+			seg = seg * 16 + (10 + curCh - 'a');
+		}
+		else { // [A, F]
+
+			seg = seg * 16 + (10 + curCh - 'A');
+		}
+	}
+
+	preCh = curCh;
+
+	// process the remaining characters
+	while (ss >> curCh) {
+
+		if (':' != curCh) { // current is a valid character
+
+			if (isdigit(curCh)) { // [0, 9]
+
+				seg = seg * 16 + (curCh - '0');
+			}
+			else if (islower(curCh)) { // [a, f]
+	
+				seg = seg * 16 + (10 + curCh - 'a');
+			}
+			else { // [A, F]
+	
+				seg = seg * 16 + (10 + curCh - 'A');
+			}
+		}
+		else { // current is :
+
+			if (':' != preCh) { // previous is a valid character, then find a segment
+
+				segarr.push_back(seg);
+
+				seg = 0;
+
+				segnum++;
+			}
+			else { // curCh == preCh == ':', find ::, then frontsegnum is determined
+				
+				frontsegnum = segnum;
+			}
+		}
+
+		preCh = curCh;
+	}
+
+	if (':' != preCh) { // if the last character is a valid character, then there remains a segment to be processed
+
+		segarr.push_back(seg);
+
+		seg = 0;
+
+		segnum++;
+	}
+	
+	backsegnum = segnum - frontsegnum; // compute number of segments behind ::
+
+	// put segments ahead of :: into _prefix
+	size_t i = 0;
+
+	for (; i < frontsegnum; ++i) {
+
+		_prefix.setSegment(segarr[i], i);
+
+		//std::cerr << "seg: " << segarr[i] << " i: " << i << std::endl;	
+	}
+
+	// put segments behind :: into _prefix
+	for (size_t j = 0; i < segnum; ++i, ++j) {
+
+		_prefix.setSegment(segarr[i], 8 - backsegnum + j); // at most 8 segments
+
+		//std::cerr << "seg: " << segarr[i] << " j: " << j << std::endl;
+	}
+
+
+	// convert length to _length
+	size_t beg = 0, end = length.size();
+
+	strToUInt<uint8>(length, beg, end, _length);
+
+	// conver isAnnounce to _isAnnounce
+	if (isAnnounce == "0") {
+
+		_isAnnounce = false;
+	}
+	else if (isAnnounce == "1") {
+
+		_isAnnounce = true;
+	}
+	else {
+
+		std::cerr << "_isAnnounce is wrong.\n";
+
+		std::cin.get();
+	}
+
+	//std::cerr << "_prefix: " << _prefix << std::endl;
+
+	//std::cin.get();
+
+	return;
+}
 
 /// \brief generate search requests
 ///

@@ -855,7 +855,7 @@ public:
 
 		for (int i = 0; i < _pnode->t; ++i) {
 
-			if (_length == _pnode->prefixEntries[i].length && _prefix == _pnode->prefixEntries[i].prefix) {
+			if (_length == _pnode->prefixEntries[i].length && _pnode->prefixEntries[i].prefix == _prefix) {
 
 				return i;
 			}
@@ -870,7 +870,7 @@ public:
 
 		if (nullptr == _snode) return;
 
-		if (_length == _snode->length && _prefix == _snode->prefix) { // find the prefix
+		if (_length == _snode->length && _snode->prefix == _prefix) { // find the prefix
 
 			if (nullptr == _snode->lchild && nullptr == _snode->rchild) { // external node, directly delete it
 

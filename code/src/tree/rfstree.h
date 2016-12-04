@@ -1323,22 +1323,14 @@ public:
 
 			entryNumInStage[i] = 0;
 		}
+	
+		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
-		std::default_random_engine** generators = new std::default_random_engine*[_stagenum]; // for nodes in one level, use a unique generator
-		
-		for (int i = 0; i < _stagenum; ++i) {
+		std::default_random_engine generator = std::default_random_engine(seed);
 
-			unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() + i * 1000000;
+		std::uniform_int_distribution<int> distribution = std::uniform_int_distribution<int>(0, _stagenum - 1);
 
-			generators[i] = new std::default_random_engine(seed);
-		}
-
-		std::uniform_int_distribution<int>** distributions = new std::uniform_int_distribution<int>*[_stagenum];
-
-		for (int i = 0; i < _stagenum; ++i) {
-
-			distributions[i] = new std::uniform_int_distribution<int>(0, _stagenum - 1);
-		}
+		auto roll = std::bind(distribution, generator);
 
 		
 		// start numbering from 0 to _stagenum - 1, nodes in a same level are located in the same level
@@ -1354,7 +1346,7 @@ public:
 			
 					auto front = queue.front();
 
-					int rand_stageidx = (*(distributions[front.second]))(*(generators[front.second]));
+					int rand_stageidx = roll();
 
 					front.first->stageidx = rand_stageidx;
 							

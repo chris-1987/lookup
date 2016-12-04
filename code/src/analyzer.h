@@ -40,10 +40,10 @@ Author: Dan Ardelean (dan@ripe.net)
 
 #define BGPDUMP_HAVE_IPV6
 
-#define OUTPUT_TO_FILE_IPV4_TABLE
+//#define OUTPUT_TO_FILE_IPV4_TABLE
 //#define OUTPUT_TO_FILE_IPV6_TABLE
 //#define OUTPUT_TO_FILE_IPV4_UPDATE
-//#define OUTPUT_TO_FILE_IPV6_UPDATE
+#define OUTPUT_TO_FILE_IPV6_UPDATE
 
 static const char* bgp_state_name[] = {
 		"Unknown",

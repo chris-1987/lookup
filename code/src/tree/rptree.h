@@ -275,7 +275,7 @@ public:
 				if (_node->length > _level) { // check if the prefix is inserted repeatedly
 	
 					// cache the prefix in _node 
-					uint32 prefix = _node->prefix;
+					ip_type prefix = _node->prefix;
 		
 					uint8 length = _node->length;
 		
@@ -495,7 +495,7 @@ public:
 
 		if (nullptr == _node) return; // find nothing	
 
-		if (_prefix == _node->prefix && _length == _node->length) { // prefix is found
+		if (_node->prefix == _prefix && _length == _node->length) { // prefix is found
 			
 			if (nullptr == _node->lchild && nullptr == _node->rchild) { // a leaf node, delete it directly
 				

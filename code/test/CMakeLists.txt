@@ -15,3 +15,6 @@ ADD_EXECUTABLE(test_fst test_fst.cpp)
 
 # test rmpt
 ADD_EXECUTABLE(test_rmpt test_rmpt.cpp)
+
+#test test_u128
+ADD_EXECUTABLE(test_u128 test_u128.cpp)
