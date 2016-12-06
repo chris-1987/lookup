@@ -577,9 +577,9 @@ public:
 	///
 	/// \note the number of stages is W - U + 1 for a linear pipe line.
 	void lin(int _stagenum) {
-		
+	
 		size_t* nodeNumInStage = new size_t[_stagenum];
-
+	
 		for (int i = 0; i < _stagenum; ++i) {
 
 			nodeNumInStage[i] = 0;
@@ -881,9 +881,11 @@ public:
 
 
 	/// \brief update 
-	///
-	/// update the index
-	void update(std::string _fn) {
+	void update(std::string _fn, int _pipestyle, int _stagenum = W - U + 1) {
+
+		size_t withdrawnum = 0;
+
+		size_t announcenum = 0;
 
 		std::ifstream fin(_fn, std::ios_base::binary);
 		
@@ -893,44 +895,167 @@ public:
 
 		uint8 length;
 
+		uint32 nexthop;
+
 		bool isAnnounce;
 
+		// random number generator
+		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+		std::default_random_engine generator(seed);
+
+		std::uniform_int_distribution<int> distribution(0, _stagenum - 1);
+	
 		while(getline(fin, line)) {
 
 			// retrieve prefix and length
 			utility::retrieveInfo(line, prefix, length, isAnnounce);
 
-			std::cerr << "line: " << line << std::endl;
-
-			std::cerr << "prefix: " << prefix << " length: " << (uint32)length << " isAnnounce: " << isAnnounce << std::endl;
-
-			std::cin.get();
-
 			if (false == isAnnounce) { // withdraw
 
-				if (0 == length) { // delete from fast table
-
-					
-				}
-				else { // delete from forest
-
-
-				}
+				++withdrawnum;
+	
+				del(prefix, length); // reuse delete operation
 			}
-			else { // announce
+			else { // annouce
 
-				if (0 == length) { // insert into fast table
+				++announcenum;
+	
+				nexthop = length;
 
-
-				}
-				else { // insert into forest
-
-
-				}
-			}	
+				ins(prefix, length, nexthop, _pipestyle, generator, distribution, _stagenum); // overload ins()
+			}
 		}
 
-		report();
+	
+		reportNodeNumInStage(_stagenum);
+
+		std::cerr << "withdraw num: " << withdrawnum << " announce num: " << announcenum << std::endl;
+
+		return;
+		
+	}
+
+	/// \brief for update, insert into index	
+	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, const int _pipestyle, std::default_random_engine& _generator, std::uniform_int_distribution<int>& _distribution, const int _stagenum) {
+
+		if (_length < U){ // insert into a fast lookup table
+	
+			ft->ins(_prefix, _length, _nexthop);	
+		}
+		else { // insert into the BT forest
+
+			ins(_prefix, _length, _nexthop, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], U, utility::getBitsValue(_prefix, 0, U - 1), true, _pipestyle, std::numeric_limits<int>::max(), _generator, _distribution, _stagenum); // parent of a root node is null, set parentStageIdx to int_max 
+		}
+
+		return;
+	}	
+		
+
+	/// \brief for update, insert into a binary tree
+	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, node_type*& _node, const int _level, const size_t _treeIdx, const bool _isRoot, const int _pipestyle, const int _parentStageidx, std::default_random_engine& _generator, std::uniform_int_distribution<int>& _distribution, const int _stagenum) {
+
+		if (nullptr == _node) { // create a new node
+
+			_node = new node_type();
+
+			if (_isRoot) { // root node
+
+				switch (_pipestyle) {
+
+				case 0: // linear pipeline, root is located at the intial stage
+					_node->stageidx = 0; break;  
+
+				case 1: 
+				case 2: // circular and randome pipeline, root is randomly allocated into a stage
+					_node->stageidx = _distribution(_generator); break; 
+				}
+			}
+			else { // not root node
+		
+				switch(_pipestyle) {
+
+				case 1: // random
+					_node->stageidx = _distribution(_generator); break;
+
+				case 0:
+				case 2: // linear and circular pipeline, descendant nodes are located into the following stages
+					_node->stageidx = (_parentStageidx + 1) % _stagenum; break;
+				}
+			}
+
+			++mNodeNum[_treeIdx];
+
+			++mLevelNodeNum[_treeIdx][_level - U];
+		}
+
+		if (_length == _level) { // insert into current node
+			
+			_node->nexthop = _nexthop;
+		}
+		else {
+
+			if (0 == utility::getBitValue(_prefix, _level)) {
+				
+				ins(_prefix, _length, _nexthop, _node->lchild, _level + 1, _treeIdx, false, _pipestyle, _node->stageidx, _generator, _distribution, _stagenum);
+			}
+			else {
+
+				ins(_prefix, _length, _nexthop, _node->rchild, _level + 1, _treeIdx, false, _pipestyle, _node->stageidx, _generator, _distribution, _stagenum);
+			}
+		}
+
+		return;
+	}
+
+
+	/// \brief report number of nodes in each stage
+	void reportNodeNumInStage(int _stagenum) {
+
+		size_t* nodeNumInStage = new size_t[_stagenum];
+
+		for (int i = 0; i < _stagenum; ++i) {
+
+			nodeNumInStage[i] = 0;
+		}
+
+		for (size_t i = 0; i < V; ++i) {
+
+			if (nullptr == mRootTable[i]) {
+
+				// do nothing
+			}
+			else {
+				
+				std::queue<node_type*> queue;
+
+				queue.push(mRootTable[i]);
+			
+				while(!queue.empty()) {
+
+					nodeNumInStage[queue.front()->stageidx]++;
+
+					if (nullptr != queue.front()->lchild) queue.push(queue.front()->lchild);
+
+					if (nullptr != queue.front()->rchild) queue.push(queue.front()->rchild);
+					
+					queue.pop();
+				}
+			}
+		}
+
+		size_t nodeNumInAllStages = 0;
+
+		for (int i = 0; i < _stagenum; ++i) {
+
+			nodeNumInAllStages += nodeNumInStage[i];
+
+			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << std::endl;
+		}
+
+		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
+
+		delete[] nodeNumInStage;
 
 		return;
 		

@@ -4,16 +4,17 @@
 #include "../src/scheduler/ransched.h"
 #include "../src/scheduler/cirsched.h"
 
+// note: only support random pipeline 
 
 static const size_t RN = 1024 * 1024 * 1; ///< number of requests
-static const int PL = 128; ///< 32 or 128 for IPv4 or IPv6, respectively
+static const int PL = 32; ///< 32 or 128 for IPv4 or IPv6, respectively
 static const int PT = 8; ///< threshold for short & long prefixes
 static const int ST = 2; ///< stride of MPT
 static const int SN = 10; ///< number of pipe stages
 
 int main(int argc, char** argv){
 
-	if (argc != 3) {
+	if (argc != 4) {
 
 		std::cerr << "This program takes two parameters:\n";
 
@@ -21,72 +22,59 @@ int main(int argc, char** argv){
 	
 		std::cerr << "The 2nd parameter specifies the file prefix for storing lookup trace. The trace is used for simulation.\n";
 
+		std::cerr << "The 3rd parameter specifies the update file.\n"; 
+
 		exit(0);
 	}
 
-	// step 1: build the index
-	std::cerr << "Create the index.\n";
-
+	// generate search requests
 	std::string bgptable(argv[1]);
-	
-	// RMPT<W, K, U>
-	// W = 32 or 128 for IPv4/IPv6
-	RMPTree<PL, ST, PT>* rmpt = new RMPTree<PL, ST, PT>();
 
-	rmpt->build(bgptable);
-
-	// step 2: search in the index
-	std::cerr << "Generate search requests.\n";
+	std::cerr << "-----Generate search requests.\n";
 
 	std::string reqFile = std::string(argv[2]).append("_req.dat");
 
 	utility::generateSearchRequest<PL>(bgptable, RN, reqFile);
 
-	// step 3: scatter nodes into a linear/random/circular pipeline and
-	// perform IP lookup to record search trace
-	// note that, only support random pipeline
-	std::cerr << "Generate search trace in a random pipeline\n";
-
-	rmpt->scatterToPipeline(1, SN);
-		
-	std::string ranTraceFile = std::string(argv[2]).append("_ran.dat");
-
-	rmpt->generateTrace(reqFile, ranTraceFile);
-
+	{ // random pipeline
 	
-	// step 4: schedule requests in a random pipeline
-	std::cerr << "Schedule search requests in a random pipeline.\n";
+		// step 1: build the index
+		std::cerr << "-----Create the index.\n";
 
-	RanSched<PL - PT + 1, SN>* ransched = new RanSched<PL - PT + 1, SN>();
+		// RMPT<W, K, U>
+		// W = 32 or 128 for IPv4/IPv6
+		RMPTree<PL, ST, PT>* rmpt = new RMPTree<PL, ST, PT>();
+	
+		rmpt->build(bgptable);
 
-	ransched->searchRun(ranTraceFile);
+		// step 2: generate trace 
+		std::cerr << "-----Scatter to random pipeline.\n";
 
-	delete ransched;
+		rmpt->scatterToPipeline(1, SN);
+		
+		std::string ranTraceFile = std::string(argv[2]).append("_ran.dat");
 
-	// step 5: Delete prefixes.
-	std::cerr << "Delete prefixes.\n";
+		rmpt->generateTrace(reqFile, ranTraceFile);
 
-	std::ifstream fin2(bgptable, std::ios_base::binary);
+		// step 3: schedule, number of stages is given in SN	
+		std::cerr << "-----Schedule in a random pipeline.\n";
+	
+		RanSched<PL - PT + 1, SN>* ransched = new RanSched<PL - PT + 1, SN>();
+	
+		ransched->searchRun(ranTraceFile);
 
-	std::string line;
+		delete ransched;
 
-	choose_ip_type<PL>::ip_type prefix;
+		// step 4: update
+		std::cerr << "-----Update in random pipeline.\n";
 
-	uint8 length;
+		std::string updateFile(argv[3]);
 
-	while (getline(fin2, line)) {
+		rmpt->update(updateFile, SN);
 
-		utility::retrieveInfo(line, prefix, length);
-
-		rmpt->del(prefix, length);
+		delete rmpt;
 	}
 
-	rmpt->report();
-
-	// traverse after deletion
-	std::cerr << "Traverse after deletion.\n";
-
-	delete rmpt;
 
 	return 0;
 }

@@ -1637,6 +1637,319 @@ public:
 
 		return;
 	}
+
+	/// \brief Update the index 
+	///
+	/// After executing build(), we ee
+	void update(const std::string & _fn, int _stagenum = W - U + 1) {
+
+		size_t withdrawnum = 0;
+
+		size_t announcenum = 0;
+
+		std::ifstream fin(_fn, std::ios_base::binary);
+
+		std::string line;
+
+		ip_type prefix;
+
+		uint8 length;
+
+		uint32 nexthop;
+
+		bool isAnnounce;
+
+		// random generator for snode
+		unsigned seed_p = std::chrono::system_clock::now().time_since_epoch().count();
+
+		std::default_random_engine generator_p(seed_p);
+
+		std::uniform_int_distribution<int> distribution_p(0, _stagenum - 1);	
+
+		// random generator for snode
+		unsigned seed_s = std::chrono::system_clock::now().time_since_epoch().count() + 10000000;
+
+		std::default_random_engine generator_s(seed_s);
+
+		std::uniform_int_distribution<int> distribution_s(0, _stagenum - 1);
+
+
+		// retrieve
+		while (getline(fin, line)) {
+
+			// retrieve prefix, length and withdraw/announce
+			utility::retrieveInfo(line, prefix, length, isAnnounce);
+
+			if (false == isAnnounce) {
+	
+				++withdrawnum;
+
+				del(prefix, length);
+			}
+			else {
+
+				++announcenum;
+
+				nexthop = length;
+
+				ins(prefix, length, nexthop, generator_p, distribution_p, generator_s, distribution_s);
+			}
+		}		
+
+		reportNodeNumInStage(_stagenum);
+
+		std::cerr << "withdraw num: " << withdrawnum << " announce num: " << announcenum << std::endl;
+
+		return;
+	}
+
+
+	/// \brief for update, insert into index 
+	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, std::default_random_engine& _generator_p, std::uniform_int_distribution<int>& _distribution_p, std::default_random_engine& _generator_s, std::uniform_int_distribution<int>& _distribution_s) {
+
+		if (_length < U) { // insert into the fast table
+
+			ft->ins(_prefix, _length, _nexthop);
+		}
+		else { // insert into the MPT forest
+
+			ins(_prefix, _length, _nexthop, mRootTable[utility::getBitsValue(_prefix, 0, U - 1)], 0, utility::getBitsValue(_prefix, 0, U - 1), _generator_p, _distribution_p, _generator_s, _distribution_s);
+		}
+		
+		return;
+	} 
+
+	/// \brief for update, insert into MPT forest
+	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, pnode_type*& _pnode, const int _level, const uint32 _treeIdx, std::default_random_engine& _generator_p, std::uniform_int_distribution<int>& _distribution_p, std::default_random_engine& _generator_s, std::uniform_int_distribution<int>& _distribution_s) {
+
+		if (nullptr == _pnode) { // node is empty, create the node
+
+			_pnode = new pnode_type();
+
+			_pnode->stageidx = _distribution_p(_generator_p); // randomly allocated
+	
+			++mLocalPNodeNum[_treeIdx]; // primary nodes in current MPT
+
+			++mLocalLevelPNodeNum[_treeIdx][_level]; // primary nodes at current level of current MPT
+		}
+
+		if (_length < U + (_level + 1) * K) { // [U, U + (_level + 1) * K - 1], in this level
+
+			// current prefix must be inserted into the auxiliary prefix tree
+			ins(_prefix, _length, _nexthop, _pnode->sRoot, 0, _level, _treeIdx, _generator_s, _distribution_s);
+		}
+		else { // insert the prefix into current primary node or a node in a higher level
+
+			if (_pnode->t < MP) { // current primary node is not full, insert prefix into current primary node
+
+				insertPrefixInPNode(_pnode, _prefix,_length, _nexthop);
+			}
+			else {
+					
+				// if the shortest prefix in current primary node is also shorter than the prefix to be inserted
+				if (_pnode->prefixEntries[MP - 1].length < _length) { 
+
+					// cache the shortest prefix in current primary node
+					ip_type prefix = _pnode->prefixEntries[MP - 1].prefix;
+
+					uint8 length = _pnode->prefixEntries[MP - 1].length;
+
+					uint32 nexthop = _pnode->prefixEntries[MP - 1].nexthop;
+
+					// delete shortest prefix in current primary node
+					deletePrefixInPNode(_pnode, MP - 1);
+					
+					// insert new comer
+					insertPrefixInPNode(_pnode, _prefix, _length, _nexthop);
+
+					// recursively insert the prefix deleted from the primary node into a higher level
+					ins(prefix, length, nexthop, _pnode->childEntries[utility::getBitsValue(prefix, U + _level * K, U + (_level + 1) * K - 1)], _level + 1, _treeIdx, _generator_p, _distribution_p, _generator_s, _distribution_s);
+						
+				}
+				else {
+				
+					// insert prefix into a node in a higher level
+
+					ins(_prefix, _length, _nexthop, _pnode->childEntries[utility::getBitsValue(_prefix, U + _level * K, U + (_level + 1) * K - 1)], _level + 1, _treeIdx, _generator_p, _distribution_p, _generator_s, _distribution_s);	
+				}
+			}
+		}
+
+		return;
+	}	
+
+	/// \brief for update, insert into the auxiliary tree.
+	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop, snode_type*& _snode, const int _sLevel, const int _pLevel, const uint32 _treeIdx, std::default_random_engine& _generator_s, std::uniform_int_distribution<int>& _distribution_s) {
+
+		if (nullptr == _snode) { // empty
+
+			// create a new secondary node
+			_snode = new snode_type();
+
+			_snode->stageidx = _distribution_s(_generator_s); // randomly allocated
+
+			mLocalSNodeNum[_treeIdx]++;	
+
+			mLocalLevelSNodeNum[_treeIdx][_pLevel + 1 + _sLevel]++; // be careful, required to plus 1 
+
+			// insert the prefix
+			_snode->prefix = _prefix;
+
+			_snode->length = _length;
+
+			_snode->nexthop = _nexthop;
+
+			return;
+		}
+		else {
+
+			if (_length == U + _pLevel * K + _sLevel) { // must be inserted into current level
+
+				if (_snode->length > U + _pLevel * K + _sLevel) { // prefix in curretn node is longer than the one to be inserted
+
+					// copy prefix in current secondary node
+					ip_type prefix = _snode->prefix;
+
+					uint8 length = _snode->length;
+
+					uint32 nexthop = _snode->nexthop;
+
+					// replaced by _prefix
+					_snode->prefix = _prefix;
+
+					_snode->length = _length;
+
+					_snode->nexthop = _nexthop;
+
+					// recursively insert the replaced prefix
+					if (0 == utility::getBitValue(prefix, U + _pLevel * K + _sLevel)) {
+
+						ins(prefix, length, nexthop, _snode->lchild, _sLevel + 1, _pLevel, _treeIdx, _generator_s, _distribution_s);
+					}
+					else {
+
+						ins(prefix, length, nexthop, _snode->rchild, _sLevel + 1, _pLevel, _treeIdx, _generator_s, _distribution_s);
+					}	
+				}
+				else { // prefix in current node must be equal to the one to be inserted
+
+					// do nothing
+				}
+			}
+			else { // insert into a node in a higher level
+
+				if (0 == utility::getBitValue(_prefix, U + _pLevel * K + _sLevel)) {
+
+					ins(_prefix, _length, _nexthop, _snode->lchild, _sLevel + 1, _pLevel, _treeIdx, _generator_s, _distribution_s); 
+				}
+				else {
+
+					ins(_prefix, _length, _nexthop, _snode->rchild, _sLevel + 1, _pLevel, _treeIdx, _generator_s, _distribution_s);
+				}
+			}
+		}
+
+		return;
+	}
+
+	/// \brief report number of nodes in each stage
+	void reportNodeNumInStage(int _stagenum) {
+
+		size_t* pnodeNumInStage = new size_t[_stagenum];
+
+		size_t* snodeNumInStage = new size_t[_stagenum];
+
+		for (int i = 0; i < _stagenum; ++i) {
+
+			pnodeNumInStage[i] = 0;
+
+			snodeNumInStage[i] = 0;
+		}
+
+		for (size_t i = 0; i < V; ++i) {
+
+			if (nullptr == mRootTable[i]) {
+
+				// do nothing
+			}
+			else {
+
+				std::queue<pnode_type*> pqueue;
+
+				std::queue<snode_type*> squeue;
+
+				pqueue.push(mRootTable[i]);
+
+				while(!pqueue.empty()) {
+
+					auto pfront = pqueue.front();
+
+					pnodeNumInStage[pfront->stageidx]++;
+
+					// traverse auxiliary tree	
+					if (nullptr != pqueue.front()->sRoot) {
+				
+						std::queue<snode_type*> squeue;
+
+						squeue.push(pqueue.front()->sRoot);
+
+						while (!squeue.empty()) {
+
+							auto sfront = squeue.front();
+
+							snodeNumInStage[sfront->stageidx]++;
+
+							if (nullptr != sfront->lchild) squeue.push(sfront->lchild);
+
+							if (nullptr != sfront->rchild) squeue.push(sfront->rchild);
+							
+							squeue.pop();
+						}
+					}
+	
+					// traverse childs
+					for (size_t j = 0; j < MC; ++j) {
+
+						if (nullptr != pqueue.front()->childEntries[j]) {
+
+							pqueue.push(pqueue.front()->childEntries[j]);
+						}
+
+					}
+
+					pqueue.pop();
+				}
+			}
+		}
+
+
+		size_t snodeNumInAllStages = 0;
+
+		size_t pnodeNumInAllStages = 0;
+
+
+		for (int i = 0; i < _stagenum; ++i) {
+
+			snodeNumInAllStages += snodeNumInStage[i];
+
+			pnodeNumInAllStages += pnodeNumInStage[i];
+
+			std::cerr << "snode in stage " << i << ": " << snodeNumInStage[i] << std::endl;
+
+			std::cerr << "pnode in stage " << i << ": " << pnodeNumInStage[i] << std::endl;
+		}
+
+		std::cerr << "snode in all stages: " << snodeNumInAllStages << std::endl;
+
+		std::cerr << "pnode in all stages: " << pnodeNumInAllStages << std::endl;
+
+		delete[] snodeNumInStage;
+
+		delete[] pnodeNumInStage;
+	
+		return;
+	}
+
 };
 
 

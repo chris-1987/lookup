@@ -7,7 +7,7 @@
 static const size_t RN = 1024 * 1024 * 1; // number of lookups
 static const int PL = 128; // prefix length, 32 or 128
 static const int PT = 10; // threshold for short & long prefixes
-static const int SN = 28; // number of pipe stages
+static const int SN = 15; // number of pipe stages
 
 int main(int argc, char** argv){
 
@@ -24,102 +24,137 @@ int main(int argc, char** argv){
 		exit(0);
 	}
 
-	// step 1: build the index
-	std::cerr << "Create the index.\n";
-
+	// generate search requests
 	std::string bgptable(argv[1]);
-	
-	// RBTree<W, U>
-	// W = 32/128 for IPv4/IPv6 
-	// U = threshold of short/long prefixes
-	RBTree<PL, PT>* rbt = new RBTree<PL, PT>();
-	
-	rbt->build(bgptable);
 
-	// step 2: generate search requests
-	std::cerr << "Generate search requests.\n";
+	std::cerr << "-----Generate search requests.\n";
 
 	std::string reqFile = std::string(argv[2]).append("_req.dat");
 
 	utility::generateSearchRequest<PL>(bgptable, RN, reqFile);
 
-	// step 3: scatter nodes into a linear/random/circular pipeline and
-	// perform IP lookup to record search trace
-	std::cerr << "Generate search trace.\n";
 
-	// linear pipeline
-	std::cerr << "Generate in a linear pipeline\n";
+	{
+		// linear pipeline 
 
-	rbt->scatterToPipeline(0);
+		// step 1: build the index
+		std::cerr << "-----Create the index.\n";
 
-	std::string linTraceFile = std::string(argv[2]).append("_lin.dat");
-
-	rbt->generateTrace(reqFile, linTraceFile);
-
-	// circular pipeline
-	std::cerr << "Generate in a circular pipeline\n";
-
-	rbt->scatterToPipeline(2, SN);
-
-	std::string cirTraceFile = std::string(argv[2]).append("_cir.dat");
+		// RBTree<W, U>
+		// W = 32/128 for IPv4/IPv6 
+		// U = threshold of short/long prefixes
+		RBTree<PL, PT>* rbt = new RBTree<PL, PT>();
+		
+		rbt->build(bgptable);
 	
-	rbt->generateTrace(reqFile, cirTraceFile);
+		// step 2: generate trace
+		std::cerr << "-----Scatter to linear pipeline.\n";
 
-	// random pipeline 
-	std::cerr << "Generate in a random pipeline\n";
-
-	rbt->scatterToPipeline(1, SN);
-
-	std::string ranTraceFile = std::string(argv[2]).append("_ran.dat");
-
-	rbt->generateTrace(reqFile, ranTraceFile);
-
-	// step 4: schedule requests in a linear/random/circular pipeline.
-	std::cerr << "Schedule search requests\n";
-
-	// linear pipeline, number of stages is PL - PT + 1
-	// a new arrival comes at the beginning of each time slot
-	std::cerr << "schedule in a linear pipeline\n";
-
-	LinSched<PL - PT + 1>* linsched = new LinSched<PL - PT + 1>();
+		rbt->scatterToPipeline(0);
 	
-	linsched->searchRun(linTraceFile);
+		std::string linTraceFile = std::string(argv[2]).append("_lin.dat");
+		
+		rbt->generateTrace(reqFile, linTraceFile);
+		
+		// step 3: schedule, number of stages is PL - PT + 1
+		std::cerr << "-----Schedule in linear pipeline.\n";
+
+		LinSched<PL - PT + 1>* linsched = new LinSched<PL - PT + 1>();
+		
+		linsched->searchRun(linTraceFile);
+		
+		delete linsched;
+
+		// step 4: update
+		std::cerr << "-----Update in linear pipeline.\n";
+
+		std::string updateFile(argv[3]);
+
+		rbt->update(updateFile, 0);
+
+		delete rbt;
+	}
+
+	{// random pipeline 
 	
-	delete linsched;
+		// step 1: build the index
+		std::cerr << "-----Create the index.\n";
 
-	// circular pipeline
-	// new arrivals comes at the beginning of each time slot
-	// comply with the Bernoulli distribution (benign or burst)
-	std::cerr << "schedule in a circular pipeline\n";
+		// RBTree<W, U>
+		// W = 32/128 for IPv4/IPv6 
+		// U = threshold of short/long prefixes
+		RBTree<PL, PT>* rbt = new RBTree<PL, PT>();
+		
+		rbt->build(bgptable);
 
-	// !!note that number of stages >= search depth
-	CirSched<PL - PT + 1, SN>* cirsched = new CirSched<PL - PT + 1, SN>();
+		// step 2: generate trace	
+		std::cerr << "-----Scatter to random pipeline.\n";
 
-	cirsched->searchRun(cirTraceFile);
+		rbt->scatterToPipeline(1, SN);
+	
+		std::string ranTraceFile = std::string(argv[2]).append("_ran.dat");
+	
+		rbt->generateTrace(reqFile, ranTraceFile);
 
-	delete cirsched;
+		// step 3: schedule, number of stages is given in SN
+		std::cerr << "-----Schedule in random pipeline.\n";
+		RanSched<PL - PT + 1, SN>* ransched = new RanSched<PL - PT + 1, SN>();
+	
+		ransched->searchRun(ranTraceFile);
+	
+		delete ransched;
 
-	// random pipeline
-	// new arrivals comes at the beginning of each time slot
-	// submitting to the Bernoulli distribution (benign or burst)
-	std::cerr << "schedule in a random pipeline\n";
+		// step 4: update
+		std::cerr << "-----Update in random pipeline.\n";
 
-	RanSched<PL - PT + 1, SN>* ransched = new RanSched<PL - PT + 1, SN>();
+		std::string updateFile(argv[3]);
 
-	ransched->searchRun(ranTraceFile);
-
-	delete ransched;
-
-
-	// step 5: update
-	std::cerr << "Update index.\n";
-
-	std::string updateFile = std::string(argv[3]);
-
-	rbt->update(updateFile);	
+		rbt->update(updateFile, 1, SN);
+	
+		delete rbt;
+	}
 
 
+	{ // circular pipeline
 
+		// step 1: build the index
+		std::cerr << "-----Create the index.\n";
+
+		// RBTree<W, U>
+		// W = 32/128 for IPv4/IPv6 
+		// U = threshold of short/long prefixes
+		RBTree<PL, PT>* rbt = new RBTree<PL, PT>();
+		
+		rbt->build(bgptable);
+
+		// step 2: generate trace
+		std::cerr << "-----Scatter to circular pipeline.\n";
+
+		rbt->scatterToPipeline(2, SN);
+	
+		std::string cirTraceFile = std::string(argv[2]).append("_cir.dat");
+		
+		rbt->generateTrace(reqFile, cirTraceFile);
+	
+		// step 3: schedule, number of stages is given in SN
+		std::cerr << "-----Schedule in circular pipeline.\n";
+
+		CirSched<PL - PT + 1, SN>* cirsched = new CirSched<PL - PT + 1, SN>();
+	
+		cirsched->searchRun(cirTraceFile);
+	
+		delete cirsched;
+
+		// step 4: update
+		std::cerr << "-----Update in circular pipeline.\n";
+
+		std::string updateFile(argv[3]);
+
+		rbt->update(updateFile, 2, SN);
+
+		delete rbt;
+	}
+		
 
 //	// step 6: Delete prefixes.
 //	std::cerr << "Delete prefixes.\n";
@@ -145,14 +180,6 @@ int main(int argc, char** argv){
 //	std::cerr << "Traverse after deletion.\n";
 //
 //	rbt->traverse();
-
-	delete rbt;
-
-
-		
-
-
-
 
 	return 0;
 }
