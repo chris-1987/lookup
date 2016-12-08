@@ -10,6 +10,10 @@
 
 NAMESPACE_UTILITY_BEG
 
+/// \brief less compartor for pair.
+///
+/// The first componenet is the sorting key.
+///
 template<typename T>
 struct PairLessCmp1st{
 

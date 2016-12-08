@@ -260,7 +260,7 @@ public:
 	}
 
 	
-	/// \breif print search report
+	/// \brief print search report
 	void searchReport() {
 
 		std::cerr << "lamda: " << LAMBDA << std::endl;

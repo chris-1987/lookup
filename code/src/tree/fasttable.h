@@ -35,13 +35,14 @@ private:
 	typedef typename choose_ip_type<W>::ip_type ip_type;
 
 public:
-
+	/// \brief Entry in the fast lookup table
 	struct Entry{
 
-		bool mask[U];
+		bool mask[U]; ///< mask value
 
-		uint32 nexthop[U];
+		uint32 nexthop[U]; ///< nexthop value
 
+		/// \brief default ctor
 		Entry(){
 
 			for (int i = 0; i < U; ++i) {
@@ -54,16 +55,19 @@ public:
 	};
 
 	
-	Entry mEntries[V];
+	Entry mEntries[V]; ///< V entries
 
 private:
 
+	/// \brief disable copy ctor
 	FastTable(const FastTable& _ft) = delete;
 
+	/// \brief disable copy assignment
 	FastTable& operator=(const FastTable& _ft) = delete;
  
 public:
 
+	/// \brief default ctor
 	FastTable() {}
 
 	/// \brief insert a prefix

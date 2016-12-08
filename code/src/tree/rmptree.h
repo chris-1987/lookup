@@ -1639,8 +1639,6 @@ public:
 	}
 
 	/// \brief Update the index 
-	///
-	/// After executing build(), we ee
 	void update(const std::string & _fn, int _stagenum = W - U + 1) {
 
 		size_t withdrawnum = 0;
@@ -1923,27 +1921,31 @@ public:
 		}
 
 
+		// snode report
 		size_t snodeNumInAllStages = 0;
-
-		size_t pnodeNumInAllStages = 0;
-
 
 		for (int i = 0; i < _stagenum; ++i) {
 
 			snodeNumInAllStages += snodeNumInStage[i];
 
-			pnodeNumInAllStages += pnodeNumInStage[i];
-
 			std::cerr << "snode in stage " << i << ": " << snodeNumInStage[i] << std::endl;
-
-			std::cerr << "pnode in stage " << i << ": " << pnodeNumInStage[i] << std::endl;
 		}
 
 		std::cerr << "snode in all stages: " << snodeNumInAllStages << std::endl;
 
-		std::cerr << "pnode in all stages: " << pnodeNumInAllStages << std::endl;
-
 		delete[] snodeNumInStage;
+
+		// pnode report
+		size_t pnodeNumInAllStages = 0;
+
+		for (int i = 0; i < _stagenum; ++i) {
+
+			pnodeNumInAllStages += pnodeNumInStage[i];
+
+			std::cerr << "pnode in stage " << i << ": " << pnodeNumInStage[i] << std::endl;
+		}
+
+		std::cerr << "pnode in all stages: " << pnodeNumInAllStages << std::endl;
 
 		delete[] pnodeNumInStage;
 	
