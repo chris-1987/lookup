@@ -1,0 +1,129 @@
+\hypertarget{structCirSched_1_1Stage}{\section{Cir\-Sched$<$ W, K, S $>$\-:\-:Stage Struct Reference}
+\label{structCirSched_1_1Stage}\index{Cir\-Sched$<$ W, K, S $>$\-::\-Stage@{Cir\-Sched$<$ W, K, S $>$\-::\-Stage}}
+}
+
+
+structure of stage  
+
+
+
+
+{\ttfamily \#include $<$cirsched.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structCirSched_1_1Stage_afa345d66cb45d79093039f3a5c6ff9df}{Stage} ()
+\item 
+bool \hyperlink{structCirSched_1_1Stage_a4a1d152024688760a0e7bc3b66b0c8ef}{is\-Empty} ()
+\begin{DoxyCompactList}\small\item\em check if no request occupies the stage \end{DoxyCompactList}\item 
+bool \hyperlink{structCirSched_1_1Stage_a684b6f40f83bf395d7849950e8ef3715}{is\-Finished} ()
+\begin{DoxyCompactList}\small\item\em check if request is finished \end{DoxyCompactList}\item 
+void \hyperlink{structCirSched_1_1Stage_a1c90362d80f455ae904d76cd05fc1292}{to\-Next} ()
+\begin{DoxyCompactList}\small\item\em one step further \end{DoxyCompactList}\item 
+void \hyperlink{structCirSched_1_1Stage_aa3d93a5f7ad03b098052b8481db97824}{dispatch} ()
+\begin{DoxyCompactList}\small\item\em dispatch the completed request \end{DoxyCompactList}\item 
+\hyperlink{structCirSched_1_1Request}{Request} $\ast$ \hyperlink{structCirSched_1_1Stage_aed1fc3846f092c61e3725ef30aff5363}{get\-Req} ()
+\begin{DoxyCompactList}\small\item\em get request handler \end{DoxyCompactList}\item 
+void \hyperlink{structCirSched_1_1Stage_a09e329c2b829d4881e63fdbee3a63a9b}{set\-Req} (\hyperlink{structCirSched_1_1Request}{Request} $\ast$\-\_\-req)
+\begin{DoxyCompactList}\small\item\em set request \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structCirSched_1_1Request}{Request} $\ast$ \hyperlink{structCirSched_1_1Stage_adcf58c67332f66beb6a09081f951e9e7}{m\-Req}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$struct Cir\-Sched$<$ W, K, S $>$\-::\-Stage}
+
+structure of stage 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structCirSched_1_1Stage_afa345d66cb45d79093039f3a5c6ff9df}{\index{Cir\-Sched\-::\-Stage@{Cir\-Sched\-::\-Stage}!Stage@{Stage}}
+\index{Stage@{Stage}!CirSched::Stage@{Cir\-Sched\-::\-Stage}}
+\subsubsection[{Stage}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Stage\-::\-Stage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1Stage_afa345d66cb45d79093039f3a5c6ff9df}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structCirSched_1_1Stage_aa3d93a5f7ad03b098052b8481db97824}{\index{Cir\-Sched\-::\-Stage@{Cir\-Sched\-::\-Stage}!dispatch@{dispatch}}
+\index{dispatch@{dispatch}!CirSched::Stage@{Cir\-Sched\-::\-Stage}}
+\subsubsection[{dispatch}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Stage\-::dispatch (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1Stage_aa3d93a5f7ad03b098052b8481db97824}
+
+
+dispatch the completed request 
+
+\hypertarget{structCirSched_1_1Stage_aed1fc3846f092c61e3725ef30aff5363}{\index{Cir\-Sched\-::\-Stage@{Cir\-Sched\-::\-Stage}!get\-Req@{get\-Req}}
+\index{get\-Req@{get\-Req}!CirSched::Stage@{Cir\-Sched\-::\-Stage}}
+\subsubsection[{get\-Req}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ {\bf Request}$\ast$ {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Stage\-::get\-Req (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1Stage_aed1fc3846f092c61e3725ef30aff5363}
+
+
+get request handler 
+
+\hypertarget{structCirSched_1_1Stage_a4a1d152024688760a0e7bc3b66b0c8ef}{\index{Cir\-Sched\-::\-Stage@{Cir\-Sched\-::\-Stage}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!CirSched::Stage@{Cir\-Sched\-::\-Stage}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ bool {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Stage\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1Stage_a4a1d152024688760a0e7bc3b66b0c8ef}
+
+
+check if no request occupies the stage 
+
+\hypertarget{structCirSched_1_1Stage_a684b6f40f83bf395d7849950e8ef3715}{\index{Cir\-Sched\-::\-Stage@{Cir\-Sched\-::\-Stage}!is\-Finished@{is\-Finished}}
+\index{is\-Finished@{is\-Finished}!CirSched::Stage@{Cir\-Sched\-::\-Stage}}
+\subsubsection[{is\-Finished}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ bool {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Stage\-::is\-Finished (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1Stage_a684b6f40f83bf395d7849950e8ef3715}
+
+
+check if request is finished 
+
+\hypertarget{structCirSched_1_1Stage_a09e329c2b829d4881e63fdbee3a63a9b}{\index{Cir\-Sched\-::\-Stage@{Cir\-Sched\-::\-Stage}!set\-Req@{set\-Req}}
+\index{set\-Req@{set\-Req}!CirSched::Stage@{Cir\-Sched\-::\-Stage}}
+\subsubsection[{set\-Req}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Stage\-::set\-Req (
+\begin{DoxyParamCaption}
+\item[{{\bf Request} $\ast$}]{\-\_\-req}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1Stage_a09e329c2b829d4881e63fdbee3a63a9b}
+
+
+set request 
+
+\hypertarget{structCirSched_1_1Stage_a1c90362d80f455ae904d76cd05fc1292}{\index{Cir\-Sched\-::\-Stage@{Cir\-Sched\-::\-Stage}!to\-Next@{to\-Next}}
+\index{to\-Next@{to\-Next}!CirSched::Stage@{Cir\-Sched\-::\-Stage}}
+\subsubsection[{to\-Next}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Stage\-::to\-Next (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1Stage_a1c90362d80f455ae904d76cd05fc1292}
+
+
+one step further 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structCirSched_1_1Stage_adcf58c67332f66beb6a09081f951e9e7}{\index{Cir\-Sched\-::\-Stage@{Cir\-Sched\-::\-Stage}!m\-Req@{m\-Req}}
+\index{m\-Req@{m\-Req}!CirSched::Stage@{Cir\-Sched\-::\-Stage}}
+\subsubsection[{m\-Req}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ {\bf Request}$\ast$ {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Stage\-::m\-Req}}\label{structCirSched_1_1Stage_adcf58c67332f66beb6a09081f951e9e7}
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/scheduler/\hyperlink{cirsched_8h}{cirsched.\-h}\end{DoxyCompactItemize}

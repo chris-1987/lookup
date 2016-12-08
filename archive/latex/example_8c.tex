@@ -1,0 +1,124 @@
+\hypertarget{example_8c}{\section{/home/chris/lookup/code/external/bgpdump/example.c File Reference}
+\label{example_8c}\index{/home/chris/lookup/code/external/bgpdump/example.\-c@{/home/chris/lookup/code/external/bgpdump/example.\-c}}
+}
+{\ttfamily \#include \char`\"{}bgpdump\-\_\-lib.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$time.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\-h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\-h$>$}\\*
+{\ttfamily \#include $<$arpa/inet.\-h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{example_8c_a16f61ffbd4c5f11daa03a393ef809a99}{process} (\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+void \hyperlink{example_8c_ad7efb25fe779ce5e6ef35f444af297a8}{show\-\_\-attr} (\hyperlink{bgpdump__attr_8h_a851314552296238881b06768eb835f95}{attributes\-\_\-t} $\ast$\hyperlink{bgpdump__attr_8h_structattr}{attr})
+\item 
+void \hyperlink{example_8c_a88d37ac6d458dc3136402c6ee438469b}{show\-\_\-prefixes} (int count, struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix})
+\item 
+void \hyperlink{example_8c_a96c0cd015ccec4bf0aba4d740fb85a43}{show\-\_\-v6\-\_\-prefixes} (int count, struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix})
+\item 
+int \hyperlink{example_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{example_8c_a913e7eb46996bf1ce24388a702672ec9}{bgp\-\_\-state\-\_\-name} \mbox{[}$\,$\mbox{]}
+\item 
+char $\ast$ \hyperlink{example_8c_a36b9ea68075252bd87bba8488b1023ae}{bgp\-\_\-message\-\_\-types} \mbox{[}$\,$\mbox{]}
+\item 
+char $\ast$ \hyperlink{example_8c_a2fc1d292ef199a1921aa91fd40361837}{notify\-\_\-codes} \mbox{[}$\,$\mbox{]}
+\item 
+char $\ast$ \hyperlink{example_8c_a26459a07db277aee0f13f4c59b94c1ba}{notify\-\_\-subcodes} \mbox{[}$\,$\mbox{]}\mbox{[}12\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{example_8c_a3c04138a5bfe5d72780bb7e82a18e627}{\index{example.\-c@{example.\-c}!main@{main}}
+\index{main@{main}!example.c@{example.\-c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}}\label{example_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+\hypertarget{example_8c_a16f61ffbd4c5f11daa03a393ef809a99}{\index{example.\-c@{example.\-c}!process@{process}}
+\index{process@{process}!example.c@{example.\-c}}
+\subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}void process (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)}}\label{example_8c_a16f61ffbd4c5f11daa03a393ef809a99}
+\hypertarget{example_8c_ad7efb25fe779ce5e6ef35f444af297a8}{\index{example.\-c@{example.\-c}!show\-\_\-attr@{show\-\_\-attr}}
+\index{show\-\_\-attr@{show\-\_\-attr}!example.c@{example.\-c}}
+\subsubsection[{show\-\_\-attr}]{\setlength{\rightskip}{0pt plus 5cm}void show\-\_\-attr (
+\begin{DoxyParamCaption}
+\item[{{\bf attributes\-\_\-t} $\ast$}]{attr}
+\end{DoxyParamCaption}
+)}}\label{example_8c_ad7efb25fe779ce5e6ef35f444af297a8}
+\hypertarget{example_8c_a88d37ac6d458dc3136402c6ee438469b}{\index{example.\-c@{example.\-c}!show\-\_\-prefixes@{show\-\_\-prefixes}}
+\index{show\-\_\-prefixes@{show\-\_\-prefixes}!example.c@{example.\-c}}
+\subsubsection[{show\-\_\-prefixes}]{\setlength{\rightskip}{0pt plus 5cm}void show\-\_\-prefixes (
+\begin{DoxyParamCaption}
+\item[{int}]{count, }
+\item[{struct {\bf prefix} $\ast$}]{prefix}
+\end{DoxyParamCaption}
+)}}\label{example_8c_a88d37ac6d458dc3136402c6ee438469b}
+\hypertarget{example_8c_a96c0cd015ccec4bf0aba4d740fb85a43}{\index{example.\-c@{example.\-c}!show\-\_\-v6\-\_\-prefixes@{show\-\_\-v6\-\_\-prefixes}}
+\index{show\-\_\-v6\-\_\-prefixes@{show\-\_\-v6\-\_\-prefixes}!example.c@{example.\-c}}
+\subsubsection[{show\-\_\-v6\-\_\-prefixes}]{\setlength{\rightskip}{0pt plus 5cm}void show\-\_\-v6\-\_\-prefixes (
+\begin{DoxyParamCaption}
+\item[{int}]{count, }
+\item[{struct {\bf prefix} $\ast$}]{prefix}
+\end{DoxyParamCaption}
+)}}\label{example_8c_a96c0cd015ccec4bf0aba4d740fb85a43}
+
+
+\subsection{Variable Documentation}
+\hypertarget{example_8c_a36b9ea68075252bd87bba8488b1023ae}{\index{example.\-c@{example.\-c}!bgp\-\_\-message\-\_\-types@{bgp\-\_\-message\-\_\-types}}
+\index{bgp\-\_\-message\-\_\-types@{bgp\-\_\-message\-\_\-types}!example.c@{example.\-c}}
+\subsubsection[{bgp\-\_\-message\-\_\-types}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ bgp\-\_\-message\-\_\-types\mbox{[}$\,$\mbox{]}}}\label{example_8c_a36b9ea68075252bd87bba8488b1023ae}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+    \textcolor{stringliteral}{"Unknown"},
+    \textcolor{stringliteral}{"Open"},
+    \textcolor{stringliteral}{"Update/Withdraw"},
+    \textcolor{stringliteral}{"Notification"},
+    \textcolor{stringliteral}{"Keepalive"}
+\}
+\end{DoxyCode}
+\hypertarget{example_8c_a913e7eb46996bf1ce24388a702672ec9}{\index{example.\-c@{example.\-c}!bgp\-\_\-state\-\_\-name@{bgp\-\_\-state\-\_\-name}}
+\index{bgp\-\_\-state\-\_\-name@{bgp\-\_\-state\-\_\-name}!example.c@{example.\-c}}
+\subsubsection[{bgp\-\_\-state\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ bgp\-\_\-state\-\_\-name\mbox{[}$\,$\mbox{]}}}\label{example_8c_a913e7eb46996bf1ce24388a702672ec9}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+    \textcolor{stringliteral}{"Unknown"},
+    \textcolor{stringliteral}{"IDLE"},
+    \textcolor{stringliteral}{"CONNECT"},
+    \textcolor{stringliteral}{"ACTIVE"},
+    \textcolor{stringliteral}{"OPEN\_SENT"},
+    \textcolor{stringliteral}{"OPEN\_CONFIRM"},
+    \textcolor{stringliteral}{"ESTABLISHED"},
+    NULL
+\}
+\end{DoxyCode}
+\hypertarget{example_8c_a2fc1d292ef199a1921aa91fd40361837}{\index{example.\-c@{example.\-c}!notify\-\_\-codes@{notify\-\_\-codes}}
+\index{notify\-\_\-codes@{notify\-\_\-codes}!example.c@{example.\-c}}
+\subsubsection[{notify\-\_\-codes}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ notify\-\_\-codes\mbox{[}$\,$\mbox{]}}}\label{example_8c_a2fc1d292ef199a1921aa91fd40361837}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+    \textcolor{stringliteral}{"Unknown"},
+    \textcolor{stringliteral}{"Message Header Error"},
+    \textcolor{stringliteral}{"OPEN Message Error"},
+    \textcolor{stringliteral}{"UPDATE Message Error"},
+    \textcolor{stringliteral}{"Hold Timer Expired"},
+    \textcolor{stringliteral}{"Finite State Machine Error"},
+    \textcolor{stringliteral}{"Cease"}
+\}
+\end{DoxyCode}
+\hypertarget{example_8c_a26459a07db277aee0f13f4c59b94c1ba}{\index{example.\-c@{example.\-c}!notify\-\_\-subcodes@{notify\-\_\-subcodes}}
+\index{notify\-\_\-subcodes@{notify\-\_\-subcodes}!example.c@{example.\-c}}
+\subsubsection[{notify\-\_\-subcodes}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ notify\-\_\-subcodes\mbox{[}$\,$\mbox{]}\mbox{[}12\mbox{]}}}\label{example_8c_a26459a07db277aee0f13f4c59b94c1ba}

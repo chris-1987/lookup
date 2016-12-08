@@ -1,0 +1,35 @@
+\hypertarget{rbtree_8h}{\section{/home/chris/lookup/code/src/tree/rbtree.h File Reference}
+\label{rbtree_8h}\index{/home/chris/lookup/code/src/tree/rbtree.\-h@{/home/chris/lookup/code/src/tree/rbtree.\-h}}
+}
+
+
+Definition of an I\-P lookup index based on binary tree.  
+
+
+{\ttfamily \#include \char`\"{}../common/common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/utility.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fasttable.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$queue$>$}\\*
+{\ttfamily \#include $<$deque$>$}\\*
+{\ttfamily \#include $<$stack$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$random$>$}\\*
+{\ttfamily \#include $<$algorithm$>$}\\*
+{\ttfamily \#include $<$numeric$>$}\\*
+{\ttfamily \#include $<$limits$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structBNode}{B\-Node$<$ W $>$}
+\begin{DoxyCompactList}\small\item\em Nodes in a binary tree. \end{DoxyCompactList}\item 
+class \hyperlink{classRBTree}{R\-B\-Tree$<$ W, U, V $>$}
+\begin{DoxyCompactList}\small\item\em Build and update the index. \end{DoxyCompactList}\item 
+struct \hyperlink{structRBTree_1_1SortElem}{R\-B\-Tree$<$ W, U, V $>$\-::\-Sort\-Elem}
+\begin{DoxyCompactList}\small\item\em element to be sorted \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Definition of an I\-P lookup index based on binary tree. Copyright (c) 2016, Sun Yat-\/sen University, All rights reserved
+
+The lookup index consists of three parts\-: a fast lookup table that contains route information for prefixes shorter than U bits, a table that consists of 2$^\wedge$\-U entries and each entry stores a pointer to the root of a binary tree, and a set of binary trees. 

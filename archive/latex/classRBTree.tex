@@ -1,0 +1,492 @@
+\hypertarget{classRBTree}{\section{R\-B\-Tree$<$ W, U, V $>$ Class Template Reference}
+\label{classRBTree}\index{R\-B\-Tree$<$ W, U, V $>$@{R\-B\-Tree$<$ W, U, V $>$}}
+}
+
+
+Build and update the index.  
+
+
+
+
+{\ttfamily \#include $<$rbtree.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structRBTree_1_1SortElem}{Sort\-Elem}
+\begin{DoxyCompactList}\small\item\em element to be sorted \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRBTree_a0b2a2b29f4c0af9602070efc3cc7b46d}{R\-B\-Tree} ()
+\begin{DoxyCompactList}\small\item\em default ctor \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_ae1b9a0c5db76ea343f820daf28b938b3}{initialize\-Parameters} ()
+\begin{DoxyCompactList}\small\item\em initialize parameters \end{DoxyCompactList}\item 
+\hyperlink{classRBTree_aabacf7b4804dd76d4381346c6c223e8c}{R\-B\-Tree} (const \hyperlink{classRBTree}{R\-B\-Tree} \&\-\_\-rbt)=delete
+\begin{DoxyCompactList}\small\item\em disable copy-\/ctor \end{DoxyCompactList}\item 
+\hyperlink{classRBTree}{R\-B\-Tree} \& \hyperlink{classRBTree_ae5e228bf0b785798baf431f141c8d151}{operator=} (const \hyperlink{classRBTree}{R\-B\-Tree} \&)=delete
+\begin{DoxyCompactList}\small\item\em disable assignment op \end{DoxyCompactList}\item 
+\hyperlink{classRBTree_a14ae21c7eb9e3d28ebe513eb8eb72d8a}{$\sim$\-R\-B\-Tree} ()
+\begin{DoxyCompactList}\small\item\em dtor \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_afe9b9b73e4c8a4f812a8e71d6e64d0a8}{clear} ()
+\begin{DoxyCompactList}\small\item\em clear \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a151d590aa5192af4d3708ac8727ec0d0}{build} (const std\-::string \&\-\_\-fn)
+\begin{DoxyCompactList}\small\item\em Build the index. \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_aef636adbe858181ebc0aeb49eb143a14}{destroy} (size\-\_\-t \-\_\-idx)
+\begin{DoxyCompactList}\small\item\em destroy a binary tree \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a06d2d8d8c17af41cd5b1ea082cb1d81e}{report} ()
+\begin{DoxyCompactList}\small\item\em Report statistical inforamtion collected at the time point. \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a06597dba808ee8528730113c4be8a64d}{ins} (const \hyperlink{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop)
+\begin{DoxyCompactList}\small\item\em insert into index \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a7ee9ee342f4753d8230972a049268fb7}{ins} (const \hyperlink{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classRBTree_a34cd65cfffec3d99e0a73deafa471078}{node\-\_\-type} $\ast$\&\-\_\-node, const int \-\_\-level, const size\-\_\-t \-\_\-tree\-Idx)
+\begin{DoxyCompactList}\small\item\em insert into a binary tree \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a88efff50f76f335f776615120b9da902}{traverse} ()
+\begin{DoxyCompactList}\small\item\em traverse all binary trees in bridth-\/first order \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a845b26ba16966c2de2100cc94985505f}{print\-Node} (\hyperlink{classRBTree_a34cd65cfffec3d99e0a73deafa471078}{node\-\_\-type} $\ast$\-\_\-node)
+\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRBTree_a14c7a40c80b6446738568cf06aee31f2}{search} (const \hyperlink{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}{ip\-\_\-type} \&\-\_\-ip, std\-::vector$<$ int $>$ \&\-\_\-trace)
+\begin{DoxyCompactList}\small\item\em search L\-P\-M for target I\-P address \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a629121f95c14ebfa25a8fba5a7fbfa8f}{generate\-Trace} (const std\-::string \&\-\_\-req\-File, const std\-::string \&\-\_\-trace\-File)
+\begin{DoxyCompactList}\small\item\em generate lookup trace for simulation \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_abbaa2510b96ad094e41cc65ac7edc429}{del} (const \hyperlink{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length)
+\begin{DoxyCompactList}\small\item\em delete a prefix in the index \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a3e233a99d209334de4bdf90741d043a8}{del} (const \hyperlink{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, \hyperlink{classRBTree_a34cd65cfffec3d99e0a73deafa471078}{node\-\_\-type} $\ast$\&\-\_\-root, const size\-\_\-t \-\_\-tree\-Idx)
+\begin{DoxyCompactList}\small\item\em delete a prefix in the B\-T forest \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a8a2a446e5293ad414482ab5ce780438a}{scatter\-To\-Pipeline} (int \-\_\-pipestyle, int \-\_\-stagenum=\hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}-\/U+1)
+\begin{DoxyCompactList}\small\item\em Scatter nodes in binary trees according to a pipeline. \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_ad67f956fe01dd3dbd2cd23e0a287e509}{lin} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em Scatter nodes in a linear pipeline. \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a8e126bc471ce34a36722f61ff833f002}{ran} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em Scatter in a random pipeline. \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_aaa068099e5f827f9932e7dca7ac4cd7c}{cir} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em Scatter in a circular pipe line. \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRBTree_a21eb3efc682903ef05b49472ec3d49c2}{get\-Level\-Node\-Num} (const int \-\_\-level)
+\begin{DoxyCompactList}\small\item\em Compute and return number of nodes at a specific level in all the binary trees. \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_ad0ebeb84ec09a401643603abf9342d50}{update} (std\-::string \-\_\-fn, int \-\_\-pipestyle, int \-\_\-stagenum=\hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}-\/U+1)
+\begin{DoxyCompactList}\small\item\em update \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a67b0d6c81596d0f3afafc3c1a45800f8}{ins} (const \hyperlink{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, const int \-\_\-pipestyle, std\-::default\-\_\-random\-\_\-engine \&\-\_\-generator, std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&\-\_\-distribution, const int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em for update, insert into index \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a678b8ede680b0b3d3418eecfe9b665e1}{ins} (const \hyperlink{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classRBTree_a34cd65cfffec3d99e0a73deafa471078}{node\-\_\-type} $\ast$\&\-\_\-node, const int \-\_\-level, const size\-\_\-t \-\_\-tree\-Idx, const bool \-\_\-is\-Root, const int \-\_\-pipestyle, const int \-\_\-parent\-Stageidx, std\-::default\-\_\-random\-\_\-engine \&\-\_\-generator, std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&\-\_\-distribution, const int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em for update, insert into a binary tree \end{DoxyCompactList}\item 
+void \hyperlink{classRBTree_a9fb161290ac60fa9d9363a4f7265ffbf}{report\-Node\-Num\-In\-Stage} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em report number of nodes in each stage \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}{ip\-\_\-type} \hyperlink{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}{ip\-\_\-type}
+\item 
+typedef \hyperlink{structBNode}{B\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classRBTree_a34cd65cfffec3d99e0a73deafa471078}{node\-\_\-type}
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRBTree_a34cd65cfffec3d99e0a73deafa471078}{node\-\_\-type} $\ast$ \hyperlink{classRBTree_afa0e7bbf323151a0d0047a31452c09e2}{m\-Root\-Table} \mbox{[}V\mbox{]}
+\begin{DoxyCompactList}\small\item\em each entry points to a binary tree \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRBTree_a0b1d29091a098e2ba8d1f89df1e9b1cc}{m\-Node\-Num} \mbox{[}V\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of nodes in each binary tree \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRBTree_aeaf334c4db430ec17c09d13845888a7f}{m\-Level\-Node\-Num} \mbox{[}V\mbox{]}\mbox{[}\hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}-\/U+1\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of nodes in each level of a binary tree \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRBTree_aa14705d97172b233354c4308df69f8f6}{m\-Total\-Node\-Num}
+\begin{DoxyCompactList}\small\item\em number of nodes in total \end{DoxyCompactList}\item 
+\hyperlink{structFastTable}{Fast\-Table}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, U-\/1 $>$ $\ast$ \hyperlink{classRBTree_a054f43074586a88ce2632cbaca07fa0b}{ft}
+\begin{DoxyCompactList}\small\item\em pointer to fast table, a fast table is used to store shorter prefixes and provide search, insert and delete interfaces \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$class R\-B\-Tree$<$ W, U, V $>$}
+
+Build and update the index. 
+
+Prefixes shorter than U bits are stored in a fast lookup table. Prefixes not shorter than U bits are stored in the B\-T forest.
+
+
+\begin{DoxyParams}{Parameters}
+{\em W} & 32 for I\-P\-V4 and 128 for I\-P\-V6, respectively. \\
+\hline
+{\em U} & A threshold for classifying shorter and longer prefixes ( $<$ U and $>$=U). \\
+\hline
+{\em V} & Number of binary trees at large. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}{\index{R\-B\-Tree@{R\-B\-Tree}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!RBTree@{R\-B\-Tree}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::{\bf ip\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRBTree_ab52ca1695103152fd0b1c2b84a33db8b}
+\hypertarget{classRBTree_a34cd65cfffec3d99e0a73deafa471078}{\index{R\-B\-Tree@{R\-B\-Tree}!node\-\_\-type@{node\-\_\-type}}
+\index{node\-\_\-type@{node\-\_\-type}!RBTree@{R\-B\-Tree}}
+\subsubsection[{node\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ typedef {\bf B\-Node}$<${\bf W}$>$ {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::{\bf node\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRBTree_a34cd65cfffec3d99e0a73deafa471078}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classRBTree_a0b2a2b29f4c0af9602070efc3cc7b46d}{\index{R\-B\-Tree@{R\-B\-Tree}!R\-B\-Tree@{R\-B\-Tree}}
+\index{R\-B\-Tree@{R\-B\-Tree}!RBTree@{R\-B\-Tree}}
+\subsubsection[{R\-B\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::{\bf R\-B\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a0b2a2b29f4c0af9602070efc3cc7b46d}
+
+
+default ctor 
+
+\hypertarget{classRBTree_aabacf7b4804dd76d4381346c6c223e8c}{\index{R\-B\-Tree@{R\-B\-Tree}!R\-B\-Tree@{R\-B\-Tree}}
+\index{R\-B\-Tree@{R\-B\-Tree}!RBTree@{R\-B\-Tree}}
+\subsubsection[{R\-B\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::{\bf R\-B\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$ \&}]{\-\_\-rbt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classRBTree_aabacf7b4804dd76d4381346c6c223e8c}
+
+
+disable copy-\/ctor 
+
+\hypertarget{classRBTree_a14ae21c7eb9e3d28ebe513eb8eb72d8a}{\index{R\-B\-Tree@{R\-B\-Tree}!$\sim$\-R\-B\-Tree@{$\sim$\-R\-B\-Tree}}
+\index{$\sim$\-R\-B\-Tree@{$\sim$\-R\-B\-Tree}!RBTree@{R\-B\-Tree}}
+\subsubsection[{$\sim$\-R\-B\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::$\sim${\bf R\-B\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a14ae21c7eb9e3d28ebe513eb8eb72d8a}
+
+
+dtor 
+
+destory index 
+
+\subsection{Member Function Documentation}
+\hypertarget{classRBTree_a151d590aa5192af4d3708ac8727ec0d0}{\index{R\-B\-Tree@{R\-B\-Tree}!build@{build}}
+\index{build@{build}!RBTree@{R\-B\-Tree}}
+\subsubsection[{build}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::build (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-fn}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a151d590aa5192af4d3708ac8727ec0d0}
+
+
+Build the index. 
+
+\hypertarget{classRBTree_aaa068099e5f827f9932e7dca7ac4cd7c}{\index{R\-B\-Tree@{R\-B\-Tree}!cir@{cir}}
+\index{cir@{cir}!RBTree@{R\-B\-Tree}}
+\subsubsection[{cir}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::cir (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_aaa068099e5f827f9932e7dca7ac4cd7c}
+
+
+Scatter in a circular pipe line. 
+
+Scatter nodes into a circular pipe line according to method proposed by Sailesh Karmar et al. we use variance to make heuristic. \hypertarget{classRBTree_afe9b9b73e4c8a4f812a8e71d6e64d0a8}{\index{R\-B\-Tree@{R\-B\-Tree}!clear@{clear}}
+\index{clear@{clear}!RBTree@{R\-B\-Tree}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_afe9b9b73e4c8a4f812a8e71d6e64d0a8}
+
+
+clear 
+
+\hypertarget{classRBTree_abbaa2510b96ad094e41cc65ac7edc429}{\index{R\-B\-Tree@{R\-B\-Tree}!del@{del}}
+\index{del@{del}!RBTree@{R\-B\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::del (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_abbaa2510b96ad094e41cc65ac7edc429}
+
+
+delete a prefix in the index 
+
+\hypertarget{classRBTree_a3e233a99d209334de4bdf90741d043a8}{\index{R\-B\-Tree@{R\-B\-Tree}!del@{del}}
+\index{del@{del}!RBTree@{R\-B\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::del (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{{\bf node\-\_\-type} $\ast$\&}]{\-\_\-root, }
+\item[{const size\-\_\-t}]{\-\_\-tree\-Idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a3e233a99d209334de4bdf90741d043a8}
+
+
+delete a prefix in the B\-T forest 
+
+If \-\_\-prefix is located in a leaf node, then directly delete the node; otherwise, clear the nexthop field. \begin{DoxyNote}{Note}
+After delete a leaf node, its parent may become a leaf node as well. If the parent has no prefix, we must recursively delete the parent node as well. 
+\end{DoxyNote}
+\hypertarget{classRBTree_aef636adbe858181ebc0aeb49eb143a14}{\index{R\-B\-Tree@{R\-B\-Tree}!destroy@{destroy}}
+\index{destroy@{destroy}!RBTree@{R\-B\-Tree}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::destroy (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{\-\_\-idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_aef636adbe858181ebc0aeb49eb143a14}
+
+
+destroy a binary tree 
+
+\hypertarget{classRBTree_a629121f95c14ebfa25a8fba5a7fbfa8f}{\index{R\-B\-Tree@{R\-B\-Tree}!generate\-Trace@{generate\-Trace}}
+\index{generate\-Trace@{generate\-Trace}!RBTree@{R\-B\-Tree}}
+\subsubsection[{generate\-Trace}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::generate\-Trace (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-req\-File, }
+\item[{const std\-::string \&}]{\-\_\-trace\-File}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a629121f95c14ebfa25a8fba5a7fbfa8f}
+
+
+generate lookup trace for simulation 
+
+\hypertarget{classRBTree_a21eb3efc682903ef05b49472ec3d49c2}{\index{R\-B\-Tree@{R\-B\-Tree}!get\-Level\-Node\-Num@{get\-Level\-Node\-Num}}
+\index{get\-Level\-Node\-Num@{get\-Level\-Node\-Num}!RBTree@{R\-B\-Tree}}
+\subsubsection[{get\-Level\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::get\-Level\-Node\-Num (
+\begin{DoxyParamCaption}
+\item[{const int}]{\-\_\-level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a21eb3efc682903ef05b49472ec3d49c2}
+
+
+Compute and return number of nodes at a specific level in all the binary trees. 
+
+\hypertarget{classRBTree_ae1b9a0c5db76ea343f820daf28b938b3}{\index{R\-B\-Tree@{R\-B\-Tree}!initialize\-Parameters@{initialize\-Parameters}}
+\index{initialize\-Parameters@{initialize\-Parameters}!RBTree@{R\-B\-Tree}}
+\subsubsection[{initialize\-Parameters}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::initialize\-Parameters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_ae1b9a0c5db76ea343f820daf28b938b3}
+
+
+initialize parameters 
+
+\hypertarget{classRBTree_a06597dba808ee8528730113c4be8a64d}{\index{R\-B\-Tree@{R\-B\-Tree}!ins@{ins}}
+\index{ins@{ins}!RBTree@{R\-B\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a06597dba808ee8528730113c4be8a64d}
+
+
+insert into index 
+
+\hypertarget{classRBTree_a7ee9ee342f4753d8230972a049268fb7}{\index{R\-B\-Tree@{R\-B\-Tree}!ins@{ins}}
+\index{ins@{ins}!RBTree@{R\-B\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf node\-\_\-type} $\ast$\&}]{\-\_\-node, }
+\item[{const int}]{\-\_\-level, }
+\item[{const size\-\_\-t}]{\-\_\-tree\-Idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a7ee9ee342f4753d8230972a049268fb7}
+
+
+insert into a binary tree 
+
+\hypertarget{classRBTree_a67b0d6c81596d0f3afafc3c1a45800f8}{\index{R\-B\-Tree@{R\-B\-Tree}!ins@{ins}}
+\index{ins@{ins}!RBTree@{R\-B\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{const int}]{\-\_\-pipestyle, }
+\item[{std\-::default\-\_\-random\-\_\-engine \&}]{\-\_\-generator, }
+\item[{std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&}]{\-\_\-distribution, }
+\item[{const int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a67b0d6c81596d0f3afafc3c1a45800f8}
+
+
+for update, insert into index 
+
+\hypertarget{classRBTree_a678b8ede680b0b3d3418eecfe9b665e1}{\index{R\-B\-Tree@{R\-B\-Tree}!ins@{ins}}
+\index{ins@{ins}!RBTree@{R\-B\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf node\-\_\-type} $\ast$\&}]{\-\_\-node, }
+\item[{const int}]{\-\_\-level, }
+\item[{const size\-\_\-t}]{\-\_\-tree\-Idx, }
+\item[{const bool}]{\-\_\-is\-Root, }
+\item[{const int}]{\-\_\-pipestyle, }
+\item[{const int}]{\-\_\-parent\-Stageidx, }
+\item[{std\-::default\-\_\-random\-\_\-engine \&}]{\-\_\-generator, }
+\item[{std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&}]{\-\_\-distribution, }
+\item[{const int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a678b8ede680b0b3d3418eecfe9b665e1}
+
+
+for update, insert into a binary tree 
+
+\hypertarget{classRBTree_ad67f956fe01dd3dbd2cd23e0a287e509}{\index{R\-B\-Tree@{R\-B\-Tree}!lin@{lin}}
+\index{lin@{lin}!RBTree@{R\-B\-Tree}}
+\subsubsection[{lin}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::lin (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_ad67f956fe01dd3dbd2cd23e0a287e509}
+
+
+Scatter nodes in a linear pipeline. 
+
+Map nodes into a linear pipe line in a manner of one level per stage.
+
+\begin{DoxyNote}{Note}
+the number of stages is W -\/ U + 1 for a linear pipe line. 
+\end{DoxyNote}
+\hypertarget{classRBTree_ae5e228bf0b785798baf431f141c8d151}{\index{R\-B\-Tree@{R\-B\-Tree}!operator=@{operator=}}
+\index{operator=@{operator=}!RBTree@{R\-B\-Tree}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf R\-B\-Tree}\& {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$ \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classRBTree_ae5e228bf0b785798baf431f141c8d151}
+
+
+disable assignment op 
+
+\hypertarget{classRBTree_a845b26ba16966c2de2100cc94985505f}{\index{R\-B\-Tree@{R\-B\-Tree}!print\-Node@{print\-Node}}
+\index{print\-Node@{print\-Node}!RBTree@{R\-B\-Tree}}
+\subsubsection[{print\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::print\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf node\-\_\-type} $\ast$}]{\-\_\-node}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a845b26ba16966c2de2100cc94985505f}
+\hypertarget{classRBTree_a8e126bc471ce34a36722f61ff833f002}{\index{R\-B\-Tree@{R\-B\-Tree}!ran@{ran}}
+\index{ran@{ran}!RBTree@{R\-B\-Tree}}
+\subsubsection[{ran}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::ran (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a8e126bc471ce34a36722f61ff833f002}
+
+
+Scatter in a random pipeline. 
+
+Map nodes into a random pipeline. A random generator is applied to determine the pipe stage to where a node is allocated. \hypertarget{classRBTree_a06d2d8d8c17af41cd5b1ea082cb1d81e}{\index{R\-B\-Tree@{R\-B\-Tree}!report@{report}}
+\index{report@{report}!RBTree@{R\-B\-Tree}}
+\subsubsection[{report}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::report (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a06d2d8d8c17af41cd5b1ea082cb1d81e}
+
+
+Report statistical inforamtion collected at the time point. 
+
+\hypertarget{classRBTree_a9fb161290ac60fa9d9363a4f7265ffbf}{\index{R\-B\-Tree@{R\-B\-Tree}!report\-Node\-Num\-In\-Stage@{report\-Node\-Num\-In\-Stage}}
+\index{report\-Node\-Num\-In\-Stage@{report\-Node\-Num\-In\-Stage}!RBTree@{R\-B\-Tree}}
+\subsubsection[{report\-Node\-Num\-In\-Stage}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::report\-Node\-Num\-In\-Stage (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a9fb161290ac60fa9d9363a4f7265ffbf}
+
+
+report number of nodes in each stage 
+
+\hypertarget{classRBTree_a8a2a446e5293ad414482ab5ce780438a}{\index{R\-B\-Tree@{R\-B\-Tree}!scatter\-To\-Pipeline@{scatter\-To\-Pipeline}}
+\index{scatter\-To\-Pipeline@{scatter\-To\-Pipeline}!RBTree@{R\-B\-Tree}}
+\subsubsection[{scatter\-To\-Pipeline}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::scatter\-To\-Pipeline (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-pipestyle, }
+\item[{int}]{\-\_\-stagenum = {\ttfamily {\bf W}~-\/~U~+~1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a8a2a446e5293ad414482ab5ce780438a}
+
+
+Scatter nodes in binary trees according to a pipeline. 
+
+Three types of pipelines are considered\-: linear, cirular and random \hypertarget{classRBTree_a14c7a40c80b6446738568cf06aee31f2}{\index{R\-B\-Tree@{R\-B\-Tree}!search@{search}}
+\index{search@{search}!RBTree@{R\-B\-Tree}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf uint32} {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::search (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-ip, }
+\item[{std\-::vector$<$ int $>$ \&}]{\-\_\-trace}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a14c7a40c80b6446738568cf06aee31f2}
+
+
+search L\-P\-M for target I\-P address 
+
+\hypertarget{classRBTree_a88efff50f76f335f776615120b9da902}{\index{R\-B\-Tree@{R\-B\-Tree}!traverse@{traverse}}
+\index{traverse@{traverse}!RBTree@{R\-B\-Tree}}
+\subsubsection[{traverse}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::traverse (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_a88efff50f76f335f776615120b9da902}
+
+
+traverse all binary trees in bridth-\/first order 
+
+\hypertarget{classRBTree_ad0ebeb84ec09a401643603abf9342d50}{\index{R\-B\-Tree@{R\-B\-Tree}!update@{update}}
+\index{update@{update}!RBTree@{R\-B\-Tree}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::update (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-fn, }
+\item[{int}]{\-\_\-pipestyle, }
+\item[{int}]{\-\_\-stagenum = {\ttfamily {\bf W}~-\/~U~+~1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRBTree_ad0ebeb84ec09a401643603abf9342d50}
+
+
+update 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classRBTree_a054f43074586a88ce2632cbaca07fa0b}{\index{R\-B\-Tree@{R\-B\-Tree}!ft@{ft}}
+\index{ft@{ft}!RBTree@{R\-B\-Tree}}
+\subsubsection[{ft}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf Fast\-Table}$<${\bf W}, U -\/ 1$>$$\ast$ {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::ft\hspace{0.3cm}{\ttfamily [private]}}}\label{classRBTree_a054f43074586a88ce2632cbaca07fa0b}
+
+
+pointer to fast table, a fast table is used to store shorter prefixes and provide search, insert and delete interfaces 
+
+\hypertarget{classRBTree_aeaf334c4db430ec17c09d13845888a7f}{\index{R\-B\-Tree@{R\-B\-Tree}!m\-Level\-Node\-Num@{m\-Level\-Node\-Num}}
+\index{m\-Level\-Node\-Num@{m\-Level\-Node\-Num}!RBTree@{R\-B\-Tree}}
+\subsubsection[{m\-Level\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf uint32} {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::m\-Level\-Node\-Num\mbox{[}V\mbox{]}\mbox{[}{\bf W}-\/U+1\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRBTree_aeaf334c4db430ec17c09d13845888a7f}
+
+
+number of nodes in each level of a binary tree 
+
+\hypertarget{classRBTree_a0b1d29091a098e2ba8d1f89df1e9b1cc}{\index{R\-B\-Tree@{R\-B\-Tree}!m\-Node\-Num@{m\-Node\-Num}}
+\index{m\-Node\-Num@{m\-Node\-Num}!RBTree@{R\-B\-Tree}}
+\subsubsection[{m\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf uint32} {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::m\-Node\-Num\mbox{[}V\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRBTree_a0b1d29091a098e2ba8d1f89df1e9b1cc}
+
+
+number of nodes in each binary tree 
+
+\hypertarget{classRBTree_afa0e7bbf323151a0d0047a31452c09e2}{\index{R\-B\-Tree@{R\-B\-Tree}!m\-Root\-Table@{m\-Root\-Table}}
+\index{m\-Root\-Table@{m\-Root\-Table}!RBTree@{R\-B\-Tree}}
+\subsubsection[{m\-Root\-Table}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf node\-\_\-type}$\ast$ {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::m\-Root\-Table\mbox{[}V\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRBTree_afa0e7bbf323151a0d0047a31452c09e2}
+
+
+each entry points to a binary tree 
+
+\hypertarget{classRBTree_aa14705d97172b233354c4308df69f8f6}{\index{R\-B\-Tree@{R\-B\-Tree}!m\-Total\-Node\-Num@{m\-Total\-Node\-Num}}
+\index{m\-Total\-Node\-Num@{m\-Total\-Node\-Num}!RBTree@{R\-B\-Tree}}
+\subsubsection[{m\-Total\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf uint32} {\bf R\-B\-Tree}$<$ {\bf W}, U, V $>$\-::m\-Total\-Node\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classRBTree_aa14705d97172b233354c4308df69f8f6}
+
+
+number of nodes in total 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{rbtree_8h}{rbtree.\-h}\end{DoxyCompactItemize}

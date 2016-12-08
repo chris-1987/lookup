@@ -1,0 +1,81 @@
+\hypertarget{structFNode2_1_1Entry}{\section{F\-Node2$<$ W $>$\-:\-:Entry Struct Reference}
+\label{structFNode2_1_1Entry}\index{F\-Node2$<$ W $>$\-::\-Entry@{F\-Node2$<$ W $>$\-::\-Entry}}
+}
+
+
+payload  
+
+
+
+
+{\ttfamily \#include $<$fstree.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structFNode2_1_1Entry_a118034ad14627e2b5e83308390cc70ae}{Entry} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\hyperlink{structFNode2}{FNode2}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ $\ast$ {\bfseries child}\\
+\>struct \{\\
+\hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} {\bfseries length}\\
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} {\bfseries nexthop}\\
+\>\} \\
+\}; \\
+
+\end{tabbing}\item 
+bool \hyperlink{structFNode2_1_1Entry_adcb357105740b1e75920b843de5cbbdf}{is\-Leaf}
+\begin{DoxyCompactList}\small\item\em this field only needs 1 bit when being implemented \end{DoxyCompactList}\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\hyperlink{structFNode2}{FNode2}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ $\ast$ {\bfseries child}\\
+\>struct \{\\
+\hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} {\bfseries length}\\
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} {\bfseries nexthop}\\
+\>\} \\
+\}; \\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W$>$struct F\-Node2$<$ W $>$\-::\-Entry}
+
+payload 
+
+1 field shared by child pointer and length + nexthop
+
+A field reused to store a child pointer or a (length, nexthop) pair. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structFNode2_1_1Entry_a118034ad14627e2b5e83308390cc70ae}{\index{F\-Node2\-::\-Entry@{F\-Node2\-::\-Entry}!Entry@{Entry}}
+\index{Entry@{Entry}!FNode2::Entry@{F\-Node2\-::\-Entry}}
+\subsubsection[{Entry}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf F\-Node2}$<$ {\bf W} $>$\-::Entry\-::\-Entry (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structFNode2_1_1Entry_a118034ad14627e2b5e83308390cc70ae}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structFNode2_1_1Entry_accfa1c9fc750da8405c2697437078a07}{\subsubsection[{"@1}]{\setlength{\rightskip}{0pt plus 5cm}union \{ ... \} }}\label{structFNode2_1_1Entry_accfa1c9fc750da8405c2697437078a07}
+\hypertarget{structFNode2_1_1Entry_a5530bf58267a06119fcfe7ed37680cd2}{\subsubsection[{"@5}]{\setlength{\rightskip}{0pt plus 5cm}union \{ ... \} }}\label{structFNode2_1_1Entry_a5530bf58267a06119fcfe7ed37680cd2}
+\hypertarget{structFNode2_1_1Entry_adcb357105740b1e75920b843de5cbbdf}{\index{F\-Node2\-::\-Entry@{F\-Node2\-::\-Entry}!is\-Leaf@{is\-Leaf}}
+\index{is\-Leaf@{is\-Leaf}!FNode2::Entry@{F\-Node2\-::\-Entry}}
+\subsubsection[{is\-Leaf}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ bool {\bf F\-Node2}$<$ {\bf W} $>$\-::Entry\-::is\-Leaf}}\label{structFNode2_1_1Entry_adcb357105740b1e75920b843de5cbbdf}
+
+
+this field only needs 1 bit when being implemented 
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{fstree_8h}{fstree.\-h}\item 
+/home/chris/lookup/code/src/tree/\hyperlink{rfstree_8h}{rfstree.\-h}\end{DoxyCompactItemize}

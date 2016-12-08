@@ -1,0 +1,94 @@
+\hypertarget{bgpdump__mstream_8c}{\section{/home/chris/lookup/code/external/bgpdump/bgpdump\-\_\-mstream.c File Reference}
+\label{bgpdump__mstream_8c}\index{/home/chris/lookup/code/external/bgpdump/bgpdump\-\_\-mstream.\-c@{/home/chris/lookup/code/external/bgpdump/bgpdump\-\_\-mstream.\-c}}
+}
+{\ttfamily \#include \char`\"{}bgpdump-\/config.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}bgpdump\-\_\-mstream.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\-h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{bgpdump__mstream_8c_addb22dda288dda6291f93fc1d673d786}{mstream\-\_\-init} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, u\-\_\-char $\ast$buffer, u\-\_\-int32\-\_\-t len)
+\item 
+u\-\_\-char \hyperlink{bgpdump__mstream_8c_aab5a0568e0ee59e3f6166e298c0a0923}{mstream\-\_\-getc} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, u\-\_\-char $\ast$d)
+\item 
+u\-\_\-int16\-\_\-t \hyperlink{bgpdump__mstream_8c_adb9044a40166249b88b9eaa077b019f8}{mstream\-\_\-getw} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, u\-\_\-int16\-\_\-t $\ast$d)
+\item 
+u\-\_\-int32\-\_\-t \hyperlink{bgpdump__mstream_8c_ac3699b198bff65c39e4e8d1823b53614}{mstream\-\_\-getl} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, u\-\_\-int32\-\_\-t $\ast$d)
+\item 
+struct in\-\_\-addr \hyperlink{bgpdump__mstream_8c_aed1ec4f9fa6d4724fce85eee004a21c2}{mstream\-\_\-get\-\_\-ipv4} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s)
+\item 
+u\-\_\-int32\-\_\-t \hyperlink{bgpdump__mstream_8c_acfe16e67a095b484ed90ad2f2b814820}{mstream\-\_\-can\-\_\-read} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s)
+\item 
+\hyperlink{bgpdump__mstream_8h_a7d785ae8ea387837eb8b894806eb45e4}{mstream\-\_\-t} \hyperlink{bgpdump__mstream_8c_aa4ab859d2be6cb4bbbb946d2a29f9fc1}{mstream\-\_\-copy} (\hyperlink{bgpdump__mstream_8h_a7d785ae8ea387837eb8b894806eb45e4}{mstream\-\_\-t} $\ast$s, int len)
+\item 
+u\-\_\-int32\-\_\-t \hyperlink{bgpdump__mstream_8c_a62f99b60986b5a77a82cbe02bc63e22e}{mstream\-\_\-get} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, void $\ast$d, u\-\_\-int32\-\_\-t len)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{bgpdump__mstream_8c_acfe16e67a095b484ed90ad2f2b814820}{\index{bgpdump\-\_\-mstream.\-c@{bgpdump\-\_\-mstream.\-c}!mstream\-\_\-can\-\_\-read@{mstream\-\_\-can\-\_\-read}}
+\index{mstream\-\_\-can\-\_\-read@{mstream\-\_\-can\-\_\-read}!bgpdump_mstream.c@{bgpdump\-\_\-mstream.\-c}}
+\subsubsection[{mstream\-\_\-can\-\_\-read}]{\setlength{\rightskip}{0pt plus 5cm}u\-\_\-int32\-\_\-t mstream\-\_\-can\-\_\-read (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__mstream_8c_acfe16e67a095b484ed90ad2f2b814820}
+\hypertarget{bgpdump__mstream_8c_aa4ab859d2be6cb4bbbb946d2a29f9fc1}{\index{bgpdump\-\_\-mstream.\-c@{bgpdump\-\_\-mstream.\-c}!mstream\-\_\-copy@{mstream\-\_\-copy}}
+\index{mstream\-\_\-copy@{mstream\-\_\-copy}!bgpdump_mstream.c@{bgpdump\-\_\-mstream.\-c}}
+\subsubsection[{mstream\-\_\-copy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mstream\-\_\-t} mstream\-\_\-copy (
+\begin{DoxyParamCaption}
+\item[{{\bf mstream\-\_\-t} $\ast$}]{s, }
+\item[{int}]{len}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__mstream_8c_aa4ab859d2be6cb4bbbb946d2a29f9fc1}
+\hypertarget{bgpdump__mstream_8c_a62f99b60986b5a77a82cbe02bc63e22e}{\index{bgpdump\-\_\-mstream.\-c@{bgpdump\-\_\-mstream.\-c}!mstream\-\_\-get@{mstream\-\_\-get}}
+\index{mstream\-\_\-get@{mstream\-\_\-get}!bgpdump_mstream.c@{bgpdump\-\_\-mstream.\-c}}
+\subsubsection[{mstream\-\_\-get}]{\setlength{\rightskip}{0pt plus 5cm}u\-\_\-int32\-\_\-t mstream\-\_\-get (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{void $\ast$}]{d, }
+\item[{u\-\_\-int32\-\_\-t}]{len}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__mstream_8c_a62f99b60986b5a77a82cbe02bc63e22e}
+\hypertarget{bgpdump__mstream_8c_aed1ec4f9fa6d4724fce85eee004a21c2}{\index{bgpdump\-\_\-mstream.\-c@{bgpdump\-\_\-mstream.\-c}!mstream\-\_\-get\-\_\-ipv4@{mstream\-\_\-get\-\_\-ipv4}}
+\index{mstream\-\_\-get\-\_\-ipv4@{mstream\-\_\-get\-\_\-ipv4}!bgpdump_mstream.c@{bgpdump\-\_\-mstream.\-c}}
+\subsubsection[{mstream\-\_\-get\-\_\-ipv4}]{\setlength{\rightskip}{0pt plus 5cm}struct in\-\_\-addr mstream\-\_\-get\-\_\-ipv4 (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__mstream_8c_aed1ec4f9fa6d4724fce85eee004a21c2}
+\hypertarget{bgpdump__mstream_8c_aab5a0568e0ee59e3f6166e298c0a0923}{\index{bgpdump\-\_\-mstream.\-c@{bgpdump\-\_\-mstream.\-c}!mstream\-\_\-getc@{mstream\-\_\-getc}}
+\index{mstream\-\_\-getc@{mstream\-\_\-getc}!bgpdump_mstream.c@{bgpdump\-\_\-mstream.\-c}}
+\subsubsection[{mstream\-\_\-getc}]{\setlength{\rightskip}{0pt plus 5cm}u\-\_\-char mstream\-\_\-getc (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{u\-\_\-char $\ast$}]{d}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__mstream_8c_aab5a0568e0ee59e3f6166e298c0a0923}
+\hypertarget{bgpdump__mstream_8c_ac3699b198bff65c39e4e8d1823b53614}{\index{bgpdump\-\_\-mstream.\-c@{bgpdump\-\_\-mstream.\-c}!mstream\-\_\-getl@{mstream\-\_\-getl}}
+\index{mstream\-\_\-getl@{mstream\-\_\-getl}!bgpdump_mstream.c@{bgpdump\-\_\-mstream.\-c}}
+\subsubsection[{mstream\-\_\-getl}]{\setlength{\rightskip}{0pt plus 5cm}u\-\_\-int32\-\_\-t mstream\-\_\-getl (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{u\-\_\-int32\-\_\-t $\ast$}]{d}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__mstream_8c_ac3699b198bff65c39e4e8d1823b53614}
+\hypertarget{bgpdump__mstream_8c_adb9044a40166249b88b9eaa077b019f8}{\index{bgpdump\-\_\-mstream.\-c@{bgpdump\-\_\-mstream.\-c}!mstream\-\_\-getw@{mstream\-\_\-getw}}
+\index{mstream\-\_\-getw@{mstream\-\_\-getw}!bgpdump_mstream.c@{bgpdump\-\_\-mstream.\-c}}
+\subsubsection[{mstream\-\_\-getw}]{\setlength{\rightskip}{0pt plus 5cm}u\-\_\-int16\-\_\-t mstream\-\_\-getw (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{u\-\_\-int16\-\_\-t $\ast$}]{d}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__mstream_8c_adb9044a40166249b88b9eaa077b019f8}
+\hypertarget{bgpdump__mstream_8c_addb22dda288dda6291f93fc1d673d786}{\index{bgpdump\-\_\-mstream.\-c@{bgpdump\-\_\-mstream.\-c}!mstream\-\_\-init@{mstream\-\_\-init}}
+\index{mstream\-\_\-init@{mstream\-\_\-init}!bgpdump_mstream.c@{bgpdump\-\_\-mstream.\-c}}
+\subsubsection[{mstream\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void mstream\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{u\-\_\-char $\ast$}]{buffer, }
+\item[{u\-\_\-int32\-\_\-t}]{len}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__mstream_8c_addb22dda288dda6291f93fc1d673d786}

@@ -1,0 +1,190 @@
+\hypertarget{classCirSched}{\section{Cir\-Sched$<$ W, K, S $>$ Class Template Reference}
+\label{classCirSched}\index{Cir\-Sched$<$ W, K, S $>$@{Cir\-Sched$<$ W, K, S $>$}}
+}
+
+
+Schedule lookup requests in a circular pipeline.  
+
+
+
+
+{\ttfamily \#include $<$cirsched.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structCirSched_1_1ReqQue}{Req\-Que}
+\begin{DoxyCompactList}\small\item\em structure of request queue \end{DoxyCompactList}\item 
+struct \hyperlink{structCirSched_1_1Request}{Request}
+\begin{DoxyCompactList}\small\item\em structure of request \end{DoxyCompactList}\item 
+struct \hyperlink{structCirSched_1_1Stage}{Stage}
+\begin{DoxyCompactList}\small\item\em structure of stage \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classCirSched_a17c4878659ef9924496b2e773ef997eb}{Cir\-Sched} ()
+\item 
+bool \hyperlink{classCirSched_aaa57ac8164b5e76d660d703abdfe2e34}{is\-All\-Queue\-Empty} ()
+\item 
+void \hyperlink{classCirSched_a9ba8ae5c2414284e98eebd8e520b14ae}{execute} ()
+\begin{DoxyCompactList}\small\item\em execute \end{DoxyCompactList}\item 
+void \hyperlink{classCirSched_aedcd80a449e68ab8a1f11280175aa319}{search\-Run} (const std\-::string \&\-\_\-trace\-File)
+\begin{DoxyCompactList}\small\item\em a run of executing search requests \end{DoxyCompactList}\item 
+void \hyperlink{classCirSched_aff159ce78575a0b97430c42738cdf79c}{search\-Report} ()
+\begin{DoxyCompactList}\small\item\em print search report \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structCirSched_1_1ReqQue}{Req\-Que} \hyperlink{classCirSched_a626135d70cbd18b7031a7eed0aafabd5}{m\-Req\-Que} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em queues of requests, one queue per stage \end{DoxyCompactList}\item 
+\hyperlink{structCirSched_1_1Stage}{Stage} \hyperlink{classCirSched_a8fecfc9c0deb2e6dca0254f8451b3ab6}{m\-Stage} \mbox{[}K\mbox{]}
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\-\_\-t \hyperlink{classCirSched_abfff83dd8fcbea59762014b06620ac69}{m\-Slot\-Num}
+\begin{DoxyCompactList}\small\item\em number of time slots in total \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classCirSched_acd7ba9fa2e160b2fea6e5600820f93f6}{m\-Request\-Num}
+\begin{DoxyCompactList}\small\item\em number of requests \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classCirSched_a455f89c9ba1df90426062f1d7be3f768}{m\-Busy\-Slot\-Num\-Stage} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of busy time slots for each pipe stage \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classCirSched_ac26481f524f6f1e0c01f077fd11fedb7}{m\-Busy\-Slot\-Num\-Avg}
+\begin{DoxyCompactList}\small\item\em average number of busy time slots over all pipe stages \end{DoxyCompactList}\item 
+int \hyperlink{classCirSched_aef4a2f15ecdea422b3b3c2e271f2a41d}{m\-Max\-Queue\-Length} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em maximum lengths of the request queues \end{DoxyCompactList}\item 
+double \hyperlink{classCirSched_abeeef452afbbfd2449cb7665d4e1a692}{m\-Avg\-Queue\-Length} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em average lengths of the request queues \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$class Cir\-Sched$<$ W, K, S $>$}
+
+Schedule lookup requests in a circular pipeline. 
+
+In a circular pipeline, a search request may start searching from any pipe stage (dependent on the location of the target subtrie) and wrap around the pipeline to finsh the task.
+
+
+\begin{DoxyParams}{Parameters}
+{\em W} & at most W search steps for a request \\
+\hline
+{\em K} & number of pipe stages \\
+\hline
+{\em S} & size of request queue per stage\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+K $>$= W. That is, the number of pipe stages is no fewer than the height of the tree (the number of search steps) 
+\end{DoxyNote}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classCirSched_a17c4878659ef9924496b2e773ef997eb}{\index{Cir\-Sched@{Cir\-Sched}!Cir\-Sched@{Cir\-Sched}}
+\index{Cir\-Sched@{Cir\-Sched}!CirSched@{Cir\-Sched}}
+\subsubsection[{Cir\-Sched}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::{\bf Cir\-Sched} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classCirSched_a17c4878659ef9924496b2e773ef997eb}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classCirSched_a9ba8ae5c2414284e98eebd8e520b14ae}{\index{Cir\-Sched@{Cir\-Sched}!execute@{execute}}
+\index{execute@{execute}!CirSched@{Cir\-Sched}}
+\subsubsection[{execute}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::execute (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classCirSched_a9ba8ae5c2414284e98eebd8e520b14ae}
+
+
+execute 
+
+\hypertarget{classCirSched_aaa57ac8164b5e76d660d703abdfe2e34}{\index{Cir\-Sched@{Cir\-Sched}!is\-All\-Queue\-Empty@{is\-All\-Queue\-Empty}}
+\index{is\-All\-Queue\-Empty@{is\-All\-Queue\-Empty}!CirSched@{Cir\-Sched}}
+\subsubsection[{is\-All\-Queue\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ bool {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::is\-All\-Queue\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classCirSched_aaa57ac8164b5e76d660d703abdfe2e34}
+\hypertarget{classCirSched_aff159ce78575a0b97430c42738cdf79c}{\index{Cir\-Sched@{Cir\-Sched}!search\-Report@{search\-Report}}
+\index{search\-Report@{search\-Report}!CirSched@{Cir\-Sched}}
+\subsubsection[{search\-Report}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::search\-Report (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classCirSched_aff159ce78575a0b97430c42738cdf79c}
+
+
+print search report 
+
+\hypertarget{classCirSched_aedcd80a449e68ab8a1f11280175aa319}{\index{Cir\-Sched@{Cir\-Sched}!search\-Run@{search\-Run}}
+\index{search\-Run@{search\-Run}!CirSched@{Cir\-Sched}}
+\subsubsection[{search\-Run}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::search\-Run (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-trace\-File}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classCirSched_aedcd80a449e68ab8a1f11280175aa319}
+
+
+a run of executing search requests 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classCirSched_abeeef452afbbfd2449cb7665d4e1a692}{\index{Cir\-Sched@{Cir\-Sched}!m\-Avg\-Queue\-Length@{m\-Avg\-Queue\-Length}}
+\index{m\-Avg\-Queue\-Length@{m\-Avg\-Queue\-Length}!CirSched@{Cir\-Sched}}
+\subsubsection[{m\-Avg\-Queue\-Length}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ double {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Avg\-Queue\-Length\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classCirSched_abeeef452afbbfd2449cb7665d4e1a692}
+
+
+average lengths of the request queues 
+
+\hypertarget{classCirSched_ac26481f524f6f1e0c01f077fd11fedb7}{\index{Cir\-Sched@{Cir\-Sched}!m\-Busy\-Slot\-Num\-Avg@{m\-Busy\-Slot\-Num\-Avg}}
+\index{m\-Busy\-Slot\-Num\-Avg@{m\-Busy\-Slot\-Num\-Avg}!CirSched@{Cir\-Sched}}
+\subsubsection[{m\-Busy\-Slot\-Num\-Avg}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ size\-\_\-t {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Busy\-Slot\-Num\-Avg\hspace{0.3cm}{\ttfamily [private]}}}\label{classCirSched_ac26481f524f6f1e0c01f077fd11fedb7}
+
+
+average number of busy time slots over all pipe stages 
+
+\hypertarget{classCirSched_a455f89c9ba1df90426062f1d7be3f768}{\index{Cir\-Sched@{Cir\-Sched}!m\-Busy\-Slot\-Num\-Stage@{m\-Busy\-Slot\-Num\-Stage}}
+\index{m\-Busy\-Slot\-Num\-Stage@{m\-Busy\-Slot\-Num\-Stage}!CirSched@{Cir\-Sched}}
+\subsubsection[{m\-Busy\-Slot\-Num\-Stage}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ size\-\_\-t {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Busy\-Slot\-Num\-Stage\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classCirSched_a455f89c9ba1df90426062f1d7be3f768}
+
+
+number of busy time slots for each pipe stage 
+
+\hypertarget{classCirSched_aef4a2f15ecdea422b3b3c2e271f2a41d}{\index{Cir\-Sched@{Cir\-Sched}!m\-Max\-Queue\-Length@{m\-Max\-Queue\-Length}}
+\index{m\-Max\-Queue\-Length@{m\-Max\-Queue\-Length}!CirSched@{Cir\-Sched}}
+\subsubsection[{m\-Max\-Queue\-Length}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ int {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Max\-Queue\-Length\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classCirSched_aef4a2f15ecdea422b3b3c2e271f2a41d}
+
+
+maximum lengths of the request queues 
+
+\hypertarget{classCirSched_a626135d70cbd18b7031a7eed0aafabd5}{\index{Cir\-Sched@{Cir\-Sched}!m\-Req\-Que@{m\-Req\-Que}}
+\index{m\-Req\-Que@{m\-Req\-Que}!CirSched@{Cir\-Sched}}
+\subsubsection[{m\-Req\-Que}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ {\bf Req\-Que} {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Req\-Que\mbox{[}K\mbox{]}}}\label{classCirSched_a626135d70cbd18b7031a7eed0aafabd5}
+
+
+queues of requests, one queue per stage 
+
+\hypertarget{classCirSched_acd7ba9fa2e160b2fea6e5600820f93f6}{\index{Cir\-Sched@{Cir\-Sched}!m\-Request\-Num@{m\-Request\-Num}}
+\index{m\-Request\-Num@{m\-Request\-Num}!CirSched@{Cir\-Sched}}
+\subsubsection[{m\-Request\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ size\-\_\-t {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Request\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classCirSched_acd7ba9fa2e160b2fea6e5600820f93f6}
+
+
+number of requests 
+
+\hypertarget{classCirSched_abfff83dd8fcbea59762014b06620ac69}{\index{Cir\-Sched@{Cir\-Sched}!m\-Slot\-Num@{m\-Slot\-Num}}
+\index{m\-Slot\-Num@{m\-Slot\-Num}!CirSched@{Cir\-Sched}}
+\subsubsection[{m\-Slot\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ size\-\_\-t {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Slot\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classCirSched_abfff83dd8fcbea59762014b06620ac69}
+
+
+number of time slots in total 
+
+\hypertarget{classCirSched_a8fecfc9c0deb2e6dca0254f8451b3ab6}{\index{Cir\-Sched@{Cir\-Sched}!m\-Stage@{m\-Stage}}
+\index{m\-Stage@{m\-Stage}!CirSched@{Cir\-Sched}}
+\subsubsection[{m\-Stage}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ {\bf Stage} {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Stage\mbox{[}K\mbox{]}}}\label{classCirSched_a8fecfc9c0deb2e6dca0254f8451b3ab6}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/scheduler/\hyperlink{cirsched_8h}{cirsched.\-h}\end{DoxyCompactItemize}

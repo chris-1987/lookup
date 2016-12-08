@@ -1,0 +1,104 @@
+\hypertarget{classAnalyzer}{\section{Analyzer Class Reference}
+\label{classAnalyzer}\index{Analyzer@{Analyzer}}
+}
+
+
+{\ttfamily \#include $<$analyzer.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classAnalyzer_ac7483f2333225c1a79a7a14faf833716}{Analyzer} (const std\-::string \&\-\_\-dfn, const std\-::string \&\-\_\-ofn)
+\begin{DoxyCompactList}\small\item\em output I\-Ps \end{DoxyCompactList}\item 
+void \hyperlink{classAnalyzer_a81389370bbaa94080a5adae11c6e7107}{generate} ()
+\item 
+void \hyperlink{classAnalyzer_a35af696b9422219939cd105a01d9610e}{process} (\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+void \hyperlink{classAnalyzer_a1a88acdbd84654d28fa38486cdb6913f}{show\-\_\-attr} (\hyperlink{bgpdump__attr_8h_a851314552296238881b06768eb835f95}{attributes\-\_\-t} $\ast$\hyperlink{bgpdump__attr_8h_structattr}{attr})
+\item 
+void \hyperlink{classAnalyzer_af93a215e0db3f556a8fbd787383c13f9}{show\-\_\-prefixes} (int count, struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, bool announce)
+\item 
+void \hyperlink{classAnalyzer_af164aeb9f9d5b3be9db21e61e2a88eea}{show\-\_\-v6\-\_\-prefixes} (int count, struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, bool announce)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const std\-::string \hyperlink{classAnalyzer_abb4239dc1b174539a12839dba3b27db9}{dfn}
+\item 
+std\-::ofstream \hyperlink{classAnalyzer_af0b0e406c71e07e7e7a41f2d10eb528f}{ofout}
+\begin{DoxyCompactList}\small\item\em dump file \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classAnalyzer_ac7483f2333225c1a79a7a14faf833716}{\index{Analyzer@{Analyzer}!Analyzer@{Analyzer}}
+\index{Analyzer@{Analyzer}!Analyzer@{Analyzer}}
+\subsubsection[{Analyzer}]{\setlength{\rightskip}{0pt plus 5cm}Analyzer\-::\-Analyzer (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-dfn, }
+\item[{const std\-::string \&}]{\-\_\-ofn}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAnalyzer_ac7483f2333225c1a79a7a14faf833716}
+
+
+output I\-Ps 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classAnalyzer_a81389370bbaa94080a5adae11c6e7107}{\index{Analyzer@{Analyzer}!generate@{generate}}
+\index{generate@{generate}!Analyzer@{Analyzer}}
+\subsubsection[{generate}]{\setlength{\rightskip}{0pt plus 5cm}void Analyzer\-::generate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAnalyzer_a81389370bbaa94080a5adae11c6e7107}
+\hypertarget{classAnalyzer_a35af696b9422219939cd105a01d9610e}{\index{Analyzer@{Analyzer}!process@{process}}
+\index{process@{process}!Analyzer@{Analyzer}}
+\subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}void Analyzer\-::process (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAnalyzer_a35af696b9422219939cd105a01d9610e}
+\hypertarget{classAnalyzer_a1a88acdbd84654d28fa38486cdb6913f}{\index{Analyzer@{Analyzer}!show\-\_\-attr@{show\-\_\-attr}}
+\index{show\-\_\-attr@{show\-\_\-attr}!Analyzer@{Analyzer}}
+\subsubsection[{show\-\_\-attr}]{\setlength{\rightskip}{0pt plus 5cm}void Analyzer\-::show\-\_\-attr (
+\begin{DoxyParamCaption}
+\item[{{\bf attributes\-\_\-t} $\ast$}]{attr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAnalyzer_a1a88acdbd84654d28fa38486cdb6913f}
+\hypertarget{classAnalyzer_af93a215e0db3f556a8fbd787383c13f9}{\index{Analyzer@{Analyzer}!show\-\_\-prefixes@{show\-\_\-prefixes}}
+\index{show\-\_\-prefixes@{show\-\_\-prefixes}!Analyzer@{Analyzer}}
+\subsubsection[{show\-\_\-prefixes}]{\setlength{\rightskip}{0pt plus 5cm}void Analyzer\-::show\-\_\-prefixes (
+\begin{DoxyParamCaption}
+\item[{int}]{count, }
+\item[{struct {\bf prefix} $\ast$}]{prefix, }
+\item[{bool}]{announce}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAnalyzer_af93a215e0db3f556a8fbd787383c13f9}
+\hypertarget{classAnalyzer_af164aeb9f9d5b3be9db21e61e2a88eea}{\index{Analyzer@{Analyzer}!show\-\_\-v6\-\_\-prefixes@{show\-\_\-v6\-\_\-prefixes}}
+\index{show\-\_\-v6\-\_\-prefixes@{show\-\_\-v6\-\_\-prefixes}!Analyzer@{Analyzer}}
+\subsubsection[{show\-\_\-v6\-\_\-prefixes}]{\setlength{\rightskip}{0pt plus 5cm}void Analyzer\-::show\-\_\-v6\-\_\-prefixes (
+\begin{DoxyParamCaption}
+\item[{int}]{count, }
+\item[{struct {\bf prefix} $\ast$}]{prefix, }
+\item[{bool}]{announce}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classAnalyzer_af164aeb9f9d5b3be9db21e61e2a88eea}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classAnalyzer_abb4239dc1b174539a12839dba3b27db9}{\index{Analyzer@{Analyzer}!dfn@{dfn}}
+\index{dfn@{dfn}!Analyzer@{Analyzer}}
+\subsubsection[{dfn}]{\setlength{\rightskip}{0pt plus 5cm}const std\-::string Analyzer\-::dfn\hspace{0.3cm}{\ttfamily [private]}}}\label{classAnalyzer_abb4239dc1b174539a12839dba3b27db9}
+\hypertarget{classAnalyzer_af0b0e406c71e07e7e7a41f2d10eb528f}{\index{Analyzer@{Analyzer}!ofout@{ofout}}
+\index{ofout@{ofout}!Analyzer@{Analyzer}}
+\subsubsection[{ofout}]{\setlength{\rightskip}{0pt plus 5cm}std\-::ofstream Analyzer\-::ofout\hspace{0.3cm}{\ttfamily [private]}}}\label{classAnalyzer_af0b0e406c71e07e7e7a41f2d10eb528f}
+
+
+dump file 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/\hyperlink{analyzer_8h}{analyzer.\-h}\end{DoxyCompactItemize}

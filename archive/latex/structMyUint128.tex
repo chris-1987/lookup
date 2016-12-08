@@ -1,0 +1,260 @@
+\hypertarget{structMyUint128}{\section{My\-Uint128 Struct Reference}
+\label{structMyUint128}\index{My\-Uint128@{My\-Uint128}}
+}
+
+
+128-\/bit unsigned integer  
+
+
+
+
+{\ttfamily \#include $<$types.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structMyUint128_a842042314a01bf6d9c7eb8e798fd3198}{My\-Uint128} ()
+\begin{DoxyCompactList}\small\item\em default ctor \end{DoxyCompactList}\item 
+\hyperlink{structMyUint128_a95123e5de2ff59222dc570760a7849a3}{My\-Uint128} (const \hyperlink{structMyUint128}{My\-Uint128} \&\-\_\-a)
+\begin{DoxyCompactList}\small\item\em copy ctor \end{DoxyCompactList}\item 
+\hyperlink{structMyUint128_aa2defd40f51042b42507089b6f0fc4d9}{My\-Uint128} (const \hyperlink{types_8h_aeefdb2888fa3c58f2454ef004419e6a5}{uint64} \&\-\_\-low, const \hyperlink{types_8h_aeefdb2888fa3c58f2454ef004419e6a5}{uint64} \&\-\_\-high)
+\begin{DoxyCompactList}\small\item\em from two uint64 \end{DoxyCompactList}\item 
+\hyperlink{structMyUint128_a5d5fff606c04e8ead641e0ded7f9db56}{My\-Uint128} (const \hyperlink{types_8h_aae6ad039f09c0676db11bd114136a3fa}{int32} \&\-\_\-a)
+\begin{DoxyCompactList}\small\item\em from int32 \end{DoxyCompactList}\item 
+\hyperlink{structMyUint128_aa288a0a61ab36f0eed9dc60f36bc8519}{My\-Uint128} (const \hyperlink{types_8h_aeefdb2888fa3c58f2454ef004419e6a5}{uint64} \&\-\_\-a)
+\begin{DoxyCompactList}\small\item\em from uint64 \end{DoxyCompactList}\item 
+void \hyperlink{structMyUint128_acf0ae57e1f3d08b55bc0278fa800b07a}{set\-Segment} (\hyperlink{types_8h_aeefdb2888fa3c58f2454ef004419e6a5}{uint64} \-\_\-seg, int \-\_\-idx)
+\begin{DoxyCompactList}\small\item\em set value of the 16-\/bit segment, \-\_\-idx in \mbox{[}0, 7\mbox{]} \end{DoxyCompactList}\item 
+bool \hyperlink{structMyUint128_a00aca0be0b5fe2b311b791bafbc748dd}{operator==} (const \hyperlink{structMyUint128}{My\-Uint128} \&\-\_\-a)
+\begin{DoxyCompactList}\small\item\em equality checking \end{DoxyCompactList}\item 
+bool \hyperlink{structMyUint128_aa963ff56fabd117773a54f07a99f1396}{operator$<$} (const \hyperlink{structMyUint128}{My\-Uint128} \&\-\_\-a)
+\begin{DoxyCompactList}\small\item\em less-\/than checking \end{DoxyCompactList}\item 
+bool \hyperlink{structMyUint128_ae3a3ede959f0648149e7b99754fd46bf}{operator$<$=} (const \hyperlink{structMyUint128}{My\-Uint128} \&\-\_\-a) const 
+\begin{DoxyCompactList}\small\item\em less-\/than-\/or-\/equal checking \end{DoxyCompactList}\item 
+bool \hyperlink{structMyUint128_ab209271675feca5a4b9d0d458f623485}{operator$>$} (const \hyperlink{structMyUint128}{My\-Uint128} \&\-\_\-a) const 
+\begin{DoxyCompactList}\small\item\em greater-\/than checking \end{DoxyCompactList}\item 
+bool \hyperlink{structMyUint128_a9a655edff854aaf64201b4b4ad22dfab}{operator$>$=} (const \hyperlink{structMyUint128}{My\-Uint128} \&\-\_\-a) const 
+\begin{DoxyCompactList}\small\item\em greater-\/than-\/or-\/equal checking \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{structMyUint128_ad048bf560df04ef5528d47e3658e71ed}{get\-Bit\-Value} (\hyperlink{types_8h_aae6ad039f09c0676db11bd114136a3fa}{int32} \-\_\-pos) const 
+\begin{DoxyCompactList}\small\item\em get bit value \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{structMyUint128_a06269e9467a4c4e61dcd9a6d5d07c794}{get\-Bits\-Value} (\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-beg\-Bit, \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-end\-Bit) const 
+\begin{DoxyCompactList}\small\item\em get bits value \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{types_8h_aeefdb2888fa3c58f2454ef004419e6a5}{uint64} \hyperlink{structMyUint128_a294d997f622685c41ad42040ff9ea1cf}{low}
+\begin{DoxyCompactList}\small\item\em 64-\/bit segment on the right \end{DoxyCompactList}\item 
+\hyperlink{types_8h_aeefdb2888fa3c58f2454ef004419e6a5}{uint64} \hyperlink{structMyUint128_a6888141e5c5e44242a144e37230a55e4}{high}
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\-::ostream \& \hyperlink{structMyUint128_afe33d92353637659c435a1f5a4efaf99}{operator$<$$<$} (std\-::ostream \&\-\_\-os, const \hyperlink{structMyUint128}{My\-Uint128} \&\-\_\-a)
+\begin{DoxyCompactList}\small\item\em outputtable \end{DoxyCompactList}\item 
+std\-::istream \& \hyperlink{structMyUint128_ae6f858d18e068ec033c76627bb2f75b1}{operator$>$$>$} (std\-::istream \&\-\_\-os, \hyperlink{structMyUint128}{My\-Uint128} \&\-\_\-a)
+\begin{DoxyCompactList}\small\item\em inputtable \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+128-\/bit unsigned integer 
+
+Comprised of two 64-\/bit unsigned integer 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structMyUint128_a842042314a01bf6d9c7eb8e798fd3198}{\index{My\-Uint128@{My\-Uint128}!My\-Uint128@{My\-Uint128}}
+\index{My\-Uint128@{My\-Uint128}!MyUint128@{My\-Uint128}}
+\subsubsection[{My\-Uint128}]{\setlength{\rightskip}{0pt plus 5cm}My\-Uint128\-::\-My\-Uint128 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_a842042314a01bf6d9c7eb8e798fd3198}
+
+
+default ctor 
+
+\hypertarget{structMyUint128_a95123e5de2ff59222dc570760a7849a3}{\index{My\-Uint128@{My\-Uint128}!My\-Uint128@{My\-Uint128}}
+\index{My\-Uint128@{My\-Uint128}!MyUint128@{My\-Uint128}}
+\subsubsection[{My\-Uint128}]{\setlength{\rightskip}{0pt plus 5cm}My\-Uint128\-::\-My\-Uint128 (
+\begin{DoxyParamCaption}
+\item[{const {\bf My\-Uint128} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_a95123e5de2ff59222dc570760a7849a3}
+
+
+copy ctor 
+
+\hypertarget{structMyUint128_aa2defd40f51042b42507089b6f0fc4d9}{\index{My\-Uint128@{My\-Uint128}!My\-Uint128@{My\-Uint128}}
+\index{My\-Uint128@{My\-Uint128}!MyUint128@{My\-Uint128}}
+\subsubsection[{My\-Uint128}]{\setlength{\rightskip}{0pt plus 5cm}My\-Uint128\-::\-My\-Uint128 (
+\begin{DoxyParamCaption}
+\item[{const {\bf uint64} \&}]{\-\_\-low, }
+\item[{const {\bf uint64} \&}]{\-\_\-high}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_aa2defd40f51042b42507089b6f0fc4d9}
+
+
+from two uint64 
+
+\hypertarget{structMyUint128_a5d5fff606c04e8ead641e0ded7f9db56}{\index{My\-Uint128@{My\-Uint128}!My\-Uint128@{My\-Uint128}}
+\index{My\-Uint128@{My\-Uint128}!MyUint128@{My\-Uint128}}
+\subsubsection[{My\-Uint128}]{\setlength{\rightskip}{0pt plus 5cm}My\-Uint128\-::\-My\-Uint128 (
+\begin{DoxyParamCaption}
+\item[{const {\bf int32} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_a5d5fff606c04e8ead641e0ded7f9db56}
+
+
+from int32 
+
+\hypertarget{structMyUint128_aa288a0a61ab36f0eed9dc60f36bc8519}{\index{My\-Uint128@{My\-Uint128}!My\-Uint128@{My\-Uint128}}
+\index{My\-Uint128@{My\-Uint128}!MyUint128@{My\-Uint128}}
+\subsubsection[{My\-Uint128}]{\setlength{\rightskip}{0pt plus 5cm}My\-Uint128\-::\-My\-Uint128 (
+\begin{DoxyParamCaption}
+\item[{const {\bf uint64} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_aa288a0a61ab36f0eed9dc60f36bc8519}
+
+
+from uint64 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structMyUint128_a06269e9467a4c4e61dcd9a6d5d07c794}{\index{My\-Uint128@{My\-Uint128}!get\-Bits\-Value@{get\-Bits\-Value}}
+\index{get\-Bits\-Value@{get\-Bits\-Value}!MyUint128@{My\-Uint128}}
+\subsubsection[{get\-Bits\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint32} My\-Uint128\-::get\-Bits\-Value (
+\begin{DoxyParamCaption}
+\item[{{\bf uint32}}]{\-\_\-beg\-Bit, }
+\item[{{\bf uint32}}]{\-\_\-end\-Bit}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_a06269e9467a4c4e61dcd9a6d5d07c794}
+
+
+get bits value 
+
+retrieve a range of bits and compute the decimal value, where \-\_\-beg\-Bit and \-\_\-end\-Bit are in \mbox{[}0, 127\mbox{]} and \-\_\-beg\-Bit $<$= \-\_\-end\-Bit \begin{DoxyNote}{Note}
+\-\_\-end\-Bit -\/ \-\_\-beg\-Bit $<$ 32 (assumption) 
+\end{DoxyNote}
+\hypertarget{structMyUint128_ad048bf560df04ef5528d47e3658e71ed}{\index{My\-Uint128@{My\-Uint128}!get\-Bit\-Value@{get\-Bit\-Value}}
+\index{get\-Bit\-Value@{get\-Bit\-Value}!MyUint128@{My\-Uint128}}
+\subsubsection[{get\-Bit\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint32} My\-Uint128\-::get\-Bit\-Value (
+\begin{DoxyParamCaption}
+\item[{{\bf int32}}]{\-\_\-pos}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_ad048bf560df04ef5528d47e3658e71ed}
+
+
+get bit value 
+
+retrieve a bit at the specified position, where pos in \mbox{[}0, 127\mbox{]} \hypertarget{structMyUint128_aa963ff56fabd117773a54f07a99f1396}{\index{My\-Uint128@{My\-Uint128}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!MyUint128@{My\-Uint128}}
+\subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}bool My\-Uint128\-::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf My\-Uint128} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_aa963ff56fabd117773a54f07a99f1396}
+
+
+less-\/than checking 
+
+\hypertarget{structMyUint128_ae3a3ede959f0648149e7b99754fd46bf}{\index{My\-Uint128@{My\-Uint128}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!MyUint128@{My\-Uint128}}
+\subsubsection[{operator$<$=}]{\setlength{\rightskip}{0pt plus 5cm}bool My\-Uint128\-::operator$<$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf My\-Uint128} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_ae3a3ede959f0648149e7b99754fd46bf}
+
+
+less-\/than-\/or-\/equal checking 
+
+\hypertarget{structMyUint128_a00aca0be0b5fe2b311b791bafbc748dd}{\index{My\-Uint128@{My\-Uint128}!operator==@{operator==}}
+\index{operator==@{operator==}!MyUint128@{My\-Uint128}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool My\-Uint128\-::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf My\-Uint128} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_a00aca0be0b5fe2b311b791bafbc748dd}
+
+
+equality checking 
+
+\hypertarget{structMyUint128_ab209271675feca5a4b9d0d458f623485}{\index{My\-Uint128@{My\-Uint128}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!MyUint128@{My\-Uint128}}
+\subsubsection[{operator$>$}]{\setlength{\rightskip}{0pt plus 5cm}bool My\-Uint128\-::operator$>$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf My\-Uint128} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_ab209271675feca5a4b9d0d458f623485}
+
+
+greater-\/than checking 
+
+\hypertarget{structMyUint128_a9a655edff854aaf64201b4b4ad22dfab}{\index{My\-Uint128@{My\-Uint128}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!MyUint128@{My\-Uint128}}
+\subsubsection[{operator$>$=}]{\setlength{\rightskip}{0pt plus 5cm}bool My\-Uint128\-::operator$>$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf My\-Uint128} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_a9a655edff854aaf64201b4b4ad22dfab}
+
+
+greater-\/than-\/or-\/equal checking 
+
+\hypertarget{structMyUint128_acf0ae57e1f3d08b55bc0278fa800b07a}{\index{My\-Uint128@{My\-Uint128}!set\-Segment@{set\-Segment}}
+\index{set\-Segment@{set\-Segment}!MyUint128@{My\-Uint128}}
+\subsubsection[{set\-Segment}]{\setlength{\rightskip}{0pt plus 5cm}void My\-Uint128\-::set\-Segment (
+\begin{DoxyParamCaption}
+\item[{{\bf uint64}}]{\-\_\-seg, }
+\item[{int}]{\-\_\-idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structMyUint128_acf0ae57e1f3d08b55bc0278fa800b07a}
+
+
+set value of the 16-\/bit segment, \-\_\-idx in \mbox{[}0, 7\mbox{]} 
+
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{structMyUint128_afe33d92353637659c435a1f5a4efaf99}{\index{My\-Uint128@{My\-Uint128}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!MyUint128@{My\-Uint128}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std\-::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\-::ostream \&}]{\-\_\-os, }
+\item[{const {\bf My\-Uint128} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}}\label{structMyUint128_afe33d92353637659c435a1f5a4efaf99}
+
+
+outputtable 
+
+\hypertarget{structMyUint128_ae6f858d18e068ec033c76627bb2f75b1}{\index{My\-Uint128@{My\-Uint128}!operator$>$$>$@{operator$>$$>$}}
+\index{operator$>$$>$@{operator$>$$>$}!MyUint128@{My\-Uint128}}
+\subsubsection[{operator$>$$>$}]{\setlength{\rightskip}{0pt plus 5cm}std\-::istream\& operator$>$$>$ (
+\begin{DoxyParamCaption}
+\item[{std\-::istream \&}]{\-\_\-os, }
+\item[{{\bf My\-Uint128} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}}\label{structMyUint128_ae6f858d18e068ec033c76627bb2f75b1}
+
+
+inputtable 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structMyUint128_a6888141e5c5e44242a144e37230a55e4}{\index{My\-Uint128@{My\-Uint128}!high@{high}}
+\index{high@{high}!MyUint128@{My\-Uint128}}
+\subsubsection[{high}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint64} My\-Uint128\-::high\hspace{0.3cm}{\ttfamily [private]}}}\label{structMyUint128_a6888141e5c5e44242a144e37230a55e4}
+\hypertarget{structMyUint128_a294d997f622685c41ad42040ff9ea1cf}{\index{My\-Uint128@{My\-Uint128}!low@{low}}
+\index{low@{low}!MyUint128@{My\-Uint128}}
+\subsubsection[{low}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint64} My\-Uint128\-::low\hspace{0.3cm}{\ttfamily [private]}}}\label{structMyUint128_a294d997f622685c41ad42040ff9ea1cf}
+
+
+64-\/bit segment on the right 
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/common/\hyperlink{types_8h}{types.\-h}\end{DoxyCompactItemize}

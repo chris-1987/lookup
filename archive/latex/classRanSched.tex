@@ -1,0 +1,181 @@
+\hypertarget{classRanSched}{\section{Ran\-Sched$<$ W, K, S $>$ Class Template Reference}
+\label{classRanSched}\index{Ran\-Sched$<$ W, K, S $>$@{Ran\-Sched$<$ W, K, S $>$}}
+}
+
+
+Schedule lookup requests in a random pipeline.  
+
+
+
+
+{\ttfamily \#include $<$ransched.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structRanSched_1_1ReqQue}{Req\-Que}
+\begin{DoxyCompactList}\small\item\em request queue \end{DoxyCompactList}\item 
+struct \hyperlink{structRanSched_1_1Request}{Request}
+\begin{DoxyCompactList}\small\item\em structure of a requeset \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRanSched_a632d4ba97ca27e5fb85e18db90846e21}{Ran\-Sched} ()
+\begin{DoxyCompactList}\small\item\em default ctor \end{DoxyCompactList}\item 
+void \hyperlink{classRanSched_a6d49e5f356711dfc6276dea83893817a}{execute} ()
+\begin{DoxyCompactList}\small\item\em execute a search request on each pipe stage \end{DoxyCompactList}\item 
+void \hyperlink{classRanSched_ab4b2fd3638b8634f907062f5775a92f2}{dispatch} ()
+\begin{DoxyCompactList}\small\item\em dispatch requests from the queue after finishing the search task \end{DoxyCompactList}\item 
+void \hyperlink{classRanSched_a7ec1bfa1ebaff80e1b9321afeaa166e9}{search\-Run} (const std\-::string \&\-\_\-trace\-File)
+\begin{DoxyCompactList}\small\item\em a run of executing search requests \end{DoxyCompactList}\item 
+void \hyperlink{classRanSched_a9ff7a9d9b40b20752dc9f975d128dafd}{search\-Report} ()
+\begin{DoxyCompactList}\small\item\em print search report \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structRanSched_1_1ReqQue}{Req\-Que} \hyperlink{classRanSched_af9be4c8624431923a682d85ea61bba5c}{m\-Req\-Que}
+\begin{DoxyCompactList}\small\item\em queue of requests \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\-\_\-t \hyperlink{classRanSched_ab846e49a0f4dadfbae2a394af599164c}{m\-Slot\-Num}
+\item 
+size\-\_\-t \hyperlink{classRanSched_ad79f85e0945332c83f94c815fed24181}{m\-Request\-Num}
+\item 
+size\-\_\-t \hyperlink{classRanSched_a80d8fc5fae90473bba4343b3daa7eb77}{m\-Busy\-Slot\-Num\-Stage} \mbox{[}K\mbox{]}
+\item 
+size\-\_\-t \hyperlink{classRanSched_adf97c2280f441eee70c102bae65ef4b6}{m\-Busy\-Slot\-Num\-Avg}
+\item 
+bool \hyperlink{classRanSched_a2919a4a797f648a0d21c1c24132a4c90}{m\-Is\-Used} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em a pipe stage is occupied during the time slot \end{DoxyCompactList}\item 
+int \hyperlink{classRanSched_a9457935e91ae686748d8d458b5ed9c2c}{m\-Max\-Queue\-Length}
+\begin{DoxyCompactList}\small\item\em maximum length of the request queue \end{DoxyCompactList}\item 
+double \hyperlink{classRanSched_a7e8a77245e7cd58fd16c192a89bd5e89}{m\-Avg\-Queue\-Length}
+\begin{DoxyCompactList}\small\item\em average length of the request queue \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$class Ran\-Sched$<$ W, K, S $>$}
+
+Schedule lookup requests in a random pipeline. 
+
+In a random pipeline, a search request jump over all the pipestages to perform the I\-P lookup task.
+
+
+\begin{DoxyParams}{Parameters}
+{\em W} & at most W search steps for a request \\
+\hline
+{\em K} & number of pipe stages \\
+\hline
+{\em S} & size of request queue \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classRanSched_a632d4ba97ca27e5fb85e18db90846e21}{\index{Ran\-Sched@{Ran\-Sched}!Ran\-Sched@{Ran\-Sched}}
+\index{Ran\-Sched@{Ran\-Sched}!RanSched@{Ran\-Sched}}
+\subsubsection[{Ran\-Sched}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::{\bf Ran\-Sched} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRanSched_a632d4ba97ca27e5fb85e18db90846e21}
+
+
+default ctor 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classRanSched_ab4b2fd3638b8634f907062f5775a92f2}{\index{Ran\-Sched@{Ran\-Sched}!dispatch@{dispatch}}
+\index{dispatch@{dispatch}!RanSched@{Ran\-Sched}}
+\subsubsection[{dispatch}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::dispatch (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRanSched_ab4b2fd3638b8634f907062f5775a92f2}
+
+
+dispatch requests from the queue after finishing the search task 
+
+\hypertarget{classRanSched_a6d49e5f356711dfc6276dea83893817a}{\index{Ran\-Sched@{Ran\-Sched}!execute@{execute}}
+\index{execute@{execute}!RanSched@{Ran\-Sched}}
+\subsubsection[{execute}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::execute (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRanSched_a6d49e5f356711dfc6276dea83893817a}
+
+
+execute a search request on each pipe stage 
+
+\hypertarget{classRanSched_a9ff7a9d9b40b20752dc9f975d128dafd}{\index{Ran\-Sched@{Ran\-Sched}!search\-Report@{search\-Report}}
+\index{search\-Report@{search\-Report}!RanSched@{Ran\-Sched}}
+\subsubsection[{search\-Report}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::search\-Report (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRanSched_a9ff7a9d9b40b20752dc9f975d128dafd}
+
+
+print search report 
+
+\hypertarget{classRanSched_a7ec1bfa1ebaff80e1b9321afeaa166e9}{\index{Ran\-Sched@{Ran\-Sched}!search\-Run@{search\-Run}}
+\index{search\-Run@{search\-Run}!RanSched@{Ran\-Sched}}
+\subsubsection[{search\-Run}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::search\-Run (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-trace\-File}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRanSched_a7ec1bfa1ebaff80e1b9321afeaa166e9}
+
+
+a run of executing search requests 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classRanSched_a7e8a77245e7cd58fd16c192a89bd5e89}{\index{Ran\-Sched@{Ran\-Sched}!m\-Avg\-Queue\-Length@{m\-Avg\-Queue\-Length}}
+\index{m\-Avg\-Queue\-Length@{m\-Avg\-Queue\-Length}!RanSched@{Ran\-Sched}}
+\subsubsection[{m\-Avg\-Queue\-Length}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ double {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Avg\-Queue\-Length\hspace{0.3cm}{\ttfamily [private]}}}\label{classRanSched_a7e8a77245e7cd58fd16c192a89bd5e89}
+
+
+average length of the request queue 
+
+\hypertarget{classRanSched_adf97c2280f441eee70c102bae65ef4b6}{\index{Ran\-Sched@{Ran\-Sched}!m\-Busy\-Slot\-Num\-Avg@{m\-Busy\-Slot\-Num\-Avg}}
+\index{m\-Busy\-Slot\-Num\-Avg@{m\-Busy\-Slot\-Num\-Avg}!RanSched@{Ran\-Sched}}
+\subsubsection[{m\-Busy\-Slot\-Num\-Avg}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ size\-\_\-t {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Busy\-Slot\-Num\-Avg\hspace{0.3cm}{\ttfamily [private]}}}\label{classRanSched_adf97c2280f441eee70c102bae65ef4b6}
+\hypertarget{classRanSched_a80d8fc5fae90473bba4343b3daa7eb77}{\index{Ran\-Sched@{Ran\-Sched}!m\-Busy\-Slot\-Num\-Stage@{m\-Busy\-Slot\-Num\-Stage}}
+\index{m\-Busy\-Slot\-Num\-Stage@{m\-Busy\-Slot\-Num\-Stage}!RanSched@{Ran\-Sched}}
+\subsubsection[{m\-Busy\-Slot\-Num\-Stage}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ size\-\_\-t {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Busy\-Slot\-Num\-Stage\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRanSched_a80d8fc5fae90473bba4343b3daa7eb77}
+\hypertarget{classRanSched_a2919a4a797f648a0d21c1c24132a4c90}{\index{Ran\-Sched@{Ran\-Sched}!m\-Is\-Used@{m\-Is\-Used}}
+\index{m\-Is\-Used@{m\-Is\-Used}!RanSched@{Ran\-Sched}}
+\subsubsection[{m\-Is\-Used}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ bool {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Is\-Used\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRanSched_a2919a4a797f648a0d21c1c24132a4c90}
+
+
+a pipe stage is occupied during the time slot 
+
+\hypertarget{classRanSched_a9457935e91ae686748d8d458b5ed9c2c}{\index{Ran\-Sched@{Ran\-Sched}!m\-Max\-Queue\-Length@{m\-Max\-Queue\-Length}}
+\index{m\-Max\-Queue\-Length@{m\-Max\-Queue\-Length}!RanSched@{Ran\-Sched}}
+\subsubsection[{m\-Max\-Queue\-Length}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ int {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Max\-Queue\-Length\hspace{0.3cm}{\ttfamily [private]}}}\label{classRanSched_a9457935e91ae686748d8d458b5ed9c2c}
+
+
+maximum length of the request queue 
+
+\hypertarget{classRanSched_af9be4c8624431923a682d85ea61bba5c}{\index{Ran\-Sched@{Ran\-Sched}!m\-Req\-Que@{m\-Req\-Que}}
+\index{m\-Req\-Que@{m\-Req\-Que}!RanSched@{Ran\-Sched}}
+\subsubsection[{m\-Req\-Que}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ {\bf Req\-Que} {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Req\-Que}}\label{classRanSched_af9be4c8624431923a682d85ea61bba5c}
+
+
+queue of requests 
+
+\hypertarget{classRanSched_ad79f85e0945332c83f94c815fed24181}{\index{Ran\-Sched@{Ran\-Sched}!m\-Request\-Num@{m\-Request\-Num}}
+\index{m\-Request\-Num@{m\-Request\-Num}!RanSched@{Ran\-Sched}}
+\subsubsection[{m\-Request\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ size\-\_\-t {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Request\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classRanSched_ad79f85e0945332c83f94c815fed24181}
+\hypertarget{classRanSched_ab846e49a0f4dadfbae2a394af599164c}{\index{Ran\-Sched@{Ran\-Sched}!m\-Slot\-Num@{m\-Slot\-Num}}
+\index{m\-Slot\-Num@{m\-Slot\-Num}!RanSched@{Ran\-Sched}}
+\subsubsection[{m\-Slot\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ size\-\_\-t {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::m\-Slot\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classRanSched_ab846e49a0f4dadfbae2a394af599164c}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/scheduler/\hyperlink{ransched_8h}{ransched.\-h}\end{DoxyCompactItemize}

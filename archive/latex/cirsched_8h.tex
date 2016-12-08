@@ -1,0 +1,37 @@
+\hypertarget{cirsched_8h}{\section{/home/chris/lookup/code/src/scheduler/cirsched.h File Reference}
+\label{cirsched_8h}\index{/home/chris/lookup/code/src/scheduler/cirsched.\-h@{/home/chris/lookup/code/src/scheduler/cirsched.\-h}}
+}
+
+
+Definition of the scheduler for a circular pipeline.  
+
+
+{\ttfamily \#include \char`\"{}../common/common.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$queue$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classCirSched}{Cir\-Sched$<$ W, K, S $>$}
+\begin{DoxyCompactList}\small\item\em Schedule lookup requests in a circular pipeline. \end{DoxyCompactList}\item 
+struct \hyperlink{structCirSched_1_1Request}{Cir\-Sched$<$ W, K, S $>$\-::\-Request}
+\begin{DoxyCompactList}\small\item\em structure of request \end{DoxyCompactList}\item 
+struct \hyperlink{structCirSched_1_1ReqQue}{Cir\-Sched$<$ W, K, S $>$\-::\-Req\-Que}
+\begin{DoxyCompactList}\small\item\em structure of request queue \end{DoxyCompactList}\item 
+struct \hyperlink{structCirSched_1_1Stage}{Cir\-Sched$<$ W, K, S $>$\-::\-Stage}
+\begin{DoxyCompactList}\small\item\em structure of stage \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Definition of the scheduler for a circular pipeline. Copyright (c) 2016, Sun Yat-\/sen University, All rights reserved
+
+Schedule lookup tasks in a circular pipeline. Please refer to \char`\"{}\-C\-A\-M\-P\-: fast and efficient
+\-I\-P lookup architecture\char`\"{} fore more details.
+
+\begin{DoxyAuthor}{Author}
+Yi Wu 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2016.\-11 
+\end{DoxyDate}

@@ -1,0 +1,80 @@
+\hypertarget{structLinSched_1_1Stage}{\section{Lin\-Sched$<$ K $>$\-:\-:Stage Struct Reference}
+\label{structLinSched_1_1Stage}\index{Lin\-Sched$<$ K $>$\-::\-Stage@{Lin\-Sched$<$ K $>$\-::\-Stage}}
+}
+
+
+structure of a scheduler  
+
+
+
+
+{\ttfamily \#include $<$linsched.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structLinSched_1_1Stage_a1e4341763fc70357367999ae7f9682c7}{Stage} ()
+\item 
+void \hyperlink{structLinSched_1_1Stage_a2e767f63c4ff0075840ae34406e23300}{execute} ()
+\item 
+bool \hyperlink{structLinSched_1_1Stage_a6e16d68a7c557c90508ed5c0bfdfec0a}{exist} ()
+\item 
+bool \hyperlink{structLinSched_1_1Stage_a6558188e3a26d6437ccab35484d02bff}{is\-Finished} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structLinSched_1_1Request}{Request} $\ast$ \hyperlink{structLinSched_1_1Stage_a9dcc76b40dedb5d6d49fc913989c1bd1}{req}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int K$>$struct Lin\-Sched$<$ K $>$\-::\-Stage}
+
+structure of a scheduler 
+
+Each pipe stage has a scheduler. During each time slot, a scheduler receives at most one task from the upstream pipe stage and delivers the task to the downstream pipe stage for a further processing (if necessary). 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structLinSched_1_1Stage_a1e4341763fc70357367999ae7f9682c7}{\index{Lin\-Sched\-::\-Stage@{Lin\-Sched\-::\-Stage}!Stage@{Stage}}
+\index{Stage@{Stage}!LinSched::Stage@{Lin\-Sched\-::\-Stage}}
+\subsubsection[{Stage}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ {\bf Lin\-Sched}$<$ K $>$\-::Stage\-::\-Stage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structLinSched_1_1Stage_a1e4341763fc70357367999ae7f9682c7}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structLinSched_1_1Stage_a2e767f63c4ff0075840ae34406e23300}{\index{Lin\-Sched\-::\-Stage@{Lin\-Sched\-::\-Stage}!execute@{execute}}
+\index{execute@{execute}!LinSched::Stage@{Lin\-Sched\-::\-Stage}}
+\subsubsection[{execute}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ void {\bf Lin\-Sched}$<$ K $>$\-::Stage\-::execute (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structLinSched_1_1Stage_a2e767f63c4ff0075840ae34406e23300}
+\hypertarget{structLinSched_1_1Stage_a6e16d68a7c557c90508ed5c0bfdfec0a}{\index{Lin\-Sched\-::\-Stage@{Lin\-Sched\-::\-Stage}!exist@{exist}}
+\index{exist@{exist}!LinSched::Stage@{Lin\-Sched\-::\-Stage}}
+\subsubsection[{exist}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ bool {\bf Lin\-Sched}$<$ K $>$\-::Stage\-::exist (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structLinSched_1_1Stage_a6e16d68a7c557c90508ed5c0bfdfec0a}
+\hypertarget{structLinSched_1_1Stage_a6558188e3a26d6437ccab35484d02bff}{\index{Lin\-Sched\-::\-Stage@{Lin\-Sched\-::\-Stage}!is\-Finished@{is\-Finished}}
+\index{is\-Finished@{is\-Finished}!LinSched::Stage@{Lin\-Sched\-::\-Stage}}
+\subsubsection[{is\-Finished}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ bool {\bf Lin\-Sched}$<$ K $>$\-::Stage\-::is\-Finished (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structLinSched_1_1Stage_a6558188e3a26d6437ccab35484d02bff}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structLinSched_1_1Stage_a9dcc76b40dedb5d6d49fc913989c1bd1}{\index{Lin\-Sched\-::\-Stage@{Lin\-Sched\-::\-Stage}!req@{req}}
+\index{req@{req}!LinSched::Stage@{Lin\-Sched\-::\-Stage}}
+\subsubsection[{req}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ {\bf Request}$\ast$ {\bf Lin\-Sched}$<$ K $>$\-::Stage\-::req}}\label{structLinSched_1_1Stage_a9dcc76b40dedb5d6d49fc913989c1bd1}
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/scheduler/\hyperlink{linsched_8h}{linsched.\-h}\end{DoxyCompactItemize}

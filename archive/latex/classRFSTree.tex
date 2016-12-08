@@ -1,0 +1,562 @@
+\hypertarget{classRFSTree}{\section{R\-F\-S\-Tree$<$ W, K, M, U, V $>$ Class Template Reference}
+\label{classRFSTree}\index{R\-F\-S\-Tree$<$ W, K, M, U, V $>$@{R\-F\-S\-Tree$<$ W, K, M, U, V $>$}}
+}
+
+
+Create an index based on leaf-\/pushed fixed-\/stride tree.  
+
+
+
+
+{\ttfamily \#include $<$rfstree.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structRFSTree_1_1SortElem}{Sort\-Elem}
+\begin{DoxyCompactList}\small\item\em element to be sorted \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRFSTree_aaf28d84e3bce9401a3b64d6a58119a7c}{R\-F\-S\-Tree} ()
+\begin{DoxyCompactList}\small\item\em ctor \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_af94bdbba63871991f0cf9c18d140f4ce}{initialize\-Parameters} ()
+\begin{DoxyCompactList}\small\item\em initialize parameters \end{DoxyCompactList}\item 
+\hyperlink{classRFSTree_acb2bd2d6342c24f41b08e6ed76aab02d}{$\sim$\-R\-F\-S\-Tree} ()
+\begin{DoxyCompactList}\small\item\em dtor \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_ab7fe9e3717784a9458048756ca4c8196}{clear} ()
+\begin{DoxyCompactList}\small\item\em clear the index \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_ae807d6ad404f6d7fb556223523113f3e}{destroy} (const size\-\_\-t \-\_\-idx)
+\begin{DoxyCompactList}\small\item\em destroy a tree in the forest \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_af46370043a6df10557b4b5ea45c1f543}{build} (const std\-::string \&\-\_\-fn)
+\begin{DoxyCompactList}\small\item\em produce a non-\/leaf-\/pushed fixed-\/stride tree \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_ad6ed56a7214f892f1432b1c183506780}{do\-Prefix\-Expansion} (\hyperlink{classRFSTree_a883be6d647fcf136a9e6903985387134}{rbtree\-\_\-type} $\ast$\-\_\-rbt)
+\begin{DoxyCompactList}\small\item\em generate prefix expansion scheme according to node distribution in rbt. \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_aa038a50c8f021a7a681a0eae195b7277}{do\-Prefix\-Expansion\-Even} ()
+\begin{DoxyCompactList}\small\item\em evenly split levels in rbt into K partitions \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_a2cca99cd95253b687f881d664bd7afe1}{do\-Prefix\-Expansion\-D\-P} (\hyperlink{classRFSTree_a883be6d647fcf136a9e6903985387134}{rbtree\-\_\-type} $\ast$\-\_\-rbt)
+\begin{DoxyCompactList}\small\item\em Two strategies for splitting nodes. \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_af560ed34ee3199ebe9da42b5662b5362}{report} ()
+\begin{DoxyCompactList}\small\item\em report collected information \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_a4eff3953319ae3f689ab3f4827eb9a73}{ins} (const \hyperlink{classRFSTree_a7cb02a7e27a8d7ff16271e33dbba26eb}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop)
+\begin{DoxyCompactList}\small\item\em insert a prefix into index \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_a6d411a3751a66e887bd39de922da3dca}{ins} (const \hyperlink{classRFSTree_a7cb02a7e27a8d7ff16271e33dbba26eb}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-nexthop, \hyperlink{classRFSTree_a82d6848400f7c2700a6283cb34bca3eb}{fnode\-\_\-type} $\ast$\&\-\_\-node, const int \-\_\-expansion\-Level, const size\-\_\-t \-\_\-tree\-Idx)
+\begin{DoxyCompactList}\small\item\em insert a long prefix into the index \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_a7e797086beed715de8b72e3c3c913e73}{del} ()=delete
+\item 
+void \hyperlink{classRFSTree_afb0a28423f374b968b102c13f51a1cc9}{rebuild} ()
+\begin{DoxyCompactList}\small\item\em rebuild the fixed-\/stride tree by leaf-\/pushing \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRFSTree_a5e52e4a054303bec77af7b5ca0183778}{search} (const \hyperlink{classRFSTree_a7cb02a7e27a8d7ff16271e33dbba26eb}{ip\-\_\-type} \&\-\_\-ip, std\-::vector$<$ int $>$ \&\-\_\-trace)
+\begin{DoxyCompactList}\small\item\em search L\-P\-M for target I\-P address \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_ac90ef75f08f670814215e647411375dd}{generate\-Trace} (const std\-::string \&\-\_\-req\-File, const std\-::string \&\-\_\-trace\-File)
+\begin{DoxyCompactList}\small\item\em generate lookup trace for simulation \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_a85ae0780513996ab7434dd23599c1d8a}{traverse\-F\-S\-T} ()
+\begin{DoxyCompactList}\small\item\em traverse non-\/leaf-\/pushed fixed-\/stride tree \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_a1337c77d6e8c591e043aa9827f331155}{traverse\-F\-S\-T2} ()
+\item 
+void \hyperlink{classRFSTree_a4d65aa9c7cd6e83a9883d6fc19f3cef9}{scatter\-To\-Pipeline} (int \-\_\-pipestyle, int \-\_\-stagenum=\hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}-\/U+1)
+\begin{DoxyCompactList}\small\item\em Scatter nodes in the forest to a pipeline. \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_a1aed1bf318c9e2d62f8b206f37111557}{lin} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em Scatter nodes in a linear pipeline. \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_a086535290141c419912e8e6563d2364f}{ran} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em Scatter in a random pipeline. \end{DoxyCompactList}\item 
+void \hyperlink{classRFSTree_a2526bccc3c0952277cb9144edf416695}{cir} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em Scatter in a circular pipe line. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{classRBTree}{R\-B\-Tree}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, U $>$ \hyperlink{classRFSTree_a883be6d647fcf136a9e6903985387134}{rbtree\-\_\-type}
+\item 
+typedef \hyperlink{structBNode}{B\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classRFSTree_a14c0aee24b9913173d3d9aaa93a6e3ce}{bnode\-\_\-type}
+\item 
+typedef \hyperlink{structFNode}{F\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classRFSTree_a82d6848400f7c2700a6283cb34bca3eb}{fnode\-\_\-type}
+\item 
+typedef \hyperlink{structFNode2}{F\-Node2}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classRFSTree_a0546714395e729135c856124425e97be}{fnode2\-\_\-type}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{classRFSTree_a7cb02a7e27a8d7ff16271e33dbba26eb}{ip\-\_\-type} \hyperlink{classRFSTree_a7cb02a7e27a8d7ff16271e33dbba26eb}{ip\-\_\-type}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRFSTree_a9343be56bc59357f4ecf6613f240547b}{R\-F\-S\-Tree} (const \hyperlink{classRFSTree}{R\-F\-S\-Tree} \&\-\_\-rfst)=delete
+\item 
+\hyperlink{classRFSTree}{R\-F\-S\-Tree} \hyperlink{classRFSTree_a69182e5f3d8704e6e2d4adfc7703d9e5}{operator=} (const \hyperlink{classRFSTree}{R\-F\-S\-Tree} \&\-\_\-rfst)=delete
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRFSTree_a82d6848400f7c2700a6283cb34bca3eb}{fnode\-\_\-type} $\ast$ \hyperlink{classRFSTree_a808e44b5d80b37411742e657bd4ba526}{m\-Root\-Table} \mbox{[}V\mbox{]}
+\begin{DoxyCompactList}\small\item\em non-\/leaf-\/pushed \end{DoxyCompactList}\item 
+\hyperlink{classRFSTree_a0546714395e729135c856124425e97be}{fnode2\-\_\-type} $\ast$ \hyperlink{classRFSTree_a15a1ae729c49a0b6fa355ec4c7428f53}{m\-Root\-Table2} \mbox{[}V\mbox{]}
+\begin{DoxyCompactList}\small\item\em leaf-\/pushed \end{DoxyCompactList}\item 
+int \hyperlink{classRFSTree_a73a0204caef560c7075a52c5a9cd54aa}{m\-Beg\-Level} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em start level of expansion level \end{DoxyCompactList}\item 
+int \hyperlink{classRFSTree_ab54baf6241f9d89e388f1d06ca1a1122}{m\-End\-Level} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em end level of expansion level \end{DoxyCompactList}\item 
+int \hyperlink{classRFSTree_a381610989dd245063f297bd400adc841}{m\-Stride} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em stride of expansion level \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRFSTree_a366b72f13bd85ba5e7a5405cdf8d59d6}{m\-Node\-Entry\-Num} \mbox{[}K+1\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of entries in a node at different level \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRFSTree_ac0537ae45e791bf13064ecff318ef051}{m\-Expansion\-Level} \mbox{[}\hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}-\/U+1\mbox{]}
+\begin{DoxyCompactList}\small\item\em correspoding expansion level for each level in rbt \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRFSTree_a1fb5db4a8ec4c8ab5e89606609054619}{m\-Global\-Level\-Node\-Num} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of nodes in the forest at each level \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRFSTree_a18ce6b5d6d9d42b5f7528f13e380b944}{m\-Local\-Level\-Node\-Num} \mbox{[}V\mbox{]}\mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of nodes in each tree at each level \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRFSTree_a22b8577ea6d16ce5008e5969c757b976}{m\-Global\-Level\-Entry\-Num} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of entries in the forest at each level \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRFSTree_a4ed6fa6f24399b7a7b9ccb30c208b38f}{m\-Local\-Level\-Entry\-Num} \mbox{[}V\mbox{]}\mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of entries in each tree at each level \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRFSTree_ab92e7b50a603831c0d2f054aab3d19dd}{m\-Local\-Node\-Num} \mbox{[}V\mbox{]}
+\item 
+size\-\_\-t \hyperlink{classRFSTree_a59097191ae5e2c7984d4f49d1c7835de}{m\-Local\-Entry\-Num} \mbox{[}V\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of entries in each tree \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRFSTree_ae0df04978b8fb52d4706716854818eff}{m\-Total\-Node\-Num}
+\begin{DoxyCompactList}\small\item\em number of nodes at all levels in all trees \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRFSTree_a8e2de7140778be6a4167b6d35b3f2846}{m\-Total\-Entry\-Num}
+\begin{DoxyCompactList}\small\item\em number of entries at all levels in all trees \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{classRFSTree_a844879a59d793f3f94be1b52af8bed6d}{m\-Max\-Global\-Level\-Entry\-Num}
+\begin{DoxyCompactList}\small\item\em maximum number of entries in a level (nodes in a same level of all trees are summed up) \end{DoxyCompactList}\item 
+\hyperlink{structFastTable}{Fast\-Table}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, U-\/1 $>$ $\ast$ \hyperlink{classRFSTree_a68bb77f190f0648bf1c4ed69da42b9f4}{ft}
+\begin{DoxyCompactList}\small\item\em pointer to fast table \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$class R\-F\-S\-Tree$<$ W, K, M, U, V $>$}
+
+Create an index based on leaf-\/pushed fixed-\/stride tree. 
+
+The index consists of three parts\-: a fast lookup table, a root table and a forest of leaf-\/pushed fixed-\/stride trees. To build each leaf-\/pushed fixed-\/stride tree, we first build the corresponding non-\/leaf-\/pushed fixed-\/stride tree and then reconstruct the tree by push prefixes in internal nodes into leaf nodes. 
+\begin{DoxyParams}{Parameters}
+{\em W} & 32 or 128 for I\-Pv4 or I\-Pv6 \\
+\hline
+{\em K} & number of expansion levels \\
+\hline
+{\em M} & 0 for C\-P\-E, 1 for M\-I\-N\-M\-A\-X and 2 for different levels with a same stride \\
+\hline
+{\em U} & A threshold for classifying short and long prefixes. \\
+\hline
+{\em V} & The number of fixed-\/stride trees \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classRFSTree_a14c0aee24b9913173d3d9aaa93a6e3ce}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!bnode\-\_\-type@{bnode\-\_\-type}}
+\index{bnode\-\_\-type@{bnode\-\_\-type}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{bnode\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ typedef {\bf B\-Node}$<${\bf W}$>$ {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::{\bf bnode\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a14c0aee24b9913173d3d9aaa93a6e3ce}
+\hypertarget{classRFSTree_a0546714395e729135c856124425e97be}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!fnode2\-\_\-type@{fnode2\-\_\-type}}
+\index{fnode2\-\_\-type@{fnode2\-\_\-type}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{fnode2\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ typedef {\bf F\-Node2}$<${\bf W}$>$ {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::{\bf fnode2\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a0546714395e729135c856124425e97be}
+\hypertarget{classRFSTree_a82d6848400f7c2700a6283cb34bca3eb}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!fnode\-\_\-type@{fnode\-\_\-type}}
+\index{fnode\-\_\-type@{fnode\-\_\-type}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{fnode\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ typedef {\bf F\-Node}$<${\bf W}$>$ {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::{\bf fnode\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a82d6848400f7c2700a6283cb34bca3eb}
+\hypertarget{classRFSTree_a7cb02a7e27a8d7ff16271e33dbba26eb}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::{\bf ip\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a7cb02a7e27a8d7ff16271e33dbba26eb}
+\hypertarget{classRFSTree_a883be6d647fcf136a9e6903985387134}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!rbtree\-\_\-type@{rbtree\-\_\-type}}
+\index{rbtree\-\_\-type@{rbtree\-\_\-type}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{rbtree\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ typedef {\bf R\-B\-Tree}$<${\bf W}, U$>$ {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::{\bf rbtree\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a883be6d647fcf136a9e6903985387134}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classRFSTree_a9343be56bc59357f4ecf6613f240547b}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!R\-F\-S\-Tree@{R\-F\-S\-Tree}}
+\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{R\-F\-S\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::{\bf R\-F\-S\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$ \&}]{\-\_\-rfst}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classRFSTree_a9343be56bc59357f4ecf6613f240547b}
+\hypertarget{classRFSTree_aaf28d84e3bce9401a3b64d6a58119a7c}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!R\-F\-S\-Tree@{R\-F\-S\-Tree}}
+\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{R\-F\-S\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::{\bf R\-F\-S\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_aaf28d84e3bce9401a3b64d6a58119a7c}
+
+
+ctor 
+
+\hypertarget{classRFSTree_acb2bd2d6342c24f41b08e6ed76aab02d}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!$\sim$\-R\-F\-S\-Tree@{$\sim$\-R\-F\-S\-Tree}}
+\index{$\sim$\-R\-F\-S\-Tree@{$\sim$\-R\-F\-S\-Tree}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{$\sim$\-R\-F\-S\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::$\sim${\bf R\-F\-S\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_acb2bd2d6342c24f41b08e6ed76aab02d}
+
+
+dtor 
+
+destroy index 
+
+\subsection{Member Function Documentation}
+\hypertarget{classRFSTree_af46370043a6df10557b4b5ea45c1f543}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!build@{build}}
+\index{build@{build}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{build}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::build (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-fn}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_af46370043a6df10557b4b5ea45c1f543}
+
+
+produce a non-\/leaf-\/pushed fixed-\/stride tree 
+
+\hypertarget{classRFSTree_a2526bccc3c0952277cb9144edf416695}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!cir@{cir}}
+\index{cir@{cir}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{cir}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::cir (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_a2526bccc3c0952277cb9144edf416695}
+
+
+Scatter in a circular pipe line. 
+
+Scatter nodes into a circular pipe line according to method proposed by Sailesh Karmar et al. we use variance to make heuristic. Because nodes in a fixed-\/stride tree is of different size in different levels, we perform the heuristic by coloring the entries instead of coloring the nodes. \hypertarget{classRFSTree_ab7fe9e3717784a9458048756ca4c8196}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!clear@{clear}}
+\index{clear@{clear}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_ab7fe9e3717784a9458048756ca4c8196}
+
+
+clear the index 
+
+\hypertarget{classRFSTree_a7e797086beed715de8b72e3c3c913e73}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!del@{del}}
+\index{del@{del}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::del (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classRFSTree_a7e797086beed715de8b72e3c3c913e73}
+delete a prefix from the index
+
+not available \hypertarget{classRFSTree_ae807d6ad404f6d7fb556223523113f3e}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!destroy@{destroy}}
+\index{destroy@{destroy}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::destroy (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{\-\_\-idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_ae807d6ad404f6d7fb556223523113f3e}
+
+
+destroy a tree in the forest 
+
+\hypertarget{classRFSTree_ad6ed56a7214f892f1432b1c183506780}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!do\-Prefix\-Expansion@{do\-Prefix\-Expansion}}
+\index{do\-Prefix\-Expansion@{do\-Prefix\-Expansion}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{do\-Prefix\-Expansion}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::do\-Prefix\-Expansion (
+\begin{DoxyParamCaption}
+\item[{{\bf rbtree\-\_\-type} $\ast$}]{\-\_\-rbt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_ad6ed56a7214f892f1432b1c183506780}
+
+
+generate prefix expansion scheme according to node distribution in rbt. 
+
+Three strategies are considered (C\-P\-E, M\-I\-N\-M\-A\-X and even) \hypertarget{classRFSTree_a2cca99cd95253b687f881d664bd7afe1}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!do\-Prefix\-Expansion\-D\-P@{do\-Prefix\-Expansion\-D\-P}}
+\index{do\-Prefix\-Expansion\-D\-P@{do\-Prefix\-Expansion\-D\-P}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{do\-Prefix\-Expansion\-D\-P}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::do\-Prefix\-Expansion\-D\-P (
+\begin{DoxyParamCaption}
+\item[{{\bf rbtree\-\_\-type} $\ast$}]{\-\_\-rbt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_a2cca99cd95253b687f881d664bd7afe1}
+
+
+Two strategies for splitting nodes. 
+
+C\-P\-E aims at minimize the total memory footprint in all the pipe stages, while M\-I\-N\-M\-A\-X aims at minimize per-\/block memory footprint. \hypertarget{classRFSTree_aa038a50c8f021a7a681a0eae195b7277}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!do\-Prefix\-Expansion\-Even@{do\-Prefix\-Expansion\-Even}}
+\index{do\-Prefix\-Expansion\-Even@{do\-Prefix\-Expansion\-Even}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{do\-Prefix\-Expansion\-Even}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::do\-Prefix\-Expansion\-Even (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_aa038a50c8f021a7a681a0eae195b7277}
+
+
+evenly split levels in rbt into K partitions 
+
+\begin{DoxyNote}{Note}
+Prefixes smaller than U bits are stored in fast table. Thus, we consider level U to be level 0 when performing prefix expansion. 
+\end{DoxyNote}
+\hypertarget{classRFSTree_ac90ef75f08f670814215e647411375dd}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!generate\-Trace@{generate\-Trace}}
+\index{generate\-Trace@{generate\-Trace}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{generate\-Trace}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::generate\-Trace (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-req\-File, }
+\item[{const std\-::string \&}]{\-\_\-trace\-File}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_ac90ef75f08f670814215e647411375dd}
+
+
+generate lookup trace for simulation 
+
+\hypertarget{classRFSTree_af94bdbba63871991f0cf9c18d140f4ce}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!initialize\-Parameters@{initialize\-Parameters}}
+\index{initialize\-Parameters@{initialize\-Parameters}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{initialize\-Parameters}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::initialize\-Parameters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_af94bdbba63871991f0cf9c18d140f4ce}
+
+
+initialize parameters 
+
+\hypertarget{classRFSTree_a4eff3953319ae3f689ab3f4827eb9a73}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!ins@{ins}}
+\index{ins@{ins}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_a4eff3953319ae3f689ab3f4827eb9a73}
+
+
+insert a prefix into index 
+
+\hypertarget{classRFSTree_a6d411a3751a66e887bd39de922da3dca}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!ins@{ins}}
+\index{ins@{ins}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32}}]{\-\_\-nexthop, }
+\item[{{\bf fnode\-\_\-type} $\ast$\&}]{\-\_\-node, }
+\item[{const int}]{\-\_\-expansion\-Level, }
+\item[{const size\-\_\-t}]{\-\_\-tree\-Idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_a6d411a3751a66e887bd39de922da3dca}
+
+
+insert a long prefix into the index 
+
+\hypertarget{classRFSTree_a1aed1bf318c9e2d62f8b206f37111557}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!lin@{lin}}
+\index{lin@{lin}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{lin}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::lin (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_a1aed1bf318c9e2d62f8b206f37111557}
+
+
+Scatter nodes in a linear pipeline. 
+
+Map nodes into a linear pipe line in a manner of one level per stage.
+
+\begin{DoxyNote}{Note}
+the number of stages is W -\/ U + 1 for a linear pipe line. 
+
+C\-P\-E, M\-I\-N\-M\-A\-X and E\-V\-E\-N are permitted 
+\end{DoxyNote}
+\hypertarget{classRFSTree_a69182e5f3d8704e6e2d4adfc7703d9e5}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!operator=@{operator=}}
+\index{operator=@{operator=}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf R\-F\-S\-Tree} {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$ \&}]{\-\_\-rfst}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classRFSTree_a69182e5f3d8704e6e2d4adfc7703d9e5}
+\hypertarget{classRFSTree_a086535290141c419912e8e6563d2364f}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!ran@{ran}}
+\index{ran@{ran}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{ran}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::ran (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_a086535290141c419912e8e6563d2364f}
+
+
+Scatter in a random pipeline. 
+
+Map nodes into a random pipeline. A random generator is applied to determine the pipe stage to where a node is allocated. \hypertarget{classRFSTree_afb0a28423f374b968b102c13f51a1cc9}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!rebuild@{rebuild}}
+\index{rebuild@{rebuild}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{rebuild}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::rebuild (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_afb0a28423f374b968b102c13f51a1cc9}
+
+
+rebuild the fixed-\/stride tree by leaf-\/pushing 
+
+\hypertarget{classRFSTree_af560ed34ee3199ebe9da42b5662b5362}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!report@{report}}
+\index{report@{report}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{report}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::report (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_af560ed34ee3199ebe9da42b5662b5362}
+
+
+report collected information 
+
+\begin{DoxyNote}{Note}
+The information is collected after performing leaf-\/pushing 
+\end{DoxyNote}
+\hypertarget{classRFSTree_a4d65aa9c7cd6e83a9883d6fc19f3cef9}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!scatter\-To\-Pipeline@{scatter\-To\-Pipeline}}
+\index{scatter\-To\-Pipeline@{scatter\-To\-Pipeline}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{scatter\-To\-Pipeline}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::scatter\-To\-Pipeline (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-pipestyle, }
+\item[{int}]{\-\_\-stagenum = {\ttfamily {\bf W}~-\/~U~+~1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_a4d65aa9c7cd6e83a9883d6fc19f3cef9}
+
+
+Scatter nodes in the forest to a pipeline. 
+
+For C\-P\-E and M\-I\-N\-M\-A\-X, we only consider linear pipeline For E\-V\-E\-N, we consider linear, circular and random pipelines \hypertarget{classRFSTree_a5e52e4a054303bec77af7b5ca0183778}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!search@{search}}
+\index{search@{search}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf uint32} {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::search (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-ip, }
+\item[{std\-::vector$<$ int $>$ \&}]{\-\_\-trace}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_a5e52e4a054303bec77af7b5ca0183778}
+
+
+search L\-P\-M for target I\-P address 
+
+\hypertarget{classRFSTree_a85ae0780513996ab7434dd23599c1d8a}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!traverse\-F\-S\-T@{traverse\-F\-S\-T}}
+\index{traverse\-F\-S\-T@{traverse\-F\-S\-T}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{traverse\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::traverse\-F\-S\-T (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_a85ae0780513996ab7434dd23599c1d8a}
+
+
+traverse non-\/leaf-\/pushed fixed-\/stride tree 
+
+\hypertarget{classRFSTree_a1337c77d6e8c591e043aa9827f331155}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!traverse\-F\-S\-T2@{traverse\-F\-S\-T2}}
+\index{traverse\-F\-S\-T2@{traverse\-F\-S\-T2}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{traverse\-F\-S\-T2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::traverse\-F\-S\-T2 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRFSTree_a1337c77d6e8c591e043aa9827f331155}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classRFSTree_a68bb77f190f0648bf1c4ed69da42b9f4}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!ft@{ft}}
+\index{ft@{ft}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{ft}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf Fast\-Table}$<${\bf W}, U -\/ 1$>$$\ast$ {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::ft\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a68bb77f190f0648bf1c4ed69da42b9f4}
+
+
+pointer to fast table 
+
+\hypertarget{classRFSTree_a73a0204caef560c7075a52c5a9cd54aa}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Beg\-Level@{m\-Beg\-Level}}
+\index{m\-Beg\-Level@{m\-Beg\-Level}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Beg\-Level}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ int {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Beg\-Level\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a73a0204caef560c7075a52c5a9cd54aa}
+
+
+start level of expansion level 
+
+\hypertarget{classRFSTree_ab54baf6241f9d89e388f1d06ca1a1122}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-End\-Level@{m\-End\-Level}}
+\index{m\-End\-Level@{m\-End\-Level}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-End\-Level}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ int {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-End\-Level\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_ab54baf6241f9d89e388f1d06ca1a1122}
+
+
+end level of expansion level 
+
+\hypertarget{classRFSTree_ac0537ae45e791bf13064ecff318ef051}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Expansion\-Level@{m\-Expansion\-Level}}
+\index{m\-Expansion\-Level@{m\-Expansion\-Level}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Expansion\-Level}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Expansion\-Level\mbox{[}{\bf W}-\/U+1\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_ac0537ae45e791bf13064ecff318ef051}
+
+
+correspoding expansion level for each level in rbt 
+
+\hypertarget{classRFSTree_a22b8577ea6d16ce5008e5969c757b976}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Global\-Level\-Entry\-Num@{m\-Global\-Level\-Entry\-Num}}
+\index{m\-Global\-Level\-Entry\-Num@{m\-Global\-Level\-Entry\-Num}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Global\-Level\-Entry\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Global\-Level\-Entry\-Num\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a22b8577ea6d16ce5008e5969c757b976}
+
+
+number of entries in the forest at each level 
+
+\hypertarget{classRFSTree_a1fb5db4a8ec4c8ab5e89606609054619}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Global\-Level\-Node\-Num@{m\-Global\-Level\-Node\-Num}}
+\index{m\-Global\-Level\-Node\-Num@{m\-Global\-Level\-Node\-Num}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Global\-Level\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Global\-Level\-Node\-Num\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a1fb5db4a8ec4c8ab5e89606609054619}
+
+
+number of nodes in the forest at each level 
+
+\hypertarget{classRFSTree_a59097191ae5e2c7984d4f49d1c7835de}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Local\-Entry\-Num@{m\-Local\-Entry\-Num}}
+\index{m\-Local\-Entry\-Num@{m\-Local\-Entry\-Num}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Local\-Entry\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Local\-Entry\-Num\mbox{[}V\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a59097191ae5e2c7984d4f49d1c7835de}
+
+
+number of entries in each tree 
+
+\hypertarget{classRFSTree_a4ed6fa6f24399b7a7b9ccb30c208b38f}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Local\-Level\-Entry\-Num@{m\-Local\-Level\-Entry\-Num}}
+\index{m\-Local\-Level\-Entry\-Num@{m\-Local\-Level\-Entry\-Num}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Local\-Level\-Entry\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Local\-Level\-Entry\-Num\mbox{[}V\mbox{]}\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a4ed6fa6f24399b7a7b9ccb30c208b38f}
+
+
+number of entries in each tree at each level 
+
+\hypertarget{classRFSTree_a18ce6b5d6d9d42b5f7528f13e380b944}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Local\-Level\-Node\-Num@{m\-Local\-Level\-Node\-Num}}
+\index{m\-Local\-Level\-Node\-Num@{m\-Local\-Level\-Node\-Num}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Local\-Level\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Local\-Level\-Node\-Num\mbox{[}V\mbox{]}\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a18ce6b5d6d9d42b5f7528f13e380b944}
+
+
+number of nodes in each tree at each level 
+
+\hypertarget{classRFSTree_ab92e7b50a603831c0d2f054aab3d19dd}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Local\-Node\-Num@{m\-Local\-Node\-Num}}
+\index{m\-Local\-Node\-Num@{m\-Local\-Node\-Num}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Local\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Local\-Node\-Num\mbox{[}V\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_ab92e7b50a603831c0d2f054aab3d19dd}
+\hypertarget{classRFSTree_a844879a59d793f3f94be1b52af8bed6d}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Max\-Global\-Level\-Entry\-Num@{m\-Max\-Global\-Level\-Entry\-Num}}
+\index{m\-Max\-Global\-Level\-Entry\-Num@{m\-Max\-Global\-Level\-Entry\-Num}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Max\-Global\-Level\-Entry\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Max\-Global\-Level\-Entry\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a844879a59d793f3f94be1b52af8bed6d}
+
+
+maximum number of entries in a level (nodes in a same level of all trees are summed up) 
+
+\hypertarget{classRFSTree_a366b72f13bd85ba5e7a5405cdf8d59d6}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Node\-Entry\-Num@{m\-Node\-Entry\-Num}}
+\index{m\-Node\-Entry\-Num@{m\-Node\-Entry\-Num}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Node\-Entry\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Node\-Entry\-Num\mbox{[}K+1\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a366b72f13bd85ba5e7a5405cdf8d59d6}
+
+
+number of entries in a node at different level 
+
+\hypertarget{classRFSTree_a808e44b5d80b37411742e657bd4ba526}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Root\-Table@{m\-Root\-Table}}
+\index{m\-Root\-Table@{m\-Root\-Table}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Root\-Table}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf fnode\-\_\-type}$\ast$ {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Root\-Table\mbox{[}V\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a808e44b5d80b37411742e657bd4ba526}
+
+
+non-\/leaf-\/pushed 
+
+\hypertarget{classRFSTree_a15a1ae729c49a0b6fa355ec4c7428f53}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Root\-Table2@{m\-Root\-Table2}}
+\index{m\-Root\-Table2@{m\-Root\-Table2}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Root\-Table2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf fnode2\-\_\-type}$\ast$ {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Root\-Table2\mbox{[}V\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a15a1ae729c49a0b6fa355ec4c7428f53}
+
+
+leaf-\/pushed 
+
+\hypertarget{classRFSTree_a381610989dd245063f297bd400adc841}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Stride@{m\-Stride}}
+\index{m\-Stride@{m\-Stride}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Stride}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ int {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Stride\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a381610989dd245063f297bd400adc841}
+
+
+stride of expansion level 
+
+\hypertarget{classRFSTree_a8e2de7140778be6a4167b6d35b3f2846}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Total\-Entry\-Num@{m\-Total\-Entry\-Num}}
+\index{m\-Total\-Entry\-Num@{m\-Total\-Entry\-Num}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Total\-Entry\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Total\-Entry\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_a8e2de7140778be6a4167b6d35b3f2846}
+
+
+number of entries at all levels in all trees 
+
+\hypertarget{classRFSTree_ae0df04978b8fb52d4706716854818eff}{\index{R\-F\-S\-Tree@{R\-F\-S\-Tree}!m\-Total\-Node\-Num@{m\-Total\-Node\-Num}}
+\index{m\-Total\-Node\-Num@{m\-Total\-Node\-Num}!RFSTree@{R\-F\-S\-Tree}}
+\subsubsection[{m\-Total\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ size\-\_\-t {\bf R\-F\-S\-Tree}$<$ {\bf W}, K, M, U, V $>$\-::m\-Total\-Node\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classRFSTree_ae0df04978b8fb52d4706716854818eff}
+
+
+number of nodes at all levels in all trees 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{rfstree_8h}{rfstree.\-h}\end{DoxyCompactItemize}

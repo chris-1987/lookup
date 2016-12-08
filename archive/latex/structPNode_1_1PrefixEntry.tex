@@ -1,0 +1,72 @@
+\hypertarget{structPNode_1_1PrefixEntry}{\section{P\-Node$<$ W, K, M\-P, M\-C $>$\-:\-:Prefix\-Entry Struct Reference}
+\label{structPNode_1_1PrefixEntry}\index{P\-Node$<$ W, K, M\-P, M\-C $>$\-::\-Prefix\-Entry@{P\-Node$<$ W, K, M\-P, M\-C $>$\-::\-Prefix\-Entry}}
+}
+
+
+Prefix entry.  
+
+
+
+
+{\ttfamily \#include $<$mptree.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structPNode_1_1PrefixEntry_aa71abfc990d9188cb52b7ce35d787832}{Prefix\-Entry} ()
+\item 
+\hyperlink{structPNode_1_1PrefixEntry_aa71abfc990d9188cb52b7ce35d787832}{Prefix\-Entry} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structPNode_a61bb3b468d24d7a913120fffd4b4cb26}{ip\-\_\-type} \hyperlink{structPNode_1_1PrefixEntry_a1e9bf615fce09a1d84c2a41993548da8}{prefix}
+\item 
+\hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \hyperlink{structPNode_1_1PrefixEntry_a30104944f87b14734351ee8ce997707a}{length}
+\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{structPNode_1_1PrefixEntry_a7b474c22c07ee8f34aa0a18b06716a3a}{nexthop}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$struct P\-Node$<$ W, K, M\-P, M\-C $>$\-::\-Prefix\-Entry}
+
+Prefix entry. 
+
+Each entry consists of three items, which are prefix, length of prefix and nexthop.
+
+A primary node consists of multiple prefix esntries, each entry records a prefix, the length of the prefix and its nexthop. A primary node also contains multiple child pointers. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structPNode_1_1PrefixEntry_aa71abfc990d9188cb52b7ce35d787832}{\index{P\-Node\-::\-Prefix\-Entry@{P\-Node\-::\-Prefix\-Entry}!Prefix\-Entry@{Prefix\-Entry}}
+\index{Prefix\-Entry@{Prefix\-Entry}!PNode::PrefixEntry@{P\-Node\-::\-Prefix\-Entry}}
+\subsubsection[{Prefix\-Entry}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf P\-Node}$<$ {\bf W}, K, M\-P, M\-C $>$\-::Prefix\-Entry\-::\-Prefix\-Entry (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structPNode_1_1PrefixEntry_aa71abfc990d9188cb52b7ce35d787832}
+\hypertarget{structPNode_1_1PrefixEntry_aa71abfc990d9188cb52b7ce35d787832}{\index{P\-Node\-::\-Prefix\-Entry@{P\-Node\-::\-Prefix\-Entry}!Prefix\-Entry@{Prefix\-Entry}}
+\index{Prefix\-Entry@{Prefix\-Entry}!PNode::PrefixEntry@{P\-Node\-::\-Prefix\-Entry}}
+\subsubsection[{Prefix\-Entry}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf P\-Node}$<$ {\bf W}, K, M\-P, M\-C $>$\-::Prefix\-Entry\-::\-Prefix\-Entry (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structPNode_1_1PrefixEntry_aa71abfc990d9188cb52b7ce35d787832}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structPNode_1_1PrefixEntry_a30104944f87b14734351ee8ce997707a}{\index{P\-Node\-::\-Prefix\-Entry@{P\-Node\-::\-Prefix\-Entry}!length@{length}}
+\index{length@{length}!PNode::PrefixEntry@{P\-Node\-::\-Prefix\-Entry}}
+\subsubsection[{length}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf uint8} {\bf P\-Node}$<$ {\bf W}, K, M\-P, M\-C $>$\-::Prefix\-Entry\-::length}}\label{structPNode_1_1PrefixEntry_a30104944f87b14734351ee8ce997707a}
+\hypertarget{structPNode_1_1PrefixEntry_a7b474c22c07ee8f34aa0a18b06716a3a}{\index{P\-Node\-::\-Prefix\-Entry@{P\-Node\-::\-Prefix\-Entry}!nexthop@{nexthop}}
+\index{nexthop@{nexthop}!PNode::PrefixEntry@{P\-Node\-::\-Prefix\-Entry}}
+\subsubsection[{nexthop}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf uint32} {\bf P\-Node}$<$ {\bf W}, K, M\-P, M\-C $>$\-::Prefix\-Entry\-::nexthop}}\label{structPNode_1_1PrefixEntry_a7b474c22c07ee8f34aa0a18b06716a3a}
+\hypertarget{structPNode_1_1PrefixEntry_a1e9bf615fce09a1d84c2a41993548da8}{\index{P\-Node\-::\-Prefix\-Entry@{P\-Node\-::\-Prefix\-Entry}!prefix@{prefix}}
+\index{prefix@{prefix}!PNode::PrefixEntry@{P\-Node\-::\-Prefix\-Entry}}
+\subsubsection[{prefix}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf ip\-\_\-type} {\bf P\-Node}$<$ {\bf W}, K, M\-P, M\-C $>$\-::Prefix\-Entry\-::prefix}}\label{structPNode_1_1PrefixEntry_a1e9bf615fce09a1d84c2a41993548da8}
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{mptree_8h}{mptree.\-h}\item 
+/home/chris/lookup/code/src/tree/\hyperlink{rmptree_8h}{rmptree.\-h}\end{DoxyCompactItemize}

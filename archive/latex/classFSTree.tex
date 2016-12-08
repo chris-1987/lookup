@@ -1,0 +1,453 @@
+\hypertarget{classFSTree}{\section{F\-S\-Tree$<$ W, K, M $>$ Class Template Reference}
+\label{classFSTree}\index{F\-S\-Tree$<$ W, K, M $>$@{F\-S\-Tree$<$ W, K, M $>$}}
+}
+
+
+Create a fixed-\/stride tree. Singleton class.  
+
+
+
+
+{\ttfamily \#include $<$fstree.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classFSTree_a4cd68e55ea6913813275c7c32174990d}{F\-S\-Tree} ()
+\begin{DoxyCompactList}\small\item\em ctor \end{DoxyCompactList}\item 
+void \hyperlink{classFSTree_a517a873bdf8ac3eceb092aa927a6cb38}{build} (const std\-::string \&\-\_\-fn)
+\begin{DoxyCompactList}\small\item\em produce a fixed-\/stride tree (without leaf-\/pushing) \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classFSTree_ab58f1283d0964663ea7130ef62f62d01}{search} (const \hyperlink{classFSTree_a4766ee89821315425e2c6090bd0a0245}{ip\-\_\-type} \&\-\_\-ip)
+\begin{DoxyCompactList}\small\item\em search \end{DoxyCompactList}\item 
+void \hyperlink{classFSTree_ae2c6117d7c6b1a610afa8dcd52ec842b}{destroy} ()
+\begin{DoxyCompactList}\small\item\em destroy the fixed-\/stride tree (without leaf-\/pushing) \end{DoxyCompactList}\item 
+\hyperlink{classFSTree_a74f4c744e51813f50ba92cc7f9fabd4f}{$\sim$\-F\-S\-Tree} ()
+\item 
+void \hyperlink{classFSTree_a491e07546a9fe1ee8d0c03d9ff4ef724}{traverse\-\_\-fst} ()
+\begin{DoxyCompactList}\small\item\em traverse the fixed-\/stride tree rooted at fst\-\_\-root \end{DoxyCompactList}\item 
+void \hyperlink{classFSTree_aa12c77a41e50d5ef6f98ceaa91d57f87}{print\-F\-S\-T\-Node} (\hyperlink{classFSTree_a67d384ab5a196299d83dde842299fe7f}{fnode\-\_\-type} $\ast$\-\_\-node, int \-\_\-level)
+\begin{DoxyCompactList}\small\item\em print fnode\-\_\-type \end{DoxyCompactList}\item 
+void \hyperlink{classFSTree_aad9ae75065c09d65f7efaf99cc8c64c1}{traverse\-\_\-fst2} ()
+\begin{DoxyCompactList}\small\item\em traverse the fixed-\/stride tree rooted at fst2\-\_\-root \end{DoxyCompactList}\item 
+void \hyperlink{classFSTree_a19bc57d1746a90c73645702ceeeb7daf}{print\-F\-S\-T2\-Node} (\hyperlink{classFSTree_ae109ec54da0c7eb682ab08c8f8bc615c}{fnode2\-\_\-type} $\ast$\-\_\-node, int \-\_\-level)
+\begin{DoxyCompactList}\small\item\em print fnode2\-\_\-type \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classFSTree}{F\-S\-Tree}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, K, M $>$ $\ast$ \hyperlink{classFSTree_a478b9f5acec1f387e16f729f317d217e}{get\-Instance} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{classBTree}{B\-Tree}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classFSTree_a33535253397298880117e194d531f9f6}{btree\-\_\-type}
+\begin{DoxyCompactList}\small\item\em auxiliary binary tree \end{DoxyCompactList}\item 
+typedef \hyperlink{structBNode}{B\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classFSTree_a8de11a7133f6140a2bafb93b78a06321}{bnode\-\_\-type}
+\begin{DoxyCompactList}\small\item\em node type in the auxiliary binary tree \end{DoxyCompactList}\item 
+typedef \hyperlink{structFNode}{F\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classFSTree_a67d384ab5a196299d83dde842299fe7f}{fnode\-\_\-type}
+\begin{DoxyCompactList}\small\item\em node type before leaf-\/pushing \end{DoxyCompactList}\item 
+typedef \hyperlink{structFNode2}{F\-Node2}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classFSTree_ae109ec54da0c7eb682ab08c8f8bc615c}{fnode2\-\_\-type}
+\begin{DoxyCompactList}\small\item\em node type after leaf-\/pushing \end{DoxyCompactList}\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{classFSTree_a4766ee89821315425e2c6090bd0a0245}{ip\-\_\-type} \hyperlink{classFSTree_a4766ee89821315425e2c6090bd0a0245}{ip\-\_\-type}
+\begin{DoxyCompactList}\small\item\em integer type adopted by ipv4/ipv6 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classFSTree_ab08e8d95d102eb5afce8a8eac49170c9}{F\-S\-Tree} (const \hyperlink{classFSTree}{F\-S\-Tree} \&\-\_\-factory)=delete
+\item 
+\hyperlink{classFSTree}{F\-S\-Tree} \& \hyperlink{classFSTree_ac3854f7bc1f756436424ee56b072865e}{operator=} (const \hyperlink{classFSTree}{F\-S\-Tree} \&\-\_\-factory)=delete
+\item 
+void \hyperlink{classFSTree_a3a8ba10010bb3cb2079f7cda85f542ae}{do\-Prefix\-Expansion} (\hyperlink{classFSTree_a33535253397298880117e194d531f9f6}{btree\-\_\-type} $\ast$\-\_\-bt)
+\begin{DoxyCompactList}\small\item\em generate prefix expansion scheme according to node distribution in binary tree \end{DoxyCompactList}\item 
+void \hyperlink{classFSTree_af5ea26c5d00f921a78afe0ea8e5d58fd}{do\-Prefix\-Expansion\-Even} ()
+\item 
+void \hyperlink{classFSTree_a4ec4932ece82352807cf55be6d6cd233}{do\-Prefix\-Expansion\-D\-P} (\hyperlink{classFSTree_a33535253397298880117e194d531f9f6}{btree\-\_\-type} $\ast$\-\_\-bt)
+\item 
+void \hyperlink{classFSTree_a4edff02f4e6f20830c67d9eceb08b242}{ins} (const \hyperlink{classFSTree_a4766ee89821315425e2c6090bd0a0245}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classFSTree_a67d384ab5a196299d83dde842299fe7f}{fnode\-\_\-type} $\ast$\-\_\-node, const int \-\_\-expansion\-Level)
+\begin{DoxyCompactList}\small\item\em insert a prefix into the fixed-\/stride tree \end{DoxyCompactList}\item 
+void \hyperlink{classFSTree_a345979590c879b10eaf76e8c42c9d8cf}{del} ()=delete
+\begin{DoxyCompactList}\small\item\em delete a prefix from the fixed-\/stride tree \end{DoxyCompactList}\item 
+void \hyperlink{classFSTree_a795e0b2a65902afc562e15555613c7e5}{rebuild} ()
+\begin{DoxyCompactList}\small\item\em To reduce memory requirement, rebuid a fixed-\/stride tree using leaf-\/pushing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classFSTree_a67d384ab5a196299d83dde842299fe7f}{fnode\-\_\-type} $\ast$ \hyperlink{classFSTree_ae2f006ad7037ccce518c2e21cebde7f1}{fst\-\_\-root}
+\begin{DoxyCompactList}\small\item\em pointer to the root node of the fixed-\/stride tree before leaf-\/pushing \end{DoxyCompactList}\item 
+\hyperlink{classFSTree_ae109ec54da0c7eb682ab08c8f8bc615c}{fnode2\-\_\-type} $\ast$ \hyperlink{classFSTree_a39e875f7b80caa1e8d79dc893f06cf97}{fst2\-\_\-root}
+\begin{DoxyCompactList}\small\item\em pointer to the root node of the fixed-\/stride tree after leaf-\/pushing \end{DoxyCompactList}\item 
+int \hyperlink{classFSTree_afe2edb406c6e4b670a59e7c3d1edaa70}{m\-Beg\-Level} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em start level of expansion level \end{DoxyCompactList}\item 
+int \hyperlink{classFSTree_a6e0ee4d265489224ed08378a5f2e3b1f}{m\-End\-Level} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em end level of expansion level \end{DoxyCompactList}\item 
+int \hyperlink{classFSTree_a463862d4c2ae3ec8a1bab6c66c3ed395}{m\-Stride} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em stride of expansion level \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classFSTree_a8130db6daaa9b99921230e9349a66888}{m\-Node\-Entry\-Num} \mbox{[}K+1\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of entries per node in expansion level \end{DoxyCompactList}\item 
+int \hyperlink{classFSTree_aedbc7712ddc76989663e783d100464c6}{m\-Expansion\-Level} \mbox{[}\hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}+1\mbox{]}
+\begin{DoxyCompactList}\small\item\em expansion level of level in binary tree \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classFSTree_a0630cd4bcdd55f729691e762018f4951}{m\-Node\-Num}
+\begin{DoxyCompactList}\small\item\em number of nodes in total \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classFSTree_af525cc4431e3681403c81839e134efb7}{m\-Level\-Node\-Num} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of nodes in each level \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classFSTree_a8c62509827ce3ebeb3f717baedd43089}{m\-Entry\-Num}
+\begin{DoxyCompactList}\small\item\em number of entries in total \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classFSTree_a0632c6cc8f80db743e022cf67095bf3f}{m\-Level\-Entry\-Num} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of entries in each level \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classFSTree_ac274e7459a6129f7497bac0807dbfbb7}{m\-Max\-Level\-Entry\-Num}
+\begin{DoxyCompactList}\small\item\em maximum number of entries among all the levels \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classFSTree}{F\-S\-Tree}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, K, M $>$ $\ast$ \hyperlink{classFSTree_a9bb6d9cad646464a0467038c9d37b407}{fst} = nullptr
+\begin{DoxyCompactList}\small\item\em pointer to fst \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, int M$>$class F\-S\-Tree$<$ W, K, M $>$}
+
+Create a fixed-\/stride tree. Singleton class. 
+
+To build a fixed-\/stride tree, we first create an auxiliary binary tree and then determine expansion levels by using C\-P\-E or M\-I\-N\-M\-A\-X. we expand each prefix into a set of fixed-\/length ones and insert them into the fixed-\/stride tree one by one. Afterward, we rebuild the fixed-\/stride tree by using the leaf-\/pushing technique for a smaller memory requirement. \begin{DoxyNote}{Note}
+Three strategies are used to perform prefix expansion. The first approach C\-P\-E, namely compressed prefix expansion, aims at minimize the total memory footprint, while the second approach M\-I\-N\-M\-A\-X aims at minimize the per-\/block memory footprint but tries to keep the total memory footprint as small as possible. Finally, the third approach demands all levels have a same stride. Update in a fixe-\/stride tree is expensive due to the use of prefix expansion and leaf-\/pushing. This becomes even worse for the next generation I\-Pv6 route lookup techniques. Therefore, we only investigate the performance of I\-P lookups for a fixed-\/stride tree and do not provide interfaces to insert/delete prefixes in fixed-\/stride tree after leaf-\/pushing. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em W} & 32 or 128 for I\-Pv4 or I\-Pv6 \\
+\hline
+{\em K} & number of expansion levels \\
+\hline
+{\em M} & 0 for C\-P\-E, 1 for M\-I\-N\-M\-A\-X and 2 for different levels with a same stride \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classFSTree_a8de11a7133f6140a2bafb93b78a06321}{\index{F\-S\-Tree@{F\-S\-Tree}!bnode\-\_\-type@{bnode\-\_\-type}}
+\index{bnode\-\_\-type@{bnode\-\_\-type}!FSTree@{F\-S\-Tree}}
+\subsubsection[{bnode\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ typedef {\bf B\-Node}$<${\bf W}$>$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::{\bf bnode\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a8de11a7133f6140a2bafb93b78a06321}
+
+
+node type in the auxiliary binary tree 
+
+\hypertarget{classFSTree_a33535253397298880117e194d531f9f6}{\index{F\-S\-Tree@{F\-S\-Tree}!btree\-\_\-type@{btree\-\_\-type}}
+\index{btree\-\_\-type@{btree\-\_\-type}!FSTree@{F\-S\-Tree}}
+\subsubsection[{btree\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ typedef {\bf B\-Tree}$<${\bf W}$>$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::{\bf btree\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a33535253397298880117e194d531f9f6}
+
+
+auxiliary binary tree 
+
+\hypertarget{classFSTree_ae109ec54da0c7eb682ab08c8f8bc615c}{\index{F\-S\-Tree@{F\-S\-Tree}!fnode2\-\_\-type@{fnode2\-\_\-type}}
+\index{fnode2\-\_\-type@{fnode2\-\_\-type}!FSTree@{F\-S\-Tree}}
+\subsubsection[{fnode2\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ typedef {\bf F\-Node2}$<${\bf W}$>$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::{\bf fnode2\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_ae109ec54da0c7eb682ab08c8f8bc615c}
+
+
+node type after leaf-\/pushing 
+
+\hypertarget{classFSTree_a67d384ab5a196299d83dde842299fe7f}{\index{F\-S\-Tree@{F\-S\-Tree}!fnode\-\_\-type@{fnode\-\_\-type}}
+\index{fnode\-\_\-type@{fnode\-\_\-type}!FSTree@{F\-S\-Tree}}
+\subsubsection[{fnode\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ typedef {\bf F\-Node}$<${\bf W}$>$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::{\bf fnode\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a67d384ab5a196299d83dde842299fe7f}
+
+
+node type before leaf-\/pushing 
+
+\hypertarget{classFSTree_a4766ee89821315425e2c6090bd0a0245}{\index{F\-S\-Tree@{F\-S\-Tree}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!FSTree@{F\-S\-Tree}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::{\bf ip\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a4766ee89821315425e2c6090bd0a0245}
+
+
+integer type adopted by ipv4/ipv6 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classFSTree_ab08e8d95d102eb5afce8a8eac49170c9}{\index{F\-S\-Tree@{F\-S\-Tree}!F\-S\-Tree@{F\-S\-Tree}}
+\index{F\-S\-Tree@{F\-S\-Tree}!FSTree@{F\-S\-Tree}}
+\subsubsection[{F\-S\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::{\bf F\-S\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$ \&}]{\-\_\-factory}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classFSTree_ab08e8d95d102eb5afce8a8eac49170c9}
+\hypertarget{classFSTree_a4cd68e55ea6913813275c7c32174990d}{\index{F\-S\-Tree@{F\-S\-Tree}!F\-S\-Tree@{F\-S\-Tree}}
+\index{F\-S\-Tree@{F\-S\-Tree}!FSTree@{F\-S\-Tree}}
+\subsubsection[{F\-S\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::{\bf F\-S\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classFSTree_a4cd68e55ea6913813275c7c32174990d}
+
+
+ctor 
+
+\hypertarget{classFSTree_a74f4c744e51813f50ba92cc7f9fabd4f}{\index{F\-S\-Tree@{F\-S\-Tree}!$\sim$\-F\-S\-Tree@{$\sim$\-F\-S\-Tree}}
+\index{$\sim$\-F\-S\-Tree@{$\sim$\-F\-S\-Tree}!FSTree@{F\-S\-Tree}}
+\subsubsection[{$\sim$\-F\-S\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::$\sim${\bf F\-S\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classFSTree_a74f4c744e51813f50ba92cc7f9fabd4f}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classFSTree_a517a873bdf8ac3eceb092aa927a6cb38}{\index{F\-S\-Tree@{F\-S\-Tree}!build@{build}}
+\index{build@{build}!FSTree@{F\-S\-Tree}}
+\subsubsection[{build}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::build (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-fn}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classFSTree_a517a873bdf8ac3eceb092aa927a6cb38}
+
+
+produce a fixed-\/stride tree (without leaf-\/pushing) 
+
+\hypertarget{classFSTree_a345979590c879b10eaf76e8c42c9d8cf}{\index{F\-S\-Tree@{F\-S\-Tree}!del@{del}}
+\index{del@{del}!FSTree@{F\-S\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::del (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classFSTree_a345979590c879b10eaf76e8c42c9d8cf}
+
+
+delete a prefix from the fixed-\/stride tree 
+
+Update in a fixed-\/string tree (after leaf pushing) is expensive. This is much more costly when performing I\-Pv6 lookups. We do not investigate update performance of fixed-\/stride trees. This t \hypertarget{classFSTree_ae2c6117d7c6b1a610afa8dcd52ec842b}{\index{F\-S\-Tree@{F\-S\-Tree}!destroy@{destroy}}
+\index{destroy@{destroy}!FSTree@{F\-S\-Tree}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::destroy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classFSTree_ae2c6117d7c6b1a610afa8dcd52ec842b}
+
+
+destroy the fixed-\/stride tree (without leaf-\/pushing) 
+
+traverse the fixed-\/stride tree \hypertarget{classFSTree_a3a8ba10010bb3cb2079f7cda85f542ae}{\index{F\-S\-Tree@{F\-S\-Tree}!do\-Prefix\-Expansion@{do\-Prefix\-Expansion}}
+\index{do\-Prefix\-Expansion@{do\-Prefix\-Expansion}!FSTree@{F\-S\-Tree}}
+\subsubsection[{do\-Prefix\-Expansion}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::do\-Prefix\-Expansion (
+\begin{DoxyParamCaption}
+\item[{{\bf btree\-\_\-type} $\ast$}]{\-\_\-bt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classFSTree_a3a8ba10010bb3cb2079f7cda85f542ae}
+
+
+generate prefix expansion scheme according to node distribution in binary tree 
+
+Three strategies with different objectives are available for prefix expansion. The template argument M is used to specify the strategy. \hypertarget{classFSTree_a4ec4932ece82352807cf55be6d6cd233}{\index{F\-S\-Tree@{F\-S\-Tree}!do\-Prefix\-Expansion\-D\-P@{do\-Prefix\-Expansion\-D\-P}}
+\index{do\-Prefix\-Expansion\-D\-P@{do\-Prefix\-Expansion\-D\-P}!FSTree@{F\-S\-Tree}}
+\subsubsection[{do\-Prefix\-Expansion\-D\-P}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::do\-Prefix\-Expansion\-D\-P (
+\begin{DoxyParamCaption}
+\item[{{\bf btree\-\_\-type} $\ast$}]{\-\_\-bt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classFSTree_a4ec4932ece82352807cf55be6d6cd233}
+C\-P\-E aims at minimize the total memory footprint in all the S\-R\-A\-M, while Min\-Max aims at minimize per-\/block memory footprint and tries to keep the total memory footprint as small as possible. \begin{DoxyNote}{Note}
+C\-P\-E is used in default. 
+\end{DoxyNote}
+\hypertarget{classFSTree_af5ea26c5d00f921a78afe0ea8e5d58fd}{\index{F\-S\-Tree@{F\-S\-Tree}!do\-Prefix\-Expansion\-Even@{do\-Prefix\-Expansion\-Even}}
+\index{do\-Prefix\-Expansion\-Even@{do\-Prefix\-Expansion\-Even}!FSTree@{F\-S\-Tree}}
+\subsubsection[{do\-Prefix\-Expansion\-Even}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::do\-Prefix\-Expansion\-Even (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classFSTree_af5ea26c5d00f921a78afe0ea8e5d58fd}
+\hypertarget{classFSTree_a478b9f5acec1f387e16f729f317d217e}{\index{F\-S\-Tree@{F\-S\-Tree}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!FSTree@{F\-S\-Tree}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$ $\ast$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::get\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classFSTree_a478b9f5acec1f387e16f729f317d217e}
+\hypertarget{classFSTree_a4edff02f4e6f20830c67d9eceb08b242}{\index{F\-S\-Tree@{F\-S\-Tree}!ins@{ins}}
+\index{ins@{ins}!FSTree@{F\-S\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8}}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf fnode\-\_\-type} $\ast$}]{\-\_\-node, }
+\item[{const int}]{\-\_\-expansion\-Level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classFSTree_a4edff02f4e6f20830c67d9eceb08b242}
+
+
+insert a prefix into the fixed-\/stride tree 
+
+Expand prefix to generate a set of fixed-\/length ones, insert them one by one into the fixed-\/stride tree.
+
+\begin{DoxyNote}{Note}
+This function is used only when building the fixed-\/stride tree without leaf-\/pushing. 
+\end{DoxyNote}
+\hypertarget{classFSTree_ac3854f7bc1f756436424ee56b072865e}{\index{F\-S\-Tree@{F\-S\-Tree}!operator=@{operator=}}
+\index{operator=@{operator=}!FSTree@{F\-S\-Tree}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf F\-S\-Tree}\& {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$ \&}]{\-\_\-factory}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classFSTree_ac3854f7bc1f756436424ee56b072865e}
+\hypertarget{classFSTree_a19bc57d1746a90c73645702ceeeb7daf}{\index{F\-S\-Tree@{F\-S\-Tree}!print\-F\-S\-T2\-Node@{print\-F\-S\-T2\-Node}}
+\index{print\-F\-S\-T2\-Node@{print\-F\-S\-T2\-Node}!FSTree@{F\-S\-Tree}}
+\subsubsection[{print\-F\-S\-T2\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::print\-F\-S\-T2\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf fnode2\-\_\-type} $\ast$}]{\-\_\-node, }
+\item[{int}]{\-\_\-level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classFSTree_a19bc57d1746a90c73645702ceeeb7daf}
+
+
+print fnode2\-\_\-type 
+
+\hypertarget{classFSTree_aa12c77a41e50d5ef6f98ceaa91d57f87}{\index{F\-S\-Tree@{F\-S\-Tree}!print\-F\-S\-T\-Node@{print\-F\-S\-T\-Node}}
+\index{print\-F\-S\-T\-Node@{print\-F\-S\-T\-Node}!FSTree@{F\-S\-Tree}}
+\subsubsection[{print\-F\-S\-T\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::print\-F\-S\-T\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf fnode\-\_\-type} $\ast$}]{\-\_\-node, }
+\item[{int}]{\-\_\-level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classFSTree_aa12c77a41e50d5ef6f98ceaa91d57f87}
+
+
+print fnode\-\_\-type 
+
+\hypertarget{classFSTree_a795e0b2a65902afc562e15555613c7e5}{\index{F\-S\-Tree@{F\-S\-Tree}!rebuild@{rebuild}}
+\index{rebuild@{rebuild}!FSTree@{F\-S\-Tree}}
+\subsubsection[{rebuild}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::rebuild (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classFSTree_a795e0b2a65902afc562e15555613c7e5}
+
+
+To reduce memory requirement, rebuid a fixed-\/stride tree using leaf-\/pushing. 
+
+After leaf-\/pushing prefixes in non-\/leaf entries, each entry in a node contains either a pointer to its subtree or a prefix, but not both. \hypertarget{classFSTree_ab58f1283d0964663ea7130ef62f62d01}{\index{F\-S\-Tree@{F\-S\-Tree}!search@{search}}
+\index{search@{search}!FSTree@{F\-S\-Tree}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf uint32} {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::search (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-ip}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classFSTree_ab58f1283d0964663ea7130ef62f62d01}
+
+
+search 
+
+\hypertarget{classFSTree_a491e07546a9fe1ee8d0c03d9ff4ef724}{\index{F\-S\-Tree@{F\-S\-Tree}!traverse\-\_\-fst@{traverse\-\_\-fst}}
+\index{traverse\-\_\-fst@{traverse\-\_\-fst}!FSTree@{F\-S\-Tree}}
+\subsubsection[{traverse\-\_\-fst}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::traverse\-\_\-fst (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classFSTree_a491e07546a9fe1ee8d0c03d9ff4ef724}
+
+
+traverse the fixed-\/stride tree rooted at fst\-\_\-root 
+
+\hypertarget{classFSTree_aad9ae75065c09d65f7efaf99cc8c64c1}{\index{F\-S\-Tree@{F\-S\-Tree}!traverse\-\_\-fst2@{traverse\-\_\-fst2}}
+\index{traverse\-\_\-fst2@{traverse\-\_\-fst2}!FSTree@{F\-S\-Tree}}
+\subsubsection[{traverse\-\_\-fst2}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ void {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::traverse\-\_\-fst2 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classFSTree_aad9ae75065c09d65f7efaf99cc8c64c1}
+
+
+traverse the fixed-\/stride tree rooted at fst2\-\_\-root 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classFSTree_a9bb6d9cad646464a0467038c9d37b407}{\index{F\-S\-Tree@{F\-S\-Tree}!fst@{fst}}
+\index{fst@{fst}!FSTree@{F\-S\-Tree}}
+\subsubsection[{fst}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$ $\ast$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::fst = nullptr\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}}\label{classFSTree_a9bb6d9cad646464a0467038c9d37b407}
+
+
+pointer to fst 
+
+\hypertarget{classFSTree_a39e875f7b80caa1e8d79dc893f06cf97}{\index{F\-S\-Tree@{F\-S\-Tree}!fst2\-\_\-root@{fst2\-\_\-root}}
+\index{fst2\-\_\-root@{fst2\-\_\-root}!FSTree@{F\-S\-Tree}}
+\subsubsection[{fst2\-\_\-root}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf fnode2\-\_\-type}$\ast$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::fst2\-\_\-root\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a39e875f7b80caa1e8d79dc893f06cf97}
+
+
+pointer to the root node of the fixed-\/stride tree after leaf-\/pushing 
+
+\hypertarget{classFSTree_ae2f006ad7037ccce518c2e21cebde7f1}{\index{F\-S\-Tree@{F\-S\-Tree}!fst\-\_\-root@{fst\-\_\-root}}
+\index{fst\-\_\-root@{fst\-\_\-root}!FSTree@{F\-S\-Tree}}
+\subsubsection[{fst\-\_\-root}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf fnode\-\_\-type}$\ast$ {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::fst\-\_\-root\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_ae2f006ad7037ccce518c2e21cebde7f1}
+
+
+pointer to the root node of the fixed-\/stride tree before leaf-\/pushing 
+
+\hypertarget{classFSTree_afe2edb406c6e4b670a59e7c3d1edaa70}{\index{F\-S\-Tree@{F\-S\-Tree}!m\-Beg\-Level@{m\-Beg\-Level}}
+\index{m\-Beg\-Level@{m\-Beg\-Level}!FSTree@{F\-S\-Tree}}
+\subsubsection[{m\-Beg\-Level}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ int {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::m\-Beg\-Level\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_afe2edb406c6e4b670a59e7c3d1edaa70}
+
+
+start level of expansion level 
+
+\hypertarget{classFSTree_a6e0ee4d265489224ed08378a5f2e3b1f}{\index{F\-S\-Tree@{F\-S\-Tree}!m\-End\-Level@{m\-End\-Level}}
+\index{m\-End\-Level@{m\-End\-Level}!FSTree@{F\-S\-Tree}}
+\subsubsection[{m\-End\-Level}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ int {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::m\-End\-Level\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a6e0ee4d265489224ed08378a5f2e3b1f}
+
+
+end level of expansion level 
+
+\hypertarget{classFSTree_a8c62509827ce3ebeb3f717baedd43089}{\index{F\-S\-Tree@{F\-S\-Tree}!m\-Entry\-Num@{m\-Entry\-Num}}
+\index{m\-Entry\-Num@{m\-Entry\-Num}!FSTree@{F\-S\-Tree}}
+\subsubsection[{m\-Entry\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf uint32} {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::m\-Entry\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a8c62509827ce3ebeb3f717baedd43089}
+
+
+number of entries in total 
+
+\hypertarget{classFSTree_aedbc7712ddc76989663e783d100464c6}{\index{F\-S\-Tree@{F\-S\-Tree}!m\-Expansion\-Level@{m\-Expansion\-Level}}
+\index{m\-Expansion\-Level@{m\-Expansion\-Level}!FSTree@{F\-S\-Tree}}
+\subsubsection[{m\-Expansion\-Level}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ int {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::m\-Expansion\-Level\mbox{[}{\bf W}+1\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_aedbc7712ddc76989663e783d100464c6}
+
+
+expansion level of level in binary tree 
+
+\hypertarget{classFSTree_a0632c6cc8f80db743e022cf67095bf3f}{\index{F\-S\-Tree@{F\-S\-Tree}!m\-Level\-Entry\-Num@{m\-Level\-Entry\-Num}}
+\index{m\-Level\-Entry\-Num@{m\-Level\-Entry\-Num}!FSTree@{F\-S\-Tree}}
+\subsubsection[{m\-Level\-Entry\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf uint32} {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::m\-Level\-Entry\-Num\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a0632c6cc8f80db743e022cf67095bf3f}
+
+
+number of entries in each level 
+
+\hypertarget{classFSTree_af525cc4431e3681403c81839e134efb7}{\index{F\-S\-Tree@{F\-S\-Tree}!m\-Level\-Node\-Num@{m\-Level\-Node\-Num}}
+\index{m\-Level\-Node\-Num@{m\-Level\-Node\-Num}!FSTree@{F\-S\-Tree}}
+\subsubsection[{m\-Level\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf uint32} {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::m\-Level\-Node\-Num\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_af525cc4431e3681403c81839e134efb7}
+
+
+number of nodes in each level 
+
+\hypertarget{classFSTree_ac274e7459a6129f7497bac0807dbfbb7}{\index{F\-S\-Tree@{F\-S\-Tree}!m\-Max\-Level\-Entry\-Num@{m\-Max\-Level\-Entry\-Num}}
+\index{m\-Max\-Level\-Entry\-Num@{m\-Max\-Level\-Entry\-Num}!FSTree@{F\-S\-Tree}}
+\subsubsection[{m\-Max\-Level\-Entry\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf uint32} {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::m\-Max\-Level\-Entry\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_ac274e7459a6129f7497bac0807dbfbb7}
+
+
+maximum number of entries among all the levels 
+
+\hypertarget{classFSTree_a8130db6daaa9b99921230e9349a66888}{\index{F\-S\-Tree@{F\-S\-Tree}!m\-Node\-Entry\-Num@{m\-Node\-Entry\-Num}}
+\index{m\-Node\-Entry\-Num@{m\-Node\-Entry\-Num}!FSTree@{F\-S\-Tree}}
+\subsubsection[{m\-Node\-Entry\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf uint32} {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::m\-Node\-Entry\-Num\mbox{[}K+1\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a8130db6daaa9b99921230e9349a66888}
+
+
+number of entries per node in expansion level 
+
+\hypertarget{classFSTree_a0630cd4bcdd55f729691e762018f4951}{\index{F\-S\-Tree@{F\-S\-Tree}!m\-Node\-Num@{m\-Node\-Num}}
+\index{m\-Node\-Num@{m\-Node\-Num}!FSTree@{F\-S\-Tree}}
+\subsubsection[{m\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ {\bf uint32} {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::m\-Node\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a0630cd4bcdd55f729691e762018f4951}
+
+
+number of nodes in total 
+
+\hypertarget{classFSTree_a463862d4c2ae3ec8a1bab6c66c3ed395}{\index{F\-S\-Tree@{F\-S\-Tree}!m\-Stride@{m\-Stride}}
+\index{m\-Stride@{m\-Stride}!FSTree@{F\-S\-Tree}}
+\subsubsection[{m\-Stride}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int M$>$ int {\bf F\-S\-Tree}$<$ {\bf W}, K, M $>$\-::m\-Stride\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classFSTree_a463862d4c2ae3ec8a1bab6c66c3ed395}
+
+
+stride of expansion level 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{fstree_8h}{fstree.\-h}\end{DoxyCompactItemize}

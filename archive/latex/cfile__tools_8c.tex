@@ -1,0 +1,177 @@
+\hypertarget{cfile__tools_8c}{\section{/home/chris/lookup/code/external/bgpdump/cfile\-\_\-tools.c File Reference}
+\label{cfile__tools_8c}\index{/home/chris/lookup/code/external/bgpdump/cfile\-\_\-tools.\-c@{/home/chris/lookup/code/external/bgpdump/cfile\-\_\-tools.\-c}}
+}
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$errno.\-h$>$}\\*
+{\ttfamily \#include $<$assert.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}cfile\-\_\-tools.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{cfile__tools_8c_a369266c24eacffb87046522897a570d5}{\-\_\-\-G\-N\-U\-\_\-\-S\-O\-U\-R\-C\-E}
+\item 
+\#define \hyperlink{cfile__tools_8c_a44d01ba0a136b8e27ad362f5a823d14e}{\-\_\-\-F\-I\-L\-E\-\_\-\-O\-F\-F\-S\-E\-T\-\_\-\-B\-I\-T\-S}~64
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \hyperlink{cfile__tools_8c_a887d5d20b54fd89a376fc5ad041860e9}{\-\_\-cfr\-\_\-compressor\-\_\-strerror} (int format, int \hyperlink{util_8h_abc39159818ae5692881c86bb5f660f93}{err})
+\item 
+const char $\ast$ \hyperlink{cfile__tools_8c_a174e6cfb425071ea40f6ed1b1e85bb8d}{\-\_\-bz2\-\_\-strerror} (int \hyperlink{util_8h_abc39159818ae5692881c86bb5f660f93}{err})
+\item 
+\hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E} $\ast$ \hyperlink{cfile__tools_8c_a7c3eea7514d948b3d688330ff7d2be75}{cfr\-\_\-open} (const char $\ast$path)
+\item 
+int \hyperlink{cfile__tools_8c_af6bc065b0ea891adb2650c1b80369661}{cfr\-\_\-close} (\hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E} $\ast$stream)
+\item 
+size\-\_\-t \hyperlink{cfile__tools_8c_af7f0dc41c7c37a8a86f7a179b53893cc}{cfr\-\_\-read\-\_\-n} (\hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E} $\ast$stream, void $\ast$ptr, size\-\_\-t bytes)
+\item 
+size\-\_\-t \hyperlink{cfile__tools_8c_ad8e2f96f6860bcb14e72ee005b481211}{cfr\-\_\-read} (void $\ast$ptr, size\-\_\-t size, size\-\_\-t nmemb, \hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E} $\ast$stream)
+\item 
+ssize\-\_\-t \hyperlink{cfile__tools_8c_a03998b77bfd4be8630cc156a9afd4541}{cfr\-\_\-getline} (char $\ast$$\ast$lineptr, size\-\_\-t $\ast$n, \hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E} $\ast$stream)
+\item 
+int \hyperlink{cfile__tools_8c_a368b117e726593d6662733a5b71f5849}{cfr\-\_\-eof} (\hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E} $\ast$stream)
+\item 
+int \hyperlink{cfile__tools_8c_a100bb39a0b11058fd377b968ea8019c4}{cfr\-\_\-error} (\hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E} $\ast$stream)
+\item 
+char $\ast$ \hyperlink{cfile__tools_8c_a3b31c8f208e2c93764f2c6890e2d1ae8}{cfr\-\_\-strerror} (\hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E} $\ast$stream)
+\item 
+const char $\ast$ \hyperlink{cfile__tools_8c_a7ee44e814b57bf0d50ff3ac7134059b2}{cfr\-\_\-compressor\-\_\-str} (\hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E} $\ast$stream)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \hyperlink{cfile__tools_8c_a6ae0e9f178059383d5b3d9bddcdda1ce}{cfr\-\_\-formats} \mbox{[}\hyperlink{cfile__tools_8h_a0dfa05f74641f0476e4d40eac9675fc2}{C\-F\-R\-\_\-\-N\-U\-M\-\_\-\-F\-O\-R\-M\-A\-T\-S}\mbox{]}
+\item 
+const char $\ast$ \hyperlink{cfile__tools_8c_a58a37ced5a77f1b4eb6f7e7d52040f1f}{cfr\-\_\-extensions} \mbox{[}\hyperlink{cfile__tools_8h_a0dfa05f74641f0476e4d40eac9675fc2}{C\-F\-R\-\_\-\-N\-U\-M\-\_\-\-F\-O\-R\-M\-A\-T\-S}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{cfile__tools_8c_a44d01ba0a136b8e27ad362f5a823d14e}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!\-\_\-\-F\-I\-L\-E\-\_\-\-O\-F\-F\-S\-E\-T\-\_\-\-B\-I\-T\-S@{\-\_\-\-F\-I\-L\-E\-\_\-\-O\-F\-F\-S\-E\-T\-\_\-\-B\-I\-T\-S}}
+\index{\-\_\-\-F\-I\-L\-E\-\_\-\-O\-F\-F\-S\-E\-T\-\_\-\-B\-I\-T\-S@{\-\_\-\-F\-I\-L\-E\-\_\-\-O\-F\-F\-S\-E\-T\-\_\-\-B\-I\-T\-S}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{\-\_\-\-F\-I\-L\-E\-\_\-\-O\-F\-F\-S\-E\-T\-\_\-\-B\-I\-T\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define \-\_\-\-F\-I\-L\-E\-\_\-\-O\-F\-F\-S\-E\-T\-\_\-\-B\-I\-T\-S~64}}\label{cfile__tools_8c_a44d01ba0a136b8e27ad362f5a823d14e}
+\hypertarget{cfile__tools_8c_a369266c24eacffb87046522897a570d5}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!\-\_\-\-G\-N\-U\-\_\-\-S\-O\-U\-R\-C\-E@{\-\_\-\-G\-N\-U\-\_\-\-S\-O\-U\-R\-C\-E}}
+\index{\-\_\-\-G\-N\-U\-\_\-\-S\-O\-U\-R\-C\-E@{\-\_\-\-G\-N\-U\-\_\-\-S\-O\-U\-R\-C\-E}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{\-\_\-\-G\-N\-U\-\_\-\-S\-O\-U\-R\-C\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define \-\_\-\-G\-N\-U\-\_\-\-S\-O\-U\-R\-C\-E}}\label{cfile__tools_8c_a369266c24eacffb87046522897a570d5}
+\hyperlink{cfile__tools_8c}{cfile\-\_\-tools.\-c}
+
+A library to deal transparently with possibly compressed files. Documentation in the function headers and in \hyperlink{cfile__tools_8h}{cfile\-\_\-tools.\-h}
+
+Copyright (C) 2004 by Arno Wagner \href{mailto:arno.wagner@acm.org}{\tt arno.\-wagner@acm.\-org} Distributed under the Gnu Public License version 2 or the modified B\-S\-D license (see file C\-O\-P\-Y\-I\-N\-G)
+
+Support for gzip added by Bernhard Tellenbach \href{mailto:bernhard.tellenbach@gmail.com}{\tt bernhard.\-tellenbach@gmail.\-com} 
+
+\subsection{Function Documentation}
+\hypertarget{cfile__tools_8c_a174e6cfb425071ea40f6ed1b1e85bb8d}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!\-\_\-bz2\-\_\-strerror@{\-\_\-bz2\-\_\-strerror}}
+\index{\-\_\-bz2\-\_\-strerror@{\-\_\-bz2\-\_\-strerror}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{\-\_\-bz2\-\_\-strerror}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ \-\_\-bz2\-\_\-strerror (
+\begin{DoxyParamCaption}
+\item[{int}]{err}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_a174e6cfb425071ea40f6ed1b1e85bb8d}
+\hypertarget{cfile__tools_8c_a887d5d20b54fd89a376fc5ad041860e9}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!\-\_\-cfr\-\_\-compressor\-\_\-strerror@{\-\_\-cfr\-\_\-compressor\-\_\-strerror}}
+\index{\-\_\-cfr\-\_\-compressor\-\_\-strerror@{\-\_\-cfr\-\_\-compressor\-\_\-strerror}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{\-\_\-cfr\-\_\-compressor\-\_\-strerror}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ \-\_\-cfr\-\_\-compressor\-\_\-strerror (
+\begin{DoxyParamCaption}
+\item[{int}]{format, }
+\item[{int}]{err}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_a887d5d20b54fd89a376fc5ad041860e9}
+\hypertarget{cfile__tools_8c_af6bc065b0ea891adb2650c1b80369661}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-close@{cfr\-\_\-close}}
+\index{cfr\-\_\-close@{cfr\-\_\-close}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-close}]{\setlength{\rightskip}{0pt plus 5cm}int cfr\-\_\-close (
+\begin{DoxyParamCaption}
+\item[{{\bf C\-F\-R\-F\-I\-L\-E} $\ast$}]{stream}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_af6bc065b0ea891adb2650c1b80369661}
+\hypertarget{cfile__tools_8c_a7ee44e814b57bf0d50ff3ac7134059b2}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-compressor\-\_\-str@{cfr\-\_\-compressor\-\_\-str}}
+\index{cfr\-\_\-compressor\-\_\-str@{cfr\-\_\-compressor\-\_\-str}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-compressor\-\_\-str}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ cfr\-\_\-compressor\-\_\-str (
+\begin{DoxyParamCaption}
+\item[{{\bf C\-F\-R\-F\-I\-L\-E} $\ast$}]{stream}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_a7ee44e814b57bf0d50ff3ac7134059b2}
+\hypertarget{cfile__tools_8c_a368b117e726593d6662733a5b71f5849}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-eof@{cfr\-\_\-eof}}
+\index{cfr\-\_\-eof@{cfr\-\_\-eof}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-eof}]{\setlength{\rightskip}{0pt plus 5cm}int cfr\-\_\-eof (
+\begin{DoxyParamCaption}
+\item[{{\bf C\-F\-R\-F\-I\-L\-E} $\ast$}]{stream}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_a368b117e726593d6662733a5b71f5849}
+\hypertarget{cfile__tools_8c_a100bb39a0b11058fd377b968ea8019c4}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-error@{cfr\-\_\-error}}
+\index{cfr\-\_\-error@{cfr\-\_\-error}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-error}]{\setlength{\rightskip}{0pt plus 5cm}int cfr\-\_\-error (
+\begin{DoxyParamCaption}
+\item[{{\bf C\-F\-R\-F\-I\-L\-E} $\ast$}]{stream}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_a100bb39a0b11058fd377b968ea8019c4}
+\hypertarget{cfile__tools_8c_a03998b77bfd4be8630cc156a9afd4541}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-getline@{cfr\-\_\-getline}}
+\index{cfr\-\_\-getline@{cfr\-\_\-getline}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-getline}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t cfr\-\_\-getline (
+\begin{DoxyParamCaption}
+\item[{char $\ast$$\ast$}]{lineptr, }
+\item[{size\-\_\-t $\ast$}]{n, }
+\item[{{\bf C\-F\-R\-F\-I\-L\-E} $\ast$}]{stream}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_a03998b77bfd4be8630cc156a9afd4541}
+\hypertarget{cfile__tools_8c_a7c3eea7514d948b3d688330ff7d2be75}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-open@{cfr\-\_\-open}}
+\index{cfr\-\_\-open@{cfr\-\_\-open}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\-F\-R\-F\-I\-L\-E}$\ast$ cfr\-\_\-open (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{path}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_a7c3eea7514d948b3d688330ff7d2be75}
+\hypertarget{cfile__tools_8c_ad8e2f96f6860bcb14e72ee005b481211}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-read@{cfr\-\_\-read}}
+\index{cfr\-\_\-read@{cfr\-\_\-read}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-read}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t cfr\-\_\-read (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{ptr, }
+\item[{size\-\_\-t}]{size, }
+\item[{size\-\_\-t}]{nmemb, }
+\item[{{\bf C\-F\-R\-F\-I\-L\-E} $\ast$}]{stream}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_ad8e2f96f6860bcb14e72ee005b481211}
+\hypertarget{cfile__tools_8c_af7f0dc41c7c37a8a86f7a179b53893cc}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-read\-\_\-n@{cfr\-\_\-read\-\_\-n}}
+\index{cfr\-\_\-read\-\_\-n@{cfr\-\_\-read\-\_\-n}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-read\-\_\-n}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t cfr\-\_\-read\-\_\-n (
+\begin{DoxyParamCaption}
+\item[{{\bf C\-F\-R\-F\-I\-L\-E} $\ast$}]{stream, }
+\item[{void $\ast$}]{ptr, }
+\item[{size\-\_\-t}]{bytes}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_af7f0dc41c7c37a8a86f7a179b53893cc}
+\hypertarget{cfile__tools_8c_a3b31c8f208e2c93764f2c6890e2d1ae8}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-strerror@{cfr\-\_\-strerror}}
+\index{cfr\-\_\-strerror@{cfr\-\_\-strerror}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-strerror}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ cfr\-\_\-strerror (
+\begin{DoxyParamCaption}
+\item[{{\bf C\-F\-R\-F\-I\-L\-E} $\ast$}]{stream}
+\end{DoxyParamCaption}
+)}}\label{cfile__tools_8c_a3b31c8f208e2c93764f2c6890e2d1ae8}
+
+
+\subsection{Variable Documentation}
+\hypertarget{cfile__tools_8c_a58a37ced5a77f1b4eb6f7e7d52040f1f}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-extensions@{cfr\-\_\-extensions}}
+\index{cfr\-\_\-extensions@{cfr\-\_\-extensions}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-extensions}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ cfr\-\_\-extensions\mbox{[}{\bf C\-F\-R\-\_\-\-N\-U\-M\-\_\-\-F\-O\-R\-M\-A\-T\-S}\mbox{]}}}\label{cfile__tools_8c_a58a37ced5a77f1b4eb6f7e7d52040f1f}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+  \textcolor{stringliteral}{""},             
+  \textcolor{stringliteral}{""},             
+  \textcolor{stringliteral}{".bz2"},          
+  \textcolor{stringliteral}{".gz"}          
+\}
+\end{DoxyCode}
+\hypertarget{cfile__tools_8c_a6ae0e9f178059383d5b3d9bddcdda1ce}{\index{cfile\-\_\-tools.\-c@{cfile\-\_\-tools.\-c}!cfr\-\_\-formats@{cfr\-\_\-formats}}
+\index{cfr\-\_\-formats@{cfr\-\_\-formats}!cfile_tools.c@{cfile\-\_\-tools.\-c}}
+\subsubsection[{cfr\-\_\-formats}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ cfr\-\_\-formats\mbox{[}{\bf C\-F\-R\-\_\-\-N\-U\-M\-\_\-\-F\-O\-R\-M\-A\-T\-S}\mbox{]}}}\label{cfile__tools_8c_a6ae0e9f178059383d5b3d9bddcdda1ce}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+  \textcolor{stringliteral}{"not open"},     
+  \textcolor{stringliteral}{"uncompressed"}, 
+  \textcolor{stringliteral}{"bzip2"},         
+  \textcolor{stringliteral}{"gzip"},         
+\}
+\end{DoxyCode}

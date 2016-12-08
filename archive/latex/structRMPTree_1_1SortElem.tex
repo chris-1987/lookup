@@ -1,0 +1,76 @@
+\hypertarget{structRMPTree_1_1SortElem}{\section{R\-M\-P\-Tree$<$ W, K, U, M\-P, M\-C, V, H1, H2 $>$\-:\-:Sort\-Elem Struct Reference}
+\label{structRMPTree_1_1SortElem}\index{R\-M\-P\-Tree$<$ W, K, U, M\-P, M\-C, V, H1, H2 $>$\-::\-Sort\-Elem@{R\-M\-P\-Tree$<$ W, K, U, M\-P, M\-C, V, H1, H2 $>$\-::\-Sort\-Elem}}
+}
+
+
+element to be sorted  
+
+
+
+
+{\ttfamily \#include $<$rmptree.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structRMPTree_1_1SortElem_a80af01ad86c3dd77e5da55cb4b9ad811}{Sort\-Elem} (const size\-\_\-t \-\_\-node\-Num, const size\-\_\-t \-\_\-tree\-Idx)
+\item 
+bool \hyperlink{structRMPTree_1_1SortElem_a254fe720289135ee05307132c9ef6ad4}{operator$<$} (const \hyperlink{structRMPTree_1_1SortElem}{Sort\-Elem} \&\-\_\-a) const 
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\-\_\-t \hyperlink{structRMPTree_1_1SortElem_a3aed6d248ebce90132ea23218bd9fd53}{node\-Num}
+\begin{DoxyCompactList}\small\item\em number of nodes in the tree \end{DoxyCompactList}\item 
+size\-\_\-t \hyperlink{structRMPTree_1_1SortElem_aa5217368661cb5c31474587ab41a71cd}{tree\-Idx}
+\begin{DoxyCompactList}\small\item\em index of tree \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$struct R\-M\-P\-Tree$<$ W, K, U, M\-P, M\-C, V, H1, H2 $>$\-::\-Sort\-Elem}
+
+element to be sorted 
+
+This strucutre is used along with \hyperlink{classRMPTree_a37d3f0f184f191935ddec8a5af90ba07}{cir()} function to map nodes of 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structRMPTree_1_1SortElem_a80af01ad86c3dd77e5da55cb4b9ad811}{\index{R\-M\-P\-Tree\-::\-Sort\-Elem@{R\-M\-P\-Tree\-::\-Sort\-Elem}!Sort\-Elem@{Sort\-Elem}}
+\index{Sort\-Elem@{Sort\-Elem}!RMPTree::SortElem@{R\-M\-P\-Tree\-::\-Sort\-Elem}}
+\subsubsection[{Sort\-Elem}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::Sort\-Elem\-::\-Sort\-Elem (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{\-\_\-node\-Num, }
+\item[{const size\-\_\-t}]{\-\_\-tree\-Idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structRMPTree_1_1SortElem_a80af01ad86c3dd77e5da55cb4b9ad811}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structRMPTree_1_1SortElem_a254fe720289135ee05307132c9ef6ad4}{\index{R\-M\-P\-Tree\-::\-Sort\-Elem@{R\-M\-P\-Tree\-::\-Sort\-Elem}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!RMPTree::SortElem@{R\-M\-P\-Tree\-::\-Sort\-Elem}}
+\subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ bool {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::Sort\-Elem\-::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Sort\-Elem} \&}]{\-\_\-a}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{structRMPTree_1_1SortElem_a254fe720289135ee05307132c9ef6ad4}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structRMPTree_1_1SortElem_a3aed6d248ebce90132ea23218bd9fd53}{\index{R\-M\-P\-Tree\-::\-Sort\-Elem@{R\-M\-P\-Tree\-::\-Sort\-Elem}!node\-Num@{node\-Num}}
+\index{node\-Num@{node\-Num}!RMPTree::SortElem@{R\-M\-P\-Tree\-::\-Sort\-Elem}}
+\subsubsection[{node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ size\-\_\-t {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::Sort\-Elem\-::node\-Num}}\label{structRMPTree_1_1SortElem_a3aed6d248ebce90132ea23218bd9fd53}
+
+
+number of nodes in the tree 
+
+\hypertarget{structRMPTree_1_1SortElem_aa5217368661cb5c31474587ab41a71cd}{\index{R\-M\-P\-Tree\-::\-Sort\-Elem@{R\-M\-P\-Tree\-::\-Sort\-Elem}!tree\-Idx@{tree\-Idx}}
+\index{tree\-Idx@{tree\-Idx}!RMPTree::SortElem@{R\-M\-P\-Tree\-::\-Sort\-Elem}}
+\subsubsection[{tree\-Idx}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ size\-\_\-t {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::Sort\-Elem\-::tree\-Idx}}\label{structRMPTree_1_1SortElem_aa5217368661cb5c31474587ab41a71cd}
+
+
+index of tree 
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{rmptree_8h}{rmptree.\-h}\end{DoxyCompactItemize}

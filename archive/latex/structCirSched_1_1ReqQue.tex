@@ -1,0 +1,104 @@
+\hypertarget{structCirSched_1_1ReqQue}{\section{Cir\-Sched$<$ W, K, S $>$\-:\-:Req\-Que Struct Reference}
+\label{structCirSched_1_1ReqQue}\index{Cir\-Sched$<$ W, K, S $>$\-::\-Req\-Que@{Cir\-Sched$<$ W, K, S $>$\-::\-Req\-Que}}
+}
+
+
+structure of request queue  
+
+
+
+
+{\ttfamily \#include $<$cirsched.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{structCirSched_1_1ReqQue_a09575abda12026f4de7cfbdee50a35c1}{is\-Empty} ()
+\begin{DoxyCompactList}\small\item\em check if queue is empty \end{DoxyCompactList}\item 
+bool \hyperlink{structCirSched_1_1ReqQue_a9a2824942840b027b770bd4c1fa3b2f4}{is\-Overflow} ()
+\begin{DoxyCompactList}\small\item\em check if queue is overflow \end{DoxyCompactList}\item 
+void \hyperlink{structCirSched_1_1ReqQue_a895a9b83a80ba67d728db61b4a657b23}{append} (\hyperlink{structCirSched_1_1Request}{Request} $\ast$\-\_\-req)
+\begin{DoxyCompactList}\small\item\em append a request to the end of the queue \end{DoxyCompactList}\item 
+void \hyperlink{structCirSched_1_1ReqQue_aaa43d17173a671297ea45230c6dcdbcb}{remove\-Head} ()
+\begin{DoxyCompactList}\small\item\em remove the head of request (which is assigned to the corresponding pipe stage) \end{DoxyCompactList}\item 
+\hyperlink{structCirSched_1_1Request}{Request} $\ast$ \hyperlink{structCirSched_1_1ReqQue_a525fb2922fdf264fb237a657131e158b}{get\-Head} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\-::vector$<$ \hyperlink{structCirSched_1_1Request}{Request} $\ast$ $>$ \hyperlink{structCirSched_1_1ReqQue_aaf7f3c388fcbb3d0c5af6aca8a871fb3}{m\-Data}
+\begin{DoxyCompactList}\small\item\em payload \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$struct Cir\-Sched$<$ W, K, S $>$\-::\-Req\-Que}
+
+structure of request queue 
+
+\subsection{Member Function Documentation}
+\hypertarget{structCirSched_1_1ReqQue_a895a9b83a80ba67d728db61b4a657b23}{\index{Cir\-Sched\-::\-Req\-Que@{Cir\-Sched\-::\-Req\-Que}!append@{append}}
+\index{append@{append}!CirSched::ReqQue@{Cir\-Sched\-::\-Req\-Que}}
+\subsubsection[{append}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Req\-Que\-::append (
+\begin{DoxyParamCaption}
+\item[{{\bf Request} $\ast$}]{\-\_\-req}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1ReqQue_a895a9b83a80ba67d728db61b4a657b23}
+
+
+append a request to the end of the queue 
+
+\hypertarget{structCirSched_1_1ReqQue_a525fb2922fdf264fb237a657131e158b}{\index{Cir\-Sched\-::\-Req\-Que@{Cir\-Sched\-::\-Req\-Que}!get\-Head@{get\-Head}}
+\index{get\-Head@{get\-Head}!CirSched::ReqQue@{Cir\-Sched\-::\-Req\-Que}}
+\subsubsection[{get\-Head}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ {\bf Request}$\ast$ {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Req\-Que\-::get\-Head (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1ReqQue_a525fb2922fdf264fb237a657131e158b}
+\hypertarget{structCirSched_1_1ReqQue_a09575abda12026f4de7cfbdee50a35c1}{\index{Cir\-Sched\-::\-Req\-Que@{Cir\-Sched\-::\-Req\-Que}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!CirSched::ReqQue@{Cir\-Sched\-::\-Req\-Que}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ bool {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Req\-Que\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1ReqQue_a09575abda12026f4de7cfbdee50a35c1}
+
+
+check if queue is empty 
+
+\hypertarget{structCirSched_1_1ReqQue_a9a2824942840b027b770bd4c1fa3b2f4}{\index{Cir\-Sched\-::\-Req\-Que@{Cir\-Sched\-::\-Req\-Que}!is\-Overflow@{is\-Overflow}}
+\index{is\-Overflow@{is\-Overflow}!CirSched::ReqQue@{Cir\-Sched\-::\-Req\-Que}}
+\subsubsection[{is\-Overflow}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ bool {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Req\-Que\-::is\-Overflow (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1ReqQue_a9a2824942840b027b770bd4c1fa3b2f4}
+
+
+check if queue is overflow 
+
+\hypertarget{structCirSched_1_1ReqQue_aaa43d17173a671297ea45230c6dcdbcb}{\index{Cir\-Sched\-::\-Req\-Que@{Cir\-Sched\-::\-Req\-Que}!remove\-Head@{remove\-Head}}
+\index{remove\-Head@{remove\-Head}!CirSched::ReqQue@{Cir\-Sched\-::\-Req\-Que}}
+\subsubsection[{remove\-Head}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Req\-Que\-::remove\-Head (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structCirSched_1_1ReqQue_aaa43d17173a671297ea45230c6dcdbcb}
+
+
+remove the head of request (which is assigned to the corresponding pipe stage) 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structCirSched_1_1ReqQue_aaf7f3c388fcbb3d0c5af6aca8a871fb3}{\index{Cir\-Sched\-::\-Req\-Que@{Cir\-Sched\-::\-Req\-Que}!m\-Data@{m\-Data}}
+\index{m\-Data@{m\-Data}!CirSched::ReqQue@{Cir\-Sched\-::\-Req\-Que}}
+\subsubsection[{m\-Data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ std\-::vector$<${\bf Request}$\ast$$>$ {\bf Cir\-Sched}$<$ {\bf W}, K, S $>$\-::Req\-Que\-::m\-Data}}\label{structCirSched_1_1ReqQue_aaf7f3c388fcbb3d0c5af6aca8a871fb3}
+
+
+payload 
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/scheduler/\hyperlink{cirsched_8h}{cirsched.\-h}\end{DoxyCompactItemize}

@@ -1,0 +1,153 @@
+\hypertarget{structSNode}{\section{S\-Node$<$ W $>$ Struct Template Reference}
+\label{structSNode}\index{S\-Node$<$ W $>$@{S\-Node$<$ W $>$}}
+}
+
+
+Secondary node in a multi-\/prefix tree.  
+
+
+
+
+{\ttfamily \#include $<$mptree.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{structSNode_a1ab678513fb60d997a93e2cff3d45f3b}{ip\-\_\-type} \hyperlink{structSNode_a1ab678513fb60d997a93e2cff3d45f3b}{ip\-\_\-type}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{structSNode_a1ab678513fb60d997a93e2cff3d45f3b}{ip\-\_\-type} \hyperlink{structSNode_a1ab678513fb60d997a93e2cff3d45f3b}{ip\-\_\-type}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structSNode_af04c5a67a5d1e5dad406711f83fac4e5}{S\-Node} ()
+\item 
+\hyperlink{structSNode_af04c5a67a5d1e5dad406711f83fac4e5}{S\-Node} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structSNode_a1ab678513fb60d997a93e2cff3d45f3b}{ip\-\_\-type} \hyperlink{structSNode_a3fa37cdc5c85a39d13b1c008d80004b2}{prefix}
+\begin{DoxyCompactList}\small\item\em prefix \end{DoxyCompactList}\item 
+\hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \hyperlink{structSNode_a26a41fee7f633ec3c1cde1b53d3dd991}{length}
+\begin{DoxyCompactList}\small\item\em length of prefix \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{structSNode_a37372530de83477ae96a73ba352ec7ef}{nexthop}
+\begin{DoxyCompactList}\small\item\em corresponding nexthop \end{DoxyCompactList}\item 
+\hyperlink{structSNode}{S\-Node} $\ast$ \hyperlink{structSNode_a8b3c44ff242d9eca3b0e2503b857b133}{lchild}
+\begin{DoxyCompactList}\small\item\em ptr to left child \end{DoxyCompactList}\item 
+\hyperlink{structSNode}{S\-Node} $\ast$ \hyperlink{structSNode_a215bae442818d32f7d03b6986e191285}{rchild}
+\begin{DoxyCompactList}\small\item\em ptr to right child \end{DoxyCompactList}\item 
+int \hyperlink{structSNode_a7dc9daff31e9d8fb8b683942dadef134}{stageidx}
+\begin{DoxyCompactList}\small\item\em pipe stage number, not required, only for test \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const size\-\_\-t \hyperlink{structSNode_a4c70546fd8e93c27ca5318df8f8cab35}{size} = sizeof(\hyperlink{structSNode_a1ab678513fb60d997a93e2cff3d45f3b}{ip\-\_\-type}) + sizeof(\hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8}) + sizeof(\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32}) + sizeof(\hyperlink{structSNode}{S\-Node}$\ast$) + sizeof(\hyperlink{structSNode}{S\-Node}$\ast$)
+\begin{DoxyCompactList}\small\item\em size of a secondary node \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W$>$struct S\-Node$<$ W $>$}
+
+Secondary node in a multi-\/prefix tree. 
+
+Each secondary node is a 5-\/tuple consisting of $<$prefix, length of prefix, nexthop, ptr to left child, ptr to right child$>$.
+
+
+\begin{DoxyParams}{Parameters}
+{\em W} & length of I\-P address, 32 or 128 for I\-Pv4 or I\-Pv6, respectively\\
+\hline
+\end{DoxyParams}
+Nodes in a multi-\/prefix tree are divided into two categories\-: primary node and secondary node. A secondary node is a 5-\/tuple consisting of $<$prefix, length of prefix, nexthop, pointer to left child, pointer to right child$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em W} & 32, or 128 for I\-Pv4 or I\-Pv6, respectively. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structSNode_a1ab678513fb60d997a93e2cff3d45f3b}{\index{S\-Node@{S\-Node}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!SNode@{S\-Node}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf S\-Node}$<$ {\bf W} $>$\-::{\bf ip\-\_\-type}}}\label{structSNode_a1ab678513fb60d997a93e2cff3d45f3b}
+\hypertarget{structSNode_a1ab678513fb60d997a93e2cff3d45f3b}{\index{S\-Node@{S\-Node}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!SNode@{S\-Node}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf S\-Node}$<$ {\bf W} $>$\-::{\bf ip\-\_\-type}}}\label{structSNode_a1ab678513fb60d997a93e2cff3d45f3b}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structSNode_af04c5a67a5d1e5dad406711f83fac4e5}{\index{S\-Node@{S\-Node}!S\-Node@{S\-Node}}
+\index{S\-Node@{S\-Node}!SNode@{S\-Node}}
+\subsubsection[{S\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf S\-Node}$<$ {\bf W} $>$\-::{\bf S\-Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structSNode_af04c5a67a5d1e5dad406711f83fac4e5}
+\hypertarget{structSNode_af04c5a67a5d1e5dad406711f83fac4e5}{\index{S\-Node@{S\-Node}!S\-Node@{S\-Node}}
+\index{S\-Node@{S\-Node}!SNode@{S\-Node}}
+\subsubsection[{S\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf S\-Node}$<$ {\bf W} $>$\-::{\bf S\-Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structSNode_af04c5a67a5d1e5dad406711f83fac4e5}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structSNode_a8b3c44ff242d9eca3b0e2503b857b133}{\index{S\-Node@{S\-Node}!lchild@{lchild}}
+\index{lchild@{lchild}!SNode@{S\-Node}}
+\subsubsection[{lchild}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf S\-Node} $\ast$ {\bf S\-Node}$<$ {\bf W} $>$\-::lchild}}\label{structSNode_a8b3c44ff242d9eca3b0e2503b857b133}
+
+
+ptr to left child 
+
+pointer to left child \hypertarget{structSNode_a26a41fee7f633ec3c1cde1b53d3dd991}{\index{S\-Node@{S\-Node}!length@{length}}
+\index{length@{length}!SNode@{S\-Node}}
+\subsubsection[{length}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf uint8} {\bf S\-Node}$<$ {\bf W} $>$\-::length}}\label{structSNode_a26a41fee7f633ec3c1cde1b53d3dd991}
+
+
+length of prefix 
+
+\hypertarget{structSNode_a37372530de83477ae96a73ba352ec7ef}{\index{S\-Node@{S\-Node}!nexthop@{nexthop}}
+\index{nexthop@{nexthop}!SNode@{S\-Node}}
+\subsubsection[{nexthop}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf uint32} {\bf S\-Node}$<$ {\bf W} $>$\-::nexthop}}\label{structSNode_a37372530de83477ae96a73ba352ec7ef}
+
+
+corresponding nexthop 
+
+\hypertarget{structSNode_a3fa37cdc5c85a39d13b1c008d80004b2}{\index{S\-Node@{S\-Node}!prefix@{prefix}}
+\index{prefix@{prefix}!SNode@{S\-Node}}
+\subsubsection[{prefix}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf ip\-\_\-type} {\bf S\-Node}$<$ {\bf W} $>$\-::{\bf prefix}}}\label{structSNode_a3fa37cdc5c85a39d13b1c008d80004b2}
+
+
+prefix 
+
+\hypertarget{structSNode_a215bae442818d32f7d03b6986e191285}{\index{S\-Node@{S\-Node}!rchild@{rchild}}
+\index{rchild@{rchild}!SNode@{S\-Node}}
+\subsubsection[{rchild}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf S\-Node} $\ast$ {\bf S\-Node}$<$ {\bf W} $>$\-::rchild}}\label{structSNode_a215bae442818d32f7d03b6986e191285}
+
+
+ptr to right child 
+
+pointer to right child \hypertarget{structSNode_a4c70546fd8e93c27ca5318df8f8cab35}{\index{S\-Node@{S\-Node}!size@{size}}
+\index{size@{size}!SNode@{S\-Node}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ const size\-\_\-t {\bf S\-Node}$<$ {\bf W} $>$\-::size = sizeof({\bf ip\-\_\-type}) + sizeof({\bf uint8}) + sizeof({\bf uint32}) + sizeof({\bf S\-Node}$\ast$) + sizeof({\bf S\-Node}$\ast$)\hspace{0.3cm}{\ttfamily [static]}}}\label{structSNode_a4c70546fd8e93c27ca5318df8f8cab35}
+
+
+size of a secondary node 
+
+\hypertarget{structSNode_a7dc9daff31e9d8fb8b683942dadef134}{\index{S\-Node@{S\-Node}!stageidx@{stageidx}}
+\index{stageidx@{stageidx}!SNode@{S\-Node}}
+\subsubsection[{stageidx}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ int {\bf S\-Node}$<$ {\bf W} $>$\-::stageidx}}\label{structSNode_a7dc9daff31e9d8fb8b683942dadef134}
+
+
+pipe stage number, not required, only for test 
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{mptree_8h}{mptree.\-h}\item 
+/home/chris/lookup/code/src/tree/\hyperlink{rmptree_8h}{rmptree.\-h}\end{DoxyCompactItemize}

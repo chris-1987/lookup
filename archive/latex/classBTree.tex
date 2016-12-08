@@ -1,0 +1,279 @@
+\hypertarget{classBTree}{\section{B\-Tree$<$ W $>$ Class Template Reference}
+\label{classBTree}\index{B\-Tree$<$ W $>$@{B\-Tree$<$ W $>$}}
+}
+
+
+Build and update binary tree.  
+
+
+
+
+{\ttfamily \#include $<$btree.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classBTree_a454d071612286f059eeed1de015a0705}{build} (const std\-::string \&\-\_\-fn)
+\begin{DoxyCompactList}\small\item\em build \hyperlink{classBTree}{B\-Tree} for B\-G\-P table \end{DoxyCompactList}\item 
+void \hyperlink{classBTree_a15b494cc96ba42c55fac37b242c20d9f}{destroy} ()
+\begin{DoxyCompactList}\small\item\em destroy btree to free memory (bridth-\/first order) \end{DoxyCompactList}\item 
+void \hyperlink{classBTree_a5aa850fb6057b56803556533104fa762}{ins} (const \hyperlink{classBTree_a01d338c5749bb49768463706d9d2141c}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classBTree_a6868250b9b4cb60d672f2c83be3889f4}{node\-\_\-type} $\ast$\-\_\-pnode, const int \-\_\-level)
+\begin{DoxyCompactList}\small\item\em insert a prefix \end{DoxyCompactList}\item 
+void \hyperlink{classBTree_a47bc53476d89b85f4e73eee488fe9e44}{traverse} ()
+\begin{DoxyCompactList}\small\item\em traverse bt in bridth-\/first order \end{DoxyCompactList}\item 
+void \hyperlink{classBTree_a5f59b125f5a9cca15da6382f591925d5}{print\-Node} (\hyperlink{classBTree_a6868250b9b4cb60d672f2c83be3889f4}{node\-\_\-type} $\ast$\-\_\-node)
+\begin{DoxyCompactList}\small\item\em print a node \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classBTree_a9038cb74603e7611e66b8e40418427ad}{search} (const \hyperlink{classBTree_a01d338c5749bb49768463706d9d2141c}{ip\-\_\-type} \&\-\_\-ip)
+\begin{DoxyCompactList}\small\item\em search the L\-P\-M for the given I\-P address \end{DoxyCompactList}\item 
+$\ast$void \hyperlink{classBTree_ab4a07c1c6df85fb7d74f9f40b6c4aea7}{del} (const \hyperlink{classBTree_a01d338c5749bb49768463706d9d2141c}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length)
+\begin{DoxyCompactList}\small\item\em delete a prefix. \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classBTree_a6b031aeb6296d188f86a4de271184458}{get\-Level\-Node\-Num} (const int \-\_\-level) const 
+\begin{DoxyCompactList}\small\item\em get number of nodes in a level \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classBTree}{B\-Tree} $\ast$ \hyperlink{classBTree_a242001054313db865876bda2ebcd274e}{get\-Instance} ()
+\begin{DoxyCompactList}\small\item\em create an instance of \hyperlink{classBTree}{B\-Tree} if not yet instantiated; otherwise, return the instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{classBTree_a01d338c5749bb49768463706d9d2141c}{ip\-\_\-type} \hyperlink{classBTree_a01d338c5749bb49768463706d9d2141c}{ip\-\_\-type}
+\item 
+typedef \hyperlink{structBNode}{B\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classBTree_a6868250b9b4cb60d672f2c83be3889f4}{node\-\_\-type}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classBTree_aa7f14edbaae29d2c8c3f8ebfd30e8455}{B\-Tree} ()
+\begin{DoxyCompactList}\small\item\em default ctor \end{DoxyCompactList}\item 
+\hyperlink{classBTree_a49aaa6a1c73bae5e3e71c4e9e49e6fe1}{B\-Tree} (const \hyperlink{classBTree}{B\-Tree} \&\-\_\-bt)=delete
+\begin{DoxyCompactList}\small\item\em disble copy-\/ctor \end{DoxyCompactList}\item 
+\hyperlink{classBTree}{B\-Tree} \& \hyperlink{classBTree_a27e5bd2681163797a7bb5cb2d8dbcd08}{operator=} (const \hyperlink{classBTree}{B\-Tree} \&)=delete
+\begin{DoxyCompactList}\small\item\em disable assignment op \end{DoxyCompactList}\item 
+\hyperlink{classBTree_ac5bace99cce39dcd0ad309912ac7e758}{$\sim$\-B\-Tree} ()
+\begin{DoxyCompactList}\small\item\em dtor \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classBTree_a6868250b9b4cb60d672f2c83be3889f4}{node\-\_\-type} $\ast$ \hyperlink{classBTree_a813c0a8e677ed4e0dd3a49da8031782b}{root}
+\begin{DoxyCompactList}\small\item\em ptr to root \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classBTree_a2a4d4cc686f03e8685f5271484385772}{nodenum}
+\begin{DoxyCompactList}\small\item\em node num \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classBTree_add8631b7a3146b921cc78e9c462b6ca0}{levelnodenum} \mbox{[}\hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}+1\mbox{]}
+\begin{DoxyCompactList}\small\item\em root node contains $\ast$/0 and locates at level 0 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classBTree}{B\-Tree}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ $\ast$ \hyperlink{classBTree_abb6c1b3f9b49697267b44ed7769d83bb}{bt} = nullptr
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W$>$class B\-Tree$<$ W $>$}
+
+Build and update binary tree. 
+
+All the prefixes of length \$k\$ are located in the \$k\$-\/th level of the binary tree. A search start from the root node and branch to the higher levels by checking bits in the given I\-P address. 
+\begin{DoxyParams}{Parameters}
+{\em W} & 32 for I\-P\-V4 and 128 for I\-P\-V6 \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classBTree_a01d338c5749bb49768463706d9d2141c}{\index{B\-Tree@{B\-Tree}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!BTree@{B\-Tree}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf B\-Tree}$<$ {\bf W} $>$\-::{\bf ip\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classBTree_a01d338c5749bb49768463706d9d2141c}
+\hypertarget{classBTree_a6868250b9b4cb60d672f2c83be3889f4}{\index{B\-Tree@{B\-Tree}!node\-\_\-type@{node\-\_\-type}}
+\index{node\-\_\-type@{node\-\_\-type}!BTree@{B\-Tree}}
+\subsubsection[{node\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ typedef {\bf B\-Node}$<${\bf W}$>$ {\bf B\-Tree}$<$ {\bf W} $>$\-::{\bf node\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classBTree_a6868250b9b4cb60d672f2c83be3889f4}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classBTree_aa7f14edbaae29d2c8c3f8ebfd30e8455}{\index{B\-Tree@{B\-Tree}!B\-Tree@{B\-Tree}}
+\index{B\-Tree@{B\-Tree}!BTree@{B\-Tree}}
+\subsubsection[{B\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf B\-Tree}$<$ {\bf W} $>$\-::{\bf B\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classBTree_aa7f14edbaae29d2c8c3f8ebfd30e8455}
+
+
+default ctor 
+
+\hypertarget{classBTree_a49aaa6a1c73bae5e3e71c4e9e49e6fe1}{\index{B\-Tree@{B\-Tree}!B\-Tree@{B\-Tree}}
+\index{B\-Tree@{B\-Tree}!BTree@{B\-Tree}}
+\subsubsection[{B\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf B\-Tree}$<$ {\bf W} $>$\-::{\bf B\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const {\bf B\-Tree}$<$ {\bf W} $>$ \&}]{\-\_\-bt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classBTree_a49aaa6a1c73bae5e3e71c4e9e49e6fe1}
+
+
+disble copy-\/ctor 
+
+\hypertarget{classBTree_ac5bace99cce39dcd0ad309912ac7e758}{\index{B\-Tree@{B\-Tree}!$\sim$\-B\-Tree@{$\sim$\-B\-Tree}}
+\index{$\sim$\-B\-Tree@{$\sim$\-B\-Tree}!BTree@{B\-Tree}}
+\subsubsection[{$\sim$\-B\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf B\-Tree}$<$ {\bf W} $>$\-::$\sim${\bf B\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classBTree_ac5bace99cce39dcd0ad309912ac7e758}
+
+
+dtor 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classBTree_a454d071612286f059eeed1de015a0705}{\index{B\-Tree@{B\-Tree}!build@{build}}
+\index{build@{build}!BTree@{B\-Tree}}
+\subsubsection[{build}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf B\-Tree}$<$ {\bf W} $>$\-::build (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-fn}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classBTree_a454d071612286f059eeed1de015a0705}
+
+
+build \hyperlink{classBTree}{B\-Tree} for B\-G\-P table 
+
+note that we represent the nexthop information by length (for test only) \hypertarget{classBTree_ab4a07c1c6df85fb7d74f9f40b6c4aea7}{\index{B\-Tree@{B\-Tree}!del@{del}}
+\index{del@{del}!BTree@{B\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ $\ast$ void {\bf B\-Tree}$<$ {\bf W} $>$\-::del (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classBTree_ab4a07c1c6df85fb7d74f9f40b6c4aea7}
+
+
+delete a prefix. 
+
+The idea is to first find the location of the prefix node in btree (if any) and then conduct the delete operation according to two cases\-: (1) a leaf node, then delete the node and recursively check if the parent node is required to be deleted; (2) a non-\/leaf node, then clear the nexthop field if not empty. \begin{DoxyNote}{Note}
+The prefix is assumed not to be 
+\end{DoxyNote}
+\hypertarget{classBTree_a15b494cc96ba42c55fac37b242c20d9f}{\index{B\-Tree@{B\-Tree}!destroy@{destroy}}
+\index{destroy@{destroy}!BTree@{B\-Tree}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf B\-Tree}$<$ {\bf W} $>$\-::destroy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classBTree_a15b494cc96ba42c55fac37b242c20d9f}
+
+
+destroy btree to free memory (bridth-\/first order) 
+
+\hypertarget{classBTree_a242001054313db865876bda2ebcd274e}{\index{B\-Tree@{B\-Tree}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!BTree@{B\-Tree}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf B\-Tree}$<$ {\bf W} $>$ $\ast$ {\bf B\-Tree}$<$ {\bf W} $>$\-::get\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classBTree_a242001054313db865876bda2ebcd274e}
+
+
+create an instance of \hyperlink{classBTree}{B\-Tree} if not yet instantiated; otherwise, return the instance. 
+
+\hypertarget{classBTree_a6b031aeb6296d188f86a4de271184458}{\index{B\-Tree@{B\-Tree}!get\-Level\-Node\-Num@{get\-Level\-Node\-Num}}
+\index{get\-Level\-Node\-Num@{get\-Level\-Node\-Num}!BTree@{B\-Tree}}
+\subsubsection[{get\-Level\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf uint32} {\bf B\-Tree}$<$ {\bf W} $>$\-::get\-Level\-Node\-Num (
+\begin{DoxyParamCaption}
+\item[{const int}]{\-\_\-level}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classBTree_a6b031aeb6296d188f86a4de271184458}
+
+
+get number of nodes in a level 
+
+\hypertarget{classBTree_a5aa850fb6057b56803556533104fa762}{\index{B\-Tree@{B\-Tree}!ins@{ins}}
+\index{ins@{ins}!BTree@{B\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf B\-Tree}$<$ {\bf W} $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf node\-\_\-type} $\ast$}]{\-\_\-pnode, }
+\item[{const int}]{\-\_\-level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classBTree_a5aa850fb6057b56803556533104fa762}
+
+
+insert a prefix 
+
+\hypertarget{classBTree_a27e5bd2681163797a7bb5cb2d8dbcd08}{\index{B\-Tree@{B\-Tree}!operator=@{operator=}}
+\index{operator=@{operator=}!BTree@{B\-Tree}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf B\-Tree}\& {\bf B\-Tree}$<$ {\bf W} $>$\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf B\-Tree}$<$ {\bf W} $>$ \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classBTree_a27e5bd2681163797a7bb5cb2d8dbcd08}
+
+
+disable assignment op 
+
+\hypertarget{classBTree_a5f59b125f5a9cca15da6382f591925d5}{\index{B\-Tree@{B\-Tree}!print\-Node@{print\-Node}}
+\index{print\-Node@{print\-Node}!BTree@{B\-Tree}}
+\subsubsection[{print\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf B\-Tree}$<$ {\bf W} $>$\-::print\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf node\-\_\-type} $\ast$}]{\-\_\-node}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classBTree_a5f59b125f5a9cca15da6382f591925d5}
+
+
+print a node 
+
+\hypertarget{classBTree_a9038cb74603e7611e66b8e40418427ad}{\index{B\-Tree@{B\-Tree}!search@{search}}
+\index{search@{search}!BTree@{B\-Tree}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf uint32} {\bf B\-Tree}$<$ {\bf W} $>$\-::search (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-ip}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classBTree_a9038cb74603e7611e66b8e40418427ad}
+
+
+search the L\-P\-M for the given I\-P address 
+
+\hypertarget{classBTree_a47bc53476d89b85f4e73eee488fe9e44}{\index{B\-Tree@{B\-Tree}!traverse@{traverse}}
+\index{traverse@{traverse}!BTree@{B\-Tree}}
+\subsubsection[{traverse}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf B\-Tree}$<$ {\bf W} $>$\-::traverse (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classBTree_a47bc53476d89b85f4e73eee488fe9e44}
+
+
+traverse bt in bridth-\/first order 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classBTree_abb6c1b3f9b49697267b44ed7769d83bb}{\index{B\-Tree@{B\-Tree}!bt@{bt}}
+\index{bt@{bt}!BTree@{B\-Tree}}
+\subsubsection[{bt}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf B\-Tree}$<$ {\bf W} $>$ $\ast$ {\bf B\-Tree}$<$ {\bf W} $>$\-::bt = nullptr\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}}\label{classBTree_abb6c1b3f9b49697267b44ed7769d83bb}
+\hypertarget{classBTree_add8631b7a3146b921cc78e9c462b6ca0}{\index{B\-Tree@{B\-Tree}!levelnodenum@{levelnodenum}}
+\index{levelnodenum@{levelnodenum}!BTree@{B\-Tree}}
+\subsubsection[{levelnodenum}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf uint32} {\bf B\-Tree}$<$ {\bf W} $>$\-::levelnodenum\mbox{[}{\bf W}+1\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classBTree_add8631b7a3146b921cc78e9c462b6ca0}
+
+
+root node contains $\ast$/0 and locates at level 0 
+
+\hypertarget{classBTree_a2a4d4cc686f03e8685f5271484385772}{\index{B\-Tree@{B\-Tree}!nodenum@{nodenum}}
+\index{nodenum@{nodenum}!BTree@{B\-Tree}}
+\subsubsection[{nodenum}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf uint32} {\bf B\-Tree}$<$ {\bf W} $>$\-::nodenum\hspace{0.3cm}{\ttfamily [private]}}}\label{classBTree_a2a4d4cc686f03e8685f5271484385772}
+
+
+node num 
+
+\hypertarget{classBTree_a813c0a8e677ed4e0dd3a49da8031782b}{\index{B\-Tree@{B\-Tree}!root@{root}}
+\index{root@{root}!BTree@{B\-Tree}}
+\subsubsection[{root}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf node\-\_\-type}$\ast$ {\bf B\-Tree}$<$ {\bf W} $>$\-::root\hspace{0.3cm}{\ttfamily [private]}}}\label{classBTree_a813c0a8e677ed4e0dd3a49da8031782b}
+
+
+ptr to root 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{btree_8h}{btree.\-h}\end{DoxyCompactItemize}

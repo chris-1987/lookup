@@ -1,0 +1,82 @@
+\hypertarget{structRanSched_1_1ReqQue}{\section{Ran\-Sched$<$ W, K, S $>$\-:\-:Req\-Que Struct Reference}
+\label{structRanSched_1_1ReqQue}\index{Ran\-Sched$<$ W, K, S $>$\-::\-Req\-Que@{Ran\-Sched$<$ W, K, S $>$\-::\-Req\-Que}}
+}
+
+
+request queue  
+
+
+
+
+{\ttfamily \#include $<$ransched.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{structRanSched_1_1ReqQue_a27576b7c3776b186315f880353647abb}{is\-Empty} ()
+\begin{DoxyCompactList}\small\item\em check if queue is empty \end{DoxyCompactList}\item 
+bool \hyperlink{structRanSched_1_1ReqQue_a4f1e73e363637215d681d79b0689720a}{is\-Overflow} ()
+\begin{DoxyCompactList}\small\item\em check if queue is overflow \end{DoxyCompactList}\item 
+void \hyperlink{structRanSched_1_1ReqQue_a56028232fc5467320506aba6d63ca476}{append} (\hyperlink{structRanSched_1_1Request}{Request} $\ast$\-\_\-req)
+\begin{DoxyCompactList}\small\item\em append a request to the end of the queue \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\-::vector$<$ \hyperlink{structRanSched_1_1Request}{Request} $\ast$ $>$ \hyperlink{structRanSched_1_1ReqQue_afffb020b5e1c36b3c9746252cee7ec7e}{m\-Data}
+\begin{DoxyCompactList}\small\item\em payload \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$struct Ran\-Sched$<$ W, K, S $>$\-::\-Req\-Que}
+
+request queue 
+
+\subsection{Member Function Documentation}
+\hypertarget{structRanSched_1_1ReqQue_a56028232fc5467320506aba6d63ca476}{\index{Ran\-Sched\-::\-Req\-Que@{Ran\-Sched\-::\-Req\-Que}!append@{append}}
+\index{append@{append}!RanSched::ReqQue@{Ran\-Sched\-::\-Req\-Que}}
+\subsubsection[{append}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ void {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::Req\-Que\-::append (
+\begin{DoxyParamCaption}
+\item[{{\bf Request} $\ast$}]{\-\_\-req}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structRanSched_1_1ReqQue_a56028232fc5467320506aba6d63ca476}
+
+
+append a request to the end of the queue 
+
+\hypertarget{structRanSched_1_1ReqQue_a27576b7c3776b186315f880353647abb}{\index{Ran\-Sched\-::\-Req\-Que@{Ran\-Sched\-::\-Req\-Que}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!RanSched::ReqQue@{Ran\-Sched\-::\-Req\-Que}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ bool {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::Req\-Que\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structRanSched_1_1ReqQue_a27576b7c3776b186315f880353647abb}
+
+
+check if queue is empty 
+
+\hypertarget{structRanSched_1_1ReqQue_a4f1e73e363637215d681d79b0689720a}{\index{Ran\-Sched\-::\-Req\-Que@{Ran\-Sched\-::\-Req\-Que}!is\-Overflow@{is\-Overflow}}
+\index{is\-Overflow@{is\-Overflow}!RanSched::ReqQue@{Ran\-Sched\-::\-Req\-Que}}
+\subsubsection[{is\-Overflow}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ bool {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::Req\-Que\-::is\-Overflow (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structRanSched_1_1ReqQue_a4f1e73e363637215d681d79b0689720a}
+
+
+check if queue is overflow 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structRanSched_1_1ReqQue_afffb020b5e1c36b3c9746252cee7ec7e}{\index{Ran\-Sched\-::\-Req\-Que@{Ran\-Sched\-::\-Req\-Que}!m\-Data@{m\-Data}}
+\index{m\-Data@{m\-Data}!RanSched::ReqQue@{Ran\-Sched\-::\-Req\-Que}}
+\subsubsection[{m\-Data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int S = Q\-U\-E\-U\-E\-S\-I\-Z\-E$>$ std\-::vector$<${\bf Request}$\ast$$>$ {\bf Ran\-Sched}$<$ {\bf W}, K, S $>$\-::Req\-Que\-::m\-Data}}\label{structRanSched_1_1ReqQue_afffb020b5e1c36b3c9746252cee7ec7e}
+
+
+payload 
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/scheduler/\hyperlink{ransched_8h}{ransched.\-h}\end{DoxyCompactItemize}

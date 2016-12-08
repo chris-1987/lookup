@@ -1,0 +1,154 @@
+\hypertarget{structFastTable}{\section{Fast\-Table$<$ W, U, V $>$ Struct Template Reference}
+\label{structFastTable}\index{Fast\-Table$<$ W, U, V $>$@{Fast\-Table$<$ W, U, V $>$}}
+}
+
+
+A fast lookup table for storing prefixes shorter than U bits.  
+
+
+
+
+{\ttfamily \#include $<$fasttable.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structFastTable_1_1Entry}{Entry}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structFastTable_1_1Entry}{Entry} in the fast lookup table. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structFastTable_a10383971aad3975696c61f0780f69efd}{Fast\-Table} ()
+\begin{DoxyCompactList}\small\item\em default ctor \end{DoxyCompactList}\item 
+void \hyperlink{structFastTable_ab9d928e0b9527765ba0bcea283517ae6}{ins} (const \hyperlink{structFastTable_ab9dad4b2ee8234f75a7bb5da2331b6e5}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop)
+\begin{DoxyCompactList}\small\item\em insert a prefix \end{DoxyCompactList}\item 
+void \hyperlink{structFastTable_a7c581dc2325ef31797fd302f51163d38}{del} (const \hyperlink{structFastTable_ab9dad4b2ee8234f75a7bb5da2331b6e5}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length)
+\begin{DoxyCompactList}\small\item\em delete a prefix \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{structFastTable_ae63321e3ae1875e9c6b8908f4cea3fe3}{search} (const \hyperlink{structFastTable_ab9dad4b2ee8234f75a7bb5da2331b6e5}{ip\-\_\-type} \&\-\_\-prefix)
+\begin{DoxyCompactList}\small\item\em search a prefix \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structFastTable_1_1Entry}{Entry} \hyperlink{structFastTable_acf2546d8e79d9eaced3d19a1dc842fb9}{m\-Entries} \mbox{[}V\mbox{]}
+\begin{DoxyCompactList}\small\item\em V entries. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{structFastTable_ab9dad4b2ee8234f75a7bb5da2331b6e5}{ip\-\_\-type} \hyperlink{structFastTable_ab9dad4b2ee8234f75a7bb5da2331b6e5}{ip\-\_\-type}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structFastTable_a5a27a8e518689de1ad72459037c8281e}{Fast\-Table} (const \hyperlink{structFastTable}{Fast\-Table} \&\-\_\-ft)=delete
+\begin{DoxyCompactList}\small\item\em disable copy ctor \end{DoxyCompactList}\item 
+\hyperlink{structFastTable}{Fast\-Table} \& \hyperlink{structFastTable_afdf153dd5c7092d64ca93f2192b770a0}{operator=} (const \hyperlink{structFastTable}{Fast\-Table} \&\-\_\-ft)=delete
+\begin{DoxyCompactList}\small\item\em disable copy assignment \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$struct Fast\-Table$<$ W, U, V $>$}
+
+A fast lookup table for storing prefixes shorter than U bits. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em U} & A threshold value, assumed to be a multiple of 2. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structFastTable_ab9dad4b2ee8234f75a7bb5da2331b6e5}{\index{Fast\-Table@{Fast\-Table}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!FastTable@{Fast\-Table}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf Fast\-Table}$<$ {\bf W}, U, V $>$\-::{\bf ip\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{structFastTable_ab9dad4b2ee8234f75a7bb5da2331b6e5}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structFastTable_a5a27a8e518689de1ad72459037c8281e}{\index{Fast\-Table@{Fast\-Table}!Fast\-Table@{Fast\-Table}}
+\index{Fast\-Table@{Fast\-Table}!FastTable@{Fast\-Table}}
+\subsubsection[{Fast\-Table}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf Fast\-Table}$<$ {\bf W}, U, V $>$\-::{\bf Fast\-Table} (
+\begin{DoxyParamCaption}
+\item[{const {\bf Fast\-Table}$<$ {\bf W}, U, V $>$ \&}]{\-\_\-ft}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{structFastTable_a5a27a8e518689de1ad72459037c8281e}
+
+
+disable copy ctor 
+
+\hypertarget{structFastTable_a10383971aad3975696c61f0780f69efd}{\index{Fast\-Table@{Fast\-Table}!Fast\-Table@{Fast\-Table}}
+\index{Fast\-Table@{Fast\-Table}!FastTable@{Fast\-Table}}
+\subsubsection[{Fast\-Table}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf Fast\-Table}$<$ {\bf W}, U, V $>$\-::{\bf Fast\-Table} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structFastTable_a10383971aad3975696c61f0780f69efd}
+
+
+default ctor 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structFastTable_a7c581dc2325ef31797fd302f51163d38}{\index{Fast\-Table@{Fast\-Table}!del@{del}}
+\index{del@{del}!FastTable@{Fast\-Table}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf Fast\-Table}$<$ {\bf W}, U, V $>$\-::del (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structFastTable_a7c581dc2325ef31797fd302f51163d38}
+
+
+delete a prefix 
+
+\hypertarget{structFastTable_ab9d928e0b9527765ba0bcea283517ae6}{\index{Fast\-Table@{Fast\-Table}!ins@{ins}}
+\index{ins@{ins}!FastTable@{Fast\-Table}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ void {\bf Fast\-Table}$<$ {\bf W}, U, V $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structFastTable_ab9d928e0b9527765ba0bcea283517ae6}
+
+
+insert a prefix 
+
+\hypertarget{structFastTable_afdf153dd5c7092d64ca93f2192b770a0}{\index{Fast\-Table@{Fast\-Table}!operator=@{operator=}}
+\index{operator=@{operator=}!FastTable@{Fast\-Table}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf Fast\-Table}\& {\bf Fast\-Table}$<$ {\bf W}, U, V $>$\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Fast\-Table}$<$ {\bf W}, U, V $>$ \&}]{\-\_\-ft}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{structFastTable_afdf153dd5c7092d64ca93f2192b770a0}
+
+
+disable copy assignment 
+
+\hypertarget{structFastTable_ae63321e3ae1875e9c6b8908f4cea3fe3}{\index{Fast\-Table@{Fast\-Table}!search@{search}}
+\index{search@{search}!FastTable@{Fast\-Table}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf uint32} {\bf Fast\-Table}$<$ {\bf W}, U, V $>$\-::search (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structFastTable_ae63321e3ae1875e9c6b8908f4cea3fe3}
+
+
+search a prefix 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structFastTable_acf2546d8e79d9eaced3d19a1dc842fb9}{\index{Fast\-Table@{Fast\-Table}!m\-Entries@{m\-Entries}}
+\index{m\-Entries@{m\-Entries}!FastTable@{Fast\-Table}}
+\subsubsection[{m\-Entries}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int U, size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U))$>$ {\bf Entry} {\bf Fast\-Table}$<$ {\bf W}, U, V $>$\-::m\-Entries\mbox{[}V\mbox{]}}}\label{structFastTable_acf2546d8e79d9eaced3d19a1dc842fb9}
+
+
+V entries. 
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{fasttable_8h}{fasttable.\-h}\end{DoxyCompactItemize}

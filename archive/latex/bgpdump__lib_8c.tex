@@ -1,0 +1,439 @@
+\hypertarget{bgpdump__lib_8c}{\section{/home/chris/lookup/code/external/bgpdump/bgpdump\-\_\-lib.c File Reference}
+\label{bgpdump__lib_8c}\index{/home/chris/lookup/code/external/bgpdump/bgpdump\-\_\-lib.\-c@{/home/chris/lookup/code/external/bgpdump/bgpdump\-\_\-lib.\-c}}
+}
+{\ttfamily \#include \char`\"{}bgpdump-\/config.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}cfile\-\_\-tools.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}bgpdump\-\_\-lib.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}bgpdump\-\_\-mstream.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}util.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$sys/stat.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
+{\ttfamily \#include $<$stdbool.\-h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\-h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\-h$>$}\\*
+{\ttfamily \#include $<$arpa/inet.\-h$>$}\\*
+{\ttfamily \#include $<$zlib.\-h$>$}\\*
+{\ttfamily \#include $<$assert.\-h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{bgpdump__lib_8c_a0f33581799d70a91dde7f192e46a7628}{bgpdump\-\_\-free\-\_\-attr} (\hyperlink{bgpdump__attr_8h_a851314552296238881b06768eb835f95}{attributes\-\_\-t} $\ast$\hyperlink{bgpdump__attr_8h_structattr}{attr})
+\item 
+static \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$ \hyperlink{bgpdump__lib_8c_a817f00af742d74d0885b7d053ffee2e1}{bgpdump\-\_\-entry\-\_\-create} (\hyperlink{bgpdump__lib_8h_a28770005952f90e82b98ce26c64e62e4}{B\-G\-P\-D\-U\-M\-P} $\ast$dump)
+\item 
+static int \hyperlink{bgpdump__lib_8c_aac7bd0cd76e1b458afc89ce381ed176c}{process\-\_\-mrtd\-\_\-bgp} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static int \hyperlink{bgpdump__lib_8c_a63230507772a92084fc56b0da4bf9298}{process\-\_\-mrtd\-\_\-table\-\_\-dump} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static int \hyperlink{bgpdump__lib_8c_ad660a80972197a6a6c8ef49e64895363}{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static int \hyperlink{bgpdump__lib_8c_a207561a6a7cb5f4ea55b1e6a6686c58f}{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-peer\-\_\-index\-\_\-table} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static int \hyperlink{bgpdump__lib_8c_a656e5da6f3e58a6d29ae126230edc35d}{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv4\-\_\-unicast} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static int \hyperlink{bgpdump__lib_8c_a4bde017f094b997acc07daf5814a0ca6}{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv6\-\_\-unicast} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static int \hyperlink{bgpdump__lib_8c_a09b48825905c2660ec749ae143839ccc}{process\-\_\-zebra\-\_\-bgp} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static int \hyperlink{bgpdump__lib_8c_ada7a6cb4fa7435cb2e5518c29555f529}{process\-\_\-zebra\-\_\-bgp\-\_\-state\-\_\-change} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, u\-\_\-int8\-\_\-t asn\-\_\-len)
+\item 
+static int \hyperlink{bgpdump__lib_8c_ad4dc3286835b26b8ba0ff75cefafbb1c}{process\-\_\-zebra\-\_\-bgp\-\_\-message} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, u\-\_\-int8\-\_\-t asn\-\_\-len)
+\item 
+static int \hyperlink{bgpdump__lib_8c_a0c54cfe20e0bd4cc239227704f7c3c09}{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-update} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, u\-\_\-int8\-\_\-t asn\-\_\-len)
+\item 
+static int \hyperlink{bgpdump__lib_8c_a74a02888f1082c0f567c7d2242193395}{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-open} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, u\-\_\-int8\-\_\-t asn\-\_\-len)
+\item 
+static int \hyperlink{bgpdump__lib_8c_abd661a516199c3d890c8dae4046afe92}{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-notify} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static int \hyperlink{bgpdump__lib_8c_aa654ad5ffbbea3ad423b7530067f1788}{process\-\_\-zebra\-\_\-bgp\-\_\-entry} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static int \hyperlink{bgpdump__lib_8c_a55eb6da3b6367bfd45ce9cb32beceb4b}{process\-\_\-zebra\-\_\-bgp\-\_\-snapshot} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static \hyperlink{bgpdump__attr_8h_a851314552296238881b06768eb835f95}{attributes\-\_\-t} $\ast$ \hyperlink{bgpdump__lib_8c_aa4e685bc0604436623864a994eda0065}{process\-\_\-attributes} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, u\-\_\-int8\-\_\-t asn\-\_\-len, struct \hyperlink{bgpdump__formats_8h_structzebra__incomplete}{zebra\-\_\-incomplete} $\ast$incomplete, int is\-\_\-addp)
+\item 
+static void \hyperlink{bgpdump__lib_8c_acfc188d91896aad896b01e956d1c348b}{process\-\_\-attr\-\_\-aspath\-\_\-string} (struct \hyperlink{bgpdump__attr_8h_structaspath}{aspath} $\ast$as)
+\item 
+static char \hyperlink{bgpdump__lib_8c_a94f355b95e928a48f8db95942034d0d5}{aspath\-\_\-delimiter\-\_\-char} (u\-\_\-char type, u\-\_\-char which)
+\item 
+static void \hyperlink{bgpdump__lib_8c_a49a6b6cdbe90993e0734985ae9e330b3}{process\-\_\-attr\-\_\-community\-\_\-string} (struct \hyperlink{bgpdump__attr_8h_structcommunity}{community} $\ast$com)
+\item 
+static void \hyperlink{bgpdump__lib_8c_a6acf5b9afb042c07f7459bab3dda720d}{process\-\_\-mp\-\_\-announce} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, struct \hyperlink{bgpdump__attr_8h_structmp__info}{mp\-\_\-info} $\ast$info, struct \hyperlink{bgpdump__formats_8h_structzebra__incomplete}{zebra\-\_\-incomplete} $\ast$incomplete, int is\-\_\-addp)
+\item 
+static void \hyperlink{bgpdump__lib_8c_a80cd4e4c0d6f32a3678bf8626492a6a6}{process\-\_\-mp\-\_\-withdraw} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, struct \hyperlink{bgpdump__attr_8h_structmp__info}{mp\-\_\-info} $\ast$info, struct \hyperlink{bgpdump__formats_8h_structzebra__incomplete}{zebra\-\_\-incomplete} $\ast$incomplete, int is\-\_\-addp)
+\item 
+static int \hyperlink{bgpdump__lib_8c_ab9a0382836b9be63ecbb34411590d72e}{read\-\_\-prefix\-\_\-list} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, u\-\_\-int16\-\_\-t af, struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$prefixes, struct \hyperlink{bgpdump__formats_8h_structzebra__incomplete}{zebra\-\_\-incomplete} $\ast$incomplete, int is\-\_\-addp)
+\item 
+static \hyperlink{bgpdump__attr_8h_ae54756b75cc699532543e4e2214c1c57}{as\-\_\-t} \hyperlink{bgpdump__lib_8c_ac5e2ba41edb5b0bae3906d6ba40f699e}{read\-\_\-asn} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, u\-\_\-int8\-\_\-t len)
+\item 
+static struct \hyperlink{bgpdump__attr_8h_structaspath}{aspath} $\ast$ \hyperlink{bgpdump__lib_8c_a3f6f2cc40822e59bf0fc5f05d415c810}{create\-\_\-aspath} (u\-\_\-int16\-\_\-t len, u\-\_\-int8\-\_\-t asn\-\_\-len)
+\item 
+static void \hyperlink{bgpdump__lib_8c_a77df76982b1508da7a27e88efa42e77c}{aspath\-\_\-error} (struct \hyperlink{bgpdump__attr_8h_structaspath}{aspath} $\ast$as)
+\item 
+static int \hyperlink{bgpdump__lib_8c_a96300a23c27594cc5581b6c6516321e2}{check\-\_\-new\-\_\-aspath} (struct \hyperlink{bgpdump__attr_8h_structaspath}{aspath} $\ast$\hyperlink{bgpdump__attr_8h_structaspath}{aspath})
+\item 
+static void \hyperlink{bgpdump__lib_8c_a91fcb942473542e27557669fa45d3433}{process\-\_\-asn32\-\_\-trans} (\hyperlink{bgpdump__attr_8h_a851314552296238881b06768eb835f95}{attributes\-\_\-t} $\ast$\hyperlink{bgpdump__attr_8h_structattr}{attr}, u\-\_\-int8\-\_\-t asn\-\_\-len)
+\item 
+static struct \hyperlink{bgpdump__attr_8h_structaspath}{aspath} $\ast$ \hyperlink{bgpdump__lib_8c_a20c52c0b0416f90f5d78ed94e7df92e6}{asn32\-\_\-merge\-\_\-paths} (struct \hyperlink{bgpdump__attr_8h_structaspath}{aspath} $\ast$path, struct \hyperlink{bgpdump__attr_8h_structaspath}{aspath} $\ast$newpath)
+\item 
+static void \hyperlink{bgpdump__lib_8c_a656d5b6d4404faa2c5c5523329509158}{asn32\-\_\-expand\-\_\-16\-\_\-to\-\_\-32} (char $\ast$dst, char $\ast$src, int len)
+\item 
+char $\ast$ \hyperlink{bgpdump__lib_8c_a71fb66f4bf94b9c6d579d6f4aff274df}{bgpdump\-\_\-version} (void)
+\item 
+\hyperlink{bgpdump__lib_8h_a28770005952f90e82b98ce26c64e62e4}{B\-G\-P\-D\-U\-M\-P} $\ast$ \hyperlink{bgpdump__lib_8c_a371380fe52effb66a6e1bbefcc467439}{bgpdump\-\_\-open\-\_\-dump} (const char $\ast$filename)
+\item 
+void \hyperlink{bgpdump__lib_8c_a7895ccf273fce794f60b20e130b1a48c}{bgpdump\-\_\-close\-\_\-dump} (\hyperlink{bgpdump__lib_8h_a28770005952f90e82b98ce26c64e62e4}{B\-G\-P\-D\-U\-M\-P} $\ast$dump)
+\item 
+\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$ \hyperlink{bgpdump__lib_8c_a30cd62509f7f432b62dc8da78d4ecf4e}{bgpdump\-\_\-read\-\_\-next} (\hyperlink{bgpdump__lib_8h_a28770005952f90e82b98ce26c64e62e4}{B\-G\-P\-D\-U\-M\-P} $\ast$dump)
+\item 
+static void \hyperlink{bgpdump__lib_8c_a0cd41957a5558a739fdd72576a8791a7}{bgpdump\-\_\-free\-\_\-mp\-\_\-info} (struct \hyperlink{bgpdump__attr_8h_structmp__info}{mp\-\_\-info} $\ast$info)
+\item 
+void \hyperlink{bgpdump__lib_8c_a2154a2b1764ca858e9b1832fdcf52dd3}{bgpdump\-\_\-free\-\_\-mem} (\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+int \hyperlink{bgpdump__lib_8c_ac425c92f31c69b5f67b6d038122dd699}{is\-\_\-addpath} (\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static \hyperlink{bgpdump__attr_8h_a851314552296238881b06768eb835f95}{attributes\-\_\-t} $\ast$ \hyperlink{bgpdump__lib_8c_aab765b0c44af7d3498fe074c30207c84}{attr\-\_\-init} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, int len)
+\item 
+static void \hyperlink{bgpdump__lib_8c_a1e9905c547bdd09cdf3df20832be92b9}{process\-\_\-unknown\-\_\-attr} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s, \hyperlink{bgpdump__attr_8h_a851314552296238881b06768eb835f95}{attributes\-\_\-t} $\ast$\hyperlink{bgpdump__attr_8h_structattr}{attr}, int flag, int type, int len)
+\item 
+static void \hyperlink{bgpdump__lib_8c_acee393e398a9ef3690662d3811d13138}{process\-\_\-one\-\_\-attr} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$outer\-\_\-stream, \hyperlink{bgpdump__attr_8h_a851314552296238881b06768eb835f95}{attributes\-\_\-t} $\ast$\hyperlink{bgpdump__attr_8h_structattr}{attr}, u\-\_\-int8\-\_\-t asn\-\_\-len, struct \hyperlink{bgpdump__formats_8h_structzebra__incomplete}{zebra\-\_\-incomplete} $\ast$incomplete, int is\-\_\-addp)
+\item 
+static struct \hyperlink{bgpdump__attr_8h_structmp__nlri}{mp\-\_\-nlri} $\ast$ \hyperlink{bgpdump__lib_8c_a3c20a37cb98101810115f7d081cba96a}{get\-\_\-nexthop} (struct \hyperlink{bgpdump__mstream_8h_structmstream}{mstream} $\ast$s)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{bgpdump__lib_8c_a656d5b6d4404faa2c5c5523329509158}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!asn32\-\_\-expand\-\_\-16\-\_\-to\-\_\-32@{asn32\-\_\-expand\-\_\-16\-\_\-to\-\_\-32}}
+\index{asn32\-\_\-expand\-\_\-16\-\_\-to\-\_\-32@{asn32\-\_\-expand\-\_\-16\-\_\-to\-\_\-32}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{asn32\-\_\-expand\-\_\-16\-\_\-to\-\_\-32}]{\setlength{\rightskip}{0pt plus 5cm}void asn32\-\_\-expand\-\_\-16\-\_\-to\-\_\-32 (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{dst, }
+\item[{char $\ast$}]{src, }
+\item[{int}]{len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a656d5b6d4404faa2c5c5523329509158}
+\hypertarget{bgpdump__lib_8c_a20c52c0b0416f90f5d78ed94e7df92e6}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!asn32\-\_\-merge\-\_\-paths@{asn32\-\_\-merge\-\_\-paths}}
+\index{asn32\-\_\-merge\-\_\-paths@{asn32\-\_\-merge\-\_\-paths}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{asn32\-\_\-merge\-\_\-paths}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf aspath} $\ast$ asn32\-\_\-merge\-\_\-paths (
+\begin{DoxyParamCaption}
+\item[{struct {\bf aspath} $\ast$}]{path, }
+\item[{struct {\bf aspath} $\ast$}]{newpath}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a20c52c0b0416f90f5d78ed94e7df92e6}
+\hypertarget{bgpdump__lib_8c_a94f355b95e928a48f8db95942034d0d5}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!aspath\-\_\-delimiter\-\_\-char@{aspath\-\_\-delimiter\-\_\-char}}
+\index{aspath\-\_\-delimiter\-\_\-char@{aspath\-\_\-delimiter\-\_\-char}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{aspath\-\_\-delimiter\-\_\-char}]{\setlength{\rightskip}{0pt plus 5cm}char aspath\-\_\-delimiter\-\_\-char (
+\begin{DoxyParamCaption}
+\item[{u\-\_\-char}]{type, }
+\item[{u\-\_\-char}]{which}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a94f355b95e928a48f8db95942034d0d5}
+\hypertarget{bgpdump__lib_8c_a77df76982b1508da7a27e88efa42e77c}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!aspath\-\_\-error@{aspath\-\_\-error}}
+\index{aspath\-\_\-error@{aspath\-\_\-error}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{aspath\-\_\-error}]{\setlength{\rightskip}{0pt plus 5cm}void aspath\-\_\-error (
+\begin{DoxyParamCaption}
+\item[{struct {\bf aspath} $\ast$}]{as}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a77df76982b1508da7a27e88efa42e77c}
+\hypertarget{bgpdump__lib_8c_aab765b0c44af7d3498fe074c30207c84}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!attr\-\_\-init@{attr\-\_\-init}}
+\index{attr\-\_\-init@{attr\-\_\-init}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{attr\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf attributes\-\_\-t}$\ast$ attr\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{int}]{len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_aab765b0c44af7d3498fe074c30207c84}
+\hypertarget{bgpdump__lib_8c_a7895ccf273fce794f60b20e130b1a48c}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!bgpdump\-\_\-close\-\_\-dump@{bgpdump\-\_\-close\-\_\-dump}}
+\index{bgpdump\-\_\-close\-\_\-dump@{bgpdump\-\_\-close\-\_\-dump}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{bgpdump\-\_\-close\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}void bgpdump\-\_\-close\-\_\-dump (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P} $\ast$}]{dump}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8c_a7895ccf273fce794f60b20e130b1a48c}
+\hypertarget{bgpdump__lib_8c_a817f00af742d74d0885b7d053ffee2e1}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!bgpdump\-\_\-entry\-\_\-create@{bgpdump\-\_\-entry\-\_\-create}}
+\index{bgpdump\-\_\-entry\-\_\-create@{bgpdump\-\_\-entry\-\_\-create}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{bgpdump\-\_\-entry\-\_\-create}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$ bgpdump\-\_\-entry\-\_\-create (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P} $\ast$}]{dump}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a817f00af742d74d0885b7d053ffee2e1}
+\hypertarget{bgpdump__lib_8c_a0f33581799d70a91dde7f192e46a7628}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!bgpdump\-\_\-free\-\_\-attr@{bgpdump\-\_\-free\-\_\-attr}}
+\index{bgpdump\-\_\-free\-\_\-attr@{bgpdump\-\_\-free\-\_\-attr}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{bgpdump\-\_\-free\-\_\-attr}]{\setlength{\rightskip}{0pt plus 5cm}void bgpdump\-\_\-free\-\_\-attr (
+\begin{DoxyParamCaption}
+\item[{{\bf attributes\-\_\-t} $\ast$}]{attr}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8c_a0f33581799d70a91dde7f192e46a7628}
+\hypertarget{bgpdump__lib_8c_a2154a2b1764ca858e9b1832fdcf52dd3}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!bgpdump\-\_\-free\-\_\-mem@{bgpdump\-\_\-free\-\_\-mem}}
+\index{bgpdump\-\_\-free\-\_\-mem@{bgpdump\-\_\-free\-\_\-mem}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{bgpdump\-\_\-free\-\_\-mem}]{\setlength{\rightskip}{0pt plus 5cm}void bgpdump\-\_\-free\-\_\-mem (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8c_a2154a2b1764ca858e9b1832fdcf52dd3}
+\hypertarget{bgpdump__lib_8c_a0cd41957a5558a739fdd72576a8791a7}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!bgpdump\-\_\-free\-\_\-mp\-\_\-info@{bgpdump\-\_\-free\-\_\-mp\-\_\-info}}
+\index{bgpdump\-\_\-free\-\_\-mp\-\_\-info@{bgpdump\-\_\-free\-\_\-mp\-\_\-info}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{bgpdump\-\_\-free\-\_\-mp\-\_\-info}]{\setlength{\rightskip}{0pt plus 5cm}static void bgpdump\-\_\-free\-\_\-mp\-\_\-info (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mp\-\_\-info} $\ast$}]{info}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a0cd41957a5558a739fdd72576a8791a7}
+\hypertarget{bgpdump__lib_8c_a371380fe52effb66a6e1bbefcc467439}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!bgpdump\-\_\-open\-\_\-dump@{bgpdump\-\_\-open\-\_\-dump}}
+\index{bgpdump\-\_\-open\-\_\-dump@{bgpdump\-\_\-open\-\_\-dump}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{bgpdump\-\_\-open\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-G\-P\-D\-U\-M\-P}$\ast$ bgpdump\-\_\-open\-\_\-dump (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{filename}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8c_a371380fe52effb66a6e1bbefcc467439}
+\hypertarget{bgpdump__lib_8c_a30cd62509f7f432b62dc8da78d4ecf4e}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!bgpdump\-\_\-read\-\_\-next@{bgpdump\-\_\-read\-\_\-next}}
+\index{bgpdump\-\_\-read\-\_\-next@{bgpdump\-\_\-read\-\_\-next}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{bgpdump\-\_\-read\-\_\-next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y}$\ast$ bgpdump\-\_\-read\-\_\-next (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P} $\ast$}]{dump}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8c_a30cd62509f7f432b62dc8da78d4ecf4e}
+\hypertarget{bgpdump__lib_8c_a71fb66f4bf94b9c6d579d6f4aff274df}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!bgpdump\-\_\-version@{bgpdump\-\_\-version}}
+\index{bgpdump\-\_\-version@{bgpdump\-\_\-version}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{bgpdump\-\_\-version}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ bgpdump\-\_\-version (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8c_a71fb66f4bf94b9c6d579d6f4aff274df}
+\hypertarget{bgpdump__lib_8c_a96300a23c27594cc5581b6c6516321e2}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!check\-\_\-new\-\_\-aspath@{check\-\_\-new\-\_\-aspath}}
+\index{check\-\_\-new\-\_\-aspath@{check\-\_\-new\-\_\-aspath}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{check\-\_\-new\-\_\-aspath}]{\setlength{\rightskip}{0pt plus 5cm}int check\-\_\-new\-\_\-aspath (
+\begin{DoxyParamCaption}
+\item[{struct {\bf aspath} $\ast$}]{aspath}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a96300a23c27594cc5581b6c6516321e2}
+\hypertarget{bgpdump__lib_8c_a3f6f2cc40822e59bf0fc5f05d415c810}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!create\-\_\-aspath@{create\-\_\-aspath}}
+\index{create\-\_\-aspath@{create\-\_\-aspath}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{create\-\_\-aspath}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf aspath} $\ast$ create\-\_\-aspath (
+\begin{DoxyParamCaption}
+\item[{u\-\_\-int16\-\_\-t}]{len, }
+\item[{u\-\_\-int8\-\_\-t}]{asn\-\_\-len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a3f6f2cc40822e59bf0fc5f05d415c810}
+\hypertarget{bgpdump__lib_8c_a3c20a37cb98101810115f7d081cba96a}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!get\-\_\-nexthop@{get\-\_\-nexthop}}
+\index{get\-\_\-nexthop@{get\-\_\-nexthop}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{get\-\_\-nexthop}]{\setlength{\rightskip}{0pt plus 5cm}static struct {\bf mp\-\_\-nlri}$\ast$ get\-\_\-nexthop (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a3c20a37cb98101810115f7d081cba96a}
+\hypertarget{bgpdump__lib_8c_ac425c92f31c69b5f67b6d038122dd699}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!is\-\_\-addpath@{is\-\_\-addpath}}
+\index{is\-\_\-addpath@{is\-\_\-addpath}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{is\-\_\-addpath}]{\setlength{\rightskip}{0pt plus 5cm}int is\-\_\-addpath (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8c_ac425c92f31c69b5f67b6d038122dd699}
+\hypertarget{bgpdump__lib_8c_a91fcb942473542e27557669fa45d3433}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-asn32\-\_\-trans@{process\-\_\-asn32\-\_\-trans}}
+\index{process\-\_\-asn32\-\_\-trans@{process\-\_\-asn32\-\_\-trans}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-asn32\-\_\-trans}]{\setlength{\rightskip}{0pt plus 5cm}void process\-\_\-asn32\-\_\-trans (
+\begin{DoxyParamCaption}
+\item[{{\bf attributes\-\_\-t} $\ast$}]{attr, }
+\item[{u\-\_\-int8\-\_\-t}]{asn\-\_\-len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a91fcb942473542e27557669fa45d3433}
+\hypertarget{bgpdump__lib_8c_acfc188d91896aad896b01e956d1c348b}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-attr\-\_\-aspath\-\_\-string@{process\-\_\-attr\-\_\-aspath\-\_\-string}}
+\index{process\-\_\-attr\-\_\-aspath\-\_\-string@{process\-\_\-attr\-\_\-aspath\-\_\-string}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-attr\-\_\-aspath\-\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}void process\-\_\-attr\-\_\-aspath\-\_\-string (
+\begin{DoxyParamCaption}
+\item[{struct {\bf aspath} $\ast$}]{as}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_acfc188d91896aad896b01e956d1c348b}
+\hypertarget{bgpdump__lib_8c_a49a6b6cdbe90993e0734985ae9e330b3}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-attr\-\_\-community\-\_\-string@{process\-\_\-attr\-\_\-community\-\_\-string}}
+\index{process\-\_\-attr\-\_\-community\-\_\-string@{process\-\_\-attr\-\_\-community\-\_\-string}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-attr\-\_\-community\-\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}void process\-\_\-attr\-\_\-community\-\_\-string (
+\begin{DoxyParamCaption}
+\item[{struct {\bf community} $\ast$}]{com}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a49a6b6cdbe90993e0734985ae9e330b3}
+\hypertarget{bgpdump__lib_8c_aa4e685bc0604436623864a994eda0065}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-attributes@{process\-\_\-attributes}}
+\index{process\-\_\-attributes@{process\-\_\-attributes}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-attributes}]{\setlength{\rightskip}{0pt plus 5cm}{\bf attributes\-\_\-t} $\ast$ process\-\_\-attributes (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{u\-\_\-int8\-\_\-t}]{asn\-\_\-len, }
+\item[{struct {\bf zebra\-\_\-incomplete} $\ast$}]{incomplete, }
+\item[{int}]{is\-\_\-addp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_aa4e685bc0604436623864a994eda0065}
+\hypertarget{bgpdump__lib_8c_a6acf5b9afb042c07f7459bab3dda720d}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-mp\-\_\-announce@{process\-\_\-mp\-\_\-announce}}
+\index{process\-\_\-mp\-\_\-announce@{process\-\_\-mp\-\_\-announce}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-mp\-\_\-announce}]{\setlength{\rightskip}{0pt plus 5cm}void process\-\_\-mp\-\_\-announce (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{struct {\bf mp\-\_\-info} $\ast$}]{info, }
+\item[{struct {\bf zebra\-\_\-incomplete} $\ast$}]{incomplete, }
+\item[{int}]{is\-\_\-addp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a6acf5b9afb042c07f7459bab3dda720d}
+\hypertarget{bgpdump__lib_8c_a80cd4e4c0d6f32a3678bf8626492a6a6}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-mp\-\_\-withdraw@{process\-\_\-mp\-\_\-withdraw}}
+\index{process\-\_\-mp\-\_\-withdraw@{process\-\_\-mp\-\_\-withdraw}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-mp\-\_\-withdraw}]{\setlength{\rightskip}{0pt plus 5cm}void process\-\_\-mp\-\_\-withdraw (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{struct {\bf mp\-\_\-info} $\ast$}]{info, }
+\item[{struct {\bf zebra\-\_\-incomplete} $\ast$}]{incomplete, }
+\item[{int}]{is\-\_\-addp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a80cd4e4c0d6f32a3678bf8626492a6a6}
+\hypertarget{bgpdump__lib_8c_aac7bd0cd76e1b458afc89ce381ed176c}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-mrtd\-\_\-bgp@{process\-\_\-mrtd\-\_\-bgp}}
+\index{process\-\_\-mrtd\-\_\-bgp@{process\-\_\-mrtd\-\_\-bgp}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-mrtd\-\_\-bgp}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-mrtd\-\_\-bgp (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_aac7bd0cd76e1b458afc89ce381ed176c}
+\hypertarget{bgpdump__lib_8c_a63230507772a92084fc56b0da4bf9298}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-mrtd\-\_\-table\-\_\-dump@{process\-\_\-mrtd\-\_\-table\-\_\-dump}}
+\index{process\-\_\-mrtd\-\_\-table\-\_\-dump@{process\-\_\-mrtd\-\_\-table\-\_\-dump}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-mrtd\-\_\-table\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-mrtd\-\_\-table\-\_\-dump (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a63230507772a92084fc56b0da4bf9298}
+\hypertarget{bgpdump__lib_8c_ad660a80972197a6a6c8ef49e64895363}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2@{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2}}
+\index{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2@{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2 (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_ad660a80972197a6a6c8ef49e64895363}
+\hypertarget{bgpdump__lib_8c_a656e5da6f3e58a6d29ae126230edc35d}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv4\-\_\-unicast@{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv4\-\_\-unicast}}
+\index{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv4\-\_\-unicast@{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv4\-\_\-unicast}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv4\-\_\-unicast}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv4\-\_\-unicast (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a656e5da6f3e58a6d29ae126230edc35d}
+\hypertarget{bgpdump__lib_8c_a4bde017f094b997acc07daf5814a0ca6}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv6\-\_\-unicast@{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv6\-\_\-unicast}}
+\index{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv6\-\_\-unicast@{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv6\-\_\-unicast}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv6\-\_\-unicast}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-ipv6\-\_\-unicast (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a4bde017f094b997acc07daf5814a0ca6}
+\hypertarget{bgpdump__lib_8c_a207561a6a7cb5f4ea55b1e6a6686c58f}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-peer\-\_\-index\-\_\-table@{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-peer\-\_\-index\-\_\-table}}
+\index{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-peer\-\_\-index\-\_\-table@{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-peer\-\_\-index\-\_\-table}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-peer\-\_\-index\-\_\-table}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-mrtd\-\_\-table\-\_\-dump\-\_\-v2\-\_\-peer\-\_\-index\-\_\-table (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a207561a6a7cb5f4ea55b1e6a6686c58f}
+\hypertarget{bgpdump__lib_8c_acee393e398a9ef3690662d3811d13138}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-one\-\_\-attr@{process\-\_\-one\-\_\-attr}}
+\index{process\-\_\-one\-\_\-attr@{process\-\_\-one\-\_\-attr}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-one\-\_\-attr}]{\setlength{\rightskip}{0pt plus 5cm}static void process\-\_\-one\-\_\-attr (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{outer\-\_\-stream, }
+\item[{{\bf attributes\-\_\-t} $\ast$}]{attr, }
+\item[{u\-\_\-int8\-\_\-t}]{asn\-\_\-len, }
+\item[{struct {\bf zebra\-\_\-incomplete} $\ast$}]{incomplete, }
+\item[{int}]{is\-\_\-addp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_acee393e398a9ef3690662d3811d13138}
+\hypertarget{bgpdump__lib_8c_a1e9905c547bdd09cdf3df20832be92b9}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-unknown\-\_\-attr@{process\-\_\-unknown\-\_\-attr}}
+\index{process\-\_\-unknown\-\_\-attr@{process\-\_\-unknown\-\_\-attr}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-unknown\-\_\-attr}]{\setlength{\rightskip}{0pt plus 5cm}static void process\-\_\-unknown\-\_\-attr (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf attributes\-\_\-t} $\ast$}]{attr, }
+\item[{int}]{flag, }
+\item[{int}]{type, }
+\item[{int}]{len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a1e9905c547bdd09cdf3df20832be92b9}
+\hypertarget{bgpdump__lib_8c_a09b48825905c2660ec749ae143839ccc}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-zebra\-\_\-bgp@{process\-\_\-zebra\-\_\-bgp}}
+\index{process\-\_\-zebra\-\_\-bgp@{process\-\_\-zebra\-\_\-bgp}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-zebra\-\_\-bgp}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-zebra\-\_\-bgp (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a09b48825905c2660ec749ae143839ccc}
+\hypertarget{bgpdump__lib_8c_aa654ad5ffbbea3ad423b7530067f1788}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-zebra\-\_\-bgp\-\_\-entry@{process\-\_\-zebra\-\_\-bgp\-\_\-entry}}
+\index{process\-\_\-zebra\-\_\-bgp\-\_\-entry@{process\-\_\-zebra\-\_\-bgp\-\_\-entry}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-zebra\-\_\-bgp\-\_\-entry}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-zebra\-\_\-bgp\-\_\-entry (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_aa654ad5ffbbea3ad423b7530067f1788}
+\hypertarget{bgpdump__lib_8c_ad4dc3286835b26b8ba0ff75cefafbb1c}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-zebra\-\_\-bgp\-\_\-message@{process\-\_\-zebra\-\_\-bgp\-\_\-message}}
+\index{process\-\_\-zebra\-\_\-bgp\-\_\-message@{process\-\_\-zebra\-\_\-bgp\-\_\-message}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-zebra\-\_\-bgp\-\_\-message}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-zebra\-\_\-bgp\-\_\-message (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{u\-\_\-int8\-\_\-t}]{asn\-\_\-len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_ad4dc3286835b26b8ba0ff75cefafbb1c}
+\hypertarget{bgpdump__lib_8c_abd661a516199c3d890c8dae4046afe92}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-notify@{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-notify}}
+\index{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-notify@{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-notify}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-notify}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-notify (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_abd661a516199c3d890c8dae4046afe92}
+\hypertarget{bgpdump__lib_8c_a74a02888f1082c0f567c7d2242193395}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-open@{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-open}}
+\index{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-open@{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-open}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-open}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-open (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{u\-\_\-int8\-\_\-t}]{asn\-\_\-len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a74a02888f1082c0f567c7d2242193395}
+\hypertarget{bgpdump__lib_8c_a0c54cfe20e0bd4cc239227704f7c3c09}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-update@{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-update}}
+\index{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-update@{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-update}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-update}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-zebra\-\_\-bgp\-\_\-message\-\_\-update (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{u\-\_\-int8\-\_\-t}]{asn\-\_\-len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a0c54cfe20e0bd4cc239227704f7c3c09}
+\hypertarget{bgpdump__lib_8c_a55eb6da3b6367bfd45ce9cb32beceb4b}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-zebra\-\_\-bgp\-\_\-snapshot@{process\-\_\-zebra\-\_\-bgp\-\_\-snapshot}}
+\index{process\-\_\-zebra\-\_\-bgp\-\_\-snapshot@{process\-\_\-zebra\-\_\-bgp\-\_\-snapshot}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-zebra\-\_\-bgp\-\_\-snapshot}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-zebra\-\_\-bgp\-\_\-snapshot (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_a55eb6da3b6367bfd45ce9cb32beceb4b}
+\hypertarget{bgpdump__lib_8c_ada7a6cb4fa7435cb2e5518c29555f529}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!process\-\_\-zebra\-\_\-bgp\-\_\-state\-\_\-change@{process\-\_\-zebra\-\_\-bgp\-\_\-state\-\_\-change}}
+\index{process\-\_\-zebra\-\_\-bgp\-\_\-state\-\_\-change@{process\-\_\-zebra\-\_\-bgp\-\_\-state\-\_\-change}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{process\-\_\-zebra\-\_\-bgp\-\_\-state\-\_\-change}]{\setlength{\rightskip}{0pt plus 5cm}int process\-\_\-zebra\-\_\-bgp\-\_\-state\-\_\-change (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{u\-\_\-int8\-\_\-t}]{asn\-\_\-len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_ada7a6cb4fa7435cb2e5518c29555f529}
+\hypertarget{bgpdump__lib_8c_ac5e2ba41edb5b0bae3906d6ba40f699e}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!read\-\_\-asn@{read\-\_\-asn}}
+\index{read\-\_\-asn@{read\-\_\-asn}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{read\-\_\-asn}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf as\-\_\-t} read\-\_\-asn (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{u\-\_\-int8\-\_\-t}]{len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_ac5e2ba41edb5b0bae3906d6ba40f699e}
+\hypertarget{bgpdump__lib_8c_ab9a0382836b9be63ecbb34411590d72e}{\index{bgpdump\-\_\-lib.\-c@{bgpdump\-\_\-lib.\-c}!read\-\_\-prefix\-\_\-list@{read\-\_\-prefix\-\_\-list}}
+\index{read\-\_\-prefix\-\_\-list@{read\-\_\-prefix\-\_\-list}!bgpdump_lib.c@{bgpdump\-\_\-lib.\-c}}
+\subsubsection[{read\-\_\-prefix\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}static int read\-\_\-prefix\-\_\-list (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mstream} $\ast$}]{s, }
+\item[{u\-\_\-int16\-\_\-t}]{af, }
+\item[{struct {\bf prefix} $\ast$}]{prefixes, }
+\item[{struct {\bf zebra\-\_\-incomplete} $\ast$}]{incomplete, }
+\item[{int}]{is\-\_\-addp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump__lib_8c_ab9a0382836b9be63ecbb34411590d72e}

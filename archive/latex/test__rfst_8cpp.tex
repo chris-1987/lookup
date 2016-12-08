@@ -1,0 +1,84 @@
+\hypertarget{test__rfst_8cpp}{\section{/home/chris/lookup/code/test/test\-\_\-rfst.cpp File Reference}
+\label{test__rfst_8cpp}\index{/home/chris/lookup/code/test/test\-\_\-rfst.\-cpp@{/home/chris/lookup/code/test/test\-\_\-rfst.\-cpp}}
+}
+{\ttfamily \#include \char`\"{}../src/tree/rfstree.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../src/common/utility.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../src/scheduler/linsched.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../src/scheduler/ransched.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../src/scheduler/cirsched.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{test__rfst_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static const size\-\_\-t \hyperlink{test__rfst_8cpp_a99815a3f657ef4930a3351a57229b9bb}{R\-N} = 1024 $\ast$ 1024 $\ast$ 1
+\begin{DoxyCompactList}\small\item\em number of requests \end{DoxyCompactList}\item 
+static const int \hyperlink{test__rfst_8cpp_a05c3042ce1bd352b278535c630ae8f54}{P\-L} = 32
+\begin{DoxyCompactList}\small\item\em 32 or 128 for I\-Pv4 or I\-Pv6, respectively. \end{DoxyCompactList}\item 
+static const int \hyperlink{test__rfst_8cpp_a4af7db3ae27d2c064baeb74d7845349b}{P\-T} = 16
+\begin{DoxyCompactList}\small\item\em threshold for short \& long prefixes \end{DoxyCompactList}\item 
+static const int \hyperlink{test__rfst_8cpp_aa5243526a7f6541a1b7562ff029ecdd0}{F\-M} = 2
+\begin{DoxyCompactList}\small\item\em C\-P\-E\-:0, M\-I\-M\-A\-X\-:1, E\-V\-E\-N\-:2. \end{DoxyCompactList}\item 
+static const int \hyperlink{test__rfst_8cpp_a5ac893f91db46cbf0088976d69ed5d0c}{E\-L} = 6
+\begin{DoxyCompactList}\small\item\em expansion level \end{DoxyCompactList}\item 
+static const int \hyperlink{test__rfst_8cpp_a6ced82e0978e696b8b8d2b4565036e56}{S\-N} = 6
+\begin{DoxyCompactList}\small\item\em number of pipe stages \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{test__rfst_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{\index{test\-\_\-rfst.\-cpp@{test\-\_\-rfst.\-cpp}!main@{main}}
+\index{main@{main}!test_rfst.cpp@{test\-\_\-rfst.\-cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}}\label{test__rfst_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+\subsection{Variable Documentation}
+\hypertarget{test__rfst_8cpp_a5ac893f91db46cbf0088976d69ed5d0c}{\index{test\-\_\-rfst.\-cpp@{test\-\_\-rfst.\-cpp}!E\-L@{E\-L}}
+\index{E\-L@{E\-L}!test_rfst.cpp@{test\-\_\-rfst.\-cpp}}
+\subsubsection[{E\-L}]{\setlength{\rightskip}{0pt plus 5cm}const int E\-L = 6\hspace{0.3cm}{\ttfamily [static]}}}\label{test__rfst_8cpp_a5ac893f91db46cbf0088976d69ed5d0c}
+
+
+expansion level 
+
+\hypertarget{test__rfst_8cpp_aa5243526a7f6541a1b7562ff029ecdd0}{\index{test\-\_\-rfst.\-cpp@{test\-\_\-rfst.\-cpp}!F\-M@{F\-M}}
+\index{F\-M@{F\-M}!test_rfst.cpp@{test\-\_\-rfst.\-cpp}}
+\subsubsection[{F\-M}]{\setlength{\rightskip}{0pt plus 5cm}const int F\-M = 2\hspace{0.3cm}{\ttfamily [static]}}}\label{test__rfst_8cpp_aa5243526a7f6541a1b7562ff029ecdd0}
+
+
+C\-P\-E\-:0, M\-I\-M\-A\-X\-:1, E\-V\-E\-N\-:2. 
+
+\hypertarget{test__rfst_8cpp_a05c3042ce1bd352b278535c630ae8f54}{\index{test\-\_\-rfst.\-cpp@{test\-\_\-rfst.\-cpp}!P\-L@{P\-L}}
+\index{P\-L@{P\-L}!test_rfst.cpp@{test\-\_\-rfst.\-cpp}}
+\subsubsection[{P\-L}]{\setlength{\rightskip}{0pt plus 5cm}const int P\-L = 32\hspace{0.3cm}{\ttfamily [static]}}}\label{test__rfst_8cpp_a05c3042ce1bd352b278535c630ae8f54}
+
+
+32 or 128 for I\-Pv4 or I\-Pv6, respectively. 
+
+\hypertarget{test__rfst_8cpp_a4af7db3ae27d2c064baeb74d7845349b}{\index{test\-\_\-rfst.\-cpp@{test\-\_\-rfst.\-cpp}!P\-T@{P\-T}}
+\index{P\-T@{P\-T}!test_rfst.cpp@{test\-\_\-rfst.\-cpp}}
+\subsubsection[{P\-T}]{\setlength{\rightskip}{0pt plus 5cm}const int P\-T = 16\hspace{0.3cm}{\ttfamily [static]}}}\label{test__rfst_8cpp_a4af7db3ae27d2c064baeb74d7845349b}
+
+
+threshold for short \& long prefixes 
+
+\hypertarget{test__rfst_8cpp_a99815a3f657ef4930a3351a57229b9bb}{\index{test\-\_\-rfst.\-cpp@{test\-\_\-rfst.\-cpp}!R\-N@{R\-N}}
+\index{R\-N@{R\-N}!test_rfst.cpp@{test\-\_\-rfst.\-cpp}}
+\subsubsection[{R\-N}]{\setlength{\rightskip}{0pt plus 5cm}const size\-\_\-t R\-N = 1024 $\ast$ 1024 $\ast$ 1\hspace{0.3cm}{\ttfamily [static]}}}\label{test__rfst_8cpp_a99815a3f657ef4930a3351a57229b9bb}
+
+
+number of requests 
+
+\hypertarget{test__rfst_8cpp_a6ced82e0978e696b8b8d2b4565036e56}{\index{test\-\_\-rfst.\-cpp@{test\-\_\-rfst.\-cpp}!S\-N@{S\-N}}
+\index{S\-N@{S\-N}!test_rfst.cpp@{test\-\_\-rfst.\-cpp}}
+\subsubsection[{S\-N}]{\setlength{\rightskip}{0pt plus 5cm}const int S\-N = 6\hspace{0.3cm}{\ttfamily [static]}}}\label{test__rfst_8cpp_a6ced82e0978e696b8b8d2b4565036e56}
+
+
+number of pipe stages 
+

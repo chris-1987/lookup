@@ -1,0 +1,53 @@
+\hypertarget{rmptree_8h}{\section{/home/chris/lookup/code/src/tree/rmptree.h File Reference}
+\label{rmptree_8h}\index{/home/chris/lookup/code/src/tree/rmptree.\-h@{/home/chris/lookup/code/src/tree/rmptree.\-h}}
+}
+
+
+Definition of an I\-P lookup index based on multi-\/prefix tree.  
+
+
+{\ttfamily \#include \char`\"{}../common/common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/utility.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fasttable.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$queue$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$chrono$>$}\\*
+{\ttfamily \#include $<$random$>$}\\*
+{\ttfamily \#include $<$algorithm$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structSNode}{S\-Node$<$ W $>$}
+\begin{DoxyCompactList}\small\item\em Secondary node in a multi-\/prefix tree. \end{DoxyCompactList}\item 
+struct \hyperlink{structPNode}{P\-Node$<$ W, K, M\-P, M\-C $>$}
+\begin{DoxyCompactList}\small\item\em Primary node in a multi-\/prefix tree. \end{DoxyCompactList}\item 
+struct \hyperlink{structPNode_1_1PrefixEntry}{P\-Node$<$ W, K, M\-P, M\-C $>$\-::\-Prefix\-Entry}
+\begin{DoxyCompactList}\small\item\em Prefix entry. \end{DoxyCompactList}\item 
+class \hyperlink{classRMPTree}{R\-M\-P\-Tree$<$ W, K, U, M\-P, M\-C, V, H1, H2 $>$}
+\begin{DoxyCompactList}\small\item\em Build and update the index. \end{DoxyCompactList}\item 
+struct \hyperlink{structRMPTree_1_1SortElem}{R\-M\-P\-Tree$<$ W, K, U, M\-P, M\-C, V, H1, H2 $>$\-::\-Sort\-Elem}
+\begin{DoxyCompactList}\small\item\em element to be sorted \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{rmptree_8h_a1af72c0e05c6caec66d91958b5784ba6}{D\-E\-B\-U\-G\-\_\-\-R\-M\-P\-T}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Definition of an I\-P lookup index based on multi-\/prefix tree. Copyright (c) 2016, Sun Yat-\/sen University All rights reserved.
+
+The lookup index consists of three parts\-: a fast lookup table that contains route information for prefixes shorter than U bits, a table that consists of 2$^\wedge$\-U entries and each entry stores a pointer to the root node of a multi-\/prefix tree, and a set of multi-\/prefix trees.
+
+\begin{DoxyAuthor}{Author}
+Yi Wu 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2016.\-11 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{rmptree_8h_a1af72c0e05c6caec66d91958b5784ba6}{\index{rmptree.\-h@{rmptree.\-h}!D\-E\-B\-U\-G\-\_\-\-R\-M\-P\-T@{D\-E\-B\-U\-G\-\_\-\-R\-M\-P\-T}}
+\index{D\-E\-B\-U\-G\-\_\-\-R\-M\-P\-T@{D\-E\-B\-U\-G\-\_\-\-R\-M\-P\-T}!rmptree.h@{rmptree.\-h}}
+\subsubsection[{D\-E\-B\-U\-G\-\_\-\-R\-M\-P\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\-E\-B\-U\-G\-\_\-\-R\-M\-P\-T}}\label{rmptree_8h_a1af72c0e05c6caec66d91958b5784ba6}

@@ -1,0 +1,92 @@
+\hypertarget{analyzer_8h}{\section{/home/chris/lookup/code/src/analyzer.h File Reference}
+\label{analyzer_8h}\index{/home/chris/lookup/code/src/analyzer.\-h@{/home/chris/lookup/code/src/analyzer.\-h}}
+}
+{\ttfamily \#include \char`\"{}../external/bgpdump/bgpdump\-\_\-lib.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$time.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$netinet/in.\-h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\-h$>$}\\*
+{\ttfamily \#include $<$arpa/inet.\-h$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classAnalyzer}{Analyzer}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{analyzer_8h_a796c70dfa903843ed40b7c6789e81cba}{B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6}
+\item 
+\#define \hyperlink{analyzer_8h_adad2cc255956217cbd5b140aa16bc649}{O\-U\-T\-P\-U\-T\-\_\-\-T\-O\-\_\-\-F\-I\-L\-E\-\_\-\-I\-P\-V6\-\_\-\-U\-P\-D\-A\-T\-E}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static const char $\ast$ \hyperlink{analyzer_8h_ae726c68d0cabd8d8b21468de5d3015ed}{bgp\-\_\-state\-\_\-name} \mbox{[}$\,$\mbox{]}
+\item 
+static const char $\ast$ \hyperlink{analyzer_8h_addf819b3ff65caa8bac076413e53901d}{bgp\-\_\-message\-\_\-types} \mbox{[}$\,$\mbox{]}
+\item 
+static const char $\ast$ \hyperlink{analyzer_8h_a4ec82bdbd19a8f0b107bd2a032939a01}{notify\-\_\-codes} \mbox{[}$\,$\mbox{]}
+\item 
+static const char $\ast$ \hyperlink{analyzer_8h_a159aa6304c8865ad9d9035fa255aa7df}{notify\-\_\-subcodes} \mbox{[}$\,$\mbox{]}\mbox{[}12\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{analyzer_8h_a796c70dfa903843ed40b7c6789e81cba}{\index{analyzer.\-h@{analyzer.\-h}!B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6@{B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6}}
+\index{B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6@{B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6}!analyzer.h@{analyzer.\-h}}
+\subsubsection[{B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6}}\label{analyzer_8h_a796c70dfa903843ed40b7c6789e81cba}
+\hypertarget{analyzer_8h_adad2cc255956217cbd5b140aa16bc649}{\index{analyzer.\-h@{analyzer.\-h}!O\-U\-T\-P\-U\-T\-\_\-\-T\-O\-\_\-\-F\-I\-L\-E\-\_\-\-I\-P\-V6\-\_\-\-U\-P\-D\-A\-T\-E@{O\-U\-T\-P\-U\-T\-\_\-\-T\-O\-\_\-\-F\-I\-L\-E\-\_\-\-I\-P\-V6\-\_\-\-U\-P\-D\-A\-T\-E}}
+\index{O\-U\-T\-P\-U\-T\-\_\-\-T\-O\-\_\-\-F\-I\-L\-E\-\_\-\-I\-P\-V6\-\_\-\-U\-P\-D\-A\-T\-E@{O\-U\-T\-P\-U\-T\-\_\-\-T\-O\-\_\-\-F\-I\-L\-E\-\_\-\-I\-P\-V6\-\_\-\-U\-P\-D\-A\-T\-E}!analyzer.h@{analyzer.\-h}}
+\subsubsection[{O\-U\-T\-P\-U\-T\-\_\-\-T\-O\-\_\-\-F\-I\-L\-E\-\_\-\-I\-P\-V6\-\_\-\-U\-P\-D\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define O\-U\-T\-P\-U\-T\-\_\-\-T\-O\-\_\-\-F\-I\-L\-E\-\_\-\-I\-P\-V6\-\_\-\-U\-P\-D\-A\-T\-E}}\label{analyzer_8h_adad2cc255956217cbd5b140aa16bc649}
+
+
+\subsection{Variable Documentation}
+\hypertarget{analyzer_8h_addf819b3ff65caa8bac076413e53901d}{\index{analyzer.\-h@{analyzer.\-h}!bgp\-\_\-message\-\_\-types@{bgp\-\_\-message\-\_\-types}}
+\index{bgp\-\_\-message\-\_\-types@{bgp\-\_\-message\-\_\-types}!analyzer.h@{analyzer.\-h}}
+\subsubsection[{bgp\-\_\-message\-\_\-types}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ bgp\-\_\-message\-\_\-types\mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}}\label{analyzer_8h_addf819b3ff65caa8bac076413e53901d}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+        \textcolor{stringliteral}{"Unknown"},
+        \textcolor{stringliteral}{"Open"},
+        \textcolor{stringliteral}{"Update/Withdraw"},
+        \textcolor{stringliteral}{"Notification"},
+        \textcolor{stringliteral}{"Keepalive"}
+    \}
+\end{DoxyCode}
+\hypertarget{analyzer_8h_ae726c68d0cabd8d8b21468de5d3015ed}{\index{analyzer.\-h@{analyzer.\-h}!bgp\-\_\-state\-\_\-name@{bgp\-\_\-state\-\_\-name}}
+\index{bgp\-\_\-state\-\_\-name@{bgp\-\_\-state\-\_\-name}!analyzer.h@{analyzer.\-h}}
+\subsubsection[{bgp\-\_\-state\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ bgp\-\_\-state\-\_\-name\mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}}\label{analyzer_8h_ae726c68d0cabd8d8b21468de5d3015ed}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+        \textcolor{stringliteral}{"Unknown"},
+        \textcolor{stringliteral}{"IDLE"},
+        \textcolor{stringliteral}{"CONNECT"},
+        \textcolor{stringliteral}{"ACTIVE"},
+        \textcolor{stringliteral}{"OPEN\_SENT"},
+        \textcolor{stringliteral}{"OPEN\_CONFIRM"},
+        \textcolor{stringliteral}{"ESTABLISHED"},
+        NULL
+    \}
+\end{DoxyCode}
+\hypertarget{analyzer_8h_a4ec82bdbd19a8f0b107bd2a032939a01}{\index{analyzer.\-h@{analyzer.\-h}!notify\-\_\-codes@{notify\-\_\-codes}}
+\index{notify\-\_\-codes@{notify\-\_\-codes}!analyzer.h@{analyzer.\-h}}
+\subsubsection[{notify\-\_\-codes}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ notify\-\_\-codes\mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}}\label{analyzer_8h_a4ec82bdbd19a8f0b107bd2a032939a01}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{
+        \textcolor{stringliteral}{"Unknown"},
+        \textcolor{stringliteral}{"Message Header Error"},
+        \textcolor{stringliteral}{"OPEN Message Error"},
+        \textcolor{stringliteral}{"UPDATE Message Error"},
+        \textcolor{stringliteral}{"Hold Timer Expired"},
+        \textcolor{stringliteral}{"Finite State Machine Error"},
+        \textcolor{stringliteral}{"Cease"}
+    \}
+\end{DoxyCode}
+\hypertarget{analyzer_8h_a159aa6304c8865ad9d9035fa255aa7df}{\index{analyzer.\-h@{analyzer.\-h}!notify\-\_\-subcodes@{notify\-\_\-subcodes}}
+\index{notify\-\_\-subcodes@{notify\-\_\-subcodes}!analyzer.h@{analyzer.\-h}}
+\subsubsection[{notify\-\_\-subcodes}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ notify\-\_\-subcodes\mbox{[}$\,$\mbox{]}\mbox{[}12\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}}\label{analyzer_8h_a159aa6304c8865ad9d9035fa255aa7df}

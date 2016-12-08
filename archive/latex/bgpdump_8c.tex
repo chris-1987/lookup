@@ -1,0 +1,315 @@
+\hypertarget{bgpdump_8c}{\section{/home/chris/lookup/code/external/bgpdump/bgpdump.c File Reference}
+\label{bgpdump_8c}\index{/home/chris/lookup/code/external/bgpdump/bgpdump.\-c@{/home/chris/lookup/code/external/bgpdump/bgpdump.\-c}}
+}
+{\ttfamily \#include \char`\"{}bgpdump-\/config.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}bgpdump\-\_\-lib.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}util.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$time.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
+{\ttfamily \#include $<$fcntl.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\-h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\-h$>$}\\*
+{\ttfamily \#include $<$arpa/inet.\-h$>$}\\*
+{\ttfamily \#include $<$stdbool.\-h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{bgpdump_8c_a16f61ffbd4c5f11daa03a393ef809a99}{process} (\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static void \hyperlink{bgpdump_8c_a2eb2051c01fb98ca383e33675c3a020f}{process\-\_\-bgpdump\-\_\-mrtd\-\_\-bgp} (\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static void \hyperlink{bgpdump_8c_a8391d63af3b2bb9050041feac2739676}{show\-\_\-ipv4\-\_\-address} (struct in\-\_\-addr ip)
+\item 
+static void \hyperlink{bgpdump_8c_ad7efb25fe779ce5e6ef35f444af297a8}{show\-\_\-attr} (\hyperlink{bgpdump__attr_8h_a851314552296238881b06768eb835f95}{attributes\-\_\-t} $\ast$\hyperlink{bgpdump__attr_8h_structattr}{attr})
+\item 
+static void \hyperlink{bgpdump_8c_a782e896057e509af753cbe17f30176c9}{show\-\_\-prefixes} (int count, struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, int addpath)
+\item 
+static void \hyperlink{bgpdump_8c_acf9cf469f71ac82bd23d99c03da01b00}{table\-\_\-line\-\_\-announce\-\_\-1} (struct \hyperlink{bgpdump__attr_8h_structmp__nlri}{mp\-\_\-nlri} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, int count, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, char $\ast$time\-\_\-str)
+\item 
+static void \hyperlink{bgpdump_8c_a5b26ac8cfbe6d161897b4c8f83ab99a9}{table\-\_\-line\-\_\-announce} (struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, int count, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, char $\ast$time\-\_\-str)
+\item 
+static void \hyperlink{bgpdump_8c_a84bcb520bd360164fb5540af97d5b582}{mrtd\-\_\-table\-\_\-line\-\_\-withdraw} (struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, int count, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, char $\ast$time\-\_\-str)
+\item 
+static void \hyperlink{bgpdump_8c_a8d6c91afb7d45d6f112dd46a4999a5e6}{mrtd\-\_\-table\-\_\-line\-\_\-announce} (struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, int count, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, char $\ast$time\-\_\-str)
+\item 
+static void \hyperlink{bgpdump_8c_a1819ddf5bfa0e439206ec0c3d5754219}{table\-\_\-line\-\_\-withdraw} (struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, int count, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, char $\ast$time\-\_\-str)
+\item 
+static void \hyperlink{bgpdump_8c_ae19452902c512770c942c5c4f0b693ae}{table\-\_\-line\-\_\-mrtd\-\_\-route} (\hyperlink{bgpdump__formats_8h_a667a732cdb3f326e73fcb03f9d351df1}{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-R\-T\-D\-\_\-\-T\-A\-B\-L\-E\-\_\-\-D\-U\-M\-P} $\ast$route, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static void \hyperlink{bgpdump_8c_abf79b0a9b5068f18514e0a36977e69ca}{table\-\_\-line\-\_\-dump\-\_\-v2\-\_\-prefix} (\hyperlink{bgpdump__formats_8h_addb3fccb9f98e441dc089bf25b6249bb}{B\-G\-P\-D\-U\-M\-P\-\_\-\-T\-A\-B\-L\-E\-\_\-\-D\-U\-M\-P\-\_\-\-V2\-\_\-\-P\-R\-E\-F\-I\-X} $\ast$e, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static char $\ast$ \hyperlink{bgpdump_8c_afce7f94fe5540ce47ad7b7fadef15de5}{describe\-\_\-origin} (int origin)
+\item 
+static int \hyperlink{bgpdump_8c_a66bcb3b40066d15b0495aeb8eaeab62d}{bgp4mp\-\_\-message\-\_\-direction\-\_\-receive} (\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+void \hyperlink{bgpdump_8c_acd2b120ae363f9928a4a85605228ccee}{show\-\_\-prefixes6} (int count, struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, int addpath)
+\item 
+static void \hyperlink{bgpdump_8c_ae710fc0af3e5c6116dde9ba4951830c9}{table\-\_\-line\-\_\-withdraw6} (struct \hyperlink{bgpdump__attr_8h_structprefix}{prefix} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, int count, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, char $\ast$time\-\_\-str)
+\item 
+static void \hyperlink{bgpdump_8c_a95c061f6a5c8802afbbf476c064d6f4d}{table\-\_\-line\-\_\-announce6} (struct \hyperlink{bgpdump__attr_8h_structmp__nlri}{mp\-\_\-nlri} $\ast$\hyperlink{bgpdump__attr_8h_structprefix}{prefix}, int count, \hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry, char $\ast$time\-\_\-str)
+\item 
+static void \hyperlink{bgpdump_8c_ae16068f1250f0f1f5f359c4a0ad213db}{show\-\_\-line\-\_\-prefix} (const char $\ast$format, const char $\ast$time\-\_\-str, const char $\ast$type)
+\item 
+static char $\ast$ \hyperlink{bgpdump_8c_abb1d8ae5c85c4a10d6efa46eb2808729}{attr\-\_\-aspath} (\hyperlink{bgpdump__attr_8h_a851314552296238881b06768eb835f95}{attributes\-\_\-t} $\ast$a)
+\item 
+static const char $\ast$ \hyperlink{bgpdump_8c_a1d562f7b66ed961c25d74e8b8c72308d}{get\-\_\-bgp4mp\-\_\-format} (\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+static const char $\ast$ \hyperlink{bgpdump_8c_a2fd9c13dbc8044360668263388665cc7}{get\-\_\-bgp\-\_\-state\-\_\-name} (u\-\_\-int16\-\_\-t state)
+\item 
+int \hyperlink{bgpdump_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{bgpdump_8c_a1ea5d0cb93f22f7d0fdf804bd68c3326}{mode} =0
+\item 
+static int \hyperlink{bgpdump_8c_ac78324c39a455695763c8263f2d06246}{timetype} =0
+\item 
+static int \hyperlink{bgpdump_8c_a776e5a7ccdd63c6bb26650b28d96b675}{show\-\_\-packet\-\_\-index} = 0
+\item 
+static int \hyperlink{bgpdump_8c_a87bfc583bc37bf9b820d7fdd9a08e43f}{packet\-\_\-index} = 0
+\item 
+static const char \hyperlink{bgpdump_8c_a6d6e26e7e3af2d4bd47f6582aff224f8}{U\-S\-A\-G\-E} \mbox{[}$\,$\mbox{]}
+\item 
+char $\ast$ \hyperlink{bgpdump_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{optarg}
+\item 
+int \hyperlink{bgpdump_8c_ad5e1c16213bbee2d5e8cc363309f418c}{optind}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{bgpdump_8c_abb1d8ae5c85c4a10d6efa46eb2808729}{\index{bgpdump.\-c@{bgpdump.\-c}!attr\-\_\-aspath@{attr\-\_\-aspath}}
+\index{attr\-\_\-aspath@{attr\-\_\-aspath}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{attr\-\_\-aspath}]{\setlength{\rightskip}{0pt plus 5cm}static char$\ast$ attr\-\_\-aspath (
+\begin{DoxyParamCaption}
+\item[{{\bf attributes\-\_\-t} $\ast$}]{a}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_abb1d8ae5c85c4a10d6efa46eb2808729}
+\hypertarget{bgpdump_8c_a66bcb3b40066d15b0495aeb8eaeab62d}{\index{bgpdump.\-c@{bgpdump.\-c}!bgp4mp\-\_\-message\-\_\-direction\-\_\-receive@{bgp4mp\-\_\-message\-\_\-direction\-\_\-receive}}
+\index{bgp4mp\-\_\-message\-\_\-direction\-\_\-receive@{bgp4mp\-\_\-message\-\_\-direction\-\_\-receive}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{bgp4mp\-\_\-message\-\_\-direction\-\_\-receive}]{\setlength{\rightskip}{0pt plus 5cm}static int bgp4mp\-\_\-message\-\_\-direction\-\_\-receive (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a66bcb3b40066d15b0495aeb8eaeab62d}
+\hypertarget{bgpdump_8c_afce7f94fe5540ce47ad7b7fadef15de5}{\index{bgpdump.\-c@{bgpdump.\-c}!describe\-\_\-origin@{describe\-\_\-origin}}
+\index{describe\-\_\-origin@{describe\-\_\-origin}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{describe\-\_\-origin}]{\setlength{\rightskip}{0pt plus 5cm}static char $\ast$ describe\-\_\-origin (
+\begin{DoxyParamCaption}
+\item[{int}]{origin}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_afce7f94fe5540ce47ad7b7fadef15de5}
+\hypertarget{bgpdump_8c_a1d562f7b66ed961c25d74e8b8c72308d}{\index{bgpdump.\-c@{bgpdump.\-c}!get\-\_\-bgp4mp\-\_\-format@{get\-\_\-bgp4mp\-\_\-format}}
+\index{get\-\_\-bgp4mp\-\_\-format@{get\-\_\-bgp4mp\-\_\-format}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{get\-\_\-bgp4mp\-\_\-format}]{\setlength{\rightskip}{0pt plus 5cm}static const char$\ast$ get\-\_\-bgp4mp\-\_\-format (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a1d562f7b66ed961c25d74e8b8c72308d}
+\hypertarget{bgpdump_8c_a2fd9c13dbc8044360668263388665cc7}{\index{bgpdump.\-c@{bgpdump.\-c}!get\-\_\-bgp\-\_\-state\-\_\-name@{get\-\_\-bgp\-\_\-state\-\_\-name}}
+\index{get\-\_\-bgp\-\_\-state\-\_\-name@{get\-\_\-bgp\-\_\-state\-\_\-name}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{get\-\_\-bgp\-\_\-state\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}static const char$\ast$ get\-\_\-bgp\-\_\-state\-\_\-name (
+\begin{DoxyParamCaption}
+\item[{u\-\_\-int16\-\_\-t}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a2fd9c13dbc8044360668263388665cc7}
+\hypertarget{bgpdump_8c_a0ddf1224851353fc92bfbff6f499fa97}{\index{bgpdump.\-c@{bgpdump.\-c}!main@{main}}
+\index{main@{main}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{bgpdump_8c_a0ddf1224851353fc92bfbff6f499fa97}
+\hypertarget{bgpdump_8c_a8d6c91afb7d45d6f112dd46a4999a5e6}{\index{bgpdump.\-c@{bgpdump.\-c}!mrtd\-\_\-table\-\_\-line\-\_\-announce@{mrtd\-\_\-table\-\_\-line\-\_\-announce}}
+\index{mrtd\-\_\-table\-\_\-line\-\_\-announce@{mrtd\-\_\-table\-\_\-line\-\_\-announce}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{mrtd\-\_\-table\-\_\-line\-\_\-announce}]{\setlength{\rightskip}{0pt plus 5cm}void mrtd\-\_\-table\-\_\-line\-\_\-announce (
+\begin{DoxyParamCaption}
+\item[{struct {\bf prefix} $\ast$}]{prefix, }
+\item[{int}]{count, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{char $\ast$}]{time\-\_\-str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a8d6c91afb7d45d6f112dd46a4999a5e6}
+\hypertarget{bgpdump_8c_a84bcb520bd360164fb5540af97d5b582}{\index{bgpdump.\-c@{bgpdump.\-c}!mrtd\-\_\-table\-\_\-line\-\_\-withdraw@{mrtd\-\_\-table\-\_\-line\-\_\-withdraw}}
+\index{mrtd\-\_\-table\-\_\-line\-\_\-withdraw@{mrtd\-\_\-table\-\_\-line\-\_\-withdraw}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{mrtd\-\_\-table\-\_\-line\-\_\-withdraw}]{\setlength{\rightskip}{0pt plus 5cm}void mrtd\-\_\-table\-\_\-line\-\_\-withdraw (
+\begin{DoxyParamCaption}
+\item[{struct {\bf prefix} $\ast$}]{prefix, }
+\item[{int}]{count, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{char $\ast$}]{time\-\_\-str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a84bcb520bd360164fb5540af97d5b582}
+\hypertarget{bgpdump_8c_a16f61ffbd4c5f11daa03a393ef809a99}{\index{bgpdump.\-c@{bgpdump.\-c}!process@{process}}
+\index{process@{process}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}void process (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a16f61ffbd4c5f11daa03a393ef809a99}
+\hypertarget{bgpdump_8c_a2eb2051c01fb98ca383e33675c3a020f}{\index{bgpdump.\-c@{bgpdump.\-c}!process\-\_\-bgpdump\-\_\-mrtd\-\_\-bgp@{process\-\_\-bgpdump\-\_\-mrtd\-\_\-bgp}}
+\index{process\-\_\-bgpdump\-\_\-mrtd\-\_\-bgp@{process\-\_\-bgpdump\-\_\-mrtd\-\_\-bgp}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{process\-\_\-bgpdump\-\_\-mrtd\-\_\-bgp}]{\setlength{\rightskip}{0pt plus 5cm}void process\-\_\-bgpdump\-\_\-mrtd\-\_\-bgp (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a2eb2051c01fb98ca383e33675c3a020f}
+\hypertarget{bgpdump_8c_ad7efb25fe779ce5e6ef35f444af297a8}{\index{bgpdump.\-c@{bgpdump.\-c}!show\-\_\-attr@{show\-\_\-attr}}
+\index{show\-\_\-attr@{show\-\_\-attr}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{show\-\_\-attr}]{\setlength{\rightskip}{0pt plus 5cm}void show\-\_\-attr (
+\begin{DoxyParamCaption}
+\item[{{\bf attributes\-\_\-t} $\ast$}]{attr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_ad7efb25fe779ce5e6ef35f444af297a8}
+\hypertarget{bgpdump_8c_a8391d63af3b2bb9050041feac2739676}{\index{bgpdump.\-c@{bgpdump.\-c}!show\-\_\-ipv4\-\_\-address@{show\-\_\-ipv4\-\_\-address}}
+\index{show\-\_\-ipv4\-\_\-address@{show\-\_\-ipv4\-\_\-address}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{show\-\_\-ipv4\-\_\-address}]{\setlength{\rightskip}{0pt plus 5cm}void show\-\_\-ipv4\-\_\-address (
+\begin{DoxyParamCaption}
+\item[{struct in\-\_\-addr}]{ip}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a8391d63af3b2bb9050041feac2739676}
+\hypertarget{bgpdump_8c_ae16068f1250f0f1f5f359c4a0ad213db}{\index{bgpdump.\-c@{bgpdump.\-c}!show\-\_\-line\-\_\-prefix@{show\-\_\-line\-\_\-prefix}}
+\index{show\-\_\-line\-\_\-prefix@{show\-\_\-line\-\_\-prefix}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{show\-\_\-line\-\_\-prefix}]{\setlength{\rightskip}{0pt plus 5cm}void show\-\_\-line\-\_\-prefix (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{format, }
+\item[{const char $\ast$}]{time\-\_\-str, }
+\item[{const char $\ast$}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_ae16068f1250f0f1f5f359c4a0ad213db}
+\hypertarget{bgpdump_8c_a782e896057e509af753cbe17f30176c9}{\index{bgpdump.\-c@{bgpdump.\-c}!show\-\_\-prefixes@{show\-\_\-prefixes}}
+\index{show\-\_\-prefixes@{show\-\_\-prefixes}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{show\-\_\-prefixes}]{\setlength{\rightskip}{0pt plus 5cm}void show\-\_\-prefixes (
+\begin{DoxyParamCaption}
+\item[{int}]{count, }
+\item[{struct {\bf prefix} $\ast$}]{prefix, }
+\item[{int}]{addpath}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a782e896057e509af753cbe17f30176c9}
+\hypertarget{bgpdump_8c_acd2b120ae363f9928a4a85605228ccee}{\index{bgpdump.\-c@{bgpdump.\-c}!show\-\_\-prefixes6@{show\-\_\-prefixes6}}
+\index{show\-\_\-prefixes6@{show\-\_\-prefixes6}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{show\-\_\-prefixes6}]{\setlength{\rightskip}{0pt plus 5cm}void show\-\_\-prefixes6 (
+\begin{DoxyParamCaption}
+\item[{int}]{count, }
+\item[{struct {\bf prefix} $\ast$}]{prefix, }
+\item[{int}]{addpath}
+\end{DoxyParamCaption}
+)}}\label{bgpdump_8c_acd2b120ae363f9928a4a85605228ccee}
+\hypertarget{bgpdump_8c_a5b26ac8cfbe6d161897b4c8f83ab99a9}{\index{bgpdump.\-c@{bgpdump.\-c}!table\-\_\-line\-\_\-announce@{table\-\_\-line\-\_\-announce}}
+\index{table\-\_\-line\-\_\-announce@{table\-\_\-line\-\_\-announce}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{table\-\_\-line\-\_\-announce}]{\setlength{\rightskip}{0pt plus 5cm}static void table\-\_\-line\-\_\-announce (
+\begin{DoxyParamCaption}
+\item[{struct {\bf prefix} $\ast$}]{prefix, }
+\item[{int}]{count, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{char $\ast$}]{time\-\_\-str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a5b26ac8cfbe6d161897b4c8f83ab99a9}
+\hypertarget{bgpdump_8c_a95c061f6a5c8802afbbf476c064d6f4d}{\index{bgpdump.\-c@{bgpdump.\-c}!table\-\_\-line\-\_\-announce6@{table\-\_\-line\-\_\-announce6}}
+\index{table\-\_\-line\-\_\-announce6@{table\-\_\-line\-\_\-announce6}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{table\-\_\-line\-\_\-announce6}]{\setlength{\rightskip}{0pt plus 5cm}static void table\-\_\-line\-\_\-announce6 (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mp\-\_\-nlri} $\ast$}]{prefix, }
+\item[{int}]{count, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{char $\ast$}]{time\-\_\-str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a95c061f6a5c8802afbbf476c064d6f4d}
+\hypertarget{bgpdump_8c_acf9cf469f71ac82bd23d99c03da01b00}{\index{bgpdump.\-c@{bgpdump.\-c}!table\-\_\-line\-\_\-announce\-\_\-1@{table\-\_\-line\-\_\-announce\-\_\-1}}
+\index{table\-\_\-line\-\_\-announce\-\_\-1@{table\-\_\-line\-\_\-announce\-\_\-1}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{table\-\_\-line\-\_\-announce\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}static void table\-\_\-line\-\_\-announce\-\_\-1 (
+\begin{DoxyParamCaption}
+\item[{struct {\bf mp\-\_\-nlri} $\ast$}]{prefix, }
+\item[{int}]{count, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{char $\ast$}]{time\-\_\-str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_acf9cf469f71ac82bd23d99c03da01b00}
+\hypertarget{bgpdump_8c_abf79b0a9b5068f18514e0a36977e69ca}{\index{bgpdump.\-c@{bgpdump.\-c}!table\-\_\-line\-\_\-dump\-\_\-v2\-\_\-prefix@{table\-\_\-line\-\_\-dump\-\_\-v2\-\_\-prefix}}
+\index{table\-\_\-line\-\_\-dump\-\_\-v2\-\_\-prefix@{table\-\_\-line\-\_\-dump\-\_\-v2\-\_\-prefix}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{table\-\_\-line\-\_\-dump\-\_\-v2\-\_\-prefix}]{\setlength{\rightskip}{0pt plus 5cm}static void table\-\_\-line\-\_\-dump\-\_\-v2\-\_\-prefix (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-T\-A\-B\-L\-E\-\_\-\-D\-U\-M\-P\-\_\-\-V2\-\_\-\-P\-R\-E\-F\-I\-X} $\ast$}]{e, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_abf79b0a9b5068f18514e0a36977e69ca}
+\hypertarget{bgpdump_8c_ae19452902c512770c942c5c4f0b693ae}{\index{bgpdump.\-c@{bgpdump.\-c}!table\-\_\-line\-\_\-mrtd\-\_\-route@{table\-\_\-line\-\_\-mrtd\-\_\-route}}
+\index{table\-\_\-line\-\_\-mrtd\-\_\-route@{table\-\_\-line\-\_\-mrtd\-\_\-route}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{table\-\_\-line\-\_\-mrtd\-\_\-route}]{\setlength{\rightskip}{0pt plus 5cm}static void table\-\_\-line\-\_\-mrtd\-\_\-route (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-R\-T\-D\-\_\-\-T\-A\-B\-L\-E\-\_\-\-D\-U\-M\-P} $\ast$}]{route, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_ae19452902c512770c942c5c4f0b693ae}
+\hypertarget{bgpdump_8c_a1819ddf5bfa0e439206ec0c3d5754219}{\index{bgpdump.\-c@{bgpdump.\-c}!table\-\_\-line\-\_\-withdraw@{table\-\_\-line\-\_\-withdraw}}
+\index{table\-\_\-line\-\_\-withdraw@{table\-\_\-line\-\_\-withdraw}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{table\-\_\-line\-\_\-withdraw}]{\setlength{\rightskip}{0pt plus 5cm}static void table\-\_\-line\-\_\-withdraw (
+\begin{DoxyParamCaption}
+\item[{struct {\bf prefix} $\ast$}]{prefix, }
+\item[{int}]{count, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{char $\ast$}]{time\-\_\-str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a1819ddf5bfa0e439206ec0c3d5754219}
+\hypertarget{bgpdump_8c_ae710fc0af3e5c6116dde9ba4951830c9}{\index{bgpdump.\-c@{bgpdump.\-c}!table\-\_\-line\-\_\-withdraw6@{table\-\_\-line\-\_\-withdraw6}}
+\index{table\-\_\-line\-\_\-withdraw6@{table\-\_\-line\-\_\-withdraw6}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{table\-\_\-line\-\_\-withdraw6}]{\setlength{\rightskip}{0pt plus 5cm}static void table\-\_\-line\-\_\-withdraw6 (
+\begin{DoxyParamCaption}
+\item[{struct {\bf prefix} $\ast$}]{prefix, }
+\item[{int}]{count, }
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry, }
+\item[{char $\ast$}]{time\-\_\-str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_ae710fc0af3e5c6116dde9ba4951830c9}
+
+
+\subsection{Variable Documentation}
+\hypertarget{bgpdump_8c_a1ea5d0cb93f22f7d0fdf804bd68c3326}{\index{bgpdump.\-c@{bgpdump.\-c}!mode@{mode}}
+\index{mode@{mode}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{mode}]{\setlength{\rightskip}{0pt plus 5cm}int mode =0\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a1ea5d0cb93f22f7d0fdf804bd68c3326}
+\hypertarget{bgpdump_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}{\index{bgpdump.\-c@{bgpdump.\-c}!optarg@{optarg}}
+\index{optarg@{optarg}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{optarg}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ optarg}}\label{bgpdump_8c_adb50a0eab9fed92fc3bfc7dfa4f2c410}
+\hypertarget{bgpdump_8c_ad5e1c16213bbee2d5e8cc363309f418c}{\index{bgpdump.\-c@{bgpdump.\-c}!optind@{optind}}
+\index{optind@{optind}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{optind}]{\setlength{\rightskip}{0pt plus 5cm}int optind}}\label{bgpdump_8c_ad5e1c16213bbee2d5e8cc363309f418c}
+\hypertarget{bgpdump_8c_a87bfc583bc37bf9b820d7fdd9a08e43f}{\index{bgpdump.\-c@{bgpdump.\-c}!packet\-\_\-index@{packet\-\_\-index}}
+\index{packet\-\_\-index@{packet\-\_\-index}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{packet\-\_\-index}]{\setlength{\rightskip}{0pt plus 5cm}int packet\-\_\-index = 0\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a87bfc583bc37bf9b820d7fdd9a08e43f}
+\hypertarget{bgpdump_8c_a776e5a7ccdd63c6bb26650b28d96b675}{\index{bgpdump.\-c@{bgpdump.\-c}!show\-\_\-packet\-\_\-index@{show\-\_\-packet\-\_\-index}}
+\index{show\-\_\-packet\-\_\-index@{show\-\_\-packet\-\_\-index}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{show\-\_\-packet\-\_\-index}]{\setlength{\rightskip}{0pt plus 5cm}int show\-\_\-packet\-\_\-index = 0\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a776e5a7ccdd63c6bb26650b28d96b675}
+\hypertarget{bgpdump_8c_ac78324c39a455695763c8263f2d06246}{\index{bgpdump.\-c@{bgpdump.\-c}!timetype@{timetype}}
+\index{timetype@{timetype}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{timetype}]{\setlength{\rightskip}{0pt plus 5cm}int timetype =0\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_ac78324c39a455695763c8263f2d06246}
+\hypertarget{bgpdump_8c_a6d6e26e7e3af2d4bd47f6582aff224f8}{\index{bgpdump.\-c@{bgpdump.\-c}!U\-S\-A\-G\-E@{U\-S\-A\-G\-E}}
+\index{U\-S\-A\-G\-E@{U\-S\-A\-G\-E}!bgpdump.c@{bgpdump.\-c}}
+\subsubsection[{U\-S\-A\-G\-E}]{\setlength{\rightskip}{0pt plus 5cm}const char U\-S\-A\-G\-E\mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}}\label{bgpdump_8c_a6d6e26e7e3af2d4bd47f6582aff224f8}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \textcolor{stringliteral}{"\(\backslash\)}
+\textcolor{stringliteral}{bgpdump version "} \hyperlink{bgpdump-config_8h_aa326a05d5e30f9e9a4bb0b4469d5d0c0}{PACKAGE\_VERSION} \textcolor{stringliteral}{"\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{Usage: bgpdump [-m|-M] [-t dump|-t change] [-O <output-file>] <input-file>\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{bgpdump translates binary MRT files (possibly compressed) into readable output\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{Output mode:\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    -H         multi-line, human-readable (the default)\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    -m         one-line per entry with unix timestamps\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    -M         one-line per entry with human readable timestamps\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    (there are other differences between -m and -M)\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{Common options:\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    -O <file>  output to <file> instead of STDOUT\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    -s         log to syslog (the default)\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    -v         log to STDERR\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{Options for -m and -M modes:\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    -t dump    timestamps for RIB dumps reflect the time of the dump (the default)\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    -t change  timestamps for RIB dumps reflect the last route modification\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    -p         show packet index at second position\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{Special options:\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{    -T         run unit tests and exit\(\backslash\)n\(\backslash\)}
+\textcolor{stringliteral}{\(\backslash\)n"}
+\end{DoxyCode}

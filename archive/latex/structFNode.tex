@@ -1,0 +1,137 @@
+\hypertarget{structFNode}{\section{F\-Node$<$ W $>$ Struct Template Reference}
+\label{structFNode}\index{F\-Node$<$ W $>$@{F\-Node$<$ W $>$}}
+}
+
+
+A node in a fixed-\/stride tree before leaf-\/pushing.  
+
+
+
+
+{\ttfamily \#include $<$fstree.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structFNode_1_1Entry}{Entry}
+\begin{DoxyCompactList}\small\item\em payload \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{structFNode_ae4ae2a97d6351584e0860a25b545cf94}{ip\-\_\-type} \hyperlink{structFNode_ae4ae2a97d6351584e0860a25b545cf94}{ip\-\_\-type}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{structFNode_ae4ae2a97d6351584e0860a25b545cf94}{ip\-\_\-type} \hyperlink{structFNode_ae4ae2a97d6351584e0860a25b545cf94}{ip\-\_\-type}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structFNode_a0896da5de02e460acda8e329eeb71dc4}{F\-Node} (const size\-\_\-t \-\_\-entrynum)
+\begin{DoxyCompactList}\small\item\em ctor \end{DoxyCompactList}\item 
+\hyperlink{structFNode_a7dde414809e4b298f8368641004e2e22}{$\sim$\-F\-Node} ()
+\begin{DoxyCompactList}\small\item\em dtor \end{DoxyCompactList}\item 
+\hyperlink{structFNode_a0896da5de02e460acda8e329eeb71dc4}{F\-Node} (const size\-\_\-t \-\_\-entrynum)
+\begin{DoxyCompactList}\small\item\em ctor \end{DoxyCompactList}\item 
+\hyperlink{structFNode_a7dde414809e4b298f8368641004e2e22}{$\sim$\-F\-Node} ()
+\begin{DoxyCompactList}\small\item\em dtor \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structFNode_1_1Entry}{Entry} $\ast$ \hyperlink{structFNode_ae0cdd65542d8630a94e5405203b2b951}{entries}
+\begin{DoxyCompactList}\small\item\em \-\_\-entrynum entries of data \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W$>$struct F\-Node$<$ W $>$}
+
+A node in a fixed-\/stride tree before leaf-\/pushing. 
+
+Node in a non-\/leaf-\/pushed fixed-\/stride tree.
+
+Each node contains \-\_\-entrynum entries, where each entry records prefix, child pointer, length field and nexthop.
+
+
+\begin{DoxyParams}{Parameters}
+{\em W} & 32 or 128 for I\-Pv4 or I\-Pv6, respectively.\\
+\hline
+\end{DoxyParams}
+Each node contains a set of entries and each entry records a prefix, its child pointer, the length of prefix and the nexthop information.
+
+
+\begin{DoxyParams}{Parameters}
+{\em W} & 32 or 128 for I\-Pv4 or I\-Pv6, respectively. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structFNode_ae4ae2a97d6351584e0860a25b545cf94}{\index{F\-Node@{F\-Node}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!FNode@{F\-Node}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf F\-Node}$<$ {\bf W} $>$\-::{\bf ip\-\_\-type}}}\label{structFNode_ae4ae2a97d6351584e0860a25b545cf94}
+\hypertarget{structFNode_ae4ae2a97d6351584e0860a25b545cf94}{\index{F\-Node@{F\-Node}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!FNode@{F\-Node}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf F\-Node}$<$ {\bf W} $>$\-::{\bf ip\-\_\-type}}}\label{structFNode_ae4ae2a97d6351584e0860a25b545cf94}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structFNode_a0896da5de02e460acda8e329eeb71dc4}{\index{F\-Node@{F\-Node}!F\-Node@{F\-Node}}
+\index{F\-Node@{F\-Node}!FNode@{F\-Node}}
+\subsubsection[{F\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf F\-Node}$<$ {\bf W} $>$\-::{\bf F\-Node} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{\-\_\-entrynum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structFNode_a0896da5de02e460acda8e329eeb71dc4}
+
+
+ctor 
+
+\hypertarget{structFNode_a7dde414809e4b298f8368641004e2e22}{\index{F\-Node@{F\-Node}!$\sim$\-F\-Node@{$\sim$\-F\-Node}}
+\index{$\sim$\-F\-Node@{$\sim$\-F\-Node}!FNode@{F\-Node}}
+\subsubsection[{$\sim$\-F\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf F\-Node}$<$ {\bf W} $>$\-::$\sim${\bf F\-Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structFNode_a7dde414809e4b298f8368641004e2e22}
+
+
+dtor 
+
+\hypertarget{structFNode_a0896da5de02e460acda8e329eeb71dc4}{\index{F\-Node@{F\-Node}!F\-Node@{F\-Node}}
+\index{F\-Node@{F\-Node}!FNode@{F\-Node}}
+\subsubsection[{F\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf F\-Node}$<$ {\bf W} $>$\-::{\bf F\-Node} (
+\begin{DoxyParamCaption}
+\item[{const size\-\_\-t}]{\-\_\-entrynum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structFNode_a0896da5de02e460acda8e329eeb71dc4}
+
+
+ctor 
+
+\hypertarget{structFNode_a7dde414809e4b298f8368641004e2e22}{\index{F\-Node@{F\-Node}!$\sim$\-F\-Node@{$\sim$\-F\-Node}}
+\index{$\sim$\-F\-Node@{$\sim$\-F\-Node}!FNode@{F\-Node}}
+\subsubsection[{$\sim$\-F\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf F\-Node}$<$ {\bf W} $>$\-::$\sim${\bf F\-Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structFNode_a7dde414809e4b298f8368641004e2e22}
+
+
+dtor 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structFNode_ae0cdd65542d8630a94e5405203b2b951}{\index{F\-Node@{F\-Node}!entries@{entries}}
+\index{entries@{entries}!FNode@{F\-Node}}
+\subsubsection[{entries}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf Entry} $\ast$ {\bf F\-Node}$<$ {\bf W} $>$\-::entries}}\label{structFNode_ae0cdd65542d8630a94e5405203b2b951}
+
+
+\-\_\-entrynum entries of data 
+
+a pointer to entry array 
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{fstree_8h}{fstree.\-h}\item 
+/home/chris/lookup/code/src/tree/\hyperlink{rfstree_8h}{rfstree.\-h}\end{DoxyCompactItemize}

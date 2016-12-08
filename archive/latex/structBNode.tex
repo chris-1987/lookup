@@ -1,0 +1,132 @@
+\hypertarget{structBNode}{\section{B\-Node$<$ W $>$ Struct Template Reference}
+\label{structBNode}\index{B\-Node$<$ W $>$@{B\-Node$<$ W $>$}}
+}
+
+
+Nodes in a binary tree.  
+
+
+
+
+{\ttfamily \#include $<$btree.\-h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{structBNode_a1a533a579c88e8e8b7e987da5ebccc55}{ip\-\_\-type} \hyperlink{structBNode_a1a533a579c88e8e8b7e987da5ebccc55}{ip\-\_\-type}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{structBNode_a1a533a579c88e8e8b7e987da5ebccc55}{ip\-\_\-type} \hyperlink{structBNode_a1a533a579c88e8e8b7e987da5ebccc55}{ip\-\_\-type}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structBNode_a965ac3a5273a78d323b07d3b8e463a18}{B\-Node} ()
+\begin{DoxyCompactList}\small\item\em ctor \end{DoxyCompactList}\item 
+\hyperlink{structBNode_a965ac3a5273a78d323b07d3b8e463a18}{B\-Node} ()
+\begin{DoxyCompactList}\small\item\em ctor \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structBNode}{B\-Node} $\ast$ \hyperlink{structBNode_a1ad4a790c2a55b13d8d49eba62ffd7c7}{lchild}
+\begin{DoxyCompactList}\small\item\em left child \end{DoxyCompactList}\item 
+\hyperlink{structBNode}{B\-Node} $\ast$ \hyperlink{structBNode_a97d5c95d581d02c15e4f531ea20da995}{rchild}
+\begin{DoxyCompactList}\small\item\em right child \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{structBNode_a6fbf88d8991ddb35540059726e14111c}{nexthop}
+\begin{DoxyCompactList}\small\item\em next hop \end{DoxyCompactList}\item 
+int \hyperlink{structBNode_adebd283b08369a1499a95d23f0268ecc}{stageidx}
+\begin{DoxyCompactList}\small\item\em stage index, indicate the pipestage in which the node is located \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W$>$struct B\-Node$<$ W $>$}
+
+Nodes in a binary tree. 
+
+binary node
+
+two pointers to children and one field for storing nexthop
+
+\begin{DoxyAuthor}{Author}
+Yi Wu 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2016.\-11\-Two pointers that indicate the child nodes and a nexthop information field.
+\end{DoxyDate}
+
+\begin{DoxyParams}{Parameters}
+{\em W} & 32 or 128 for I\-Pv4 or I\-Pv6 address, respectively. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{structBNode_a1a533a579c88e8e8b7e987da5ebccc55}{\index{B\-Node@{B\-Node}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!BNode@{B\-Node}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf B\-Node}$<$ {\bf W} $>$\-::{\bf ip\-\_\-type}}}\label{structBNode_a1a533a579c88e8e8b7e987da5ebccc55}
+\hypertarget{structBNode_a1a533a579c88e8e8b7e987da5ebccc55}{\index{B\-Node@{B\-Node}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!BNode@{B\-Node}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf B\-Node}$<$ {\bf W} $>$\-::{\bf ip\-\_\-type}}}\label{structBNode_a1a533a579c88e8e8b7e987da5ebccc55}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structBNode_a965ac3a5273a78d323b07d3b8e463a18}{\index{B\-Node@{B\-Node}!B\-Node@{B\-Node}}
+\index{B\-Node@{B\-Node}!BNode@{B\-Node}}
+\subsubsection[{B\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf B\-Node}$<$ {\bf W} $>$\-::{\bf B\-Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structBNode_a965ac3a5273a78d323b07d3b8e463a18}
+
+
+ctor 
+
+\hypertarget{structBNode_a965ac3a5273a78d323b07d3b8e463a18}{\index{B\-Node@{B\-Node}!B\-Node@{B\-Node}}
+\index{B\-Node@{B\-Node}!BNode@{B\-Node}}
+\subsubsection[{B\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf B\-Node}$<$ {\bf W} $>$\-::{\bf B\-Node} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structBNode_a965ac3a5273a78d323b07d3b8e463a18}
+
+
+ctor 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{structBNode_a1ad4a790c2a55b13d8d49eba62ffd7c7}{\index{B\-Node@{B\-Node}!lchild@{lchild}}
+\index{lchild@{lchild}!BNode@{B\-Node}}
+\subsubsection[{lchild}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf B\-Node} $\ast$ {\bf B\-Node}$<$ {\bf W} $>$\-::lchild}}\label{structBNode_a1ad4a790c2a55b13d8d49eba62ffd7c7}
+
+
+left child 
+
+pointer to left child \hypertarget{structBNode_a6fbf88d8991ddb35540059726e14111c}{\index{B\-Node@{B\-Node}!nexthop@{nexthop}}
+\index{nexthop@{nexthop}!BNode@{B\-Node}}
+\subsubsection[{nexthop}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf uint32} {\bf B\-Node}$<$ {\bf W} $>$\-::nexthop}}\label{structBNode_a6fbf88d8991ddb35540059726e14111c}
+
+
+next hop 
+
+next hop information \hypertarget{structBNode_a97d5c95d581d02c15e4f531ea20da995}{\index{B\-Node@{B\-Node}!rchild@{rchild}}
+\index{rchild@{rchild}!BNode@{B\-Node}}
+\subsubsection[{rchild}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf B\-Node} $\ast$ {\bf B\-Node}$<$ {\bf W} $>$\-::rchild}}\label{structBNode_a97d5c95d581d02c15e4f531ea20da995}
+
+
+right child 
+
+pointer to right child \hypertarget{structBNode_adebd283b08369a1499a95d23f0268ecc}{\index{B\-Node@{B\-Node}!stageidx@{stageidx}}
+\index{stageidx@{stageidx}!BNode@{B\-Node}}
+\subsubsection[{stageidx}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ int {\bf B\-Node}$<$ {\bf W} $>$\-::stageidx}}\label{structBNode_adebd283b08369a1499a95d23f0268ecc}
+
+
+stage index, indicate the pipestage in which the node is located 
+
+
+
+The documentation for this struct was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{btree_8h}{btree.\-h}\item 
+/home/chris/lookup/code/src/tree/\hyperlink{rbtree_8h}{rbtree.\-h}\end{DoxyCompactItemize}

@@ -1,0 +1,272 @@
+\hypertarget{classPTree}{\section{P\-Tree$<$ W $>$ Class Template Reference}
+\label{classPTree}\index{P\-Tree$<$ W $>$@{P\-Tree$<$ W $>$}}
+}
+
+
+prefix tree, singleton class  
+
+
+
+
+{\ttfamily \#include $<$ptree.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classPTree_aad71c0cee38a70d56ed772ac19a24252}{build} (const std\-::string \&\-\_\-fn)
+\begin{DoxyCompactList}\small\item\em build \hyperlink{classPTree}{P\-Tree} for the given B\-G\-P table \end{DoxyCompactList}\item 
+void \hyperlink{classPTree_a55a8c6fbed00f8259a7af7a27027fb2b}{destroy} ()
+\item 
+void \hyperlink{classPTree_a5d77e8de25c1dbc545dda4e95452272f}{ins} (const \hyperlink{classPTree_a946047316df947ae9fbb8a9372c51e77}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classPTree_ad1004ef68aec722b83a6055ad8e9db55}{node\-\_\-type} $\ast$\&\-\_\-node, const int \-\_\-level)
+\begin{DoxyCompactList}\small\item\em insert a prefix \end{DoxyCompactList}\item 
+void \hyperlink{classPTree_ac02cafe6dfc6d31214932bd73645a505}{del} (const \hyperlink{classPTree_a946047316df947ae9fbb8a9372c51e77}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, \hyperlink{classPTree_ad1004ef68aec722b83a6055ad8e9db55}{node\-\_\-type} $\ast$\&\-\_\-node, const int \-\_\-level)
+\begin{DoxyCompactList}\small\item\em delete a prefix \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classPTree_aca1d149ec5bc7e5c70671084245970e0}{search} (const \hyperlink{classPTree_a946047316df947ae9fbb8a9372c51e77}{ip\-\_\-type} \&\-\_\-ip)
+\begin{DoxyCompactList}\small\item\em search the L\-P\-M for the given I\-P address \end{DoxyCompactList}\item 
+void \hyperlink{classPTree_aaf5933000ca153c8b57bbd92af1a5602}{traverse} ()
+\begin{DoxyCompactList}\small\item\em traverse the prefix tree \end{DoxyCompactList}\item 
+void \hyperlink{classPTree_ac25b6287131f184d2c6bafe28c0aadc1}{print\-Node} (\hyperlink{classPTree_ad1004ef68aec722b83a6055ad8e9db55}{node\-\_\-type} $\ast$\-\_\-node)
+\begin{DoxyCompactList}\small\item\em print a node \end{DoxyCompactList}\item 
+\hyperlink{classPTree_ad1004ef68aec722b83a6055ad8e9db55}{node\-\_\-type} $\ast$\& \hyperlink{classPTree_adfb67964d24883d336e3879b921626b7}{get\-Root} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classPTree}{P\-Tree} $\ast$ \hyperlink{classPTree_a35953e10fd9d7e7d903f56bc07cdeede}{get\-Instance} ()
+\begin{DoxyCompactList}\small\item\em return singleton \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{classPTree_a946047316df947ae9fbb8a9372c51e77}{ip\-\_\-type} \hyperlink{classPTree_a946047316df947ae9fbb8a9372c51e77}{ip\-\_\-type}
+\item 
+typedef \hyperlink{structPNode}{P\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classPTree_ad1004ef68aec722b83a6055ad8e9db55}{node\-\_\-type}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classPTree_ab6a6d94a37c3150c2f74b10fe42ad1f6}{P\-Tree} ()
+\begin{DoxyCompactList}\small\item\em default ctor \end{DoxyCompactList}\item 
+\hyperlink{classPTree_a992264de413031fecb0145407f9eb060}{P\-Tree} (const \hyperlink{classPTree}{P\-Tree} \&\-\_\-pt)=delete
+\begin{DoxyCompactList}\small\item\em copy ctor, disabled \end{DoxyCompactList}\item 
+\hyperlink{classPTree}{P\-Tree} \& \hyperlink{classPTree_ab0ef7f0ccff4d5f1a8715cda9875ecd8}{operator=} (const \hyperlink{classPTree}{P\-Tree} \&)=delete
+\begin{DoxyCompactList}\small\item\em assignment op, disabled \end{DoxyCompactList}\item 
+\hyperlink{classPTree_a539f6a563bcb9e00d18efa661546d0ca}{$\sim$\-P\-Tree} ()
+\begin{DoxyCompactList}\small\item\em dtor \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classPTree_ad1004ef68aec722b83a6055ad8e9db55}{node\-\_\-type} $\ast$ \hyperlink{classPTree_ae87b3a544e048520a900456177af6e03}{root}
+\begin{DoxyCompactList}\small\item\em ptr to root \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classPTree_a3b5c4d673f63afded23d7ab31174d02d}{m\-Node\-Num}
+\begin{DoxyCompactList}\small\item\em number of nodes in total \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classPTree_aa4ae1d4235346aba797878a0415dc41b}{m\-Level\-Node\-Num} \mbox{[}\hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}+1\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of nodes in each level \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classPTree}{P\-Tree}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ $\ast$ \hyperlink{classPTree_a78fb787b80f61d94c4ce92d1fd6f38b4}{pt} = nullptr
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W$>$class P\-Tree$<$ W $>$}
+
+prefix tree, singleton class 
+
+The length of each prefix inserted into level \$k\$ is no less than \$k\$.
+
+
+\begin{DoxyParams}{Parameters}
+{\em W} & 32 and 128 for I\-Pv4 and I\-Pv6, respectively. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classPTree_a946047316df947ae9fbb8a9372c51e77}{\index{P\-Tree@{P\-Tree}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!PTree@{P\-Tree}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf P\-Tree}$<$ {\bf W} $>$\-::{\bf ip\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classPTree_a946047316df947ae9fbb8a9372c51e77}
+\hypertarget{classPTree_ad1004ef68aec722b83a6055ad8e9db55}{\index{P\-Tree@{P\-Tree}!node\-\_\-type@{node\-\_\-type}}
+\index{node\-\_\-type@{node\-\_\-type}!PTree@{P\-Tree}}
+\subsubsection[{node\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ typedef {\bf P\-Node}$<${\bf W}$>$ {\bf P\-Tree}$<$ {\bf W} $>$\-::{\bf node\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classPTree_ad1004ef68aec722b83a6055ad8e9db55}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classPTree_ab6a6d94a37c3150c2f74b10fe42ad1f6}{\index{P\-Tree@{P\-Tree}!P\-Tree@{P\-Tree}}
+\index{P\-Tree@{P\-Tree}!PTree@{P\-Tree}}
+\subsubsection[{P\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf P\-Tree}$<$ {\bf W} $>$\-::{\bf P\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classPTree_ab6a6d94a37c3150c2f74b10fe42ad1f6}
+
+
+default ctor 
+
+\hypertarget{classPTree_a992264de413031fecb0145407f9eb060}{\index{P\-Tree@{P\-Tree}!P\-Tree@{P\-Tree}}
+\index{P\-Tree@{P\-Tree}!PTree@{P\-Tree}}
+\subsubsection[{P\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf P\-Tree}$<$ {\bf W} $>$\-::{\bf P\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const {\bf P\-Tree}$<$ {\bf W} $>$ \&}]{\-\_\-pt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classPTree_a992264de413031fecb0145407f9eb060}
+
+
+copy ctor, disabled 
+
+\hypertarget{classPTree_a539f6a563bcb9e00d18efa661546d0ca}{\index{P\-Tree@{P\-Tree}!$\sim$\-P\-Tree@{$\sim$\-P\-Tree}}
+\index{$\sim$\-P\-Tree@{$\sim$\-P\-Tree}!PTree@{P\-Tree}}
+\subsubsection[{$\sim$\-P\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf P\-Tree}$<$ {\bf W} $>$\-::$\sim${\bf P\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classPTree_a539f6a563bcb9e00d18efa661546d0ca}
+
+
+dtor 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classPTree_aad71c0cee38a70d56ed772ac19a24252}{\index{P\-Tree@{P\-Tree}!build@{build}}
+\index{build@{build}!PTree@{P\-Tree}}
+\subsubsection[{build}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf P\-Tree}$<$ {\bf W} $>$\-::build (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-fn}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPTree_aad71c0cee38a70d56ed772ac19a24252}
+
+
+build \hyperlink{classPTree}{P\-Tree} for the given B\-G\-P table 
+
+\hypertarget{classPTree_ac02cafe6dfc6d31214932bd73645a505}{\index{P\-Tree@{P\-Tree}!del@{del}}
+\index{del@{del}!PTree@{P\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf P\-Tree}$<$ {\bf W} $>$\-::del (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{{\bf node\-\_\-type} $\ast$\&}]{\-\_\-node, }
+\item[{const int}]{\-\_\-level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPTree_ac02cafe6dfc6d31214932bd73645a505}
+
+
+delete a prefix 
+
+\hypertarget{classPTree_a55a8c6fbed00f8259a7af7a27027fb2b}{\index{P\-Tree@{P\-Tree}!destroy@{destroy}}
+\index{destroy@{destroy}!PTree@{P\-Tree}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf P\-Tree}$<$ {\bf W} $>$\-::destroy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPTree_a55a8c6fbed00f8259a7af7a27027fb2b}
+\hypertarget{classPTree_a35953e10fd9d7e7d903f56bc07cdeede}{\index{P\-Tree@{P\-Tree}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!PTree@{P\-Tree}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf P\-Tree}$<$ {\bf W} $>$ $\ast$ {\bf P\-Tree}$<$ {\bf W} $>$\-::get\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classPTree_a35953e10fd9d7e7d903f56bc07cdeede}
+
+
+return singleton 
+
+\hypertarget{classPTree_adfb67964d24883d336e3879b921626b7}{\index{P\-Tree@{P\-Tree}!get\-Root@{get\-Root}}
+\index{get\-Root@{get\-Root}!PTree@{P\-Tree}}
+\subsubsection[{get\-Root}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf node\-\_\-type}$\ast$\& {\bf P\-Tree}$<$ {\bf W} $>$\-::get\-Root (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPTree_adfb67964d24883d336e3879b921626b7}
+\hypertarget{classPTree_a5d77e8de25c1dbc545dda4e95452272f}{\index{P\-Tree@{P\-Tree}!ins@{ins}}
+\index{ins@{ins}!PTree@{P\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf P\-Tree}$<$ {\bf W} $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf node\-\_\-type} $\ast$\&}]{\-\_\-node, }
+\item[{const int}]{\-\_\-level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPTree_a5d77e8de25c1dbc545dda4e95452272f}
+
+
+insert a prefix 
+
+\hypertarget{classPTree_ab0ef7f0ccff4d5f1a8715cda9875ecd8}{\index{P\-Tree@{P\-Tree}!operator=@{operator=}}
+\index{operator=@{operator=}!PTree@{P\-Tree}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf P\-Tree}\& {\bf P\-Tree}$<$ {\bf W} $>$\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf P\-Tree}$<$ {\bf W} $>$ \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classPTree_ab0ef7f0ccff4d5f1a8715cda9875ecd8}
+
+
+assignment op, disabled 
+
+\hypertarget{classPTree_ac25b6287131f184d2c6bafe28c0aadc1}{\index{P\-Tree@{P\-Tree}!print\-Node@{print\-Node}}
+\index{print\-Node@{print\-Node}!PTree@{P\-Tree}}
+\subsubsection[{print\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf P\-Tree}$<$ {\bf W} $>$\-::print\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf node\-\_\-type} $\ast$}]{\-\_\-node}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPTree_ac25b6287131f184d2c6bafe28c0aadc1}
+
+
+print a node 
+
+\hypertarget{classPTree_aca1d149ec5bc7e5c70671084245970e0}{\index{P\-Tree@{P\-Tree}!search@{search}}
+\index{search@{search}!PTree@{P\-Tree}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf uint32} {\bf P\-Tree}$<$ {\bf W} $>$\-::search (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-ip}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPTree_aca1d149ec5bc7e5c70671084245970e0}
+
+
+search the L\-P\-M for the given I\-P address 
+
+\hypertarget{classPTree_aaf5933000ca153c8b57bbd92af1a5602}{\index{P\-Tree@{P\-Tree}!traverse@{traverse}}
+\index{traverse@{traverse}!PTree@{P\-Tree}}
+\subsubsection[{traverse}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void {\bf P\-Tree}$<$ {\bf W} $>$\-::traverse (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classPTree_aaf5933000ca153c8b57bbd92af1a5602}
+
+
+traverse the prefix tree 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classPTree_aa4ae1d4235346aba797878a0415dc41b}{\index{P\-Tree@{P\-Tree}!m\-Level\-Node\-Num@{m\-Level\-Node\-Num}}
+\index{m\-Level\-Node\-Num@{m\-Level\-Node\-Num}!PTree@{P\-Tree}}
+\subsubsection[{m\-Level\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf uint32} {\bf P\-Tree}$<$ {\bf W} $>$\-::m\-Level\-Node\-Num\mbox{[}{\bf W}+1\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classPTree_aa4ae1d4235346aba797878a0415dc41b}
+
+
+number of nodes in each level 
+
+\hypertarget{classPTree_a3b5c4d673f63afded23d7ab31174d02d}{\index{P\-Tree@{P\-Tree}!m\-Node\-Num@{m\-Node\-Num}}
+\index{m\-Node\-Num@{m\-Node\-Num}!PTree@{P\-Tree}}
+\subsubsection[{m\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf uint32} {\bf P\-Tree}$<$ {\bf W} $>$\-::m\-Node\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classPTree_a3b5c4d673f63afded23d7ab31174d02d}
+
+
+number of nodes in total 
+
+\hypertarget{classPTree_a78fb787b80f61d94c4ce92d1fd6f38b4}{\index{P\-Tree@{P\-Tree}!pt@{pt}}
+\index{pt@{pt}!PTree@{P\-Tree}}
+\subsubsection[{pt}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf P\-Tree}$<$ {\bf W} $>$ $\ast$ {\bf P\-Tree}$<$ {\bf W} $>$\-::pt = nullptr\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}}\label{classPTree_a78fb787b80f61d94c4ce92d1fd6f38b4}
+\hypertarget{classPTree_ae87b3a544e048520a900456177af6e03}{\index{P\-Tree@{P\-Tree}!root@{root}}
+\index{root@{root}!PTree@{P\-Tree}}
+\subsubsection[{root}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ {\bf node\-\_\-type}$\ast$ {\bf P\-Tree}$<$ {\bf W} $>$\-::root\hspace{0.3cm}{\ttfamily [private]}}}\label{classPTree_ae87b3a544e048520a900456177af6e03}
+
+
+ptr to root 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{ptree_8h}{ptree.\-h}\end{DoxyCompactItemize}

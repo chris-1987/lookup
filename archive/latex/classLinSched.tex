@@ -1,0 +1,142 @@
+\hypertarget{classLinSched}{\section{Lin\-Sched$<$ K $>$ Class Template Reference}
+\label{classLinSched}\index{Lin\-Sched$<$ K $>$@{Lin\-Sched$<$ K $>$}}
+}
+
+
+schedule lookup tasks in a linear pipeline  
+
+
+
+
+{\ttfamily \#include $<$linsched.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structLinSched_1_1Request}{Request}
+\begin{DoxyCompactList}\small\item\em structure of a task \end{DoxyCompactList}\item 
+struct \hyperlink{structLinSched_1_1Stage}{Stage}
+\begin{DoxyCompactList}\small\item\em structure of a scheduler \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classLinSched_a11873ccd556cc6ae26d714078cc80fd1}{Lin\-Sched} ()
+\begin{DoxyCompactList}\small\item\em default ctor \end{DoxyCompactList}\item 
+bool \hyperlink{classLinSched_a776d6ffd758776074548113051204078}{is\-Empty} ()
+\begin{DoxyCompactList}\small\item\em current pipeline is empty \end{DoxyCompactList}\item 
+void \hyperlink{classLinSched_ad3abe827088ec3b62a0329457378691a}{search\-Run} (const std\-::string \&\-\_\-trace\-File)
+\begin{DoxyCompactList}\small\item\em perform lookup \end{DoxyCompactList}\item 
+void \hyperlink{classLinSched_a96e1746d1a2579b001d59685ddddfd94}{search\-Report} ()
+\item 
+void \hyperlink{classLinSched_a09e9f09b9b77c841b870e1815e093cd0}{update\-Run} (const std\-::string \&\-\_\-task\-File)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structLinSched_1_1Stage}{Stage} \hyperlink{classLinSched_a825ee41205fa4e9dd53fc8f2ac444494}{stages} \mbox{[}K\mbox{]}
+\begin{DoxyCompactList}\small\item\em one scheduler per stage \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\-\_\-t \hyperlink{classLinSched_a851cef882cb7392a1887b0d77cb83ec8}{m\-Slot\-Num}
+\item 
+size\-\_\-t \hyperlink{classLinSched_a864879d805b12ea6c2dd1641fc86ffbe}{m\-Request\-Num}
+\item 
+size\-\_\-t \hyperlink{classLinSched_ac64077553a7f146e98dbd84365c1a552}{m\-Busy\-Slot\-Num\-Stage} \mbox{[}K\mbox{]}
+\item 
+size\-\_\-t \hyperlink{classLinSched_a084c69c2890d7700e1ce14ed8da179e6}{m\-Busy\-Slot\-Num\-Avg}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int K$>$class Lin\-Sched$<$ K $>$}
+
+schedule lookup tasks in a linear pipeline 
+
+In a linear pipeline, each lookup task starts at the initial pipe stage and steps through the remaining pipe stages from left to right. Therefore, the throughput of a linear pipeline is one task per time slot.
+
+
+\begin{DoxyParams}{Parameters}
+{\em K} & number of pipe stages. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classLinSched_a11873ccd556cc6ae26d714078cc80fd1}{\index{Lin\-Sched@{Lin\-Sched}!Lin\-Sched@{Lin\-Sched}}
+\index{Lin\-Sched@{Lin\-Sched}!LinSched@{Lin\-Sched}}
+\subsubsection[{Lin\-Sched}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ {\bf Lin\-Sched}$<$ K $>$\-::{\bf Lin\-Sched} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classLinSched_a11873ccd556cc6ae26d714078cc80fd1}
+
+
+default ctor 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classLinSched_a776d6ffd758776074548113051204078}{\index{Lin\-Sched@{Lin\-Sched}!is\-Empty@{is\-Empty}}
+\index{is\-Empty@{is\-Empty}!LinSched@{Lin\-Sched}}
+\subsubsection[{is\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ bool {\bf Lin\-Sched}$<$ K $>$\-::is\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classLinSched_a776d6ffd758776074548113051204078}
+
+
+current pipeline is empty 
+
+\hypertarget{classLinSched_a96e1746d1a2579b001d59685ddddfd94}{\index{Lin\-Sched@{Lin\-Sched}!search\-Report@{search\-Report}}
+\index{search\-Report@{search\-Report}!LinSched@{Lin\-Sched}}
+\subsubsection[{search\-Report}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ void {\bf Lin\-Sched}$<$ K $>$\-::search\-Report (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classLinSched_a96e1746d1a2579b001d59685ddddfd94}
+\hypertarget{classLinSched_ad3abe827088ec3b62a0329457378691a}{\index{Lin\-Sched@{Lin\-Sched}!search\-Run@{search\-Run}}
+\index{search\-Run@{search\-Run}!LinSched@{Lin\-Sched}}
+\subsubsection[{search\-Run}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ void {\bf Lin\-Sched}$<$ K $>$\-::search\-Run (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-trace\-File}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classLinSched_ad3abe827088ec3b62a0329457378691a}
+
+
+perform lookup 
+
+A new arrival comes at the beginning of each time slot. \hypertarget{classLinSched_a09e9f09b9b77c841b870e1815e093cd0}{\index{Lin\-Sched@{Lin\-Sched}!update\-Run@{update\-Run}}
+\index{update\-Run@{update\-Run}!LinSched@{Lin\-Sched}}
+\subsubsection[{update\-Run}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ void {\bf Lin\-Sched}$<$ K $>$\-::update\-Run (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-task\-File}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classLinSched_a09e9f09b9b77c841b870e1815e093cd0}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classLinSched_a084c69c2890d7700e1ce14ed8da179e6}{\index{Lin\-Sched@{Lin\-Sched}!m\-Busy\-Slot\-Num\-Avg@{m\-Busy\-Slot\-Num\-Avg}}
+\index{m\-Busy\-Slot\-Num\-Avg@{m\-Busy\-Slot\-Num\-Avg}!LinSched@{Lin\-Sched}}
+\subsubsection[{m\-Busy\-Slot\-Num\-Avg}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ size\-\_\-t {\bf Lin\-Sched}$<$ K $>$\-::m\-Busy\-Slot\-Num\-Avg\hspace{0.3cm}{\ttfamily [private]}}}\label{classLinSched_a084c69c2890d7700e1ce14ed8da179e6}
+\hypertarget{classLinSched_ac64077553a7f146e98dbd84365c1a552}{\index{Lin\-Sched@{Lin\-Sched}!m\-Busy\-Slot\-Num\-Stage@{m\-Busy\-Slot\-Num\-Stage}}
+\index{m\-Busy\-Slot\-Num\-Stage@{m\-Busy\-Slot\-Num\-Stage}!LinSched@{Lin\-Sched}}
+\subsubsection[{m\-Busy\-Slot\-Num\-Stage}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ size\-\_\-t {\bf Lin\-Sched}$<$ K $>$\-::m\-Busy\-Slot\-Num\-Stage\mbox{[}K\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classLinSched_ac64077553a7f146e98dbd84365c1a552}
+\hypertarget{classLinSched_a864879d805b12ea6c2dd1641fc86ffbe}{\index{Lin\-Sched@{Lin\-Sched}!m\-Request\-Num@{m\-Request\-Num}}
+\index{m\-Request\-Num@{m\-Request\-Num}!LinSched@{Lin\-Sched}}
+\subsubsection[{m\-Request\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ size\-\_\-t {\bf Lin\-Sched}$<$ K $>$\-::m\-Request\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classLinSched_a864879d805b12ea6c2dd1641fc86ffbe}
+\hypertarget{classLinSched_a851cef882cb7392a1887b0d77cb83ec8}{\index{Lin\-Sched@{Lin\-Sched}!m\-Slot\-Num@{m\-Slot\-Num}}
+\index{m\-Slot\-Num@{m\-Slot\-Num}!LinSched@{Lin\-Sched}}
+\subsubsection[{m\-Slot\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ size\-\_\-t {\bf Lin\-Sched}$<$ K $>$\-::m\-Slot\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classLinSched_a851cef882cb7392a1887b0d77cb83ec8}
+\hypertarget{classLinSched_a825ee41205fa4e9dd53fc8f2ac444494}{\index{Lin\-Sched@{Lin\-Sched}!stages@{stages}}
+\index{stages@{stages}!LinSched@{Lin\-Sched}}
+\subsubsection[{stages}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int K$>$ {\bf Stage} {\bf Lin\-Sched}$<$ K $>$\-::stages\mbox{[}K\mbox{]}}}\label{classLinSched_a825ee41205fa4e9dd53fc8f2ac444494}
+
+
+one scheduler per stage 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/scheduler/\hyperlink{linsched_8h}{linsched.\-h}\end{DoxyCompactItemize}

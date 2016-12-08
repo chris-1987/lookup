@@ -1,0 +1,47 @@
+\hypertarget{mptree_8h}{\section{/home/chris/lookup/code/src/tree/mptree.h File Reference}
+\label{mptree_8h}\index{/home/chris/lookup/code/src/tree/mptree.\-h@{/home/chris/lookup/code/src/tree/mptree.\-h}}
+}
+
+
+definition of multi-\/prefix tree  
+
+
+{\ttfamily \#include \char`\"{}../common/common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/utility.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$queue$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structSNode}{S\-Node$<$ W $>$}
+\begin{DoxyCompactList}\small\item\em Secondary node in a multi-\/prefix tree. \end{DoxyCompactList}\item 
+struct \hyperlink{structPNode}{P\-Node$<$ W, K, M\-P, M\-C $>$}
+\begin{DoxyCompactList}\small\item\em Primary node in a multi-\/prefix tree. \end{DoxyCompactList}\item 
+struct \hyperlink{structPNode_1_1PrefixEntry}{P\-Node$<$ W, K, M\-P, M\-C $>$\-::\-Prefix\-Entry}
+\begin{DoxyCompactList}\small\item\em Prefix entry. \end{DoxyCompactList}\item 
+class \hyperlink{classMPTree}{M\-P\-Tree$<$ W, K, M\-P, M\-C $>$}
+\begin{DoxyCompactList}\small\item\em Build and update a multi-\/prefix tree. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{mptree_8h_aa5f92781a38d49886c9f56296cbf3623}{D\-E\-B\-U\-G\-\_\-\-M\-P\-T}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+definition of multi-\/prefix tree Copyright (c) 2016, Sun Yat-\/sen University All rights reserved
+
+Build, insert and delete prefixes in a multi-\/bit tree An implementation of the algorithm designed by Sun-\/\-Yuan Hsieh. Please refer to \char`\"{}\-A novel dynamic router-\/tables design for I\-P lookup and update\char`\"{} for more details.
+
+\begin{DoxyAuthor}{Author}
+Yi Wu 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2016.\-11 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{mptree_8h_aa5f92781a38d49886c9f56296cbf3623}{\index{mptree.\-h@{mptree.\-h}!D\-E\-B\-U\-G\-\_\-\-M\-P\-T@{D\-E\-B\-U\-G\-\_\-\-M\-P\-T}}
+\index{D\-E\-B\-U\-G\-\_\-\-M\-P\-T@{D\-E\-B\-U\-G\-\_\-\-M\-P\-T}!mptree.h@{mptree.\-h}}
+\subsubsection[{D\-E\-B\-U\-G\-\_\-\-M\-P\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\-E\-B\-U\-G\-\_\-\-M\-P\-T}}\label{mptree_8h_aa5f92781a38d49886c9f56296cbf3623}

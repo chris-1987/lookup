@@ -1,0 +1,93 @@
+\hypertarget{inet__ntop_8c}{\section{/home/chris/lookup/code/external/bgpdump/inet\-\_\-ntop.c File Reference}
+\label{inet__ntop_8c}\index{/home/chris/lookup/code/external/bgpdump/inet\-\_\-ntop.\-c@{/home/chris/lookup/code/external/bgpdump/inet\-\_\-ntop.\-c}}
+}
+{\ttfamily \#include $<$sys/param.\-h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdbool.\-h$>$}\\*
+{\ttfamily \#include $<$assert.\-h$>$}\\*
+{\ttfamily \#include $<$sys/types.\-h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\-h$>$}\\*
+{\ttfamily \#include $<$arpa/inet.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}util.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{inet__ntop_8c_ab3cc2a4b1a28ce4f71ab41fb12a3c8aa}{fmt\-\_\-ipv4} (\hyperlink{bgpdump__attr_8h_a9aaa4b1d3636b5125123407655ecb963}{B\-G\-P\-D\-U\-M\-P\-\_\-\-I\-P\-\_\-\-A\-D\-D\-R\-E\-S\-S} addr, char $\ast$buffer)
+\item 
+char $\ast$ \hyperlink{inet__ntop_8c_a797230fb2bc4cbf56a18a6f5a5d1decf}{fmt\-\_\-ipv6} (\hyperlink{bgpdump__attr_8h_a9aaa4b1d3636b5125123407655ecb963}{B\-G\-P\-D\-U\-M\-P\-\_\-\-I\-P\-\_\-\-A\-D\-D\-R\-E\-S\-S} addr, char $\ast$buffer)
+\item 
+static void \hyperlink{inet__ntop_8c_a7860add101cff7451cc499c7e714d049}{test\-\_\-roundtrip} (char $\ast$str)
+\item 
+void \hyperlink{inet__ntop_8c_a658c2baa759270a9125f34fb0112d456}{test\-\_\-fmt\-\_\-ip} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char \hyperlink{inet__ntop_8c_aa5d8106d7f0afc313688953c057236d6}{O\-C\-T\-E\-T\-S} \mbox{[}$\,$\mbox{]}\mbox{[}4\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{inet__ntop_8c_ab3cc2a4b1a28ce4f71ab41fb12a3c8aa}{\index{inet\-\_\-ntop.\-c@{inet\-\_\-ntop.\-c}!fmt\-\_\-ipv4@{fmt\-\_\-ipv4}}
+\index{fmt\-\_\-ipv4@{fmt\-\_\-ipv4}!inet_ntop.c@{inet\-\_\-ntop.\-c}}
+\subsubsection[{fmt\-\_\-ipv4}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ fmt\-\_\-ipv4 (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-I\-P\-\_\-\-A\-D\-D\-R\-E\-S\-S}}]{addr, }
+\item[{char $\ast$}]{buffer}
+\end{DoxyParamCaption}
+)}}\label{inet__ntop_8c_ab3cc2a4b1a28ce4f71ab41fb12a3c8aa}
+\hypertarget{inet__ntop_8c_a797230fb2bc4cbf56a18a6f5a5d1decf}{\index{inet\-\_\-ntop.\-c@{inet\-\_\-ntop.\-c}!fmt\-\_\-ipv6@{fmt\-\_\-ipv6}}
+\index{fmt\-\_\-ipv6@{fmt\-\_\-ipv6}!inet_ntop.c@{inet\-\_\-ntop.\-c}}
+\subsubsection[{fmt\-\_\-ipv6}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ fmt\-\_\-ipv6 (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-I\-P\-\_\-\-A\-D\-D\-R\-E\-S\-S}}]{addr, }
+\item[{char $\ast$}]{buffer}
+\end{DoxyParamCaption}
+)}}\label{inet__ntop_8c_a797230fb2bc4cbf56a18a6f5a5d1decf}
+\hypertarget{inet__ntop_8c_a658c2baa759270a9125f34fb0112d456}{\index{inet\-\_\-ntop.\-c@{inet\-\_\-ntop.\-c}!test\-\_\-fmt\-\_\-ip@{test\-\_\-fmt\-\_\-ip}}
+\index{test\-\_\-fmt\-\_\-ip@{test\-\_\-fmt\-\_\-ip}!inet_ntop.c@{inet\-\_\-ntop.\-c}}
+\subsubsection[{test\-\_\-fmt\-\_\-ip}]{\setlength{\rightskip}{0pt plus 5cm}void test\-\_\-fmt\-\_\-ip (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{inet__ntop_8c_a658c2baa759270a9125f34fb0112d456}
+\hypertarget{inet__ntop_8c_a7860add101cff7451cc499c7e714d049}{\index{inet\-\_\-ntop.\-c@{inet\-\_\-ntop.\-c}!test\-\_\-roundtrip@{test\-\_\-roundtrip}}
+\index{test\-\_\-roundtrip@{test\-\_\-roundtrip}!inet_ntop.c@{inet\-\_\-ntop.\-c}}
+\subsubsection[{test\-\_\-roundtrip}]{\setlength{\rightskip}{0pt plus 5cm}static void test\-\_\-roundtrip (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{inet__ntop_8c_a7860add101cff7451cc499c7e714d049}
+
+
+\subsection{Variable Documentation}
+\hypertarget{inet__ntop_8c_aa5d8106d7f0afc313688953c057236d6}{\index{inet\-\_\-ntop.\-c@{inet\-\_\-ntop.\-c}!O\-C\-T\-E\-T\-S@{O\-C\-T\-E\-T\-S}}
+\index{O\-C\-T\-E\-T\-S@{O\-C\-T\-E\-T\-S}!inet_ntop.c@{inet\-\_\-ntop.\-c}}
+\subsubsection[{O\-C\-T\-E\-T\-S}]{\setlength{\rightskip}{0pt plus 5cm}const char O\-C\-T\-E\-T\-S\mbox{[}$\,$\mbox{]}\mbox{[}4\mbox{]}}}\label{inet__ntop_8c_aa5d8106d7f0afc313688953c057236d6}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{        
+     \textcolor{stringliteral}{"0"},  \textcolor{stringliteral}{"1"},  \textcolor{stringliteral}{"2"},  \textcolor{stringliteral}{"3"},  \textcolor{stringliteral}{"4"},  \textcolor{stringliteral}{"5"},  \textcolor{stringliteral}{"6"},  \textcolor{stringliteral}{"7"},  \textcolor{stringliteral}{"8"},  \textcolor{stringliteral}{"9"}, \textcolor{stringliteral}{"10"}, \textcolor{stringliteral}{"11"}, \textcolor{stringliteral}{"12"}, \textcolor{stringliteral}{"13"}, \textcolor{stringliteral}{"14"}, \textcolor{stringliteral}{"15"},
+    \textcolor{stringliteral}{"16"}, \textcolor{stringliteral}{"17"}, \textcolor{stringliteral}{"18"}, \textcolor{stringliteral}{"19"}, \textcolor{stringliteral}{"20"}, \textcolor{stringliteral}{"21"}, \textcolor{stringliteral}{"22"}, \textcolor{stringliteral}{"23"}, \textcolor{stringliteral}{"24"}, \textcolor{stringliteral}{"25"}, \textcolor{stringliteral}{"26"}, \textcolor{stringliteral}{"27"}, \textcolor{stringliteral}{"28"}, \textcolor{stringliteral}{"29"}, \textcolor{stringliteral}{"30"}, \textcolor{stringliteral}{"31"},
+    \textcolor{stringliteral}{"32"}, \textcolor{stringliteral}{"33"}, \textcolor{stringliteral}{"34"}, \textcolor{stringliteral}{"35"}, \textcolor{stringliteral}{"36"}, \textcolor{stringliteral}{"37"}, \textcolor{stringliteral}{"38"}, \textcolor{stringliteral}{"39"}, \textcolor{stringliteral}{"40"}, \textcolor{stringliteral}{"41"}, \textcolor{stringliteral}{"42"}, \textcolor{stringliteral}{"43"}, \textcolor{stringliteral}{"44"}, \textcolor{stringliteral}{"45"}, \textcolor{stringliteral}{"46"}, \textcolor{stringliteral}{"47"},
+    \textcolor{stringliteral}{"48"}, \textcolor{stringliteral}{"49"}, \textcolor{stringliteral}{"50"}, \textcolor{stringliteral}{"51"}, \textcolor{stringliteral}{"52"}, \textcolor{stringliteral}{"53"}, \textcolor{stringliteral}{"54"}, \textcolor{stringliteral}{"55"}, \textcolor{stringliteral}{"56"}, \textcolor{stringliteral}{"57"}, \textcolor{stringliteral}{"58"}, \textcolor{stringliteral}{"59"}, \textcolor{stringliteral}{"60"}, \textcolor{stringliteral}{"61"}, \textcolor{stringliteral}{"62"}, \textcolor{stringliteral}{"63"},
+    \textcolor{stringliteral}{"64"}, \textcolor{stringliteral}{"65"}, \textcolor{stringliteral}{"66"}, \textcolor{stringliteral}{"67"}, \textcolor{stringliteral}{"68"}, \textcolor{stringliteral}{"69"}, \textcolor{stringliteral}{"70"}, \textcolor{stringliteral}{"71"}, \textcolor{stringliteral}{"72"}, \textcolor{stringliteral}{"73"}, \textcolor{stringliteral}{"74"}, \textcolor{stringliteral}{"75"}, \textcolor{stringliteral}{"76"}, \textcolor{stringliteral}{"77"}, \textcolor{stringliteral}{"78"}, \textcolor{stringliteral}{"79"},
+    \textcolor{stringliteral}{"80"}, \textcolor{stringliteral}{"81"}, \textcolor{stringliteral}{"82"}, \textcolor{stringliteral}{"83"}, \textcolor{stringliteral}{"84"}, \textcolor{stringliteral}{"85"}, \textcolor{stringliteral}{"86"}, \textcolor{stringliteral}{"87"}, \textcolor{stringliteral}{"88"}, \textcolor{stringliteral}{"89"}, \textcolor{stringliteral}{"90"}, \textcolor{stringliteral}{"91"}, \textcolor{stringliteral}{"92"}, \textcolor{stringliteral}{"93"}, \textcolor{stringliteral}{"94"}, \textcolor{stringliteral}{"95"},
+    \textcolor{stringliteral}{"96"}, \textcolor{stringliteral}{"97"}, \textcolor{stringliteral}{"98"}, \textcolor{stringliteral}{"99"},
+    \textcolor{stringliteral}{"100"}, \textcolor{stringliteral}{"101"}, \textcolor{stringliteral}{"102"}, \textcolor{stringliteral}{"103"}, \textcolor{stringliteral}{"104"}, \textcolor{stringliteral}{"105"}, \textcolor{stringliteral}{"106"}, \textcolor{stringliteral}{"107"}, \textcolor{stringliteral}{"108"}, \textcolor{stringliteral}{"109"},
+    \textcolor{stringliteral}{"110"}, \textcolor{stringliteral}{"111"}, \textcolor{stringliteral}{"112"}, \textcolor{stringliteral}{"113"}, \textcolor{stringliteral}{"114"}, \textcolor{stringliteral}{"115"}, \textcolor{stringliteral}{"116"}, \textcolor{stringliteral}{"117"}, \textcolor{stringliteral}{"118"}, \textcolor{stringliteral}{"119"}, \textcolor{stringliteral}{"120"}, \textcolor{stringliteral}{"121"}, \textcolor{stringliteral}{"122"},
+    \textcolor{stringliteral}{"123"}, \textcolor{stringliteral}{"124"}, \textcolor{stringliteral}{"125"}, \textcolor{stringliteral}{"126"}, \textcolor{stringliteral}{"127"}, \textcolor{stringliteral}{"128"}, \textcolor{stringliteral}{"129"}, \textcolor{stringliteral}{"130"}, \textcolor{stringliteral}{"131"}, \textcolor{stringliteral}{"132"}, \textcolor{stringliteral}{"133"}, \textcolor{stringliteral}{"134"}, \textcolor{stringliteral}{"135"},
+    \textcolor{stringliteral}{"136"}, \textcolor{stringliteral}{"137"}, \textcolor{stringliteral}{"138"}, \textcolor{stringliteral}{"139"}, \textcolor{stringliteral}{"140"}, \textcolor{stringliteral}{"141"}, \textcolor{stringliteral}{"142"}, \textcolor{stringliteral}{"143"}, \textcolor{stringliteral}{"144"}, \textcolor{stringliteral}{"145"}, \textcolor{stringliteral}{"146"}, \textcolor{stringliteral}{"147"}, \textcolor{stringliteral}{"148"},
+    \textcolor{stringliteral}{"149"}, \textcolor{stringliteral}{"150"}, \textcolor{stringliteral}{"151"}, \textcolor{stringliteral}{"152"}, \textcolor{stringliteral}{"153"}, \textcolor{stringliteral}{"154"}, \textcolor{stringliteral}{"155"}, \textcolor{stringliteral}{"156"}, \textcolor{stringliteral}{"157"}, \textcolor{stringliteral}{"158"}, \textcolor{stringliteral}{"159"}, \textcolor{stringliteral}{"160"}, \textcolor{stringliteral}{"161"},
+    \textcolor{stringliteral}{"162"}, \textcolor{stringliteral}{"163"}, \textcolor{stringliteral}{"164"}, \textcolor{stringliteral}{"165"}, \textcolor{stringliteral}{"166"}, \textcolor{stringliteral}{"167"}, \textcolor{stringliteral}{"168"}, \textcolor{stringliteral}{"169"}, \textcolor{stringliteral}{"170"}, \textcolor{stringliteral}{"171"}, \textcolor{stringliteral}{"172"}, \textcolor{stringliteral}{"173"}, \textcolor{stringliteral}{"174"},
+    \textcolor{stringliteral}{"175"}, \textcolor{stringliteral}{"176"}, \textcolor{stringliteral}{"177"}, \textcolor{stringliteral}{"178"}, \textcolor{stringliteral}{"179"}, \textcolor{stringliteral}{"180"}, \textcolor{stringliteral}{"181"}, \textcolor{stringliteral}{"182"}, \textcolor{stringliteral}{"183"}, \textcolor{stringliteral}{"184"}, \textcolor{stringliteral}{"185"}, \textcolor{stringliteral}{"186"}, \textcolor{stringliteral}{"187"}, 
+    \textcolor{stringliteral}{"188"}, \textcolor{stringliteral}{"189"}, \textcolor{stringliteral}{"190"}, \textcolor{stringliteral}{"191"}, \textcolor{stringliteral}{"192"}, \textcolor{stringliteral}{"193"}, \textcolor{stringliteral}{"194"}, \textcolor{stringliteral}{"195"}, \textcolor{stringliteral}{"196"}, \textcolor{stringliteral}{"197"}, \textcolor{stringliteral}{"198"}, \textcolor{stringliteral}{"199"}, \textcolor{stringliteral}{"200"},
+    \textcolor{stringliteral}{"201"}, \textcolor{stringliteral}{"202"}, \textcolor{stringliteral}{"203"}, \textcolor{stringliteral}{"204"}, \textcolor{stringliteral}{"205"}, \textcolor{stringliteral}{"206"}, \textcolor{stringliteral}{"207"}, \textcolor{stringliteral}{"208"}, \textcolor{stringliteral}{"209"}, \textcolor{stringliteral}{"210"}, \textcolor{stringliteral}{"211"}, \textcolor{stringliteral}{"212"}, \textcolor{stringliteral}{"213"},
+    \textcolor{stringliteral}{"214"}, \textcolor{stringliteral}{"215"}, \textcolor{stringliteral}{"216"}, \textcolor{stringliteral}{"217"}, \textcolor{stringliteral}{"218"}, \textcolor{stringliteral}{"219"}, \textcolor{stringliteral}{"220"}, \textcolor{stringliteral}{"221"}, \textcolor{stringliteral}{"222"}, \textcolor{stringliteral}{"223"}, \textcolor{stringliteral}{"224"}, \textcolor{stringliteral}{"225"}, \textcolor{stringliteral}{"226"},
+    \textcolor{stringliteral}{"227"}, \textcolor{stringliteral}{"228"}, \textcolor{stringliteral}{"229"}, \textcolor{stringliteral}{"230"}, \textcolor{stringliteral}{"231"}, \textcolor{stringliteral}{"232"}, \textcolor{stringliteral}{"233"}, \textcolor{stringliteral}{"234"}, \textcolor{stringliteral}{"235"}, \textcolor{stringliteral}{"236"}, \textcolor{stringliteral}{"237"}, \textcolor{stringliteral}{"238"}, \textcolor{stringliteral}{"239"},
+    \textcolor{stringliteral}{"240"}, \textcolor{stringliteral}{"241"}, \textcolor{stringliteral}{"242"}, \textcolor{stringliteral}{"243"}, \textcolor{stringliteral}{"244"}, \textcolor{stringliteral}{"245"}, \textcolor{stringliteral}{"246"}, \textcolor{stringliteral}{"247"}, \textcolor{stringliteral}{"248"}, \textcolor{stringliteral}{"249"}, \textcolor{stringliteral}{"250"}, \textcolor{stringliteral}{"251"}, \textcolor{stringliteral}{"252"},
+    \textcolor{stringliteral}{"253"}, \textcolor{stringliteral}{"254"}, \textcolor{stringliteral}{"255"}
+\}
+\end{DoxyCode}

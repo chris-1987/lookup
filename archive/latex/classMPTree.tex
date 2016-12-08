@@ -1,0 +1,379 @@
+\hypertarget{classMPTree}{\section{M\-P\-Tree$<$ W, K, M\-P, M\-C $>$ Class Template Reference}
+\label{classMPTree}\index{M\-P\-Tree$<$ W, K, M\-P, M\-C $>$@{M\-P\-Tree$<$ W, K, M\-P, M\-C $>$}}
+}
+
+
+Build and update a multi-\/prefix tree.  
+
+
+
+
+{\ttfamily \#include $<$mptree.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classMPTree_af43cf4996e24c9d343923e4ea1db703a}{build} (const std\-::string \&\-\_\-fn)
+\begin{DoxyCompactList}\small\item\em build \hyperlink{classBTree}{B\-Tree} for B\-G\-P table \end{DoxyCompactList}\item 
+void \hyperlink{classMPTree_aadc3bf6841d9941a0a89101f9ad6eceb}{destroy} ()
+\begin{DoxyCompactList}\small\item\em destroy a multi-\/prefix tree \end{DoxyCompactList}\item 
+void \hyperlink{classMPTree_a0a3055fdb63dd614e55ec35630f6b48a}{ins} (const \hyperlink{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classMPTree_aaccc544aa2a8703f51ca45951f37a279}{pnode\-\_\-type} $\ast$\&\-\_\-pnode, const int \-\_\-level)
+\begin{DoxyCompactList}\small\item\em Insert a prefix into multi-\/prefix tree. \end{DoxyCompactList}\item 
+void \hyperlink{classMPTree_a6008b5d92736c860bd15f1e2e60474f3}{insert\-Prefix\-In\-P\-Node} (\hyperlink{classMPTree_aaccc544aa2a8703f51ca45951f37a279}{pnode\-\_\-type} $\ast$\-\_\-pnode, const \hyperlink{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop)
+\begin{DoxyCompactList}\small\item\em insert prefix into a non-\/full pnode \end{DoxyCompactList}\item 
+void \hyperlink{classMPTree_a2f06bf88ea0b8d1de3392bd395814ecc}{delete\-Prefix\-In\-P\-Node} (\hyperlink{structPNode}{P\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, K $>$ $\ast$\-\_\-pnode, const int \-\_\-pos)
+\begin{DoxyCompactList}\small\item\em delete a prefix at certain position from a primary node \end{DoxyCompactList}\item 
+void \hyperlink{classMPTree_a42e747e9c5affa8094e486729015288e}{ins} (const \hyperlink{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classMPTree_a456aa661f3322ceae1d38bfbb39b572c}{snode\-\_\-type} $\ast$\&\-\_\-snode, const int \-\_\-s\-Level, const int \-\_\-p\-Level)
+\begin{DoxyCompactList}\small\item\em Insert a prefix into the auxiliary tree. \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classMPTree_aa15df626e27ba47239e7d7b71a9d6de4}{search} (const \hyperlink{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{ip\-\_\-type} \&\-\_\-ip)
+\begin{DoxyCompactList}\small\item\em search L\-P\-M for the given I\-P address \end{DoxyCompactList}\item 
+void \hyperlink{classMPTree_a84bb0788175d919dfe0cc51f7346f10f}{del} (const \hyperlink{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, \hyperlink{structPNode}{P\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, K $>$ $\ast$\&\-\_\-pnode, const int \-\_\-level)
+\begin{DoxyCompactList}\small\item\em delete a prefix in a multi-\/prefix tree \end{DoxyCompactList}\item 
+int \hyperlink{classMPTree_ab18a63220f460f43c7eb17a6d9b692b0}{find\-Prefix\-In\-P\-Node} (\hyperlink{classMPTree_aaccc544aa2a8703f51ca45951f37a279}{pnode\-\_\-type} $\ast$\-\_\-pnode, const \hyperlink{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length)
+\begin{DoxyCompactList}\small\item\em try to find a prefix in the primary node \end{DoxyCompactList}\item 
+void \hyperlink{classMPTree_a0397e87c8e2c541734c8512300f317a4}{del} (const \hyperlink{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, \hyperlink{classMPTree_a456aa661f3322ceae1d38bfbb39b572c}{snode\-\_\-type} $\ast$\&\-\_\-snode, const int \-\_\-s\-Level, const int \-\_\-p\-Level)
+\begin{DoxyCompactList}\small\item\em delete a prefix in the auxiliary prefix tree \end{DoxyCompactList}\item 
+void \hyperlink{classMPTree_a9b4591cca6b68b689413e436ac1c4510}{find\-Longest\-Prefix\-In\-Child} (\hyperlink{structPNode}{P\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, K $>$ $\ast$\-\_\-pnode, size\-\_\-t \&\-\_\-child\-Idx, \hyperlink{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{ip\-\_\-type} \&\-\_\-long\-Prefix, \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-long\-Length, \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-long\-Nexthop)
+\begin{DoxyCompactList}\small\item\em find the longest prefix in the child nodes of a pnode \end{DoxyCompactList}\item 
+void \hyperlink{classMPTree_acd0b63c9580ca45b254114d03e8302c0}{print\-P\-Node} (const \hyperlink{classMPTree_aaccc544aa2a8703f51ca45951f37a279}{pnode\-\_\-type} $\ast$\-\_\-pnode) const 
+\item 
+\hyperlink{classMPTree_aaccc544aa2a8703f51ca45951f37a279}{pnode\-\_\-type} $\ast$\& \hyperlink{classMPTree_aa82b228f096ce70301f1a932e94cd306}{get\-Root} ()
+\item 
+void \hyperlink{classMPTree_ae01a6521f203c038781dce94a4e573f1}{report} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classMPTree}{M\-P\-Tree} $\ast$ \hyperlink{classMPTree_a5a2cae4534f201ebaddf348141c4b835}{get\-Instance} ()
+\begin{DoxyCompactList}\small\item\em create an instance of \hyperlink{classMPTree}{M\-P\-Tree} if not yet instantiated \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{ip\-\_\-type} \hyperlink{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{ip\-\_\-type}
+\item 
+typedef \hyperlink{structPNode}{P\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, K $>$ \hyperlink{classMPTree_aaccc544aa2a8703f51ca45951f37a279}{pnode\-\_\-type}
+\begin{DoxyCompactList}\small\item\em primary node type \end{DoxyCompactList}\item 
+typedef \hyperlink{structSNode}{S\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classMPTree_a456aa661f3322ceae1d38bfbb39b572c}{snode\-\_\-type}
+\begin{DoxyCompactList}\small\item\em secondary node type \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classMPTree_afe32c972435e628fb95e868304838992}{M\-P\-Tree} ()
+\begin{DoxyCompactList}\small\item\em default ctor \end{DoxyCompactList}\item 
+\hyperlink{classMPTree_afbd52e698d4f71e1e0384eaa94f7fda4}{M\-P\-Tree} (const \hyperlink{classMPTree}{M\-P\-Tree} \&\-\_\-mpt)=delete
+\item 
+\hyperlink{classMPTree}{M\-P\-Tree} \& \hyperlink{classMPTree_aea9c3ae2f9a98e4d2fb863c811dc4cd0}{operator=} (const \hyperlink{classMPTree}{M\-P\-Tree} \&)=delete
+\item 
+\hyperlink{classMPTree_a7a82f874b7a32521498717f701997db5}{$\sim$\-M\-P\-Tree} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classMPTree_aaccc544aa2a8703f51ca45951f37a279}{pnode\-\_\-type} $\ast$ \hyperlink{classMPTree_a63dc440043e3e752fadf7a6c86f5a66f}{p\-Root}
+\begin{DoxyCompactList}\small\item\em root node of the multi-\/prefix tree, a primary node \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classMPTree_a7df7e5c59c99de5b95292a27d84f1571}{m\-P\-Node\-Num}
+\begin{DoxyCompactList}\small\item\em number of primary nodes in total \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classMPTree_a69977970b2e2ae088e5973847071005b}{m\-S\-Node\-Num}
+\begin{DoxyCompactList}\small\item\em number of secondary nodes in total \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classMPTree}{M\-P\-Tree} $\ast$ \hyperlink{classMPTree_a6e09fa47644fc1b4ae296dd9eccf7bee}{mpt} = nullptr
+\begin{DoxyCompactList}\small\item\em pointer to mpt \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$class M\-P\-Tree$<$ W, K, M\-P, M\-C $>$}
+
+Build and update a multi-\/prefix tree. 
+
+Two kinds of nodes appear in a multi-\/prefix tree, namely primary node and secondary node.
+
+
+\begin{DoxyParams}{Parameters}
+{\em W} & 32 and 128 for I\-Pv4 and I\-Pv6, respectively \\
+\hline
+{\em K} & stride \\
+\hline
+{\em M\-P} & at most M\-P prefixes can be stored in a primary node, M\-P = 2 $\ast$ K + 1 \\
+\hline
+{\em M\-C} & at most M\-C child pointers can be stored in a primary node, M\-C = pow(2, K) \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}{\index{M\-P\-Tree@{M\-P\-Tree}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!MPTree@{M\-P\-Tree}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::{\bf ip\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classMPTree_a11032357a52017ffa6ad4e7ddedf3c23}
+\hypertarget{classMPTree_aaccc544aa2a8703f51ca45951f37a279}{\index{M\-P\-Tree@{M\-P\-Tree}!pnode\-\_\-type@{pnode\-\_\-type}}
+\index{pnode\-\_\-type@{pnode\-\_\-type}!MPTree@{M\-P\-Tree}}
+\subsubsection[{pnode\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ typedef {\bf P\-Node}$<${\bf W}, K$>$ {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::{\bf pnode\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classMPTree_aaccc544aa2a8703f51ca45951f37a279}
+
+
+primary node type 
+
+\hypertarget{classMPTree_a456aa661f3322ceae1d38bfbb39b572c}{\index{M\-P\-Tree@{M\-P\-Tree}!snode\-\_\-type@{snode\-\_\-type}}
+\index{snode\-\_\-type@{snode\-\_\-type}!MPTree@{M\-P\-Tree}}
+\subsubsection[{snode\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ typedef {\bf S\-Node}$<${\bf W}$>$ {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::{\bf snode\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classMPTree_a456aa661f3322ceae1d38bfbb39b572c}
+
+
+secondary node type 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classMPTree_afe32c972435e628fb95e868304838992}{\index{M\-P\-Tree@{M\-P\-Tree}!M\-P\-Tree@{M\-P\-Tree}}
+\index{M\-P\-Tree@{M\-P\-Tree}!MPTree@{M\-P\-Tree}}
+\subsubsection[{M\-P\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::{\bf M\-P\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classMPTree_afe32c972435e628fb95e868304838992}
+
+
+default ctor 
+
+\hypertarget{classMPTree_afbd52e698d4f71e1e0384eaa94f7fda4}{\index{M\-P\-Tree@{M\-P\-Tree}!M\-P\-Tree@{M\-P\-Tree}}
+\index{M\-P\-Tree@{M\-P\-Tree}!MPTree@{M\-P\-Tree}}
+\subsubsection[{M\-P\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::{\bf M\-P\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$ \&}]{\-\_\-mpt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classMPTree_afbd52e698d4f71e1e0384eaa94f7fda4}
+\hypertarget{classMPTree_a7a82f874b7a32521498717f701997db5}{\index{M\-P\-Tree@{M\-P\-Tree}!$\sim$\-M\-P\-Tree@{$\sim$\-M\-P\-Tree}}
+\index{$\sim$\-M\-P\-Tree@{$\sim$\-M\-P\-Tree}!MPTree@{M\-P\-Tree}}
+\subsubsection[{$\sim$\-M\-P\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::$\sim${\bf M\-P\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}}\label{classMPTree_a7a82f874b7a32521498717f701997db5}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classMPTree_af43cf4996e24c9d343923e4ea1db703a}{\index{M\-P\-Tree@{M\-P\-Tree}!build@{build}}
+\index{build@{build}!MPTree@{M\-P\-Tree}}
+\subsubsection[{build}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::build (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-fn}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_af43cf4996e24c9d343923e4ea1db703a}
+
+
+build \hyperlink{classBTree}{B\-Tree} for B\-G\-P table 
+
+\hypertarget{classMPTree_a84bb0788175d919dfe0cc51f7346f10f}{\index{M\-P\-Tree@{M\-P\-Tree}!del@{del}}
+\index{del@{del}!MPTree@{M\-P\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::del (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{{\bf P\-Node}$<$ {\bf W}, K $>$ $\ast$\&}]{\-\_\-pnode, }
+\item[{const int}]{\-\_\-level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_a84bb0788175d919dfe0cc51f7346f10f}
+
+
+delete a prefix in a multi-\/prefix tree 
+
+If len(\-\_\-prefix) $<$ K $\ast$ (\-\_\-level + 1), then attempt to delete the prefix in the auxiliary prefix tree of current node. Otherwise\-: (1) If \-\_\-prefix is in current node, there are two subcases\-: (1-\/1) if current node is an external node, then directly remove the prefix in the node (1-\/2) if current node is an internal node, then remove the prefix in the node, insert the longest prefix y in the child nodes to current node, and recursively delete y in the child node. (2) If \-\_\-prefix in not in current node, we branch to one of the child node to continue the delete operation. \hypertarget{classMPTree_a0397e87c8e2c541734c8512300f317a4}{\index{M\-P\-Tree@{M\-P\-Tree}!del@{del}}
+\index{del@{del}!MPTree@{M\-P\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::del (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{{\bf snode\-\_\-type} $\ast$\&}]{\-\_\-snode, }
+\item[{const int}]{\-\_\-s\-Level, }
+\item[{const int}]{\-\_\-p\-Level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_a0397e87c8e2c541734c8512300f317a4}
+
+
+delete a prefix in the auxiliary prefix tree 
+
+\hypertarget{classMPTree_a2f06bf88ea0b8d1de3392bd395814ecc}{\index{M\-P\-Tree@{M\-P\-Tree}!delete\-Prefix\-In\-P\-Node@{delete\-Prefix\-In\-P\-Node}}
+\index{delete\-Prefix\-In\-P\-Node@{delete\-Prefix\-In\-P\-Node}!MPTree@{M\-P\-Tree}}
+\subsubsection[{delete\-Prefix\-In\-P\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::delete\-Prefix\-In\-P\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf P\-Node}$<$ {\bf W}, K $>$ $\ast$}]{\-\_\-pnode, }
+\item[{const int}]{\-\_\-pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_a2f06bf88ea0b8d1de3392bd395814ecc}
+
+
+delete a prefix at certain position from a primary node 
+
+\hypertarget{classMPTree_aadc3bf6841d9941a0a89101f9ad6eceb}{\index{M\-P\-Tree@{M\-P\-Tree}!destroy@{destroy}}
+\index{destroy@{destroy}!MPTree@{M\-P\-Tree}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::destroy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_aadc3bf6841d9941a0a89101f9ad6eceb}
+
+
+destroy a multi-\/prefix tree 
+
+\hypertarget{classMPTree_a9b4591cca6b68b689413e436ac1c4510}{\index{M\-P\-Tree@{M\-P\-Tree}!find\-Longest\-Prefix\-In\-Child@{find\-Longest\-Prefix\-In\-Child}}
+\index{find\-Longest\-Prefix\-In\-Child@{find\-Longest\-Prefix\-In\-Child}!MPTree@{M\-P\-Tree}}
+\subsubsection[{find\-Longest\-Prefix\-In\-Child}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::find\-Longest\-Prefix\-In\-Child (
+\begin{DoxyParamCaption}
+\item[{{\bf P\-Node}$<$ {\bf W}, K $>$ $\ast$}]{\-\_\-pnode, }
+\item[{size\-\_\-t \&}]{\-\_\-child\-Idx, }
+\item[{{\bf ip\-\_\-type} \&}]{\-\_\-long\-Prefix, }
+\item[{{\bf uint8} \&}]{\-\_\-long\-Length, }
+\item[{{\bf uint32} \&}]{\-\_\-long\-Nexthop}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_a9b4591cca6b68b689413e436ac1c4510}
+
+
+find the longest prefix in the child nodes of a pnode 
+
+If all the child nodes have no prefixes, then they are external nodes and the longest prefix is in one of the auxiliary prefix tree If at least one child node is an internal node, then the longest prefix can be found in one of the child node. \hypertarget{classMPTree_ab18a63220f460f43c7eb17a6d9b692b0}{\index{M\-P\-Tree@{M\-P\-Tree}!find\-Prefix\-In\-P\-Node@{find\-Prefix\-In\-P\-Node}}
+\index{find\-Prefix\-In\-P\-Node@{find\-Prefix\-In\-P\-Node}!MPTree@{M\-P\-Tree}}
+\subsubsection[{find\-Prefix\-In\-P\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ int {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::find\-Prefix\-In\-P\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf pnode\-\_\-type} $\ast$}]{\-\_\-pnode, }
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_ab18a63220f460f43c7eb17a6d9b692b0}
+
+
+try to find a prefix in the primary node 
+
+\begin{DoxyReturn}{Returns}
+position of prefix in the node if any; otherwise, t. 
+\end{DoxyReturn}
+\hypertarget{classMPTree_a5a2cae4534f201ebaddf348141c4b835}{\index{M\-P\-Tree@{M\-P\-Tree}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!MPTree@{M\-P\-Tree}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P, size\-\_\-t M\-C$>$ {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$ $\ast$ {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::get\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classMPTree_a5a2cae4534f201ebaddf348141c4b835}
+
+
+create an instance of \hyperlink{classMPTree}{M\-P\-Tree} if not yet instantiated 
+
+\hypertarget{classMPTree_aa82b228f096ce70301f1a932e94cd306}{\index{M\-P\-Tree@{M\-P\-Tree}!get\-Root@{get\-Root}}
+\index{get\-Root@{get\-Root}!MPTree@{M\-P\-Tree}}
+\subsubsection[{get\-Root}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf pnode\-\_\-type}$\ast$\& {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::get\-Root (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_aa82b228f096ce70301f1a932e94cd306}
+\hypertarget{classMPTree_a0a3055fdb63dd614e55ec35630f6b48a}{\index{M\-P\-Tree@{M\-P\-Tree}!ins@{ins}}
+\index{ins@{ins}!MPTree@{M\-P\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf pnode\-\_\-type} $\ast$\&}]{\-\_\-pnode, }
+\item[{const int}]{\-\_\-level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_a0a3055fdb63dd614e55ec35630f6b48a}
+
+
+Insert a prefix into multi-\/prefix tree. 
+
+If len(\-\_\-prefix) $<$ K $\ast$ (\-\_\-level + 1), then insert \-\_\-prefix into the auxiliary prefix tree rooted at \-\_\-node-\/$>$s\-Root. Otherwise\-: (1) If \-\_\-node.\-t != M\-P, then \-\_\-node is not full, insert \-\_\-prefix into current node. (2) If \-\_\-node.\-t == M\-P \&\& len(\-\_\-node.\-prefix\mbox{[}M\-P -\/ 1\mbox{]}) $<$ len(\-\_\-prefix), then replace \-\_\-node.\-prefix\mbox{[}M\-P -\/ 1\mbox{]} with \-\_\-prefix, reorde prefixes in \-\_\-node and recursively insert the replaced prefix into a higher level. (3) If \-\_\-node.\-t == M\-P \&\& len(\-\_\-node.\-prefix\mbox{[}M\-P -\/ 1\mbox{]}) $>$= len(\-\_\-prefix), then continue to insert \-\_\-prefix into a higher level. \hypertarget{classMPTree_a42e747e9c5affa8094e486729015288e}{\index{M\-P\-Tree@{M\-P\-Tree}!ins@{ins}}
+\index{ins@{ins}!MPTree@{M\-P\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf snode\-\_\-type} $\ast$\&}]{\-\_\-snode, }
+\item[{const int}]{\-\_\-s\-Level, }
+\item[{const int}]{\-\_\-p\-Level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_a42e747e9c5affa8094e486729015288e}
+
+
+Insert a prefix into the auxiliary tree. 
+
+\hypertarget{classMPTree_a6008b5d92736c860bd15f1e2e60474f3}{\index{M\-P\-Tree@{M\-P\-Tree}!insert\-Prefix\-In\-P\-Node@{insert\-Prefix\-In\-P\-Node}}
+\index{insert\-Prefix\-In\-P\-Node@{insert\-Prefix\-In\-P\-Node}!MPTree@{M\-P\-Tree}}
+\subsubsection[{insert\-Prefix\-In\-P\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::insert\-Prefix\-In\-P\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf pnode\-\_\-type} $\ast$}]{\-\_\-pnode, }
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_a6008b5d92736c860bd15f1e2e60474f3}
+
+
+insert prefix into a non-\/full pnode 
+
+\hypertarget{classMPTree_aea9c3ae2f9a98e4d2fb863c811dc4cd0}{\index{M\-P\-Tree@{M\-P\-Tree}!operator=@{operator=}}
+\index{operator=@{operator=}!MPTree@{M\-P\-Tree}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf M\-P\-Tree}\& {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$ \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [delete]}}}\label{classMPTree_aea9c3ae2f9a98e4d2fb863c811dc4cd0}
+\hypertarget{classMPTree_acd0b63c9580ca45b254114d03e8302c0}{\index{M\-P\-Tree@{M\-P\-Tree}!print\-P\-Node@{print\-P\-Node}}
+\index{print\-P\-Node@{print\-P\-Node}!MPTree@{M\-P\-Tree}}
+\subsubsection[{print\-P\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::print\-P\-Node (
+\begin{DoxyParamCaption}
+\item[{const {\bf pnode\-\_\-type} $\ast$}]{\-\_\-pnode}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_acd0b63c9580ca45b254114d03e8302c0}
+\hypertarget{classMPTree_ae01a6521f203c038781dce94a4e573f1}{\index{M\-P\-Tree@{M\-P\-Tree}!report@{report}}
+\index{report@{report}!MPTree@{M\-P\-Tree}}
+\subsubsection[{report}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ void {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::report (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_ae01a6521f203c038781dce94a4e573f1}
+\hypertarget{classMPTree_aa15df626e27ba47239e7d7b71a9d6de4}{\index{M\-P\-Tree@{M\-P\-Tree}!search@{search}}
+\index{search@{search}!MPTree@{M\-P\-Tree}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf uint32} {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::search (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-ip}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMPTree_aa15df626e27ba47239e7d7b71a9d6de4}
+
+
+search L\-P\-M for the given I\-P address 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classMPTree_a7df7e5c59c99de5b95292a27d84f1571}{\index{M\-P\-Tree@{M\-P\-Tree}!m\-P\-Node\-Num@{m\-P\-Node\-Num}}
+\index{m\-P\-Node\-Num@{m\-P\-Node\-Num}!MPTree@{M\-P\-Tree}}
+\subsubsection[{m\-P\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf uint32} {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::m\-P\-Node\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classMPTree_a7df7e5c59c99de5b95292a27d84f1571}
+
+
+number of primary nodes in total 
+
+\hypertarget{classMPTree_a6e09fa47644fc1b4ae296dd9eccf7bee}{\index{M\-P\-Tree@{M\-P\-Tree}!mpt@{mpt}}
+\index{mpt@{mpt}!MPTree@{M\-P\-Tree}}
+\subsubsection[{mpt}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$ $\ast$ {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::mpt = nullptr\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}}\label{classMPTree_a6e09fa47644fc1b4ae296dd9eccf7bee}
+
+
+pointer to mpt 
+
+\hypertarget{classMPTree_a69977970b2e2ae088e5973847071005b}{\index{M\-P\-Tree@{M\-P\-Tree}!m\-S\-Node\-Num@{m\-S\-Node\-Num}}
+\index{m\-S\-Node\-Num@{m\-S\-Node\-Num}!MPTree@{M\-P\-Tree}}
+\subsubsection[{m\-S\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf uint32} {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::m\-S\-Node\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classMPTree_a69977970b2e2ae088e5973847071005b}
+
+
+number of secondary nodes in total 
+
+\hypertarget{classMPTree_a63dc440043e3e752fadf7a6c86f5a66f}{\index{M\-P\-Tree@{M\-P\-Tree}!p\-Root@{p\-Root}}
+\index{p\-Root@{p\-Root}!MPTree@{M\-P\-Tree}}
+\subsubsection[{p\-Root}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K))$>$ {\bf pnode\-\_\-type}$\ast$ {\bf M\-P\-Tree}$<$ {\bf W}, K, M\-P, M\-C $>$\-::p\-Root\hspace{0.3cm}{\ttfamily [private]}}}\label{classMPTree_a63dc440043e3e752fadf7a6c86f5a66f}
+
+
+root node of the multi-\/prefix tree, a primary node 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{mptree_8h}{mptree.\-h}\end{DoxyCompactItemize}

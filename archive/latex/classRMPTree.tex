@@ -1,0 +1,661 @@
+\hypertarget{classRMPTree}{\section{R\-M\-P\-Tree$<$ W, K, U, M\-P, M\-C, V, H1, H2 $>$ Class Template Reference}
+\label{classRMPTree}\index{R\-M\-P\-Tree$<$ W, K, U, M\-P, M\-C, V, H1, H2 $>$@{R\-M\-P\-Tree$<$ W, K, U, M\-P, M\-C, V, H1, H2 $>$}}
+}
+
+
+Build and update the index.  
+
+
+
+
+{\ttfamily \#include $<$rmptree.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structRMPTree_1_1SortElem}{Sort\-Elem}
+\begin{DoxyCompactList}\small\item\em element to be sorted \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRMPTree_aa40e0de7051ee571a9d89cd9106e0c62}{R\-M\-P\-Tree} ()
+\begin{DoxyCompactList}\small\item\em default ctor \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a398eb082ee35f45e8e2e119478c3c7aa}{initialize\-Parameters} ()
+\begin{DoxyCompactList}\small\item\em initialize parameters \end{DoxyCompactList}\item 
+\hyperlink{classRMPTree_a77c366d17bf6c7082188d45b0a9e967a}{R\-M\-P\-Tree} (const \hyperlink{classRMPTree}{R\-M\-P\-Tree} \&\-\_\-mpt)=delete
+\begin{DoxyCompactList}\small\item\em disable copy-\/ctor \end{DoxyCompactList}\item 
+\hyperlink{classRMPTree}{R\-M\-P\-Tree} \& \hyperlink{classRMPTree_ae16ed3a2d18e52997dfaff4870f2372d}{operator=} (const \hyperlink{classRMPTree}{R\-M\-P\-Tree} \&)=delete
+\begin{DoxyCompactList}\small\item\em disable assignment op \end{DoxyCompactList}\item 
+\hyperlink{classRMPTree_ac23a18d501f8c430a9c313e5a11f5017}{$\sim$\-R\-M\-P\-Tree} ()
+\begin{DoxyCompactList}\small\item\em dtor \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_acdc7500f870bdf78aee90553dff1fb83}{clear} ()
+\begin{DoxyCompactList}\small\item\em clear \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a2a178a47b5eb15869548e79cc13dee8f}{build} (const std\-::string \&\-\_\-fn)
+\begin{DoxyCompactList}\small\item\em Build the index. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_ac59486bc75a65d7ee31e1d54cd64162e}{destroy} (size\-\_\-t \-\_\-idx)
+\begin{DoxyCompactList}\small\item\em destroy a multi-\/prefix tree \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a740480779eca4924a14f512af6e70675}{report} ()
+\begin{DoxyCompactList}\small\item\em Report the collected information. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a97c8ca5d99c9fce9aeeddae0a2479bb2}{ins} (const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop)
+\begin{DoxyCompactList}\small\item\em Insert a prefix into the index. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_ac02e80665c49225e72e76fd4867e2c30}{ins} (const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classRMPTree_ac37da419a61106e5996632fc83670959}{pnode\-\_\-type} $\ast$\&\-\_\-pnode, const int \-\_\-level, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-tree\-Idx)
+\begin{DoxyCompactList}\small\item\em Insert a prefix into the M\-P\-T forest. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a36ae5c5ba559386a2e318ad1f9d76832}{insert\-Prefix\-In\-P\-Node} (\hyperlink{classRMPTree_ac37da419a61106e5996632fc83670959}{pnode\-\_\-type} $\ast$\-\_\-pnode, const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop)
+\begin{DoxyCompactList}\small\item\em Insert prefix into a non-\/full pnode. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_abf994ca8e073378dc4a643b1d9c1cfc7}{delete\-Prefix\-In\-P\-Node} (\hyperlink{structPNode}{P\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, K $>$ $\ast$\-\_\-pnode, const int \-\_\-pos)
+\begin{DoxyCompactList}\small\item\em delete a prefix at certain position from a primary node \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_af26712b559e84c21ee0f3d03ee89bf6b}{ins} (const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classRMPTree_ade23f0b765f589613fe10d6cbab738e2}{snode\-\_\-type} $\ast$\&\-\_\-snode, const int \-\_\-s\-Level, const int \-\_\-p\-Level, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-tree\-Idx)
+\begin{DoxyCompactList}\small\item\em Insert a prefix into the auxiliary tree. \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRMPTree_aba048ea59e12faeac571ef5895feb55d}{search} (const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-ip, std\-::vector$<$ int $>$ \&\-\_\-trace)
+\begin{DoxyCompactList}\small\item\em Search L\-P\-M for the input I\-P address. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_aeb968111f77661b1e7dc46b2d00bb947}{generate\-Trace} (const std\-::string \&\-\_\-req\-File, const std\-::string \&\-\_\-trace\-File)
+\begin{DoxyCompactList}\small\item\em generate lookup trace for simulation \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_ad48e9bf6f019b2ae704f61a885c96cd7}{del} (const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length)
+\begin{DoxyCompactList}\small\item\em Delete a prefix from the index. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a4b15911964ac9d5312248c5c13f33077}{del} (const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, \hyperlink{structPNode}{P\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, K $>$ $\ast$\&\-\_\-pnode, const int \-\_\-level, \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-tree\-Idx)
+\begin{DoxyCompactList}\small\item\em Delete a prefix in the index. \end{DoxyCompactList}\item 
+int \hyperlink{classRMPTree_a49b3605159043ab336af2f31c218cf9c}{find\-Prefix\-In\-P\-Node} (\hyperlink{classRMPTree_ac37da419a61106e5996632fc83670959}{pnode\-\_\-type} $\ast$\-\_\-pnode, const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length)
+\begin{DoxyCompactList}\small\item\em Try to find a prefix in a primary node. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_ae74702ea82f7bb98eba8ce5cb1ccc98c}{del} (const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, \hyperlink{classRMPTree_ade23f0b765f589613fe10d6cbab738e2}{snode\-\_\-type} $\ast$\&\-\_\-snode, const int \-\_\-s\-Level, const int \-\_\-p\-Level, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-tree\-Idx)
+\begin{DoxyCompactList}\small\item\em delete a prefix in an auxiliary prefix tree \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a86e307f0cefe7489a9586a7e2cf8a9a1}{find\-Longest\-Prefix\-In\-Child} (\hyperlink{structPNode}{P\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, K $>$ $\ast$\-\_\-pnode, size\-\_\-t \&\-\_\-child\-Idx, \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-long\-Prefix, \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-long\-Length, \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-long\-Nexthop)
+\begin{DoxyCompactList}\small\item\em find the longest prefix in the child nodes of a pnode \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a6405ff9f920c55e2e7b7255d6ff7c478}{print\-P\-Node} (const \hyperlink{classRMPTree_ac37da419a61106e5996632fc83670959}{pnode\-\_\-type} $\ast$\-\_\-pnode) const 
+\begin{DoxyCompactList}\small\item\em print a primary node \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a227f397d708cf164e3837434778cd7ff}{scatter\-To\-Pipeline} (int \-\_\-pipestyle, int \-\_\-stagenum=H2)
+\begin{DoxyCompactList}\small\item\em Scatter. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a02e278a265a901f31eaabb0a5b94f640}{lin} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em Scatter nodes in a linear pipe line. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_ac6b336010d7aec91920a578b0e830ac9}{ran} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em Scatter nodes in a random pipe line. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a37d3f0f184f191935ddec8a5af90ba07}{cir} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em Scatter in a circular pipeline. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_aea5eb8ddc2ef237b197ea9712272692e}{update} (const std\-::string \&\-\_\-fn, int \-\_\-stagenum=\hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}-\/U+1)
+\begin{DoxyCompactList}\small\item\em Update the index. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a21826215602a4748acd707461a40c297}{ins} (const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, std\-::default\-\_\-random\-\_\-engine \&\-\_\-generator\-\_\-p, std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&\-\_\-distribution\-\_\-p, std\-::default\-\_\-random\-\_\-engine \&\-\_\-generator\-\_\-s, std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&\-\_\-distribution\-\_\-s)
+\begin{DoxyCompactList}\small\item\em for update, insert into index \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_aa588b3479961066f6f9295f01e2b953e}{ins} (const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classRMPTree_ac37da419a61106e5996632fc83670959}{pnode\-\_\-type} $\ast$\&\-\_\-pnode, const int \-\_\-level, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-tree\-Idx, std\-::default\-\_\-random\-\_\-engine \&\-\_\-generator\-\_\-p, std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&\-\_\-distribution\-\_\-p, std\-::default\-\_\-random\-\_\-engine \&\-\_\-generator\-\_\-s, std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&\-\_\-distribution\-\_\-s)
+\begin{DoxyCompactList}\small\item\em for update, insert into M\-P\-T forest \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_a78e29ac6b9235a7a82fe7461ce752bc2}{ins} (const \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \&\-\_\-prefix, const \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-nexthop, \hyperlink{classRMPTree_ade23f0b765f589613fe10d6cbab738e2}{snode\-\_\-type} $\ast$\&\-\_\-snode, const int \-\_\-s\-Level, const int \-\_\-p\-Level, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-tree\-Idx, std\-::default\-\_\-random\-\_\-engine \&\-\_\-generator\-\_\-s, std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&\-\_\-distribution\-\_\-s)
+\begin{DoxyCompactList}\small\item\em for update, insert into the auxiliary tree. \end{DoxyCompactList}\item 
+void \hyperlink{classRMPTree_aab37d3f74dc84185d2cc7aedb417f578}{report\-Node\-Num\-In\-Stage} (int \-\_\-stagenum)
+\begin{DoxyCompactList}\small\item\em report number of nodes in each stage \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{types_8h_structchoose__ip__type}{choose\-\_\-ip\-\_\-type}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$\\*
+\-::\hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type} \hyperlink{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{ip\-\_\-type}
+\item 
+typedef \hyperlink{structPNode}{P\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, K $>$ \hyperlink{classRMPTree_ac37da419a61106e5996632fc83670959}{pnode\-\_\-type}
+\begin{DoxyCompactList}\small\item\em primary node type \end{DoxyCompactList}\item 
+typedef \hyperlink{structSNode}{S\-Node}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ \hyperlink{classRMPTree_ade23f0b765f589613fe10d6cbab738e2}{snode\-\_\-type}
+\begin{DoxyCompactList}\small\item\em secondary node type \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classRMPTree_ac37da419a61106e5996632fc83670959}{pnode\-\_\-type} $\ast$ \hyperlink{classRMPTree_a4241c1689e08498084c51399549ae6b7}{m\-Root\-Table} \mbox{[}V\mbox{]}
+\begin{DoxyCompactList}\small\item\em pointers to a forest of multi-\/prefix tree \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRMPTree_a80594c79c981b7599d05b39c8701fbb8}{m\-Local\-Level\-P\-Node\-Num} \mbox{[}V\mbox{]}\mbox{[}H1\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of pnodes at each level in all M\-P\-T \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRMPTree_a02dd259c17645662ea922afa6aa5959a}{m\-Local\-Level\-S\-Node\-Num} \mbox{[}V\mbox{]}\mbox{[}H2\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of snodes at each level in all M\-P\-T \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRMPTree_a155ea8b9b340e1e108105062cfb2aa75}{m\-Local\-P\-Node\-Num} \mbox{[}V\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of pnodes in each M\-P\-T \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRMPTree_a5662a149c9af51f1d0d470ee9b700a61}{m\-Local\-S\-Node\-Num} \mbox{[}V\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of snodes in each M\-P\-T \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRMPTree_a5bfe436635f93a065affd03637d6b361}{m\-Global\-Level\-P\-Node\-Num} \mbox{[}H1\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of pnodes at each level \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRMPTree_a2435f801f07587babed1853cdb04b078}{m\-Global\-Level\-S\-Node\-Num} \mbox{[}H2\mbox{]}
+\begin{DoxyCompactList}\small\item\em number of snodes at each level \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRMPTree_a583509c36d3ec16fe35ca64ae7d71977}{m\-Total\-P\-Node\-Num}
+\begin{DoxyCompactList}\small\item\em number of pnodes \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{classRMPTree_af7293f2b7c8212daaccc3d014a9ca089}{m\-Total\-S\-Node\-Num}
+\begin{DoxyCompactList}\small\item\em number of snodes \end{DoxyCompactList}\item 
+\hyperlink{structFastTable}{Fast\-Table}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W}, U-\/1 $>$ $\ast$ \hyperlink{classRMPTree_ad94614dd338215403c0e46d8f3bed5e1}{ft}
+\begin{DoxyCompactList}\small\item\em pointer to the fast lookup table \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$class R\-M\-P\-Tree$<$ W, K, U, M\-P, M\-C, V, H1, H2 $>$}
+
+Build and update the index. 
+
+Prefixes shorter than U bits are stored in a fast lookup table. Prefixes not shorter than U bits are stored in the P\-T forest. 
+\begin{DoxyParams}{Parameters}
+{\em W} & 32 or 128 for I\-Pv4 or I\-Pv6, respectively. \\
+\hline
+{\em K} & Stride of M\-P\-T. \\
+\hline
+{\em M\-P} & Max number of prefixes tored in a primary node (2 $\ast$ K + 1). \\
+\hline
+{\em M\-C} & Max number of child pointers stored in a primary node (pow(2, K). \\
+\hline
+{\em U} & Threshold for classifying shorter and longer prefixes. \\
+\hline
+{\em V} & Number of prefix trees at large. \\
+\hline
+{\em H1} & Max level of a primary node. \\
+\hline
+{\em H2} & Max level of a secondary node. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The maximum height of M\-P\-T is H1 = (W -\/ U + 1) / K. The maximum height of P\-T is H2 = H1 + K, where the root node of P\-T is pointed to by a primary node located at the highest level of M\-P\-T. 
+\end{DoxyNote}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!ip\-\_\-type@{ip\-\_\-type}}
+\index{ip\-\_\-type@{ip\-\_\-type}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{ip\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ typedef {\bf choose\-\_\-ip\-\_\-type}$<${\bf W}$>$\-::{\bf ip\-\_\-type} {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::{\bf ip\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_a3dc76d54f334071d8a2bac2422db0159}
+\hypertarget{classRMPTree_ac37da419a61106e5996632fc83670959}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!pnode\-\_\-type@{pnode\-\_\-type}}
+\index{pnode\-\_\-type@{pnode\-\_\-type}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{pnode\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ typedef {\bf P\-Node}$<${\bf W}, K$>$ {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::{\bf pnode\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_ac37da419a61106e5996632fc83670959}
+
+
+primary node type 
+
+\hypertarget{classRMPTree_ade23f0b765f589613fe10d6cbab738e2}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!snode\-\_\-type@{snode\-\_\-type}}
+\index{snode\-\_\-type@{snode\-\_\-type}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{snode\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ typedef {\bf S\-Node}$<${\bf W}$>$ {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::{\bf snode\-\_\-type}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_ade23f0b765f589613fe10d6cbab738e2}
+
+
+secondary node type 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classRMPTree_aa40e0de7051ee571a9d89cd9106e0c62}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!R\-M\-P\-Tree@{R\-M\-P\-Tree}}
+\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{R\-M\-P\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::{\bf R\-M\-P\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_aa40e0de7051ee571a9d89cd9106e0c62}
+
+
+default ctor 
+
+\hypertarget{classRMPTree_a77c366d17bf6c7082188d45b0a9e967a}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!R\-M\-P\-Tree@{R\-M\-P\-Tree}}
+\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{R\-M\-P\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::{\bf R\-M\-P\-Tree} (
+\begin{DoxyParamCaption}
+\item[{const {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$ \&}]{\-\_\-mpt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classRMPTree_a77c366d17bf6c7082188d45b0a9e967a}
+
+
+disable copy-\/ctor 
+
+\hypertarget{classRMPTree_ac23a18d501f8c430a9c313e5a11f5017}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!$\sim$\-R\-M\-P\-Tree@{$\sim$\-R\-M\-P\-Tree}}
+\index{$\sim$\-R\-M\-P\-Tree@{$\sim$\-R\-M\-P\-Tree}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{$\sim$\-R\-M\-P\-Tree}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::$\sim${\bf R\-M\-P\-Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_ac23a18d501f8c430a9c313e5a11f5017}
+
+
+dtor 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classRMPTree_a2a178a47b5eb15869548e79cc13dee8f}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!build@{build}}
+\index{build@{build}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{build}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::build (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-fn}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a2a178a47b5eb15869548e79cc13dee8f}
+
+
+Build the index. 
+
+\hypertarget{classRMPTree_a37d3f0f184f191935ddec8a5af90ba07}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!cir@{cir}}
+\index{cir@{cir}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{cir}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::cir (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a37d3f0f184f191935ddec8a5af90ba07}
+
+
+Scatter in a circular pipeline. 
+
+\begin{DoxyNote}{Note}
+abandon 
+\end{DoxyNote}
+\hypertarget{classRMPTree_acdc7500f870bdf78aee90553dff1fb83}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!clear@{clear}}
+\index{clear@{clear}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_acdc7500f870bdf78aee90553dff1fb83}
+
+
+clear 
+
+\hypertarget{classRMPTree_ad48e9bf6f019b2ae704f61a885c96cd7}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!del@{del}}
+\index{del@{del}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::del (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_ad48e9bf6f019b2ae704f61a885c96cd7}
+
+
+Delete a prefix from the index. 
+
+A short prefix ($<$ U bits) is deleted from the fast lookup table if exists. A long prefix ($>$=U bits) is deleted from the forest of multi-\/prefix tree. \hypertarget{classRMPTree_a4b15911964ac9d5312248c5c13f33077}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!del@{del}}
+\index{del@{del}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::del (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{{\bf P\-Node}$<$ {\bf W}, K $>$ $\ast$\&}]{\-\_\-pnode, }
+\item[{const int}]{\-\_\-level, }
+\item[{{\bf uint32}}]{\-\_\-tree\-Idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a4b15911964ac9d5312248c5c13f33077}
+
+
+Delete a prefix in the index. 
+
+Given a prefix P to be deleted from the index and a primary node P at level L\-: (1) if len(\-P) $<$ U + K $\ast$ (L + 1), then try to find the prefix in the auxiliary tree. Delete it if exists. (2) otherwise, try to find the prefix in the current primary node. If current node contains prefix, then remove the prefix following one of two cases\-: (2-\/1)\-: if current node is an external node, then directly remove the prefix in the node. (2-\/2)\-: if currentnode is an internal node, then remove the prefix in the node and fetch the longest prefix in the child nodes to fill up current node again. Then recursively delete the prefix fetched from the child node. \hypertarget{classRMPTree_ae74702ea82f7bb98eba8ce5cb1ccc98c}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!del@{del}}
+\index{del@{del}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{del}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::del (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{{\bf snode\-\_\-type} $\ast$\&}]{\-\_\-snode, }
+\item[{const int}]{\-\_\-s\-Level, }
+\item[{const int}]{\-\_\-p\-Level, }
+\item[{const {\bf uint32}}]{\-\_\-tree\-Idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_ae74702ea82f7bb98eba8ce5cb1ccc98c}
+
+
+delete a prefix in an auxiliary prefix tree 
+
+\hypertarget{classRMPTree_abf994ca8e073378dc4a643b1d9c1cfc7}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!delete\-Prefix\-In\-P\-Node@{delete\-Prefix\-In\-P\-Node}}
+\index{delete\-Prefix\-In\-P\-Node@{delete\-Prefix\-In\-P\-Node}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{delete\-Prefix\-In\-P\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::delete\-Prefix\-In\-P\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf P\-Node}$<$ {\bf W}, K $>$ $\ast$}]{\-\_\-pnode, }
+\item[{const int}]{\-\_\-pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_abf994ca8e073378dc4a643b1d9c1cfc7}
+
+
+delete a prefix at certain position from a primary node 
+
+\hypertarget{classRMPTree_ac59486bc75a65d7ee31e1d54cd64162e}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!destroy@{destroy}}
+\index{destroy@{destroy}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::destroy (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{\-\_\-idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_ac59486bc75a65d7ee31e1d54cd64162e}
+
+
+destroy a multi-\/prefix tree 
+
+\hypertarget{classRMPTree_a86e307f0cefe7489a9586a7e2cf8a9a1}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!find\-Longest\-Prefix\-In\-Child@{find\-Longest\-Prefix\-In\-Child}}
+\index{find\-Longest\-Prefix\-In\-Child@{find\-Longest\-Prefix\-In\-Child}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{find\-Longest\-Prefix\-In\-Child}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::find\-Longest\-Prefix\-In\-Child (
+\begin{DoxyParamCaption}
+\item[{{\bf P\-Node}$<$ {\bf W}, K $>$ $\ast$}]{\-\_\-pnode, }
+\item[{size\-\_\-t \&}]{\-\_\-child\-Idx, }
+\item[{{\bf ip\-\_\-type} \&}]{\-\_\-long\-Prefix, }
+\item[{{\bf uint8} \&}]{\-\_\-long\-Length, }
+\item[{{\bf uint32} \&}]{\-\_\-long\-Nexthop}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a86e307f0cefe7489a9586a7e2cf8a9a1}
+
+
+find the longest prefix in the child nodes of a pnode 
+
+If all the child nodes have no prefixes, then they are external nodes and the longest prefix is in one of the auxiliary prefix tree If at least one child node is an internal node, then the longest prefix can be found in one of the child node. \hypertarget{classRMPTree_a49b3605159043ab336af2f31c218cf9c}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!find\-Prefix\-In\-P\-Node@{find\-Prefix\-In\-P\-Node}}
+\index{find\-Prefix\-In\-P\-Node@{find\-Prefix\-In\-P\-Node}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{find\-Prefix\-In\-P\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ int {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::find\-Prefix\-In\-P\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf pnode\-\_\-type} $\ast$}]{\-\_\-pnode, }
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a49b3605159043ab336af2f31c218cf9c}
+
+
+Try to find a prefix in a primary node. 
+
+\begin{DoxyReturn}{Returns}
+position of prefix in the node if any; otherwise, t + 1. 
+\end{DoxyReturn}
+\hypertarget{classRMPTree_aeb968111f77661b1e7dc46b2d00bb947}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!generate\-Trace@{generate\-Trace}}
+\index{generate\-Trace@{generate\-Trace}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{generate\-Trace}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::generate\-Trace (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-req\-File, }
+\item[{const std\-::string \&}]{\-\_\-trace\-File}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_aeb968111f77661b1e7dc46b2d00bb947}
+
+
+generate lookup trace for simulation 
+
+\hypertarget{classRMPTree_a398eb082ee35f45e8e2e119478c3c7aa}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!initialize\-Parameters@{initialize\-Parameters}}
+\index{initialize\-Parameters@{initialize\-Parameters}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{initialize\-Parameters}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::initialize\-Parameters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a398eb082ee35f45e8e2e119478c3c7aa}
+
+
+initialize parameters 
+
+\hypertarget{classRMPTree_a97c8ca5d99c9fce9aeeddae0a2479bb2}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!ins@{ins}}
+\index{ins@{ins}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a97c8ca5d99c9fce9aeeddae0a2479bb2}
+
+
+Insert a prefix into the index. 
+
+\hypertarget{classRMPTree_ac02e80665c49225e72e76fd4867e2c30}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!ins@{ins}}
+\index{ins@{ins}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf pnode\-\_\-type} $\ast$\&}]{\-\_\-pnode, }
+\item[{const int}]{\-\_\-level, }
+\item[{const {\bf uint32}}]{\-\_\-tree\-Idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_ac02e80665c49225e72e76fd4867e2c30}
+
+
+Insert a prefix into the M\-P\-T forest. 
+
+\hypertarget{classRMPTree_af26712b559e84c21ee0f3d03ee89bf6b}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!ins@{ins}}
+\index{ins@{ins}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf snode\-\_\-type} $\ast$\&}]{\-\_\-snode, }
+\item[{const int}]{\-\_\-s\-Level, }
+\item[{const int}]{\-\_\-p\-Level, }
+\item[{const {\bf uint32}}]{\-\_\-tree\-Idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_af26712b559e84c21ee0f3d03ee89bf6b}
+
+
+Insert a prefix into the auxiliary tree. 
+
+\hypertarget{classRMPTree_a21826215602a4748acd707461a40c297}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!ins@{ins}}
+\index{ins@{ins}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{std\-::default\-\_\-random\-\_\-engine \&}]{\-\_\-generator\-\_\-p, }
+\item[{std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&}]{\-\_\-distribution\-\_\-p, }
+\item[{std\-::default\-\_\-random\-\_\-engine \&}]{\-\_\-generator\-\_\-s, }
+\item[{std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&}]{\-\_\-distribution\-\_\-s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a21826215602a4748acd707461a40c297}
+
+
+for update, insert into index 
+
+\hypertarget{classRMPTree_aa588b3479961066f6f9295f01e2b953e}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!ins@{ins}}
+\index{ins@{ins}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf pnode\-\_\-type} $\ast$\&}]{\-\_\-pnode, }
+\item[{const int}]{\-\_\-level, }
+\item[{const {\bf uint32}}]{\-\_\-tree\-Idx, }
+\item[{std\-::default\-\_\-random\-\_\-engine \&}]{\-\_\-generator\-\_\-p, }
+\item[{std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&}]{\-\_\-distribution\-\_\-p, }
+\item[{std\-::default\-\_\-random\-\_\-engine \&}]{\-\_\-generator\-\_\-s, }
+\item[{std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&}]{\-\_\-distribution\-\_\-s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_aa588b3479961066f6f9295f01e2b953e}
+
+
+for update, insert into M\-P\-T forest 
+
+\hypertarget{classRMPTree_a78e29ac6b9235a7a82fe7461ce752bc2}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!ins@{ins}}
+\index{ins@{ins}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{ins}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::ins (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop, }
+\item[{{\bf snode\-\_\-type} $\ast$\&}]{\-\_\-snode, }
+\item[{const int}]{\-\_\-s\-Level, }
+\item[{const int}]{\-\_\-p\-Level, }
+\item[{const {\bf uint32}}]{\-\_\-tree\-Idx, }
+\item[{std\-::default\-\_\-random\-\_\-engine \&}]{\-\_\-generator\-\_\-s, }
+\item[{std\-::uniform\-\_\-int\-\_\-distribution$<$ int $>$ \&}]{\-\_\-distribution\-\_\-s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a78e29ac6b9235a7a82fe7461ce752bc2}
+
+
+for update, insert into the auxiliary tree. 
+
+\hypertarget{classRMPTree_a36ae5c5ba559386a2e318ad1f9d76832}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!insert\-Prefix\-In\-P\-Node@{insert\-Prefix\-In\-P\-Node}}
+\index{insert\-Prefix\-In\-P\-Node@{insert\-Prefix\-In\-P\-Node}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{insert\-Prefix\-In\-P\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::insert\-Prefix\-In\-P\-Node (
+\begin{DoxyParamCaption}
+\item[{{\bf pnode\-\_\-type} $\ast$}]{\-\_\-pnode, }
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{const {\bf uint8} \&}]{\-\_\-length, }
+\item[{const {\bf uint32} \&}]{\-\_\-nexthop}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a36ae5c5ba559386a2e318ad1f9d76832}
+
+
+Insert prefix into a non-\/full pnode. 
+
+Prefixes in the node are sorted in non-\/decreasing order by their lengths. This variant is maintained during the insertion. \begin{DoxyNote}{Note}
+It is assumed that the primary node is not full yet. 
+\end{DoxyNote}
+\hypertarget{classRMPTree_a02e278a265a901f31eaabb0a5b94f640}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!lin@{lin}}
+\index{lin@{lin}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{lin}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::lin (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a02e278a265a901f31eaabb0a5b94f640}
+
+
+Scatter nodes in a linear pipe line. 
+
+\begin{DoxyNote}{Note}
+abandon 
+\end{DoxyNote}
+\hypertarget{classRMPTree_ae16ed3a2d18e52997dfaff4870f2372d}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!operator=@{operator=}}
+\index{operator=@{operator=}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf R\-M\-P\-Tree}\& {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$ \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [delete]}}}\label{classRMPTree_ae16ed3a2d18e52997dfaff4870f2372d}
+
+
+disable assignment op 
+
+\hypertarget{classRMPTree_a6405ff9f920c55e2e7b7255d6ff7c478}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!print\-P\-Node@{print\-P\-Node}}
+\index{print\-P\-Node@{print\-P\-Node}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{print\-P\-Node}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::print\-P\-Node (
+\begin{DoxyParamCaption}
+\item[{const {\bf pnode\-\_\-type} $\ast$}]{\-\_\-pnode}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a6405ff9f920c55e2e7b7255d6ff7c478}
+
+
+print a primary node 
+
+\hypertarget{classRMPTree_ac6b336010d7aec91920a578b0e830ac9}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!ran@{ran}}
+\index{ran@{ran}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{ran}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::ran (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_ac6b336010d7aec91920a578b0e830ac9}
+
+
+Scatter nodes in a random pipe line. 
+
+Use different generator to produce random number for distributing primary nodes and secondary nodes. \hypertarget{classRMPTree_a740480779eca4924a14f512af6e70675}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!report@{report}}
+\index{report@{report}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{report}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::report (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a740480779eca4924a14f512af6e70675}
+
+
+Report the collected information. 
+
+\hypertarget{classRMPTree_aab37d3f74dc84185d2cc7aedb417f578}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!report\-Node\-Num\-In\-Stage@{report\-Node\-Num\-In\-Stage}}
+\index{report\-Node\-Num\-In\-Stage@{report\-Node\-Num\-In\-Stage}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{report\-Node\-Num\-In\-Stage}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::report\-Node\-Num\-In\-Stage (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-stagenum}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_aab37d3f74dc84185d2cc7aedb417f578}
+
+
+report number of nodes in each stage 
+
+\hypertarget{classRMPTree_a227f397d708cf164e3837434778cd7ff}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!scatter\-To\-Pipeline@{scatter\-To\-Pipeline}}
+\index{scatter\-To\-Pipeline@{scatter\-To\-Pipeline}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{scatter\-To\-Pipeline}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::scatter\-To\-Pipeline (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-pipestyle, }
+\item[{int}]{\-\_\-stagenum = {\ttfamily H2}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_a227f397d708cf164e3837434778cd7ff}
+
+
+Scatter. 
+
+The structure of an M\-P\-T is different from other prefix trees. There's no efficient mapping method to distribute nodes in a M\-P\-T into a linear/cirular pipeline without no-\/ops Here, we only consider random pipeline. \hypertarget{classRMPTree_aba048ea59e12faeac571ef5895feb55d}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!search@{search}}
+\index{search@{search}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf uint32} {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::search (
+\begin{DoxyParamCaption}
+\item[{const {\bf ip\-\_\-type} \&}]{\-\_\-ip, }
+\item[{std\-::vector$<$ int $>$ \&}]{\-\_\-trace}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_aba048ea59e12faeac571ef5895feb55d}
+
+
+Search L\-P\-M for the input I\-P address. 
+
+\hypertarget{classRMPTree_aea5eb8ddc2ef237b197ea9712272692e}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!update@{update}}
+\index{update@{update}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ void {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::update (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-fn, }
+\item[{int}]{\-\_\-stagenum = {\ttfamily {\bf W}~-\/~U~+~1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classRMPTree_aea5eb8ddc2ef237b197ea9712272692e}
+
+
+Update the index. 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classRMPTree_ad94614dd338215403c0e46d8f3bed5e1}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!ft@{ft}}
+\index{ft@{ft}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{ft}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf Fast\-Table}$<${\bf W}, U -\/ 1$>$$\ast$ {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::ft\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_ad94614dd338215403c0e46d8f3bed5e1}
+
+
+pointer to the fast lookup table 
+
+\hypertarget{classRMPTree_a5bfe436635f93a065affd03637d6b361}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!m\-Global\-Level\-P\-Node\-Num@{m\-Global\-Level\-P\-Node\-Num}}
+\index{m\-Global\-Level\-P\-Node\-Num@{m\-Global\-Level\-P\-Node\-Num}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{m\-Global\-Level\-P\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf uint32} {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::m\-Global\-Level\-P\-Node\-Num\mbox{[}H1\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_a5bfe436635f93a065affd03637d6b361}
+
+
+number of pnodes at each level 
+
+\hypertarget{classRMPTree_a2435f801f07587babed1853cdb04b078}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!m\-Global\-Level\-S\-Node\-Num@{m\-Global\-Level\-S\-Node\-Num}}
+\index{m\-Global\-Level\-S\-Node\-Num@{m\-Global\-Level\-S\-Node\-Num}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{m\-Global\-Level\-S\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf uint32} {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::m\-Global\-Level\-S\-Node\-Num\mbox{[}H2\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_a2435f801f07587babed1853cdb04b078}
+
+
+number of snodes at each level 
+
+\hypertarget{classRMPTree_a80594c79c981b7599d05b39c8701fbb8}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!m\-Local\-Level\-P\-Node\-Num@{m\-Local\-Level\-P\-Node\-Num}}
+\index{m\-Local\-Level\-P\-Node\-Num@{m\-Local\-Level\-P\-Node\-Num}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{m\-Local\-Level\-P\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf uint32} {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::m\-Local\-Level\-P\-Node\-Num\mbox{[}V\mbox{]}\mbox{[}H1\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_a80594c79c981b7599d05b39c8701fbb8}
+
+
+number of pnodes at each level in all M\-P\-T 
+
+\hypertarget{classRMPTree_a02dd259c17645662ea922afa6aa5959a}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!m\-Local\-Level\-S\-Node\-Num@{m\-Local\-Level\-S\-Node\-Num}}
+\index{m\-Local\-Level\-S\-Node\-Num@{m\-Local\-Level\-S\-Node\-Num}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{m\-Local\-Level\-S\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf uint32} {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::m\-Local\-Level\-S\-Node\-Num\mbox{[}V\mbox{]}\mbox{[}H2\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_a02dd259c17645662ea922afa6aa5959a}
+
+
+number of snodes at each level in all M\-P\-T 
+
+\hypertarget{classRMPTree_a155ea8b9b340e1e108105062cfb2aa75}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!m\-Local\-P\-Node\-Num@{m\-Local\-P\-Node\-Num}}
+\index{m\-Local\-P\-Node\-Num@{m\-Local\-P\-Node\-Num}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{m\-Local\-P\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf uint32} {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::m\-Local\-P\-Node\-Num\mbox{[}V\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_a155ea8b9b340e1e108105062cfb2aa75}
+
+
+number of pnodes in each M\-P\-T 
+
+\hypertarget{classRMPTree_a5662a149c9af51f1d0d470ee9b700a61}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!m\-Local\-S\-Node\-Num@{m\-Local\-S\-Node\-Num}}
+\index{m\-Local\-S\-Node\-Num@{m\-Local\-S\-Node\-Num}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{m\-Local\-S\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf uint32} {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::m\-Local\-S\-Node\-Num\mbox{[}V\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_a5662a149c9af51f1d0d470ee9b700a61}
+
+
+number of snodes in each M\-P\-T 
+
+\hypertarget{classRMPTree_a4241c1689e08498084c51399549ae6b7}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!m\-Root\-Table@{m\-Root\-Table}}
+\index{m\-Root\-Table@{m\-Root\-Table}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{m\-Root\-Table}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf pnode\-\_\-type}$\ast$ {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::m\-Root\-Table\mbox{[}V\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_a4241c1689e08498084c51399549ae6b7}
+
+
+pointers to a forest of multi-\/prefix tree 
+
+\hypertarget{classRMPTree_a583509c36d3ec16fe35ca64ae7d71977}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!m\-Total\-P\-Node\-Num@{m\-Total\-P\-Node\-Num}}
+\index{m\-Total\-P\-Node\-Num@{m\-Total\-P\-Node\-Num}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{m\-Total\-P\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf uint32} {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::m\-Total\-P\-Node\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_a583509c36d3ec16fe35ca64ae7d71977}
+
+
+number of pnodes 
+
+\hypertarget{classRMPTree_af7293f2b7c8212daaccc3d014a9ca089}{\index{R\-M\-P\-Tree@{R\-M\-P\-Tree}!m\-Total\-S\-Node\-Num@{m\-Total\-S\-Node\-Num}}
+\index{m\-Total\-S\-Node\-Num@{m\-Total\-S\-Node\-Num}!RMPTree@{R\-M\-P\-Tree}}
+\subsubsection[{m\-Total\-S\-Node\-Num}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W, int K, int U, size\-\_\-t M\-P = 2 $\ast$ K + 1, size\-\_\-t M\-C = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, K)), size\-\_\-t V = static\-\_\-cast$<$size\-\_\-t$>$(pow(2, U)), int H1 = (\-W -\/ U + 1) / K + (((\-W -\/ U + 1) \% K != 0) ? 1 \-: 0), int H2 = H1 + K$>$ {\bf uint32} {\bf R\-M\-P\-Tree}$<$ {\bf W}, K, U, M\-P, M\-C, V, H1, H2 $>$\-::m\-Total\-S\-Node\-Num\hspace{0.3cm}{\ttfamily [private]}}}\label{classRMPTree_af7293f2b7c8212daaccc3d014a9ca089}
+
+
+number of snodes 
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+/home/chris/lookup/code/src/tree/\hyperlink{rmptree_8h}{rmptree.\-h}\end{DoxyCompactItemize}

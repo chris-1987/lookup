@@ -1,0 +1,117 @@
+\hypertarget{util_8h}{\section{/home/chris/lookup/code/external/bgpdump/util.h File Reference}
+\label{util_8h}\index{/home/chris/lookup/code/external/bgpdump/util.\-h@{/home/chris/lookup/code/external/bgpdump/util.\-h}}
+}
+{\ttfamily \#include $<$time.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}bgpdump\-\_\-attr.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{util_8h_a6a369e5885b3caa0d30337065baf8b2b}{log\-\_\-to\-\_\-stderr} (void)
+\item 
+void \hyperlink{util_8h_a26b188582bd584c686368c83a2c744cc}{log\-\_\-to\-\_\-syslog} (void)
+\item 
+void \hyperlink{util_8h_abc39159818ae5692881c86bb5f660f93}{err} (const char $\ast$fmt,...) \-\_\-\-\_\-attribute\-\_\-\-\_\-((format(printf
+\item 
+void void \hyperlink{util_8h_a47ea0de8297604047ca18f50a0bdcbc3}{warn} (const char $\ast$fmt,...) \-\_\-\-\_\-attribute\-\_\-\-\_\-((format(printf
+\item 
+void void void \hyperlink{util_8h_a0ba73960f58b04865d03541efdaf1194}{debug} (const char $\ast$fmt,...) \-\_\-\-\_\-attribute\-\_\-\-\_\-((format(printf
+\item 
+void void void char $\ast$ \hyperlink{util_8h_a481ac7332643851ea30a62f540be7f89}{fmt\-\_\-ipv4} (\hyperlink{bgpdump__attr_8h_a9aaa4b1d3636b5125123407655ecb963}{B\-G\-P\-D\-U\-M\-P\-\_\-\-I\-P\-\_\-\-A\-D\-D\-R\-E\-S\-S} addr, char $\ast$buffer)
+\item 
+char $\ast$ \hyperlink{util_8h_a797230fb2bc4cbf56a18a6f5a5d1decf}{fmt\-\_\-ipv6} (\hyperlink{bgpdump__attr_8h_a9aaa4b1d3636b5125123407655ecb963}{B\-G\-P\-D\-U\-M\-P\-\_\-\-I\-P\-\_\-\-A\-D\-D\-R\-E\-S\-S} addr, char $\ast$buffer)
+\item 
+void \hyperlink{util_8h_a1431079ce99ea8e5bc3689dd4702544f}{test\-\_\-fmt\-\_\-ip} (void)
+\item 
+int \hyperlink{util_8h_ab6ffa48ee97ae04af70c3ed35da5f904}{time2str} (struct tm $\ast$date, char $\ast$time\-\_\-str)
+\item 
+int \hyperlink{util_8h_ad4070f6f9faaeea816fc52a891305607}{int2str} (uint32\-\_\-t value, char $\ast$str)
+\item 
+void \hyperlink{util_8h_a46aa1659e67fade2dc4dbd5aa2628fbf}{test\-\_\-utils} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{util_8h_a0ba73960f58b04865d03541efdaf1194}{\index{util.\-h@{util.\-h}!debug@{debug}}
+\index{debug@{debug}!util.h@{util.\-h}}
+\subsubsection[{debug}]{\setlength{\rightskip}{0pt plus 5cm}void void void debug (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{util_8h_a0ba73960f58b04865d03541efdaf1194}
+\hypertarget{util_8h_abc39159818ae5692881c86bb5f660f93}{\index{util.\-h@{util.\-h}!err@{err}}
+\index{err@{err}!util.h@{util.\-h}}
+\subsubsection[{err}]{\setlength{\rightskip}{0pt plus 5cm}void err (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{util_8h_abc39159818ae5692881c86bb5f660f93}
+\hypertarget{util_8h_a481ac7332643851ea30a62f540be7f89}{\index{util.\-h@{util.\-h}!fmt\-\_\-ipv4@{fmt\-\_\-ipv4}}
+\index{fmt\-\_\-ipv4@{fmt\-\_\-ipv4}!util.h@{util.\-h}}
+\subsubsection[{fmt\-\_\-ipv4}]{\setlength{\rightskip}{0pt plus 5cm}void void void char$\ast$ fmt\-\_\-ipv4 (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-I\-P\-\_\-\-A\-D\-D\-R\-E\-S\-S}}]{addr, }
+\item[{char $\ast$}]{buffer}
+\end{DoxyParamCaption}
+)}}\label{util_8h_a481ac7332643851ea30a62f540be7f89}
+\hypertarget{util_8h_a797230fb2bc4cbf56a18a6f5a5d1decf}{\index{util.\-h@{util.\-h}!fmt\-\_\-ipv6@{fmt\-\_\-ipv6}}
+\index{fmt\-\_\-ipv6@{fmt\-\_\-ipv6}!util.h@{util.\-h}}
+\subsubsection[{fmt\-\_\-ipv6}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ fmt\-\_\-ipv6 (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-I\-P\-\_\-\-A\-D\-D\-R\-E\-S\-S}}]{addr, }
+\item[{char $\ast$}]{buffer}
+\end{DoxyParamCaption}
+)}}\label{util_8h_a797230fb2bc4cbf56a18a6f5a5d1decf}
+\hypertarget{util_8h_ad4070f6f9faaeea816fc52a891305607}{\index{util.\-h@{util.\-h}!int2str@{int2str}}
+\index{int2str@{int2str}!util.h@{util.\-h}}
+\subsubsection[{int2str}]{\setlength{\rightskip}{0pt plus 5cm}int int2str (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{value, }
+\item[{char $\ast$}]{str}
+\end{DoxyParamCaption}
+)}}\label{util_8h_ad4070f6f9faaeea816fc52a891305607}
+\hypertarget{util_8h_a6a369e5885b3caa0d30337065baf8b2b}{\index{util.\-h@{util.\-h}!log\-\_\-to\-\_\-stderr@{log\-\_\-to\-\_\-stderr}}
+\index{log\-\_\-to\-\_\-stderr@{log\-\_\-to\-\_\-stderr}!util.h@{util.\-h}}
+\subsubsection[{log\-\_\-to\-\_\-stderr}]{\setlength{\rightskip}{0pt plus 5cm}void log\-\_\-to\-\_\-stderr (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{util_8h_a6a369e5885b3caa0d30337065baf8b2b}
+\hypertarget{util_8h_a26b188582bd584c686368c83a2c744cc}{\index{util.\-h@{util.\-h}!log\-\_\-to\-\_\-syslog@{log\-\_\-to\-\_\-syslog}}
+\index{log\-\_\-to\-\_\-syslog@{log\-\_\-to\-\_\-syslog}!util.h@{util.\-h}}
+\subsubsection[{log\-\_\-to\-\_\-syslog}]{\setlength{\rightskip}{0pt plus 5cm}void log\-\_\-to\-\_\-syslog (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{util_8h_a26b188582bd584c686368c83a2c744cc}
+\hypertarget{util_8h_a1431079ce99ea8e5bc3689dd4702544f}{\index{util.\-h@{util.\-h}!test\-\_\-fmt\-\_\-ip@{test\-\_\-fmt\-\_\-ip}}
+\index{test\-\_\-fmt\-\_\-ip@{test\-\_\-fmt\-\_\-ip}!util.h@{util.\-h}}
+\subsubsection[{test\-\_\-fmt\-\_\-ip}]{\setlength{\rightskip}{0pt plus 5cm}void test\-\_\-fmt\-\_\-ip (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{util_8h_a1431079ce99ea8e5bc3689dd4702544f}
+\hypertarget{util_8h_a46aa1659e67fade2dc4dbd5aa2628fbf}{\index{util.\-h@{util.\-h}!test\-\_\-utils@{test\-\_\-utils}}
+\index{test\-\_\-utils@{test\-\_\-utils}!util.h@{util.\-h}}
+\subsubsection[{test\-\_\-utils}]{\setlength{\rightskip}{0pt plus 5cm}void test\-\_\-utils (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{util_8h_a46aa1659e67fade2dc4dbd5aa2628fbf}
+\hypertarget{util_8h_ab6ffa48ee97ae04af70c3ed35da5f904}{\index{util.\-h@{util.\-h}!time2str@{time2str}}
+\index{time2str@{time2str}!util.h@{util.\-h}}
+\subsubsection[{time2str}]{\setlength{\rightskip}{0pt plus 5cm}int time2str (
+\begin{DoxyParamCaption}
+\item[{struct tm $\ast$}]{date, }
+\item[{char $\ast$}]{time\-\_\-str}
+\end{DoxyParamCaption}
+)}}\label{util_8h_ab6ffa48ee97ae04af70c3ed35da5f904}
+\hypertarget{util_8h_a47ea0de8297604047ca18f50a0bdcbc3}{\index{util.\-h@{util.\-h}!warn@{warn}}
+\index{warn@{warn}!util.h@{util.\-h}}
+\subsubsection[{warn}]{\setlength{\rightskip}{0pt plus 5cm}void void warn (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{util_8h_a47ea0de8297604047ca18f50a0bdcbc3}

@@ -1,0 +1,158 @@
+\hypertarget{bgpdump__lib_8h}{\section{/home/chris/lookup/code/external/bgpdump/bgpdump\-\_\-lib.h File Reference}
+\label{bgpdump__lib_8h}\index{/home/chris/lookup/code/external/bgpdump/bgpdump\-\_\-lib.\-h@{/home/chris/lookup/code/external/bgpdump/bgpdump\-\_\-lib.\-h}}
+}
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}bgpdump\-\_\-attr.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}bgpdump\-\_\-formats.\-h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{bgpdump__lib_8h_structstruct__BGPDUMP}{struct\-\_\-\-B\-G\-P\-D\-U\-M\-P}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{bgpdump__lib_8h_a796c70dfa903843ed40b7c6789e81cba}{B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6}
+\item 
+\#define \hyperlink{bgpdump__lib_8h_a74528f24ef2a2115ca3241d15ce0516d}{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-F\-I\-L\-E\-\_\-\-L\-E\-N}~1024
+\item 
+\#define \hyperlink{bgpdump__lib_8h_aa7765c4de9d2938c267d828c05f9a303}{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-A\-S\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N}~2000
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{cfile__tools_8h_struct__CFRFILE}{\-\_\-\-C\-F\-R\-F\-I\-L\-E} \hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E}
+\item 
+typedef struct \hyperlink{bgpdump__lib_8h_structstruct__BGPDUMP}{struct\-\_\-\-B\-G\-P\-D\-U\-M\-P} \hyperlink{bgpdump__lib_8h_a28770005952f90e82b98ce26c64e62e4}{B\-G\-P\-D\-U\-M\-P}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{bgpdump__lib_8h_a28770005952f90e82b98ce26c64e62e4}{B\-G\-P\-D\-U\-M\-P} $\ast$ \hyperlink{bgpdump__lib_8h_a371380fe52effb66a6e1bbefcc467439}{bgpdump\-\_\-open\-\_\-dump} (const char $\ast$filename)
+\item 
+void \hyperlink{bgpdump__lib_8h_a7895ccf273fce794f60b20e130b1a48c}{bgpdump\-\_\-close\-\_\-dump} (\hyperlink{bgpdump__lib_8h_a28770005952f90e82b98ce26c64e62e4}{B\-G\-P\-D\-U\-M\-P} $\ast$dump)
+\item 
+\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$ \hyperlink{bgpdump__lib_8h_a30cd62509f7f432b62dc8da78d4ecf4e}{bgpdump\-\_\-read\-\_\-next} (\hyperlink{bgpdump__lib_8h_a28770005952f90e82b98ce26c64e62e4}{B\-G\-P\-D\-U\-M\-P} $\ast$dump)
+\item 
+void \hyperlink{bgpdump__lib_8h_a2154a2b1764ca858e9b1832fdcf52dd3}{bgpdump\-\_\-free\-\_\-mem} (\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\item 
+char $\ast$ \hyperlink{bgpdump__lib_8h_a71fb66f4bf94b9c6d579d6f4aff274df}{bgpdump\-\_\-version} (void)
+\item 
+int \hyperlink{bgpdump__lib_8h_ac425c92f31c69b5f67b6d038122dd699}{is\-\_\-addpath} (\hyperlink{bgpdump__formats_8h_ad19c13df48a6e0256f234c0747ff1752}{B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$entry)
+\end{DoxyCompactItemize}
+
+
+\subsection{Class Documentation}
+\index{struct\-\_\-\-B\-G\-P\-D\-U\-M\-P@{struct\-\_\-\-B\-G\-P\-D\-U\-M\-P}}\label{structstruct__BGPDUMP}
+\hypertarget{bgpdump__lib_8h_structstruct__BGPDUMP}{}
+\subsubsection{struct struct\-\_\-\-B\-G\-P\-D\-U\-M\-P}
+\begin{DoxyFields}{Class Members}
+\hypertarget{bgpdump__lib_8h_a3a95a251b862e00d6b544fd0771954e5}{int}\label{bgpdump__lib_8h_a3a95a251b862e00d6b544fd0771954e5}
+&
+eof&
+\\
+\hline
+
+\hypertarget{bgpdump__lib_8h_ac641bca483b6fa9429ddf74f5bed517c}{\hyperlink{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{C\-F\-R\-F\-I\-L\-E} $\ast$}\label{bgpdump__lib_8h_ac641bca483b6fa9429ddf74f5bed517c}
+&
+f&
+\\
+\hline
+
+\hypertarget{bgpdump__lib_8h_aff6d117ba0355b2d366cd1301aa0fb29}{int}\label{bgpdump__lib_8h_aff6d117ba0355b2d366cd1301aa0fb29}
+&
+f\-\_\-type&
+\\
+\hline
+
+\hypertarget{bgpdump__lib_8h_a7c41eab5004a53ec1dafdf4b59b151fc}{char}\label{bgpdump__lib_8h_a7c41eab5004a53ec1dafdf4b59b151fc}
+&
+filename\mbox{[}\hyperlink{bgpdump__lib_8h_a74528f24ef2a2115ca3241d15ce0516d}{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-F\-I\-L\-E\-\_\-\-L\-E\-N}\mbox{]}&
+\\
+\hline
+
+\hypertarget{bgpdump__lib_8h_afb1eb20355c0fe8a74c641fd3117b42d}{int}\label{bgpdump__lib_8h_afb1eb20355c0fe8a74c641fd3117b42d}
+&
+parsed&
+\\
+\hline
+
+\hypertarget{bgpdump__lib_8h_aa4ae2c6f688c13c9fb8cad84127e2fb5}{int}\label{bgpdump__lib_8h_aa4ae2c6f688c13c9fb8cad84127e2fb5}
+&
+parsed\-\_\-ok&
+\\
+\hline
+
+\hypertarget{bgpdump__lib_8h_ab53d02ea51eb01c28a5749298561de12}{\hyperlink{bgpdump__formats_8h_a87a345136188ef51508c26eef6946c8d}{B\-G\-P\-D\-U\-M\-P\-\_\-\-T\-A\-B\-L\-E\-\_\-\-D\-U\-M\-P\-\_\-\-V2\-\_\-\-P\-E\-E\-R\-\_\-\-I\-N\-D\-E\-X\-\_\-\-T\-A\-B\-L\-E} $\ast$}\label{bgpdump__lib_8h_ab53d02ea51eb01c28a5749298561de12}
+&
+table\-\_\-dump\-\_\-v2\-\_\-peer\-\_\-index\-\_\-table&
+\\
+\hline
+
+\end{DoxyFields}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{bgpdump__lib_8h_a796c70dfa903843ed40b7c6789e81cba}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6@{B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6}}
+\index{B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6@{B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\-G\-P\-D\-U\-M\-P\-\_\-\-H\-A\-V\-E\-\_\-\-I\-P\-V6}}\label{bgpdump__lib_8h_a796c70dfa903843ed40b7c6789e81cba}
+\hypertarget{bgpdump__lib_8h_aa7765c4de9d2938c267d828c05f9a303}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-A\-S\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N@{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-A\-S\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N}}
+\index{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-A\-S\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N@{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-A\-S\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-A\-S\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-A\-S\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N~2000}}\label{bgpdump__lib_8h_aa7765c4de9d2938c267d828c05f9a303}
+\hypertarget{bgpdump__lib_8h_a74528f24ef2a2115ca3241d15ce0516d}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-F\-I\-L\-E\-\_\-\-L\-E\-N@{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-F\-I\-L\-E\-\_\-\-L\-E\-N}}
+\index{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-F\-I\-L\-E\-\_\-\-L\-E\-N@{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-F\-I\-L\-E\-\_\-\-L\-E\-N}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-F\-I\-L\-E\-\_\-\-L\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\-G\-P\-D\-U\-M\-P\-\_\-\-M\-A\-X\-\_\-\-F\-I\-L\-E\-\_\-\-L\-E\-N~1024}}\label{bgpdump__lib_8h_a74528f24ef2a2115ca3241d15ce0516d}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{bgpdump__lib_8h_a28770005952f90e82b98ce26c64e62e4}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!B\-G\-P\-D\-U\-M\-P@{B\-G\-P\-D\-U\-M\-P}}
+\index{B\-G\-P\-D\-U\-M\-P@{B\-G\-P\-D\-U\-M\-P}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{B\-G\-P\-D\-U\-M\-P}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf struct\-\_\-\-B\-G\-P\-D\-U\-M\-P}  {\bf B\-G\-P\-D\-U\-M\-P}}}\label{bgpdump__lib_8h_a28770005952f90e82b98ce26c64e62e4}
+\hypertarget{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!C\-F\-R\-F\-I\-L\-E@{C\-F\-R\-F\-I\-L\-E}}
+\index{C\-F\-R\-F\-I\-L\-E@{C\-F\-R\-F\-I\-L\-E}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{C\-F\-R\-F\-I\-L\-E}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \-\_\-\-C\-F\-R\-F\-I\-L\-E} {\bf C\-F\-R\-F\-I\-L\-E}}}\label{bgpdump__lib_8h_a2da15fde496378826b7d3d3df00331b0}
+
+
+\subsection{Function Documentation}
+\hypertarget{bgpdump__lib_8h_a7895ccf273fce794f60b20e130b1a48c}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!bgpdump\-\_\-close\-\_\-dump@{bgpdump\-\_\-close\-\_\-dump}}
+\index{bgpdump\-\_\-close\-\_\-dump@{bgpdump\-\_\-close\-\_\-dump}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{bgpdump\-\_\-close\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}void bgpdump\-\_\-close\-\_\-dump (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P} $\ast$}]{dump}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8h_a7895ccf273fce794f60b20e130b1a48c}
+\hypertarget{bgpdump__lib_8h_a2154a2b1764ca858e9b1832fdcf52dd3}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!bgpdump\-\_\-free\-\_\-mem@{bgpdump\-\_\-free\-\_\-mem}}
+\index{bgpdump\-\_\-free\-\_\-mem@{bgpdump\-\_\-free\-\_\-mem}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{bgpdump\-\_\-free\-\_\-mem}]{\setlength{\rightskip}{0pt plus 5cm}void bgpdump\-\_\-free\-\_\-mem (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8h_a2154a2b1764ca858e9b1832fdcf52dd3}
+\hypertarget{bgpdump__lib_8h_a371380fe52effb66a6e1bbefcc467439}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!bgpdump\-\_\-open\-\_\-dump@{bgpdump\-\_\-open\-\_\-dump}}
+\index{bgpdump\-\_\-open\-\_\-dump@{bgpdump\-\_\-open\-\_\-dump}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{bgpdump\-\_\-open\-\_\-dump}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-G\-P\-D\-U\-M\-P}$\ast$ bgpdump\-\_\-open\-\_\-dump (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{filename}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8h_a371380fe52effb66a6e1bbefcc467439}
+\hypertarget{bgpdump__lib_8h_a30cd62509f7f432b62dc8da78d4ecf4e}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!bgpdump\-\_\-read\-\_\-next@{bgpdump\-\_\-read\-\_\-next}}
+\index{bgpdump\-\_\-read\-\_\-next@{bgpdump\-\_\-read\-\_\-next}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{bgpdump\-\_\-read\-\_\-next}]{\setlength{\rightskip}{0pt plus 5cm}{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y}$\ast$ bgpdump\-\_\-read\-\_\-next (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P} $\ast$}]{dump}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8h_a30cd62509f7f432b62dc8da78d4ecf4e}
+\hypertarget{bgpdump__lib_8h_a71fb66f4bf94b9c6d579d6f4aff274df}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!bgpdump\-\_\-version@{bgpdump\-\_\-version}}
+\index{bgpdump\-\_\-version@{bgpdump\-\_\-version}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{bgpdump\-\_\-version}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ bgpdump\-\_\-version (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8h_a71fb66f4bf94b9c6d579d6f4aff274df}
+\hypertarget{bgpdump__lib_8h_ac425c92f31c69b5f67b6d038122dd699}{\index{bgpdump\-\_\-lib.\-h@{bgpdump\-\_\-lib.\-h}!is\-\_\-addpath@{is\-\_\-addpath}}
+\index{is\-\_\-addpath@{is\-\_\-addpath}!bgpdump_lib.h@{bgpdump\-\_\-lib.\-h}}
+\subsubsection[{is\-\_\-addpath}]{\setlength{\rightskip}{0pt plus 5cm}int is\-\_\-addpath (
+\begin{DoxyParamCaption}
+\item[{{\bf B\-G\-P\-D\-U\-M\-P\-\_\-\-E\-N\-T\-R\-Y} $\ast$}]{entry}
+\end{DoxyParamCaption}
+)}}\label{bgpdump__lib_8h_ac425c92f31c69b5f67b6d038122dd699}

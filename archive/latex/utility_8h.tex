@@ -1,0 +1,264 @@
+\hypertarget{utility_8h}{\section{/home/chris/lookup/code/src/common/utility.h File Reference}
+\label{utility_8h}\index{/home/chris/lookup/code/src/common/utility.\-h@{/home/chris/lookup/code/src/common/utility.\-h}}
+}
+{\ttfamily \#include \char`\"{}common.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$random$>$}\\*
+{\ttfamily \#include $<$chrono$>$}\\*
+{\ttfamily \#include $<$algorithm$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structPairLessCmp1st}{Pair\-Less\-Cmp1st$<$ T $>$}
+\begin{DoxyCompactList}\small\item\em less compartor for pair. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{utility_8h_a50d16196e67b0abe2acff39b39c27807}{print\-Msg} (const std\-::string \&\-\_\-msg, const int code=0)
+\begin{DoxyCompactList}\small\item\em print message \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \hyperlink{utility_8h_a6cdb98f857f3c8d3a190f3944f32c3af}{str\-To\-U\-Int} (const std\-::string \&\-\_\-str, const size\-\_\-t \&\-\_\-beg, const size\-\_\-t \&\-\_\-end, T \&\-\_\-uint)
+\begin{DoxyCompactList}\small\item\em convert a string (integer value) to an unsigned integer for ipv6 \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{utility_8h_af894ab43fa245d9a805fa8cb69090a89}{get\-Bit\-Value} (const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-uint, const size\-\_\-t \&\-\_\-pos)
+\begin{DoxyCompactList}\small\item\em get the bit-\/value for ipv4 \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{utility_8h_a42481bdabdd667d061e25de14af902e4}{get\-Bit\-Value} (const \hyperlink{structMyUint128}{My\-Uint128} \&\-\_\-uint, const size\-\_\-t \&\-\_\-pos)
+\begin{DoxyCompactList}\small\item\em get the bit-\/value for ipv6 \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{utility_8h_afec6a6d75a5b0a3deb31cb923c47d293}{get\-Bits\-Value} (const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \&\-\_\-uint, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-beg\-Bit, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-end\-Bit)
+\begin{DoxyCompactList}\small\item\em get the value of bits for ipv4 \end{DoxyCompactList}\item 
+\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \hyperlink{utility_8h_a40061604986fae90e2afdc58045d7c93}{get\-Bits\-Value} (const \hyperlink{structMyUint128}{My\-Uint128} \&\-\_\-uint, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-beg\-Bit, const \hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32} \-\_\-end\-Bit)
+\begin{DoxyCompactList}\small\item\em get the value of bits for ipv6 \end{DoxyCompactList}\item 
+void \hyperlink{utility_8h_a4e3ae37243ee82552179ff8e25d1c3dd}{retrieve\-Info} (const std\-::string \&\-\_\-line, \hyperlink{types_8h_a7bd05814ae5b70409fec11f143a26a91}{ipv4\-\_\-type} \&\-\_\-prefix, \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length)
+\begin{DoxyCompactList}\small\item\em for search, retrieve I\-Pv4 prefix and length \end{DoxyCompactList}\item 
+void \hyperlink{utility_8h_a374bc849659a19a95b63545fa6bcd4a8}{retrieve\-Info} (const std\-::string \&\-\_\-line, \hyperlink{types_8h_a7bd05814ae5b70409fec11f143a26a91}{ipv4\-\_\-type} \&\-\_\-prefix, \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, bool \&\-\_\-is\-Announce)
+\begin{DoxyCompactList}\small\item\em for update, retrieve I\-Pv4 prefix, length and withdraw/announce. \end{DoxyCompactList}\item 
+void \hyperlink{utility_8h_a8ad165819f8a2e819f005d50405e97cf}{retrieve\-Info} (const std\-::string \&\-\_\-line, \hyperlink{types_8h_afa43ba6a29738e2139d3037cf5844c34}{ipv6\-\_\-type} \&\-\_\-prefix, \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length)
+\begin{DoxyCompactList}\small\item\em for search, retrieve I\-Pv6 prefix and length \end{DoxyCompactList}\item 
+void \hyperlink{utility_8h_a043bb42bf08b9ce7704db72e8f406df5}{retrieve\-Info} (const std\-::string \&\-\_\-line, \hyperlink{types_8h_afa43ba6a29738e2139d3037cf5844c34}{ipv6\-\_\-type} \&\-\_\-prefix, \hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8} \&\-\_\-length, bool \&\-\_\-is\-Announce)
+\begin{DoxyCompactList}\small\item\em for update, retrieve I\-Pv6 prefix, length and announce/withdraw \end{DoxyCompactList}\item 
+{\footnotesize template$<$int W$>$ }\\void \hyperlink{utility_8h_a3681ef678478984d9fc37c898c9ad3ea}{generate\-Search\-Request} (const std\-::string \&\-\_\-bgptable, const size\-\_\-t \-\_\-searchnum, const std\-::string \&\-\_\-req\-File)
+\begin{DoxyCompactList}\small\item\em generate search requests \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{utility_8h_a3681ef678478984d9fc37c898c9ad3ea}{\index{utility.\-h@{utility.\-h}!generate\-Search\-Request@{generate\-Search\-Request}}
+\index{generate\-Search\-Request@{generate\-Search\-Request}!utility.h@{utility.\-h}}
+\subsubsection[{generate\-Search\-Request}]{\setlength{\rightskip}{0pt plus 5cm}template$<$int W$>$ void generate\-Search\-Request (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-bgptable, }
+\item[{const size\-\_\-t}]{\-\_\-searchnum, }
+\item[{const std\-::string \&}]{\-\_\-req\-File}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_a3681ef678478984d9fc37c898c9ad3ea}
+
+
+generate search requests 
+
+Generate search requests in a random way. \hypertarget{utility_8h_afec6a6d75a5b0a3deb31cb923c47d293}{\index{utility.\-h@{utility.\-h}!get\-Bits\-Value@{get\-Bits\-Value}}
+\index{get\-Bits\-Value@{get\-Bits\-Value}!utility.h@{utility.\-h}}
+\subsubsection[{get\-Bits\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint32} get\-Bits\-Value (
+\begin{DoxyParamCaption}
+\item[{const {\bf uint32} \&}]{\-\_\-uint, }
+\item[{const {\bf uint32}}]{\-\_\-beg\-Bit, }
+\item[{const {\bf uint32}}]{\-\_\-end\-Bit}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_afec6a6d75a5b0a3deb31cb923c47d293}
+
+
+get the value of bits for ipv4 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-uint} & inpv4 address \\
+\hline
+{\em \-\_\-stride} & number of bits to be retrieved \\
+\hline
+{\em \-\_\-pos} & start position \\
+\hline
+\end{DoxyParams}
+\hypertarget{utility_8h_a40061604986fae90e2afdc58045d7c93}{\index{utility.\-h@{utility.\-h}!get\-Bits\-Value@{get\-Bits\-Value}}
+\index{get\-Bits\-Value@{get\-Bits\-Value}!utility.h@{utility.\-h}}
+\subsubsection[{get\-Bits\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint32} get\-Bits\-Value (
+\begin{DoxyParamCaption}
+\item[{const {\bf My\-Uint128} \&}]{\-\_\-uint, }
+\item[{const {\bf uint32}}]{\-\_\-beg\-Bit, }
+\item[{const {\bf uint32}}]{\-\_\-end\-Bit}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_a40061604986fae90e2afdc58045d7c93}
+
+
+get the value of bits for ipv6 
+
+\begin{DoxyNote}{Note}
+we assume that \-\_\-end\-Bit -\/ Beg\-Bit + 1 $<$ 32, thus the result is less than std\-::numeric\-\_\-limits$<$uint32$>$\-::max() 
+\end{DoxyNote}
+\hypertarget{utility_8h_af894ab43fa245d9a805fa8cb69090a89}{\index{utility.\-h@{utility.\-h}!get\-Bit\-Value@{get\-Bit\-Value}}
+\index{get\-Bit\-Value@{get\-Bit\-Value}!utility.h@{utility.\-h}}
+\subsubsection[{get\-Bit\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint32} get\-Bit\-Value (
+\begin{DoxyParamCaption}
+\item[{const {\bf uint32} \&}]{\-\_\-uint, }
+\item[{const size\-\_\-t \&}]{\-\_\-pos}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_af894ab43fa245d9a805fa8cb69090a89}
+
+
+get the bit-\/value for ipv4 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-uint} & ipv4 address \\
+\hline
+{\em \-\_\-pos} & offset \\
+\hline
+\end{DoxyParams}
+\hypertarget{utility_8h_a42481bdabdd667d061e25de14af902e4}{\index{utility.\-h@{utility.\-h}!get\-Bit\-Value@{get\-Bit\-Value}}
+\index{get\-Bit\-Value@{get\-Bit\-Value}!utility.h@{utility.\-h}}
+\subsubsection[{get\-Bit\-Value}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uint32} get\-Bit\-Value (
+\begin{DoxyParamCaption}
+\item[{const {\bf My\-Uint128} \&}]{\-\_\-uint, }
+\item[{const size\-\_\-t \&}]{\-\_\-pos}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_a42481bdabdd667d061e25de14af902e4}
+
+
+get the bit-\/value for ipv6 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-uint} & ipv6 address \\
+\hline
+{\em \-\_\-pos} & offset \\
+\hline
+\end{DoxyParams}
+\hypertarget{utility_8h_a50d16196e67b0abe2acff39b39c27807}{\index{utility.\-h@{utility.\-h}!print\-Msg@{print\-Msg}}
+\index{print\-Msg@{print\-Msg}!utility.h@{utility.\-h}}
+\subsubsection[{print\-Msg}]{\setlength{\rightskip}{0pt plus 5cm}void print\-Msg (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-msg, }
+\item[{const int}]{code = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_a50d16196e67b0abe2acff39b39c27807}
+
+
+print message 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-msg} & message to print \\
+\hline
+{\em code} & indicate warning level \\
+\hline
+\end{DoxyParams}
+\hypertarget{utility_8h_a4e3ae37243ee82552179ff8e25d1c3dd}{\index{utility.\-h@{utility.\-h}!retrieve\-Info@{retrieve\-Info}}
+\index{retrieve\-Info@{retrieve\-Info}!utility.h@{utility.\-h}}
+\subsubsection[{retrieve\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void retrieve\-Info (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-line, }
+\item[{{\bf ipv4\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{{\bf uint8} \&}]{\-\_\-length}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_a4e3ae37243ee82552179ff8e25d1c3dd}
+
+
+for search, retrieve I\-Pv4 prefix and length 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-line} & input sttring line, containing prefix and length \\
+\hline
+{\em \-\_\-prefix} & store the prefix retrieved from \-\_\-line \\
+\hline
+{\em \-\_\-length} & sotre the prefix length retrieved from \-\_\-length \\
+\hline
+\end{DoxyParams}
+\hypertarget{utility_8h_a374bc849659a19a95b63545fa6bcd4a8}{\index{utility.\-h@{utility.\-h}!retrieve\-Info@{retrieve\-Info}}
+\index{retrieve\-Info@{retrieve\-Info}!utility.h@{utility.\-h}}
+\subsubsection[{retrieve\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void retrieve\-Info (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-line, }
+\item[{{\bf ipv4\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{{\bf uint8} \&}]{\-\_\-length, }
+\item[{bool \&}]{\-\_\-is\-Announce}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_a374bc849659a19a95b63545fa6bcd4a8}
+
+
+for update, retrieve I\-Pv4 prefix, length and withdraw/announce. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-line} & input sttring line, containing prefix and length \\
+\hline
+{\em \-\_\-prefix} & store the prefix retrieved from \-\_\-line \\
+\hline
+{\em \-\_\-length} & sotre the prefix length retrieved from \-\_\-length \\
+\hline
+\end{DoxyParams}
+\hypertarget{utility_8h_a8ad165819f8a2e819f005d50405e97cf}{\index{utility.\-h@{utility.\-h}!retrieve\-Info@{retrieve\-Info}}
+\index{retrieve\-Info@{retrieve\-Info}!utility.h@{utility.\-h}}
+\subsubsection[{retrieve\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void retrieve\-Info (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-line, }
+\item[{{\bf ipv6\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{{\bf uint8} \&}]{\-\_\-length}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_a8ad165819f8a2e819f005d50405e97cf}
+
+
+for search, retrieve I\-Pv6 prefix and length 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-line} & input string line, containing prefix and length \\
+\hline
+{\em \-\_\-prefix} & store the prefix retrieved from \-\_\-line \\
+\hline
+{\em \-\_\-length} & sotre the prefix length retrieved from \-\_\-length \\
+\hline
+\end{DoxyParams}
+\hypertarget{utility_8h_a043bb42bf08b9ce7704db72e8f406df5}{\index{utility.\-h@{utility.\-h}!retrieve\-Info@{retrieve\-Info}}
+\index{retrieve\-Info@{retrieve\-Info}!utility.h@{utility.\-h}}
+\subsubsection[{retrieve\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void retrieve\-Info (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-line, }
+\item[{{\bf ipv6\-\_\-type} \&}]{\-\_\-prefix, }
+\item[{{\bf uint8} \&}]{\-\_\-length, }
+\item[{bool \&}]{\-\_\-is\-Announce}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_a043bb42bf08b9ce7704db72e8f406df5}
+
+
+for update, retrieve I\-Pv6 prefix, length and announce/withdraw 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-line} & input string line, containing prefix and length \\
+\hline
+{\em \-\_\-prefix} & store the prefix retrieved from \-\_\-line \\
+\hline
+{\em \-\_\-length} & sotre the prefix length retrieved from \-\_\-length \\
+\hline
+\end{DoxyParams}
+\hypertarget{utility_8h_a6cdb98f857f3c8d3a190f3944f32c3af}{\index{utility.\-h@{utility.\-h}!str\-To\-U\-Int@{str\-To\-U\-Int}}
+\index{str\-To\-U\-Int@{str\-To\-U\-Int}!utility.h@{utility.\-h}}
+\subsubsection[{str\-To\-U\-Int}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ void str\-To\-U\-Int (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-str, }
+\item[{const size\-\_\-t \&}]{\-\_\-beg, }
+\item[{const size\-\_\-t \&}]{\-\_\-end, }
+\item[{T \&}]{\-\_\-uint}
+\end{DoxyParamCaption}
+)}}\label{utility_8h_a6cdb98f857f3c8d3a190f3944f32c3af}
+
+
+convert a string (integer value) to an unsigned integer for ipv6 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-str} & input string \\
+\hline
+{\em \-\_\-beg} & start position \\
+\hline
+{\em \-\_\-end} & end position \\
+\hline
+{\em \-\_\-uint} & result stored in \-\_\-uint \\
+\hline
+\end{DoxyParams}

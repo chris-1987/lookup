@@ -1,0 +1,37 @@
+\hypertarget{rptree_8h}{\section{/home/chris/lookup/code/src/tree/rptree.h File Reference}
+\label{rptree_8h}\index{/home/chris/lookup/code/src/tree/rptree.\-h@{/home/chris/lookup/code/src/tree/rptree.\-h}}
+}
+
+
+Definition of an I\-P lookup index based on prefix tree.  
+
+
+{\ttfamily \#include \char`\"{}../common/common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/utility.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fasttable.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$queue$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$random$>$}\\*
+{\ttfamily \#include $<$algorithm$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structPNode}{P\-Node$<$ W, K, M\-P, M\-C $>$}
+\begin{DoxyCompactList}\small\item\em Primary node in a multi-\/prefix tree. \end{DoxyCompactList}\item 
+class \hyperlink{classRPTree}{R\-P\-Tree$<$ W, U, V $>$}
+\begin{DoxyCompactList}\small\item\em Build and update the index. \end{DoxyCompactList}\item 
+struct \hyperlink{structRPTree_1_1SortElem}{R\-P\-Tree$<$ W, U, V $>$\-::\-Sort\-Elem}
+\begin{DoxyCompactList}\small\item\em element to be sorted \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Definition of an I\-P lookup index based on prefix tree. Copyright (c) 2016, Sun Yat-\/sen University All rights reserved
+
+The lookup index consists of three parts\-: a fast lookup table that contains route information for prefixes shorter than U bits, a table that consists of 2$^\wedge$\-U entries and each entry stores a pointer to the root of a prefix tree, and a set of binary trees.
+
+\begin{DoxyAuthor}{Author}
+Yi Wu 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2016.\-11 
+\end{DoxyDate}

@@ -1,0 +1,98 @@
+\hypertarget{fstree_8h}{\section{/home/chris/lookup/code/src/tree/fstree.h File Reference}
+\label{fstree_8h}\index{/home/chris/lookup/code/src/tree/fstree.\-h@{/home/chris/lookup/code/src/tree/fstree.\-h}}
+}
+
+
+definition of fixed-\/stride trees  
+
+
+{\ttfamily \#include \char`\"{}../common/common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/utility.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}btree.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$queue$>$}\\*
+{\ttfamily \#include $<$deque$>$}\\*
+{\ttfamily \#include $<$stack$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structFNode}{F\-Node$<$ W $>$}
+\begin{DoxyCompactList}\small\item\em A node in a fixed-\/stride tree before leaf-\/pushing. \end{DoxyCompactList}\item 
+struct \hyperlink{structFNode_1_1Entry}{F\-Node$<$ W $>$\-::\-Entry}
+\begin{DoxyCompactList}\small\item\em payload \end{DoxyCompactList}\item 
+struct \hyperlink{structFNode2}{F\-Node2$<$ W $>$}
+\begin{DoxyCompactList}\small\item\em A node in a fixed-\/stride tree after leaf-\/pushing. \end{DoxyCompactList}\item 
+struct \hyperlink{structFNode2_1_1Entry}{F\-Node2$<$ W $>$\-::\-Entry}
+\begin{DoxyCompactList}\small\item\em payload \end{DoxyCompactList}\item 
+class \hyperlink{classFSTree}{F\-S\-Tree$<$ W, K, M $>$}
+\begin{DoxyCompactList}\small\item\em Create a fixed-\/stride tree. Singleton class. \end{DoxyCompactList}\item 
+union \hyperlink{structFNode2_unionFNode2_1_1Entry_8____unnamed____}{F\-Node2$<$ W $>$\-::\-Entry.\-\_\-\-\_\-unnamed\-\_\-\-\_\-}
+\item 
+struct \hyperlink{structFNode2_structFNode2_1_1Entry_8____unnamed_____8____unnamed____}{F\-Node2$<$ W $>$\-::\-Entry.\-\_\-\-\_\-unnamed\-\_\-\-\_\-.\-\_\-\-\_\-unnamed\-\_\-\-\_\-}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{fstree_8h_a1530af2e15b227637dff7a696de918d9}{D\-E\-B\-U\-G\-\_\-\-F\-S\-T}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+definition of fixed-\/stride trees Copyright (c) 2016, Sun Yat-\/sen University, All rights reserved
+
+build, insert and delete prefixes in a fixed-\/stride tree
+
+\begin{DoxyAuthor}{Author}
+Yi Wu 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2016.\-11 
+\end{DoxyDate}
+
+
+\subsection{Class Documentation}
+\index{F\-Node2\-::\-Entry.\-\_\-\-\_\-unnamed\-\_\-\-\_\-@{F\-Node2\-::\-Entry.\-\_\-\-\_\-unnamed\-\_\-\-\_\-}}\label{unionFNode2_1_1Entry_8____unnamed____}
+\hypertarget{structFNode2_unionFNode2_1_1Entry_8____unnamed____}{}
+\subsubsection{union F\-Node2\-:\-:Entry.\-\_\-\-\_\-unnamed\-\_\-\-\_\-}
+\subsubsection*{template$<$int W$>$union F\-Node2$<$ W $>$\-::\-Entry.\-\_\-\-\_\-unnamed\-\_\-\-\_\-}
+
+\begin{DoxyFields}{Class Members}
+\hypertarget{structFNode2_a1378d7d8767899287b0407055215aa4e}{\hyperlink{structFNode2_structFNode2_1_1Entry_8____unnamed_____8____unnamed____}{\-\_\-\-\_\-unnamed\-\_\-\-\_\-}}\label{structFNode2_a1378d7d8767899287b0407055215aa4e}
+&
+\-\_\-\-\_\-unnamed\-\_\-\-\_\-&
+\\
+\hline
+
+\hypertarget{structFNode2_a1b7d5726533ab525a8760351e9b5e415}{\hyperlink{structFNode2}{F\-Node2}$<$ \hyperlink{test__u128_8cpp_ab21b528bc38899d04d3a7053e52fb797}{W} $>$ $\ast$}\label{structFNode2_a1b7d5726533ab525a8760351e9b5e415}
+&
+child&
+\\
+\hline
+
+\end{DoxyFields}
+\index{F\-Node2\-::\-Entry.\-\_\-\-\_\-unnamed\-\_\-\-\_\-.\-\_\-\-\_\-unnamed\-\_\-\-\_\-@{F\-Node2\-::\-Entry.\-\_\-\-\_\-unnamed\-\_\-\-\_\-.\-\_\-\-\_\-unnamed\-\_\-\-\_\-}}\label{structFNode2_1_1Entry_8____unnamed_____8____unnamed____}
+\hypertarget{structFNode2_structFNode2_1_1Entry_8____unnamed_____8____unnamed____}{}
+\subsubsection{struct F\-Node2\-:\-:Entry.\-\_\-\-\_\-unnamed\-\_\-\-\_\-.\-\_\-\-\_\-unnamed\-\_\-\-\_\-}
+\subsubsection*{template$<$int W$>$struct F\-Node2$<$ W $>$\-::\-Entry.\-\_\-\-\_\-unnamed\-\_\-\-\_\-.\-\_\-\-\_\-unnamed\-\_\-\-\_\-}
+
+\begin{DoxyFields}{Class Members}
+\hypertarget{structFNode2_a2fa47f7c65fec19cc163b195725e3844}{\hyperlink{types_8h_a34ecedcf03a70dc91e4616212d79267d}{uint8}}\label{structFNode2_a2fa47f7c65fec19cc163b195725e3844}
+&
+length&
+\\
+\hline
+
+\hypertarget{structFNode2_acd89a5ed2bdc1b5e6183409f0c056ee2}{\hyperlink{types_8h_abd01e8e67e3d94cab04ecaaf4f85ac1b}{uint32}}\label{structFNode2_acd89a5ed2bdc1b5e6183409f0c056ee2}
+&
+nexthop&
+\\
+\hline
+
+\end{DoxyFields}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{fstree_8h_a1530af2e15b227637dff7a696de918d9}{\index{fstree.\-h@{fstree.\-h}!D\-E\-B\-U\-G\-\_\-\-F\-S\-T@{D\-E\-B\-U\-G\-\_\-\-F\-S\-T}}
+\index{D\-E\-B\-U\-G\-\_\-\-F\-S\-T@{D\-E\-B\-U\-G\-\_\-\-F\-S\-T}!fstree.h@{fstree.\-h}}
+\subsubsection[{D\-E\-B\-U\-G\-\_\-\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\-E\-B\-U\-G\-\_\-\-F\-S\-T}}\label{fstree_8h_a1530af2e15b227637dff7a696de918d9}

@@ -1,0 +1,31 @@
+\hypertarget{fasttable_8h}{\section{/home/chris/lookup/code/src/tree/fasttable.h File Reference}
+\label{fasttable_8h}\index{/home/chris/lookup/code/src/tree/fasttable.\-h@{/home/chris/lookup/code/src/tree/fasttable.\-h}}
+}
+
+
+definition of a fast table for searching short prefixes  
+
+
+{\ttfamily \#include \char`\"{}../common/common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../common/utility.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structFastTable}{Fast\-Table$<$ W, U, V $>$}
+\begin{DoxyCompactList}\small\item\em A fast lookup table for storing prefixes shorter than U bits. \end{DoxyCompactList}\item 
+struct \hyperlink{structFastTable_1_1Entry}{Fast\-Table$<$ W, U, V $>$\-::\-Entry}
+\begin{DoxyCompactList}\small\item\em \hyperlink{structFastTable_1_1Entry}{Entry} in the fast lookup table. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+definition of a fast table for searching short prefixes Copyright (c) 2016, Sun Yat-\/sen University, All rights reserved
+
+Build a fast table for prefixes not longer than U bits. For each prefixes shorter than U bits, we expand them to U bits by padding 0. All the prefixes with a same expanded form are gathered together in the table. To insert/delete a prefix into/from the table, we expand the prefix to U bits by padding 0 and use $<$expanded\-Prefix$>$ as an index to find the set of prefixes that have a same expanded form and use its length to check whether or not it exists.
+
+\begin{DoxyAuthor}{Author}
+Yi Wu 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2016.\-11 
+\end{DoxyDate}

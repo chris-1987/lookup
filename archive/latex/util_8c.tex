@@ -1,0 +1,158 @@
+\hypertarget{util_8c}{\section{/home/chris/lookup/code/external/bgpdump/util.c File Reference}
+\label{util_8c}\index{/home/chris/lookup/code/external/bgpdump/util.\-c@{/home/chris/lookup/code/external/bgpdump/util.\-c}}
+}
+{\ttfamily \#include \char`\"{}util.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdarg.\-h$>$}\\*
+{\ttfamily \#include $<$assert.\-h$>$}\\*
+{\ttfamily \#include $<$stdbool.\-h$>$}\\*
+{\ttfamily \#include $<$syslog.\-h$>$}\\*
+{\ttfamily \#include $<$time.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{util_8c_ab543d2c20fd7454ba614eedf153b049c}{log}(lvl, lvl\-\_\-str)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{util_8c_ab73428e0eb13db91258613074f9a762a}{log\-\_\-to\-\_\-syslog} ()
+\item 
+void \hyperlink{util_8c_a13acf466441d6365ff413afa9c26ad7b}{log\-\_\-to\-\_\-stderr} ()
+\item 
+static char $\ast$ \hyperlink{util_8c_a1ec50b6619c53ef6e32ed67d20bec568}{now\-\_\-str} ()
+\item 
+static void \hyperlink{util_8c_a1be8e8ae14d38a4f323c85667380011a}{\-\_\-log} (int lvl, char $\ast$lvl\-\_\-str, const char $\ast$fmt, va\-\_\-list args)
+\item 
+void \hyperlink{util_8c_aede5746344fdce99647541101eaa7f06}{err} (const char $\ast$fmt,...)
+\item 
+void \hyperlink{util_8c_af80d19f1297a11626fab61a248959c71}{warn} (const char $\ast$fmt,...)
+\item 
+void \hyperlink{util_8c_a30654c55dca96c720074d096a749999a}{debug} (const char $\ast$fmt,...)
+\item 
+int \hyperlink{util_8c_ab6ffa48ee97ae04af70c3ed35da5f904}{time2str} (struct tm $\ast$date, char $\ast$time\-\_\-str)
+\item 
+int \hyperlink{util_8c_ad4070f6f9faaeea816fc52a891305607}{int2str} (uint32\-\_\-t value, char $\ast$str)
+\item 
+static void \hyperlink{util_8c_a115b4570a1ca1b8ba763e8049539a6ca}{ti2s} (uint32\-\_\-t value)
+\item 
+void \hyperlink{util_8c_a16c594182aee6ed8c34ea309dc7265b6}{test\-\_\-utils} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{util_8c_a865e48fe39e98e4fcc2bfb9c60912a84}{use\-\_\-syslog} = true
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{util_8c_ab543d2c20fd7454ba614eedf153b049c}{\index{util.\-c@{util.\-c}!log@{log}}
+\index{log@{log}!util.c@{util.\-c}}
+\subsubsection[{log}]{\setlength{\rightskip}{0pt plus 5cm}\#define log(
+\begin{DoxyParamCaption}
+\item[{}]{lvl, }
+\item[{}]{lvl\-\_\-str}
+\end{DoxyParamCaption}
+)}}\label{util_8c_ab543d2c20fd7454ba614eedf153b049c}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+va\_list args; \(\backslash\)
+    va\_start(args, fmt); \hyperlink{util_8c_a1be8e8ae14d38a4f323c85667380011a}{\(\backslash\)}
+\hyperlink{util_8c_a1be8e8ae14d38a4f323c85667380011a}{    \_log}(LOG\_##lvl, #lvl\_str, fmt, args)
+\end{DoxyCode}
+
+
+\subsection{Function Documentation}
+\hypertarget{util_8c_a1be8e8ae14d38a4f323c85667380011a}{\index{util.\-c@{util.\-c}!\-\_\-log@{\-\_\-log}}
+\index{\-\_\-log@{\-\_\-log}!util.c@{util.\-c}}
+\subsubsection[{\-\_\-log}]{\setlength{\rightskip}{0pt plus 5cm}static void \-\_\-log (
+\begin{DoxyParamCaption}
+\item[{int}]{lvl, }
+\item[{char $\ast$}]{lvl\-\_\-str, }
+\item[{const char $\ast$}]{fmt, }
+\item[{va\-\_\-list}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{util_8c_a1be8e8ae14d38a4f323c85667380011a}
+\hypertarget{util_8c_a30654c55dca96c720074d096a749999a}{\index{util.\-c@{util.\-c}!debug@{debug}}
+\index{debug@{debug}!util.c@{util.\-c}}
+\subsubsection[{debug}]{\setlength{\rightskip}{0pt plus 5cm}void debug (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{util_8c_a30654c55dca96c720074d096a749999a}
+\hypertarget{util_8c_aede5746344fdce99647541101eaa7f06}{\index{util.\-c@{util.\-c}!err@{err}}
+\index{err@{err}!util.c@{util.\-c}}
+\subsubsection[{err}]{\setlength{\rightskip}{0pt plus 5cm}void err (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{util_8c_aede5746344fdce99647541101eaa7f06}
+\hypertarget{util_8c_ad4070f6f9faaeea816fc52a891305607}{\index{util.\-c@{util.\-c}!int2str@{int2str}}
+\index{int2str@{int2str}!util.c@{util.\-c}}
+\subsubsection[{int2str}]{\setlength{\rightskip}{0pt plus 5cm}int int2str (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{value, }
+\item[{char $\ast$}]{str}
+\end{DoxyParamCaption}
+)}}\label{util_8c_ad4070f6f9faaeea816fc52a891305607}
+\hypertarget{util_8c_a13acf466441d6365ff413afa9c26ad7b}{\index{util.\-c@{util.\-c}!log\-\_\-to\-\_\-stderr@{log\-\_\-to\-\_\-stderr}}
+\index{log\-\_\-to\-\_\-stderr@{log\-\_\-to\-\_\-stderr}!util.c@{util.\-c}}
+\subsubsection[{log\-\_\-to\-\_\-stderr}]{\setlength{\rightskip}{0pt plus 5cm}void log\-\_\-to\-\_\-stderr (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{util_8c_a13acf466441d6365ff413afa9c26ad7b}
+\hypertarget{util_8c_ab73428e0eb13db91258613074f9a762a}{\index{util.\-c@{util.\-c}!log\-\_\-to\-\_\-syslog@{log\-\_\-to\-\_\-syslog}}
+\index{log\-\_\-to\-\_\-syslog@{log\-\_\-to\-\_\-syslog}!util.c@{util.\-c}}
+\subsubsection[{log\-\_\-to\-\_\-syslog}]{\setlength{\rightskip}{0pt plus 5cm}void log\-\_\-to\-\_\-syslog (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{util_8c_ab73428e0eb13db91258613074f9a762a}
+\hypertarget{util_8c_a1ec50b6619c53ef6e32ed67d20bec568}{\index{util.\-c@{util.\-c}!now\-\_\-str@{now\-\_\-str}}
+\index{now\-\_\-str@{now\-\_\-str}!util.c@{util.\-c}}
+\subsubsection[{now\-\_\-str}]{\setlength{\rightskip}{0pt plus 5cm}static char$\ast$ now\-\_\-str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{util_8c_a1ec50b6619c53ef6e32ed67d20bec568}
+\hypertarget{util_8c_a16c594182aee6ed8c34ea309dc7265b6}{\index{util.\-c@{util.\-c}!test\-\_\-utils@{test\-\_\-utils}}
+\index{test\-\_\-utils@{test\-\_\-utils}!util.c@{util.\-c}}
+\subsubsection[{test\-\_\-utils}]{\setlength{\rightskip}{0pt plus 5cm}void test\-\_\-utils (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{util_8c_a16c594182aee6ed8c34ea309dc7265b6}
+\hypertarget{util_8c_a115b4570a1ca1b8ba763e8049539a6ca}{\index{util.\-c@{util.\-c}!ti2s@{ti2s}}
+\index{ti2s@{ti2s}!util.c@{util.\-c}}
+\subsubsection[{ti2s}]{\setlength{\rightskip}{0pt plus 5cm}static void ti2s (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{util_8c_a115b4570a1ca1b8ba763e8049539a6ca}
+\hypertarget{util_8c_ab6ffa48ee97ae04af70c3ed35da5f904}{\index{util.\-c@{util.\-c}!time2str@{time2str}}
+\index{time2str@{time2str}!util.c@{util.\-c}}
+\subsubsection[{time2str}]{\setlength{\rightskip}{0pt plus 5cm}int time2str (
+\begin{DoxyParamCaption}
+\item[{struct tm $\ast$}]{date, }
+\item[{char $\ast$}]{time\-\_\-str}
+\end{DoxyParamCaption}
+)}}\label{util_8c_ab6ffa48ee97ae04af70c3ed35da5f904}
+\hypertarget{util_8c_af80d19f1297a11626fab61a248959c71}{\index{util.\-c@{util.\-c}!warn@{warn}}
+\index{warn@{warn}!util.c@{util.\-c}}
+\subsubsection[{warn}]{\setlength{\rightskip}{0pt plus 5cm}void warn (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{fmt, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}}\label{util_8c_af80d19f1297a11626fab61a248959c71}
+
+
+\subsection{Variable Documentation}
+\hypertarget{util_8c_a865e48fe39e98e4fcc2bfb9c60912a84}{\index{util.\-c@{util.\-c}!use\-\_\-syslog@{use\-\_\-syslog}}
+\index{use\-\_\-syslog@{use\-\_\-syslog}!util.c@{util.\-c}}
+\subsubsection[{use\-\_\-syslog}]{\setlength{\rightskip}{0pt plus 5cm}bool use\-\_\-syslog = true\hspace{0.3cm}{\ttfamily [static]}}}\label{util_8c_a865e48fe39e98e4fcc2bfb9c60912a84}
