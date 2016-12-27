@@ -376,10 +376,16 @@ public:
 
 		std::cerr << "queue length for each queue: " << std::endl;
 
+		uint32 total_max_queue_length = 0;
+
 		for (int i = 0; i < K; ++i) {
 
 			std::cerr << i << "'s queue--avg (per slot): " << mAvgQueueLength[i] / mSlotNum << " max: " << mMaxQueueLength[i] << std::endl;
+
+			total_max_queue_length += mMaxQueueLength[i];
 		}
+
+		std::cerr << "total max queue length: " << total_max_queue_length << std::endl;
 
 		return;
 	}

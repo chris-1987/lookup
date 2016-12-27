@@ -79,8 +79,9 @@ private:
 
 	uint32 mTotalNodeNum; ///< number of nodes in total
 
-	FastTable<W, U - 1> *ft; ///< pointer to fast table, a fast table is used to store shorter prefixes and provide search, insert and delete interfaces
+	FastTable<W, U - 1> ft; ///< pointer to fast table, a fast table is used to store shorter prefixes and provide search, insert and delete interfaces
 
+	double mAvgSearchDepth; ///
 public:
 
 	/// \brief default ctor
@@ -93,8 +94,6 @@ public:
 	void initializeParameters() {
 
 		mTotalNodeNum = 0;
-
-		ft = nullptr;
 	
 		for (size_t i = 0; i < V; ++i) {
 
@@ -114,7 +113,7 @@ public:
 			}
 		}
 
-		ft = new FastTable<W, U - 1>();	
+		ft = FastTable<W, U - 1>();	
 	}
 
 	/// \brief disable copy-ctor
@@ -144,21 +143,11 @@ public:
 				mRootTable[i] = nullptr;
 			}
 		}
-
-		delete ft;
-
-		ft = nullptr;
 	}
 
 
 	/// \brief Build the index.
 	void build(const std::string & _fn) {
-
-		// clear old index if there exists any
-		clear();
-
-		// 
-		initializeParameters();
 	
 		// insert prefixes one by one into index
 		std::ifstream fin(_fn, std::ios_base::binary);
@@ -256,7 +245,7 @@ public:
 
 		if (_length < U){ // insert into a fast lookup table (use prefix + length as index entry) 
 	
-			ft->ins(_prefix, _length, _nexthop);	
+			ft.ins(_prefix, _length, _nexthop);	
 					
 		}
 		else { // insert into the BT forest
@@ -350,7 +339,7 @@ public:
 		// try to find a match in the fast lookup table
 		uint32 nexthop1 = 0;
 
-		nexthop1 = ft->search(_ip);
+		nexthop1 = ft.search(_ip);
 
 		// try to find a match in the binary trees
 		uint32 nexthop2 = 0;
@@ -390,7 +379,7 @@ public:
 	}
 
 	/// \brief generate lookup trace for simulation
-	void generateTrace (const std::string& _reqFile, const std::string& _traceFile){
+	void generateTrace (const std::string& _reqFile, const std::string& _traceFile, uint32 _stageNum){
 
 		std::ifstream reqFin(_reqFile, std::ios_base::binary);
 
@@ -402,7 +391,7 @@ public:
 		
 		size_t searchNum = 0;
 
-		double avgSearchDepth = 0;
+		mAvgSearchDepth = 0;
 
 		while (getline(reqFin, line)) {
 
@@ -418,7 +407,7 @@ public:
 			// collect search depth
 			++searchNum;
 
-			avgSearchDepth += trace.size();
+			mAvgSearchDepth += trace.size();
 		 
 			// output trace to file	
 			traFin << static_cast<size_t>(trace.size());
@@ -437,9 +426,11 @@ public:
 			traFin << "\n";
 		}
 	
-		avgSearchDepth /= searchNum; 
+		mAvgSearchDepth /= searchNum; 
 
-		std::cerr << "average search depth: " << avgSearchDepth << std::endl;		
+		std::cerr << "workload: " << LAMBDA * BURSTSIZE * mAvgSearchDepth / _stageNum<< std::endl;
+
+		std::cerr << "average search depth: " << mAvgSearchDepth << std::endl;		
 
 		return;	
 	}
@@ -452,7 +443,7 @@ public:
 		if (_length < U) { // process in an alternatively way
 
 			// delete from the fast lookup table
-			ft->del(_prefix, _length);
+			ft.del(_prefix, _length);
 		}
 		else { // delete from a binary tree
 
@@ -625,18 +616,41 @@ public:
 			}
 		}
 
+		//
+		//
 		size_t nodeNumInAllStages = 0;
 
+		// compute total number of nodes 
 		for (size_t i = 0; i < _stagenum; ++i) {
 
 			nodeNumInAllStages += nodeNumInStage[i];
-
-			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << std::endl;
 		}
 
 		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
 
+		// collect normalized memory block utilization
+		double min_ratio = std::numeric_limits<double>::max(), max_ratio = 0.0, mean_ratio = 0.0, cur_ratio;
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+	
+			cur_ratio = (double)nodeNumInStage[i] / nodeNumInAllStages;
+
+			mean_ratio += cur_ratio;
+
+			if (min_ratio > cur_ratio) min_ratio = cur_ratio;
+
+			if (max_ratio < cur_ratio) max_ratio = cur_ratio;
+			
+			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << " ratio: " << (double)cur_ratio << std::endl;
+		}
+
+		mean_ratio /= _stagenum;
+	
+		std::cerr << "min ratio: " << min_ratio << " max ratio: " << max_ratio << " mean ratio: " << mean_ratio << std::endl;	
+
 		delete[] nodeNumInStage;
+
+		return;
 	}
 
 
@@ -700,20 +714,40 @@ public:
 			}
 		}
 			
+		//
 		size_t nodeNumInAllStages = 0;
 
+		// compute total number of nodes 
 		for (size_t i = 0; i < _stagenum; ++i) {
 
 			nodeNumInAllStages += nodeNumInStage[i];
-
-			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << std::endl;
 		}
 
 		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
 
+		// collect normalized memory block utilization
+		double min_ratio = std::numeric_limits<double>::max(), max_ratio = 0.0, mean_ratio = 0.0, cur_ratio;
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+	
+			cur_ratio = (double)nodeNumInStage[i] / nodeNumInAllStages;
+
+			mean_ratio += cur_ratio;
+
+			if (min_ratio > cur_ratio) min_ratio = cur_ratio;
+
+			if (max_ratio < cur_ratio) max_ratio = cur_ratio;
+			
+			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << " ratio: " << (double)cur_ratio << std::endl;
+		}
+
+		mean_ratio /= _stagenum;
+	
+		std::cerr << "min ratio: " << min_ratio << " max ratio: " << max_ratio << " mean ratio: " << mean_ratio << std::endl;	
+
 		delete[] nodeNumInStage;
 
-		return;				
+		return;
 	}
 
 
@@ -849,20 +883,42 @@ public:
 			}
 		} 
 
+
 		size_t nodeNumInAllStages = 0;
 
-		for (int i = 0; i < _stagenum; ++i) {
-			
-			nodeNumInAllStages += colored[i];
+		// compute total number of nodes 
+		for (size_t i = 0; i < _stagenum; ++i) {
 
-			std::cerr << "nodes in stage " << i << ": " << colored[i] << std::endl;
+			nodeNumInAllStages += colored[i];
 		}
 
 		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
 
+		// collect normalized memory block utilization
+		double min_ratio = std::numeric_limits<double>::max(), max_ratio = 0.0, mean_ratio = 0.0, cur_ratio;
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+	
+			cur_ratio = (double)colored[i] / nodeNumInAllStages;
+
+			mean_ratio += cur_ratio;
+
+			if (min_ratio > cur_ratio) min_ratio = cur_ratio;
+
+			if (max_ratio < cur_ratio) max_ratio = cur_ratio;
+			
+			std::cerr << "nodes in stage " << i << ": " << colored[i] << " ratio: " << (double)cur_ratio << std::endl;
+		}
+
+		mean_ratio /= _stagenum;
+	
+		std::cerr << "min ratio: " << min_ratio << " max ratio: " << max_ratio << " mean ratio: " << mean_ratio << std::endl;	
+
 		delete[] colored;
 
 		delete[] trycolor;
+
+		return;
 	}
 
 
@@ -941,7 +997,7 @@ public:
 
 		if (_length < U){ // insert into a fast lookup table
 	
-			ft->ins(_prefix, _length, _nexthop);	
+			ft.ins(_prefix, _length, _nexthop);	
 		}
 		else { // insert into the BT forest
 
@@ -1044,20 +1100,38 @@ public:
 			}
 		}
 
+		//
 		size_t nodeNumInAllStages = 0;
 
-		for (int i = 0; i < _stagenum; ++i) {
+		// compute total number of nodes 
+		for (size_t i = 0; i < _stagenum; ++i) {
 
 			nodeNumInAllStages += nodeNumInStage[i];
-
-			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << std::endl;
 		}
 
 		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
 
-		delete[] nodeNumInStage;
+		// collect normalized memory block utilization
+		double min_ratio = std::numeric_limits<double>::max(), max_ratio = 0.0, mean_ratio = 0.0, cur_ratio;
 
-		return;
+		for (size_t i = 0; i < _stagenum; ++i) {
+	
+			cur_ratio = (double)nodeNumInStage[i] / nodeNumInAllStages;
+
+			mean_ratio += cur_ratio;
+
+			if (min_ratio > cur_ratio) min_ratio = cur_ratio;
+
+			if (max_ratio < cur_ratio) max_ratio = cur_ratio;
+			
+			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << " ratio: " << (double)cur_ratio << std::endl;
+		}
+
+		mean_ratio /= _stagenum;
+	
+		std::cerr << "min ratio: " << min_ratio << " max ratio: " << max_ratio << " mean ratio: " << mean_ratio << std::endl;	
+
+		delete[] nodeNumInStage;
 		
 	}
 };

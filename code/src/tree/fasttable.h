@@ -57,19 +57,6 @@ public:
 	
 	Entry mEntries[V]; ///< V entries
 
-private:
-
-	/// \brief disable copy ctor
-	FastTable(const FastTable& _ft) = delete;
-
-	/// \brief disable copy assignment
-	FastTable& operator=(const FastTable& _ft) = delete;
- 
-public:
-
-	/// \brief default ctor
-	FastTable() {}
-
 	/// \brief insert a prefix
 	void ins(const ip_type& _prefix, const uint8& _length, const uint32& _nexthop) {
 

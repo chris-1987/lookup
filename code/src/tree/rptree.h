@@ -75,7 +75,7 @@ private:
 
 	uint32 mTotalNodeNum; ///< number of nodes in total 
 
-	FastTable<W, U - 1> *ft;
+	FastTable<W, U - 1> ft;
 
 public:
 
@@ -108,7 +108,7 @@ public:
 			}
 		}
 
-		ft = new FastTable<W, U - 1>();	
+		ft = FastTable<W, U - 1>();	
 	}
 	
 	/// \brief copy ctor, disabled
@@ -135,10 +135,6 @@ public:
 				mRootTable[i] = nullptr;
 			}
 		}
-
-		delete ft;
-
-		ft = nullptr;
 	}
 
 
@@ -237,7 +233,7 @@ public:
 
 		if (_length < U) { // insert into the fast table
 
-			ft->ins(_prefix, _length, _nexthop);
+			ft.ins(_prefix, _length, _nexthop);
 		}
 		else { // insert into the PT forest
 
@@ -373,7 +369,7 @@ public:
 		// try to find a match in the fast lookup table
 		uint32 nexthop1 = 0;
 
-		nexthop1 = ft->search(_ip);
+		nexthop1 = ft.search(_ip);
 
 		// try to find a match in the forest of prefix trees
 		uint32 nexthop2 = 0;
@@ -421,7 +417,7 @@ public:
 	}
 
 	/// \brief generate lookup trace for simulation
-	void generateTrace (const std::string& _reqFile, const std::string& _traceFile){
+	void generateTrace (const std::string& _reqFile, const std::string& _traceFile, const uint32 _stageNum){
 
 		std::ifstream reqFin(_reqFile, std::ios_base::binary);
 
@@ -470,6 +466,8 @@ public:
 	
 		avgSearchDepth /= searchNum; 
 
+		std::cerr << "workload: " << LAMBDA * BURSTSIZE * avgSearchDepth / _stageNum << std::endl;
+
 		std::cerr << "average search depth: " << avgSearchDepth << std::endl;		
 
 		return;	
@@ -480,7 +478,7 @@ public:
 
 		if (_length < U) {
 		
-			ft->del(_prefix, _length);
+			ft.del(_prefix, _length);
 		}
 		else {
 
@@ -677,16 +675,37 @@ public:
 
 		size_t nodeNumInAllStages = 0;
 
+		// compute total number of nodes 
 		for (size_t i = 0; i < _stagenum; ++i) {
 
 			nodeNumInAllStages += nodeNumInStage[i];
-
-			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << std::endl;
 		}
 
 		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
 
+		// collect normalized memory block utilization
+		double min_ratio = std::numeric_limits<double>::max(), max_ratio = 0.0, mean_ratio = 0.0, cur_ratio;
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+	
+			cur_ratio = (double)nodeNumInStage[i] / nodeNumInAllStages;
+
+			mean_ratio += cur_ratio;
+
+			if (min_ratio > cur_ratio) min_ratio = cur_ratio;
+
+			if (max_ratio < cur_ratio) max_ratio = cur_ratio;
+			
+			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << " ratio: " << (double)cur_ratio << std::endl;
+		}
+
+		mean_ratio /= _stagenum;
+	
+		std::cerr << "min ratio: " << min_ratio << " max ratio: " << max_ratio << " mean ratio: " << mean_ratio << std::endl;	
+
 		delete[] nodeNumInStage;
+
+		return;
 	}
 
 
@@ -749,21 +768,41 @@ public:
 				}
 			}
 		}
-			
+	
+		// collect information	
 		size_t nodeNumInAllStages = 0;
 
+		// compute total number of nodes 
 		for (size_t i = 0; i < _stagenum; ++i) {
 
 			nodeNumInAllStages += nodeNumInStage[i];
-
-			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << std::endl;
 		}
 
 		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
 
+		// collect normalized memory block utilization
+		double min_ratio = std::numeric_limits<double>::max(), max_ratio = 0.0, mean_ratio = 0.0, cur_ratio;
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+	
+			cur_ratio = (double)nodeNumInStage[i] / nodeNumInAllStages;
+
+			mean_ratio += cur_ratio;
+
+			if (min_ratio > cur_ratio) min_ratio = cur_ratio;
+
+			if (max_ratio < cur_ratio) max_ratio = cur_ratio;
+			
+			std::cerr << "nodes in stage " << i << ": " << nodeNumInStage[i] << " ratio: " << (double)cur_ratio << std::endl;
+		}
+
+		mean_ratio /= _stagenum;
+	
+		std::cerr << "min ratio: " << min_ratio << " max ratio: " << max_ratio << " mean ratio: " << mean_ratio << std::endl;	
+
 		delete[] nodeNumInStage;
 
-		return;				
+		return;
 	}
 
 
@@ -899,16 +938,36 @@ public:
 			}
 		} 
 
+		// collect information
 		size_t nodeNumInAllStages = 0;
 
-		for (int i = 0; i < _stagenum; ++i) {
-			
-			nodeNumInAllStages += colored[i];
+		// compute total number of nodes 
+		for (size_t i = 0; i < _stagenum; ++i) {
 
-			std::cerr << "nodes in stage " << i << ": " << colored[i] << std::endl;
+			nodeNumInAllStages += colored[i];
 		}
 
 		std::cerr << "nodes in all stages: " << nodeNumInAllStages << std::endl;
+
+		// collect normalized memory block utilization
+		double min_ratio = std::numeric_limits<double>::max(), max_ratio = 0.0, mean_ratio = 0.0, cur_ratio;
+
+		for (size_t i = 0; i < _stagenum; ++i) {
+	
+			cur_ratio = (double)colored[i] / nodeNumInAllStages;
+
+			mean_ratio += cur_ratio;
+
+			if (min_ratio > cur_ratio) min_ratio = cur_ratio;
+
+			if (max_ratio < cur_ratio) max_ratio = cur_ratio;
+			
+			std::cerr << "nodes in stage " << i << ": " << colored[i] << " ratio: " << (double)cur_ratio << std::endl;
+		}
+
+		mean_ratio /= _stagenum;
+	
+		std::cerr << "min ratio: " << min_ratio << " max ratio: " << max_ratio << " mean ratio: " << mean_ratio << std::endl;	
 
 		delete[] colored;
 
@@ -975,7 +1034,7 @@ public:
 
 		if (_length < U) { // insert into the fast table
 
-			ft->ins(_prefix, _length, _nexthop);
+			ft.ins(_prefix, _length, _nexthop);
 		}
 		else { // insert into the PT forest
 

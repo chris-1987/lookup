@@ -166,7 +166,7 @@ private:
 
 	uint32 mTotalSNodeNum; ///< number of snodes 
 
-	FastTable<W, U - 1> *ft; ///< pointer to the fast lookup table
+	FastTable<W, U - 1> ft; ///< pointer to the fast lookup table
 
 public:
 	
@@ -224,7 +224,7 @@ public:
 
 		mTotalSNodeNum = 0;
 
-		ft = new FastTable<W, U - 1>();
+		ft = FastTable<W, U - 1>();
 
 		return;
 	}
@@ -254,11 +254,7 @@ public:
 
 				mRootTable[i] = nullptr;
 			}
-		}
-		
-		delete ft;
-
-		ft = nullptr;
+		}	
 	}
 
 public:
@@ -391,7 +387,7 @@ public:
 
 		if (_length < U) { // insert into the fast table
 
-			ft->ins(_prefix, _length, _nexthop);
+			ft.ins(_prefix, _length, _nexthop);
 		}
 		else { // insert into the MPT forest
 
@@ -599,7 +595,7 @@ public:
 		// try to find a match in the fast lookup table
 		uint32 nexthop1 = 0;
 
-		nexthop1 = ft->search(_ip);
+		nexthop1 = ft.search(_ip);
 
 		// try to find a match in the forest of the multi-prefix trees
 		uint32 nexthop2 = 0;
@@ -679,7 +675,7 @@ public:
 
 
 	/// \brief generate lookup trace for simulation
-	void generateTrace (const std::string& _reqFile, const std::string& _traceFile){
+	void generateTrace (const std::string& _reqFile, const std::string& _traceFile, const uint32 _stageNum){
 
 		std::ifstream reqFin(_reqFile, std::ios_base::binary);
 
@@ -728,6 +724,8 @@ public:
 	
 		avgSearchDepth /= searchNum; 
 
+		std::cerr << "workload: " << LAMBDA * BURSTSIZE * avgSearchDepth / _stageNum << std::endl; 
+
 		std::cerr << "average search depth: " << avgSearchDepth << std::endl;		
 
 		return;	
@@ -741,7 +739,7 @@ public:
 
 		if (_length < U) { // delete a short prefix in the fast lookup table
 
-			ft->del(_prefix, _length);	
+			ft.del(_prefix, _length);	
 		}
 		else { // delete a long prefix in the MPT forest
 
@@ -1707,7 +1705,7 @@ public:
 
 		if (_length < U) { // insert into the fast table
 
-			ft->ins(_prefix, _length, _nexthop);
+			ft.ins(_prefix, _length, _nexthop);
 		}
 		else { // insert into the MPT forest
 

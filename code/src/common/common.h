@@ -11,7 +11,7 @@
 #include <limits>
 #include <cassert>
 
-static const double LAMBDA = 0.3; // packet arriving probability
+static const double LAMBDA = 0.1;// packet arriving probability
 
 static const int BURSTSIZE = 1; // number of packets arriving at the same time
 
