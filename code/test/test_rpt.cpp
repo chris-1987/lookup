@@ -5,16 +5,16 @@
 #include "../src/scheduler/cirsched.h"
 
 static const size_t RN = 1024 * 1024 * 1; ///< number of requests
-static const int PL = 32; ///< 32 or 128 for Ipv4 or IPv6, respectively
+static const int PL = 128; ///< 32 or 128 for Ipv4 or IPv6, respectively
 static const int PT = 10; ///< threshold for short & long prefixes
-static const int SN = 15; ///< number of pipe stages
+static const int SN = 16; ///< number of pipe stages
 
 
 int main(int argc, char** argv){
 
 	if (argc != 4) {
 		
-		std::cerr << "This program takes two parameters:\n";
+		std::cerr << "This program takes three parameters:\n";
 
 		std::cerr << "The 1st parameter specifies the file of the BGP table. We reuse the table to generate search requests.\n";
 	
@@ -53,7 +53,7 @@ int main(int argc, char** argv){
 	 
 	 	std::string linTraceFile = std::string(argv[2]).append("_lin.dat");
 	 
-	 	rpt->generateTrace(reqFile, linTraceFile);
+	 	rpt->generateTrace(reqFile, linTraceFile, PL - PT + 1);
  
 
  		// step 3: schedule, number of stages is PL - PT + 1		
@@ -95,7 +95,7 @@ int main(int argc, char** argv){
 	 
 	 	std::string ranTraceFile = std::string(argv[2]).append("_ran.dat");
 	 
-	 	rpt->generateTrace(reqFile, ranTraceFile);
+	 	rpt->generateTrace(reqFile, ranTraceFile, SN);
 
 		// step 3: schedule, number of stages is given in SN 
  		std::cerr << "-----Schedule in a random pipeline\n";
@@ -135,7 +135,7 @@ int main(int argc, char** argv){
 
 		std::string cirTraceFile = std::string(argv[2]).append("_cir.dat");
 
- 		rpt->generateTrace(reqFile, cirTraceFile);
+ 		rpt->generateTrace(reqFile, cirTraceFile, SN);
  
  		// step 3: schedule, number of stages is given in SN
 		std::cerr << "-----Schedule in circular pipeline.\n";

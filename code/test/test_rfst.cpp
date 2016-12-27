@@ -8,11 +8,11 @@
 // note that for IPv6, EL is not allowed to be too small. 
 
 static const size_t RN = 1024 * 1024 * 1; ///< number of requests
-static const int PL = 32; ///< 32 or 128 for IPv4 or IPv6, respectively.
-static const int PT = 16; ///< threshold for short & long prefixes
+static const int PL = 128; ///< 32 or 128 for IPv4 or IPv6, respectively.
+static const int PT = 10; ///< threshold for short & long prefixes
 static const int FM = 2; ///< CPE:0, MIMAX:1, EVEN:2
-static const int EL = 6; ///< expansion level
-static const int SN = 6; ///< number of pipe stages
+static const int EL = 16; ///< expansion level
+static const int SN = 16; ///< number of pipe stages
 
 int main(int argc, char** argv){
 
@@ -30,7 +30,7 @@ int main(int argc, char** argv){
 	// generate seach requests
 	std::string bgptable(argv[1]);
 
-	std::cerr < "-----Generate search requests.\n";
+	std::cerr << "-----Generate search requests.\n";
 
 	std::string reqFile = std::string(argv[2]).append("_req.dat");
 
@@ -74,7 +74,7 @@ int main(int argc, char** argv){
 	
 		std::string linTraceFile = std::string(argv[2]).append("_lin.dat");
 	
-		rfst->generateTrace(reqFile, linTraceFile);
+		rfst->generateTrace(reqFile, linTraceFile, EL);
 	
 		// step 3: schedule
 		std::cerr << "-----Schedule in a linear pipeline\n";
@@ -109,7 +109,7 @@ int main(int argc, char** argv){
 		
 		std::string cirTraceFile = std::string(argv[2]).append("_cir.dat");
 		
-		rfst->generateTrace(reqFile, cirTraceFile);
+		rfst->generateTrace(reqFile, cirTraceFile, SN);
 
 		// step 3: schedule, number of stages is given in SN
 		std::cerr << "-----Schedule in circular pipeline.\n";
@@ -144,7 +144,7 @@ int main(int argc, char** argv){
 		
 		std::string ranTraceFile = std::string(argv[2]).append("_ran.dat");
 			
-		rfst->generateTrace(reqFile, ranTraceFile);
+		rfst->generateTrace(reqFile, ranTraceFile, SN);
 		
 		// step 3: schedule, number of stages is given in SN		
 		std::cerr << "-----Schedule in a random pipeline.\n";

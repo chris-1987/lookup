@@ -8,9 +8,9 @@
 
 static const size_t RN = 1024 * 1024 * 1; ///< number of requests
 static const int PL = 32; ///< 32 or 128 for IPv4 or IPv6, respectively
-static const int PT = 8; ///< threshold for short & long prefixes
+static const int PT = 10; ///< threshold for short & long prefixes
 static const int ST = 2; ///< stride of MPT
-static const int SN = 10; ///< number of pipe stages
+static const int SN = 16; ///< number of pipe stages
 
 int main(int argc, char** argv){
 
@@ -54,7 +54,7 @@ int main(int argc, char** argv){
 		
 		std::string ranTraceFile = std::string(argv[2]).append("_ran.dat");
 
-		rmpt->generateTrace(reqFile, ranTraceFile);
+		rmpt->generateTrace(reqFile, ranTraceFile, SN);
 
 		// step 3: schedule, number of stages is given in SN	
 		std::cerr << "-----Schedule in a random pipeline.\n";
